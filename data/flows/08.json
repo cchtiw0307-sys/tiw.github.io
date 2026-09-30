@@ -1,0 +1,678 @@
+{
+  "id": "08",
+  "title": "腹痛",
+  "chapter": "08",
+  "entries": [
+    { "label": "腹痛（護理師通知病人喊肚子痛）", "type": "symptom", "start": "q_danger", "group": "腹部",
+      "keywords": ["腹痛", "肚子痛", "abdominal pain", "急性腹症", "acute abdomen", "上腹痛", "下腹痛", "右上腹痛", "右下腹痛", "肚子脹"] },
+    { "label": "術後腹痛／引流液性質改變", "type": "symptom", "start": "r_postop", "group": "腹部",
+      "keywords": ["術後腹痛", "引流管", "drain", "吻合口滲漏", "anastomotic leak", "術後發燒", "腹內膿瘍"] },
+    { "label": "腹痛止痛與止吐（表 8-1）", "type": "diagnosis", "start": "r_analgesia",
+      "keywords": ["腹痛止痛", "ketorolac", "morphine", "acetaminophen", "止吐", "metoclopramide", "hyoscine", "Buscopan"] },
+    { "label": "消化道穿孔", "type": "diagnosis", "start": "r_perforation",
+      "keywords": ["穿孔", "perforation", "游離氣體", "free air", "板狀腹", "腹膜炎", "peritonitis"] },
+    { "label": "腸阻塞／腸麻痺／Ogilvie", "type": "diagnosis", "start": "q_obstruction",
+      "keywords": ["腸阻塞", "ileus", "bowel obstruction", "SBO", "腸麻痺", "Ogilvie", "假性阻塞", "氣液面", "air-fluid level"] },
+    { "label": "腸繫膜缺血", "type": "diagnosis", "start": "r_mesenteric",
+      "keywords": ["腸繫膜缺血", "mesenteric ischemia", "腸缺血", "SMA", "NOMI", "疼痛與檢查不成比例"] },
+    { "label": "腹主動脈瘤破裂", "type": "diagnosis", "start": "r_aaa",
+      "keywords": ["主動脈瘤", "AAA", "aortic aneurysm", "破裂", "搏動性腫塊", "允許性低血壓"] },
+    { "label": "膽絞痛／膽囊炎／膽管炎", "type": "diagnosis", "start": "q_biliary",
+      "keywords": ["膽囊炎", "cholecystitis", "膽管炎", "cholangitis", "膽絞痛", "biliary colic", "膽結石", "Charcot", "總膽管結石", "CBD stone", "ERCP", "PTGBD"] },
+    { "label": "急性胰臟炎", "type": "diagnosis", "start": "r_pancreatitis",
+      "keywords": ["胰臟炎", "pancreatitis", "lipase", "BISAP", "高三酸甘油酯"] },
+    { "label": "闌尾炎", "type": "diagnosis", "start": "r_appendicitis",
+      "keywords": ["闌尾炎", "appendicitis", "盲腸炎", "McBurney"] },
+    { "label": "憩室炎", "type": "diagnosis", "start": "q_divert",
+      "keywords": ["憩室炎", "diverticulitis", "乙狀結腸", "盲腸憩室炎"] },
+    { "label": "腎絞痛／輸尿管結石", "type": "diagnosis", "start": "q_renal",
+      "keywords": ["腎絞痛", "renal colic", "輸尿管結石", "ureteral stone", "腎結石", "血尿", "tamsulosin", "腰痛"] },
+    { "label": "腎盂腎炎", "type": "diagnosis", "start": "r_pyelo",
+      "keywords": ["腎盂腎炎", "pyelonephritis", "肋脊角敲痛", "CVA tenderness", "上泌尿道感染"] },
+    { "label": "自發性細菌性腹膜炎（SBP）", "type": "diagnosis", "start": "r_sbp",
+      "keywords": ["SBP", "自發性細菌性腹膜炎", "spontaneous bacterial peritonitis", "腹水感染", "肝硬化腹痛", "PMN 250"] },
+    { "label": "腹水穿刺（診斷性／治療性）", "type": "diagnosis", "start": "r_paracentesis",
+      "keywords": ["腹水穿刺", "paracentesis", "放腹水", "albumin 補充", "SAAG"] },
+    { "label": "婦科急症（子宮外孕、卵巢扭轉、PID）", "type": "diagnosis", "start": "r_gyn",
+      "keywords": ["子宮外孕", "ectopic pregnancy", "卵巢扭轉", "ovarian torsion", "PID", "骨盆腔發炎", "hCG 陽性", "陰道出血"] }
+  ],
+  "nodes": {
+    "q_danger": {
+      "type": "multi",
+      "title": "先問三件事：突然劇痛？生命徵象不穩？腹膜炎徵候？（勾選所有符合）",
+      "help": "電話中先口頭：生命徵象 + 血糖、NPO；低血壓／心搏過速 → IV、NS 500 mL bolus（心衰竭 250 mL）、監測器；突發劇痛／第一次／生命徵象異常 → 立刻到床邊",
+      "options": [
+        { "label": "突然發生的劇痛（刀割樣、秒到分鐘內達最痛）", "set": { "sudden": true } },
+        { "label": "休克／低血壓／心搏過速／冒冷汗／意識改變", "set": { "shock": true } },
+        { "label": "腹膜炎徵候：不敢動、反彈痛、板狀腹", "set": { "perit": true } },
+        { "label": "疼痛與理學檢查不成比例 + Afib／動脈硬化／透析／升壓劑", "set": { "isch": true } },
+        { "label": "搏動性腫塊或已知主動脈瘤 + 腰背痛／低血壓", "set": { "aaa": true } },
+        { "label": "育齡女性：hCG 陽性／陰道出血 + 下腹痛", "set": { "ectopic": true } }
+      ],
+      "branches": [
+        { "if": "aaa", "next": "r_aaa" },
+        { "if": "ectopic", "next": "r_gyn" },
+        { "if": "isch", "next": "r_mesenteric" },
+        { "if": "shock || perit || sudden", "next": "r_acute_abdomen" },
+        { "else": "q_location" }
+      ]
+    },
+    "q_location": {
+      "type": "choice",
+      "title": "主要在哪裡？最像什麼？",
+      "help": "老人／糖尿病／類固醇者症狀輕、不燒、WBC 正常仍可能是嚴重腹症 → 降低影像門檻；上腹痛的老人／糖尿病／女性要做 ECG",
+      "options": [
+        { "label": "右上腹：Murphy、黃疸、發燒（膽道）", "next": "q_biliary" },
+        { "label": "上腹／心窩：lipase、潰瘍史、ECG", "next": "q_epigastric" },
+        { "label": "右下腹：轉移痛、McBurney（闌尾炎／盲腸憩室炎）", "next": "r_appendicitis" },
+        { "label": "左下腹：發燒、壓痛（憩室炎）", "next": "q_divert" },
+        { "label": "腰痛放射到鼠蹊、翻來覆去、血尿（腎絞痛）", "next": "q_renal" },
+        { "label": "發燒 + 肋脊角敲痛 + 解尿症狀（腎盂腎炎）", "next": "r_pyelo" },
+        { "label": "腹脹、嘔吐、無排氣排便、高亢腸音（腸阻塞）", "next": "q_obstruction" },
+        { "label": "肝硬化腹水 + 發燒／腹痛／肝腦病變（SBP）", "next": "r_sbp" },
+        { "label": "下腹／骨盆：LMP、陰道分泌物、附件壓痛（婦科）", "next": "r_gyn" },
+        { "label": "術後 3–7 天、引流液改變", "next": "r_postop" },
+        { "label": "瀰漫、不明、輕–中度", "next": "r_workup" }
+      ]
+    },
+    "q_epigastric": {
+      "type": "choice",
+      "title": "上腹痛：最像哪一種？",
+      "help": "先做 ECG（下壁 MI）；lipase > 3 倍上限 = 胰臟炎；AST/ALT > 500、bilirubin > 4 → 想總膽管結石",
+      "options": [
+        { "label": "痛到背、lipase > 3 倍上限、酒精／膽石（胰臟炎）", "next": "r_pancreatitis" },
+        { "label": "右上腹壓痛、Murphy、黃疸、發燒（膽道）", "next": "q_biliary" },
+        { "label": "潰瘍史、NSAID、餐後／空腹痛、無腹膜炎（潰瘍／GERD）", "next": "r_pud" },
+        { "label": "ECG 缺血變化／胸悶（ACS）→ Ch6", "next": "r_workup" },
+        { "label": "不確定", "next": "r_workup" }
+      ]
+    },
+    "q_biliary": {
+      "type": "choice",
+      "title": "膽道：哪一種？",
+      "help": "Charcot 三聯（發燒、黃疸、右上腹痛）= 膽管炎；Reynolds 五聯加休克、意識改變",
+      "options": [
+        { "label": "膽絞痛：陣發痛 < 6 hr、無發燒、WBC／肝功能正常", "next": "r_colic" },
+        { "label": "膽囊炎：持續痛、Murphy、發燒／WBC↑、超音波膽囊壁厚／積液", "next": "r_cholecystitis" },
+        { "label": "膽管炎：發燒 + 黃疸 + 右上腹痛（± 休克、意識改變）", "next": "r_cholangitis" }
+      ]
+    },
+    "q_divert": {
+      "type": "choice",
+      "title": "憩室炎：有併發症或全身症狀嗎？",
+      "help": "併發症 = 膿瘍、穿孔、腹膜炎、阻塞、敗血症；免疫低下也視為高風險",
+      "options": [
+        { "label": "無併發症（CT 單純、無膿瘍／穿孔／敗血症、免疫正常）", "next": "r_diverticulitis", "set": { "comp": false } },
+        { "label": "有併發症或全身症狀（膿瘍、穿孔、敗血症、免疫低下）", "next": "r_diverticulitis", "set": { "comp": true } }
+      ]
+    },
+    "q_renal": {
+      "type": "multi",
+      "title": "腎絞痛：有沒有需要緊急泌尿科減壓的情況？",
+      "options": [
+        { "label": "阻塞 + 感染：發燒、膿尿、敗血症", "set": { "infx": true } },
+        { "label": "單腎／雙側阻塞、AKI（Cr 上升）", "set": { "aki": true } },
+        { "label": "止痛止吐後仍無法控制的疼痛／嘔吐", "set": { "uncontrolled": true } }
+      ],
+      "branches": [
+        { "if": "infx || aki || uncontrolled", "next": "r_renal_urgent" },
+        { "else": "q_stone" }
+      ]
+    },
+    "q_stone": {
+      "type": "number",
+      "title": "結石大小（mm）？",
+      "help": "CT／KUB 報告；不知道先填 0",
+      "var": "stone", "unit": "mm", "step": 1,
+      "quick": [0, 3, 5, 7, 10, 12],
+      "branches": [
+        { "else": "r_renal_colic" }
+      ]
+    },
+    "q_obstruction": {
+      "type": "choice",
+      "title": "腸阻塞：哪一種？",
+      "help": "KUB／CT：小腸 > 3 cm、大腸 > 6 cm、盲腸 > 9 cm 為擴張；閉環／絞扼／嵌頓疝氣 → 外科",
+      "options": [
+        { "label": "機械性（氣液面、轉折點、疝氣、沾黏、腫瘤）", "next": "r_sbo" },
+        { "label": "麻痺性腸阻塞（術後、鴉片、電解質；全腸擴張無轉折點）", "next": "r_ileus" },
+        { "label": "大腸假性阻塞 Ogilvie（盲腸 > 10–12 cm 或 > 3–6 天）", "next": "r_ogilvie" }
+      ]
+    },
+    "r_acute_abdomen": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性腹症：突發劇痛／休克／腹膜炎徵候",
+      "summary": "穿孔、腸缺血、AAA 破裂、子宮外孕、敗血症直到證明不是：**復甦 + 止痛 + 抽血備血 + CT + 立刻聯絡後線／外科**；止痛不會掩蓋診斷。",
+      "steps": [
+        "叫後線／外科；IV × 2、心電監測、O₂ 依 SpO₂；NPO",
+        "休克 → NS/LR 500 mL bolus 重複（心衰竭 250 mL）；備血、Foley 記尿量",
+        "抽血：CBC/DC、電解質、BUN/Cr、血糖、肝功能、lipase、lactate、CRP、PT/aPTT、troponin（上腹痛）、type & screen；VBG；hCG（育齡）",
+        "ECG（上腹痛、危險因子）；肝濁音消失 = 游離氣體",
+        "止痛（morphine）；止吐；NG（嘔吐／阻塞）",
+        "站立 CXR／KUB（游離氣體、氣液面）→ **CT 腹骨盆含顯影劑**（腎功能差仍以診斷為重）；疑 AAA／缺血 → CTA",
+        "疑穿孔／腹膜炎 → 廣效抗生素（表 8-2 重症列）",
+        "lactate 正常不能排除腸缺血"
+      ],
+      "orders": [
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，重複至灌流改善", "note": "心衰竭 250 mL；疑 AAA 破裂改允許性低血壓" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "不影響診斷；{age} 歲" },
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "note": "疑穿孔／腹膜炎／敗血性休克；ESBL 風險改 meropenem 1 g IV q8h；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV", "freq": "q6–8h PRN", "note": "機械性腸阻塞禁用；改 ondansetron 4–8 mg IV q8h" },
+        { "drug": "pRBC", "dose": "2–4 U", "route": "IV", "freq": "備血；出血性休克時輸", "note": "type & cross" }
+      ],
+      "watch": ["BP、HR、尿量 q15 min 至穩定；lactate q2–4h", "Hb 趨勢、腹部理學檢查 q1–2h"],
+      "call": ["腹膜炎徵候、板狀腹、反彈痛、腹痛 + 休克／lactate↑ → 立刻後線 + 外科", "影像游離氣體、腸缺血、閉環阻塞、AAA", "止痛後 1–2 小時未改善且診斷不明"],
+      "ddx": ["下壁 MI（ECG）", "DKA", "腎上腺危症"],
+      "refs": [{ "ch": "08", "q": "床邊初步評估與處置" }, { "ch": "08", "q": "表 8-2" }],
+      "next": [
+        { "label": "游離氣體 → 穿孔", "next": "r_perforation" },
+        { "label": "疑腸繫膜缺血", "next": "r_mesenteric" },
+        { "label": "疑 AAA 破裂", "next": "r_aaa" },
+        { "label": "腸阻塞", "next": "q_obstruction" }
+      ]
+    },
+    "r_perforation": {
+      "type": "result",
+      "urgency": "red",
+      "title": "消化道穿孔",
+      "summary": "NPO、NG 減壓、輸液、**廣效抗生素、緊急外科**；潰瘍穿孔加 PPI；止痛。",
+      "steps": [
+        "叫後線 + 外科（緊急手術評估）；NPO、NG 減壓、IV × 2、Foley",
+        "輸液 NS/LR 500 mL bolus 重複（心衰竭 250 mL）",
+        "CBC、電解質、Cr、lactate、PT/aPTT、type & screen、血液培養（抗生素前）",
+        "站立 CXR（游離氣體）→ CT 腹骨盆含顯影劑（定位、分期）",
+        "廣效抗生素 1 小時內；止痛；PPI（潰瘍）",
+        "停 NSAID／類固醇（若可）、抗凝評估"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "note": "重症／院內／ESBL 風險改 meropenem 1 g IV q8h；上消化道穿孔／長期抗生素／免疫低下 ± fluconazole 400 mg IV QD；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Ceftriaxone + metronidazole", "dose": "2 g + 500 mg", "route": "IV", "freq": "q24h + q8h", "note": "社區型輕–中度替代；來源控制後 4 天即可停" },
+        { "drug": "Pantoprazole", "dose": "40 mg", "route": "IV", "freq": "QD", "note": "潰瘍穿孔" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，重複", "note": "心衰竭 250 mL" }
+      ],
+      "watch": ["BP、HR、尿量 q15–30 min；lactate", "腹部理學檢查、體溫；NG 引流量"],
+      "call": ["確認游離氣體／穿孔當下 = 外科 + 後線", "休克、lactate↑、需升壓劑"],
+      "refs": [{ "ch": "08", "q": "消化道穿孔" }, { "ch": "08", "q": "表 8-2" }]
+    },
+    "r_sbo": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "機械性腸阻塞",
+      "summary": "NPO、**NG 減壓（持續抽吸）、輸液補第三空間（常需 2–4 L）、矯正 K**；每 4–6 小時再評估；絞扼／閉環／腹膜炎 → 外科。",
+      "steps": [
+        "NPO、NG 持續抽吸（記量）、IV × 2、Foley；輸液 500 mL bolus 後維持",
+        "電解質（K、Mg）、CBC、Cr、lactate、VBG；KUB → CT 腹骨盆含顯影劑（轉折點、閉環、絞扼、疝氣、腫瘤）",
+        "止痛（morphine）、止吐（**metoclopramide 禁用**，用 ondansetron）",
+        "手術指標：腹膜炎徵候、lactate↑、發燒／WBC↑、閉環、絞扼、嵌頓疝氣、腸扭轉、保守 48–72 hr 無改善",
+        "沾黏性小腸阻塞：水溶性顯影劑 Gastrografin 100 mL NG 可診斷兼治療（依外科）",
+        "每 4–6 小時再評估腹部與生命徵象"
+      ],
+      "orders": [
+        { "drug": "NS／LR", "dose": "500 mL bolus → 維持（常需 2–4 L）", "route": "IV", "freq": "STAT → 依尿量調整", "note": "心衰竭 250 mL；補 KCl" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV", "freq": "q8h", "note": "metoclopramide 機械性阻塞禁；QT" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "鴉片會加重腸麻痺，但止痛優先" },
+        { "drug": "Gastrografin", "dose": "100 mL", "route": "NG（夾管 2 hr）", "freq": "單次，8–24 hr 後 KUB", "note": "沾黏性小腸阻塞，依外科決定" },
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "note": "僅絞扼／穿孔／敗血症時" }
+      ],
+      "watch": ["腹部理學檢查、生命徵象 q4–6h；NG 量、尿量、I/O", "K、Mg、lactate q12–24h；發燒／WBC↑ = 絞扼"],
+      "call": ["腹膜炎徵候、lactate↑、發燒／WBC↑、閉環／絞扼／嵌頓疝氣 → 外科", "保守 48–72 hr 無改善"],
+      "refs": [{ "ch": "08", "q": "腸阻塞" }]
+    },
+    "r_ileus": {
+      "type": "result",
+      "urgency": "green",
+      "title": "麻痺性腸阻塞（術後 ileus）",
+      "summary": "停鴉片／抗膽鹼藥、矯正 K／Mg、活動；嘔吐／腹脹 → NG 減壓；確定無機械阻塞才可 metoclopramide；> 3–5 天 → CT 排除機械性。",
+      "steps": [
+        "確認無機械性阻塞（KUB／CT）；NPO 或清流質、NG 減壓（嘔吐／腹脹）",
+        "停或減鴉片、抗膽鹼藥；電解質矯正（K、Mg）",
+        "下床活動、嚼口香糖；輸液維持",
+        "> 3–5 天或嘔吐 → CT 排除機械性阻塞；alvimopan 依外科"
+      ],
+      "orders": [
+        { "drug": "KCl", "dose": "依血鉀補充", "route": "IV／PO", "freq": "依 Ch33", "note": "低血鉀加重腸麻痺" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM", "freq": "q6–8h", "note": "確定無機械性阻塞才可；CrCl {round(crcl)} < 40 減半" },
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "IV／PO", "freq": "q6h，max 3 g/d", "note": "減少鴉片需求；肝硬化 ≤ 2 g/d" }
+      ],
+      "watch": ["腹脹、排氣、NG 量每日；K、Mg", "新出現腹痛加劇／發燒 → 機械性阻塞或滲漏"],
+      "call": ["腹膜炎徵候、盲腸 > 10–12 cm、> 3–5 天未改善", "術後發燒 + 腹痛（吻合口滲漏）"],
+      "refs": [{ "ch": "08", "q": "麻痺性腸阻塞" }, { "ch": "24", "q": "術後腸麻痺" }]
+    },
+    "r_ogilvie": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "大腸假性阻塞（Ogilvie）",
+      "summary": "盲腸 > 10–12 cm 或 > 3–6 天 → **neostigmine 2 mg IV over 3–5 min**（心電監測、備 atropine）或大腸鏡減壓；先停鴉片／抗膽鹼、矯正電解質。",
+      "steps": [
+        "KUB／CT 確認無機械阻塞、量盲腸直徑；NPO、NG、肛管",
+        "停鴉片、抗膽鹼藥；矯正 K、Mg；活動",
+        "盲腸 > 10–12 cm 或 > 3–6 天 → neostigmine（心電監測、床邊備 atropine）",
+        "無效或禁忌 → 消化科大腸鏡減壓；腹膜炎／穿孔 → 外科"
+      ],
+      "orders": [
+        { "drug": "Neostigmine", "dose": "2 mg", "route": "IV over 3–5 min", "freq": "單次（心電監測）", "note": "心搏過緩 → atropine；氣喘、AV block、機械阻塞禁" },
+        { "drug": "Atropine", "dose": "0.5–1 mg", "route": "IV", "freq": "PRN 心搏過緩（床邊備）", "note": "neostigmine 副作用" }
+      ],
+      "watch": ["心電監測 30 min（心搏過緩、支氣管痙攣）", "KUB q12–24h 盲腸直徑；腹膜炎徵候"],
+      "call": ["盲腸 > 10–12 cm、neostigmine 無效 → 消化科減壓", "腹膜炎徵候／穿孔 → 外科"],
+      "refs": [{ "ch": "08", "q": "Ogilvie" }]
+    },
+    "r_mesenteric": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腸繫膜缺血（疼痛與檢查不成比例）",
+      "summary": "高度懷疑即 **CTA（勿因腎功能延誤）**；輸液、**heparin bolus + 滴注**、廣效抗生素、避免升壓劑；腹膜炎徵候 → 直接開刀；緊急血管外科／介入放射／一般外科。",
+      "steps": [
+        "叫後線 + 外科／血管外科／介入放射科；IV × 2、心電監測、Foley",
+        "CTA 動脈相（疑靜脈栓塞加靜脈相）；KUB 早期可正常，thumbprinting／pneumatosis 已是晚期",
+        "lactate、VBG、CBC、電解質、Cr、PT/aPTT、type & screen；ECG（Afib？）；lactate 正常不能排除",
+        "輸液 500 mL bolus 重複；避免升壓劑（必要時 low-dose）",
+        "Heparin（無出血禁忌）；廣效抗生素；NPO、NG",
+        "腹膜炎徵候 → 直接開刀；NOMI（休克後、升壓劑、透析）以矯正心輸出量與灌流為主"
+      ],
+      "orders": [
+        { "drug": "Heparin", "dose": "{round(wt*80)} U bolus → {round(wt*18)} U/hr", "route": "IV push → IV drip", "freq": "STAT → 持續（aPTT 調整）", "note": "80 U/kg → 18 U/kg/hr，依 {wt} kg；無出血禁忌" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，重複至灌流改善", "note": "心衰竭 250 mL" },
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "note": "表 8-2 重症列；ESBL 改 meropenem 1 g IV q8h；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解", "note": "" }
+      ],
+      "watch": ["BP、HR、尿量 q15 min；lactate q2h", "腹部理學檢查 q1h（腹膜炎 = 壞死）；aPTT 6 hr"],
+      "call": ["懷疑當下立刻後線 + 血管外科／介入放射／一般外科", "腹膜炎徵候、lactate↑、休克"],
+      "refs": [{ "ch": "08", "q": "腸繫膜缺血" }]
+    },
+    "r_aaa": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腹主動脈瘤破裂",
+      "summary": "**允許性低血壓（SBP 80–100，意識清楚即可）**、大口徑 IV × 2、備血 6–10 U、緊急心血管外科／血管內修補；**不要為了 CT 延誤**。",
+      "steps": [
+        "立刻叫後線 + 心血管外科（血管內修補團隊）；不要為了 CT 延誤",
+        "大口徑 IV × 2（≥ 18G）、心電監測、Foley；床邊超音波（AAA、游離液）",
+        "備血 6–10 U pRBC + FFP、type & cross；CBC、Cr、PT/aPTT、lactate",
+        "允許性低血壓：SBP 80–100、意識清楚即可，避免大量晶體液",
+        "止痛小量；穩定者才 CTA",
+        "停抗凝並逆轉（Ch30）"
+      ],
+      "orders": [
+        { "drug": "pRBC", "dose": "6–10 U 備血", "route": "IV", "freq": "依血壓輸（目標 SBP 80–100）", "note": "不知血型先 O 型；啟動 MTP（1:1:1）" },
+        { "drug": "NS／LR", "dose": "250 mL", "route": "IV bolus", "freq": "僅 SBP < 80 或意識改變時，小量重複", "note": "允許性低血壓，避免大量晶體液" },
+        { "drug": "Fentanyl", "dose": "25–50 mcg", "route": "IV", "freq": "q5–10 min PRN", "note": "低血壓者止痛首選" }
+      ],
+      "watch": ["BP、HR、意識 q5 min；尿量", "Hb、凝血、Ca（大量輸血）"],
+      "call": ["懷疑當下立刻：後線 + 心血管外科／血管外科 + 血庫", "SBP < 80 或意識改變"],
+      "refs": [{ "ch": "08", "q": "腹主動脈瘤破裂" }, { "ch": "09", "q": "表 9-1" }]
+    },
+    "r_colic": {
+      "type": "result",
+      "urgency": "green",
+      "title": "膽絞痛（無發燒、WBC／肝功能正常）",
+      "summary": "止痛（**NSAID 首選**：ketorolac；效果 ≈ 鴉片且不增加 Oddi 括約肌壓力）、止吐；可進食後出院安排膽囊切除。",
+      "steps": [
+        "確認：陣發痛 < 6 hr、無發燒、無 Murphy 持續、WBC／AST/ALT/bilirubin／lipase 正常；超音波膽結石、膽囊壁正常",
+        "止痛 ketorolac ± morphine；止吐",
+        "AST/ALT > 500、bilirubin > 4 或 amylase > 1,000 → 想總膽管結石（CBD > 6 mm → MRCP／EUS／ERCP）",
+        "痛持續 > 6 hr、發燒、WBC↑ → 改依膽囊炎處理",
+        "可進食後出院，安排膽囊切除"
+      ],
+      "orders": [
+        { "drug": "Ketorolac", "dose": "{(age >= 65 || wt < 50 || crcl < 60) ? 15 : 30} mg", "route": "IV／IM", "freq": "q6h，max 5 天", "note": "≥ 65 歲、< 50 kg、CrCl ↓（目前 {round(crcl)}）改 15 mg；出血、腎損傷、潰瘍慎用" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "NSAID 不足時；Oddi 括約肌痙攣顧慮臨床上不重要" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM", "freq": "q6–8h", "note": "止吐；CrCl {round(crcl)} < 40 減半" }
+      ],
+      "watch": ["疼痛 1–2 hr 再評估；體溫、Murphy", "肝功能、lipase（若未驗）"],
+      "call": ["痛 > 6 hr、發燒、黃疸、WBC↑（膽囊炎／膽管炎）", "止痛 1–2 小時未改善"],
+      "refs": [{ "ch": "08", "q": "膽絞痛" }, { "ch": "08", "q": "表 8-1" }],
+      "next": [{ "label": "進展為膽囊炎", "next": "r_cholecystitis" }]
+    },
+    "r_cholecystitis": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "急性膽囊炎",
+      "summary": "NPO、輸液、止痛、抗生素；**72 小時內（最好 24–48 hr）腹腔鏡膽囊切除**；高風險不適合手術 → PTGBD；AST/ALT > 500、bilirubin > 4 → 想總膽管結石。",
+      "steps": [
+        "NPO、IV 輸液、止痛（ketorolac／morphine）、止吐",
+        "CBC、肝功能、lipase、CRP、Cr、PT/aPTT、血液培養（抗生素前）；超音波（壁厚、積液、CBD > 6 mm？）",
+        "抗生素（表 8-2 社區型）；會診外科：72 小時內膽囊切除",
+        "高風險不適合手術 → PTGBD（腹水／凝血異常者改 EUS／ERCP 引流）",
+        "AST/ALT > 500、bilirubin > 4 或 amylase > 1,000 → 總膽管結石：中度懷疑 MRCP／EUS，高度懷疑直接 ERCP",
+        "發燒 + 黃疸 + 休克 → 膽管炎處置"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q24h", "with": "Metronidazole 500 mg IV q8h", "note": "社區型輕–中度；替代 flomoxef 1 g IV q8h 或 ertapenem 1 g IV q24h；β-lactam 過敏 ciprofloxacin 400 mg IV q12h + metronidazole" },
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "note": "僅重症／院內／近期抗生素／免疫低下；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Ketorolac", "dose": "{(age >= 65 || wt < 50 || crcl < 60) ? 15 : 30} mg", "route": "IV／IM", "freq": "q6h，max 5 天", "note": "CrCl ↓（目前 {round(crcl)}）改 15 mg；術前出血顧慮與外科討論" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM", "freq": "q6–8h", "note": "止吐；CrCl {round(crcl)} < 40 減半" },
+        { "drug": "NS／LR", "dose": "500 mL bolus → 維持", "route": "IV", "freq": "STAT → 依尿量", "note": "心衰竭 250 mL" }
+      ],
+      "watch": ["體溫、HR、BP q4h；疼痛", "肝功能、WBC 每日；黃疸／休克 = 膽管炎或壞疽"],
+      "call": ["休克、黃疸 + 發燒（膽管炎）、壞疽／穿孔（CT）", "外科會診安排膽囊切除；不適合手術 → PTGBD"],
+      "refs": [{ "ch": "08", "q": "急性膽囊炎、膽管炎、膽絞痛" }, { "ch": "08", "q": "表 8-2" }],
+      "next": [{ "label": "膽管炎（黃疸 + 發燒 ± 休克）", "next": "r_cholangitis" }]
+    },
+    "r_cholangitis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性膽管炎（Charcot 三聯 ± 休克、意識改變）",
+      "summary": "敗血症處置 + 抗生素 + **24–48 小時內膽道引流（ERCP；重症 12 小時內）**；立刻聯絡後線與消化科。",
+      "steps": [
+        "叫後線 + 消化科（ERCP）；IV × 2、心電監測、Foley",
+        "血液培養 × 2（抗生素前）、CBC、肝功能、lipase、Cr、lactate、PT/aPTT、type & screen",
+        "輸液 500 mL bolus 重複（心衰竭 250 mL）；休克 → Ch19（升壓劑）",
+        "抗生素 1 小時內（重症用 piperacillin-tazobactam）",
+        "超音波（CBD 擴張、結石）；ERCP 引流 24–48 hr 內，重症 12 hr 內；無法 ERCP → PTCD",
+        "止痛、止吐、NPO"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "note": "重症／休克／院內／近期抗生素；ESBL 改 meropenem 1 g IV q8h；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q24h", "with": "Metronidazole 500 mg IV q8h", "note": "社區型輕–中度（無休克）" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，重複至 MAP ≥ 65", "note": "心衰竭 250 mL" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解", "note": "" }
+      ],
+      "watch": ["BP、HR、意識、尿量 q15–30 min；lactate q2–4h", "肝功能、bilirubin、凝血、血小板每日"],
+      "call": ["懷疑膽管炎當下 = 後線 + 消化科（ERCP）", "休克、意識改變（Reynolds 五聯）、需升壓劑"],
+      "refs": [{ "ch": "08", "q": "膽管炎" }, { "ch": "19", "q": "敗血性休克" }]
+    },
+    "r_pancreatitis": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "急性胰臟炎（ACG 2024）",
+      "summary": "**LR 中等量輸液**（10 mL/kg bolus → 1.5 mL/kg/hr）、止痛、早期進食、**不常規抗生素**；第一時間超音波找膽石，CT 不急做；膽管炎／bilirubin ≥ 5 → 24 hr 內 ERCP。",
+      "steps": [
+        "診斷 2/3：典型痛、lipase > 3 倍、影像；找原因：膽石（ALT > 3 倍／> 150）、酒精、TG > 1,000、高血鈣、藥物、ERCP 後",
+        "腹部超音波（膽石／膽管擴張）第一時間做；CT 不必急（48–72 hr 後仍痛或惡化再做 CT(I+)）",
+        "LR 輸液：低血容 10 mL/kg bolus → 1.5 mL/kg/hr；6、12、24、48 hr 評估 HR、MAP、尿量 > 0.5 mL/kg/hr、BUN、Hct；overload 徵候即減量",
+        "止痛（morphine／fentanyl）、止吐；早期經口進食（24 hr 內，低脂軟食）；> 72 hr 無法進食 → NG／NJ 腸道營養",
+        "膽石性 + 膽管炎／敗血症／bilirubin ≥ 5 → 24 hr 內 ERCP；輕症同次住院膽囊切除",
+        "高風險（BISAP ≥ 3、SIRS > 48 hr、Cr > 1.8、BUN > 20、Hct > 44、CRP > 150）→ 考慮 ICU",
+        "感染性壞死（發燒／WBC↑持續 7–10 天、CT 氣體）才給抗生素 + 會診外科／消化科"
+      ],
+      "orders": [
+        { "drug": "Lactated Ringer's（LR）", "dose": "{round(wt*10)} mL bolus（低血容）→ {round(wt*1.5)} mL/hr", "route": "IV", "freq": "bolus STAT → 持續，6／12／24／48 hr 評估", "note": "10 mL/kg → 1.5 mL/kg/hr，依 {wt} kg；有 overload 徵候即減量" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "alt": "Fentanyl 25–50 mcg IV q5–10 min PRN（腎衰竭／低血壓）", "note": "" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM", "freq": "q6–8h", "note": "止吐；CrCl {round(crcl)} < 40 減半；或 ondansetron 4–8 mg IV q8h" },
+        { "drug": "Regular insulin", "dose": "{round(wt*0.1,1)} U/hr（0.1 U/kg/hr）", "route": "IV drip", "with": "D5W 維持血糖 150–200", "freq": "持續至 TG < 500", "note": "僅 TG > 1,000 高三酸甘油酯胰臟炎；重症可血漿置換" },
+        { "drug": "Meropenem", "dose": "1 g", "route": "IV", "freq": "q8h", "note": "僅感染性壞死（或 piperacillin-tazobactam 4.5 g IV q6h）；不常規給；CrCl {round(crcl)} 依院內調整" }
+      ],
+      "watch": ["HR、MAP、尿量（> 0.5 mL/kg/hr ＝ > {round(wt*0.5)} mL/hr）、RR／SpO₂ q4h；6／12／24／48 hr 評估 BUN、Hct", "Ca、血糖、TG、CRP（48 hr）、Cr；overload（喘、囉音）"],
+      "call": ["休克、SpO₂↓、Cr > 1.8、BUN > 20 且上升、器官衰竭（重症 → ICU）", "膽管炎／bilirubin ≥ 5 → 消化科 ERCP；感染性壞死 → 外科／消化科"],
+      "refs": [{ "ch": "08", "q": "急性胰臟炎（ACG 2024）" }]
+    },
+    "r_pud": {
+      "type": "result",
+      "urgency": "green",
+      "title": "消化性潰瘍／GERD（無穿孔、無出血）",
+      "summary": "PPI、停 NSAID、H. pylori 檢驗；出血見 Ch9、穿孔（游離氣體）→ 外科。",
+      "steps": [
+        "確認無腹膜炎徵候、無黑便／吐血（有 → Ch9）；ECG（上腹痛老人／糖尿病）",
+        "PPI；停 NSAID／aspirin（與原團隊討論）",
+        "H. pylori 檢驗（內視鏡切片／呼氣試驗）安排",
+        "止痛用 acetaminophen，避免 NSAID"
+      ],
+      "orders": [
+        { "drug": "Pantoprazole", "dose": "40 mg", "route": "PO／IV", "freq": "QD", "note": "" },
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "PO／IV", "freq": "q6h，max 3 g/d（肝硬化 ≤ 2 g/d）", "note": "避免 NSAID" }
+      ],
+      "watch": ["黑便、吐血、Hb", "痛加劇／腹膜炎徵候 → 穿孔"],
+      "call": ["吐血／黑便／Hb 下降（Ch9）", "腹膜炎徵候、游離氣體"],
+      "refs": [{ "ch": "08", "q": "消化性潰瘍、GERD" }, { "ch": "09", "q": "非靜脈曲張性上消化道出血" }]
+    },
+    "r_appendicitis": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "闌尾炎（右下腹痛）",
+      "summary": "NPO、輸液、止痛、抗生素、外科（腹腔鏡）；無併發症者抗生素優先治療為選項（復發率 30–40%）。",
+      "steps": [
+        "NPO、IV 輸液、止痛（止痛不會掩蓋診斷）",
+        "CBC/DC、CRP、Cr、電解質、尿液（膿尿也可見於闌尾炎）、hCG（育齡女性）",
+        "CT 腹骨盆含顯影劑（瘦者／孕婦可先超音波）",
+        "抗生素（表 8-2 社區型）；會診外科",
+        "右下腹鑑別：盲腸憩室炎（亞洲常見）、克隆氏症、卵巢扭轉／囊腫破裂、子宮外孕、腎結石、腸繫膜淋巴腺炎"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q24h", "with": "Metronidazole 500 mg IV q8h", "note": "替代 flomoxef 1 g IV q8h／ertapenem 1 g IV q24h；β-lactam 過敏 ciprofloxacin 400 mg IV q12h + metronidazole；來源控制後 4 天即可停" },
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "note": "僅穿孔／膿瘍／敗血症；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "" },
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "IV／PO", "freq": "q6h，max 3 g/d", "note": "" },
+        { "drug": "NS／LR", "dose": "500 mL bolus → 維持", "route": "IV", "freq": "STAT → 依尿量", "note": "心衰竭 250 mL" }
+      ],
+      "watch": ["體溫、HR、腹部理學檢查 q4h", "WBC、CRP 每日（保守治療者）"],
+      "call": ["外科會診；腹膜炎徵候、穿孔／膿瘍（CT）", "hCG 陽性 → 婦產科"],
+      "refs": [{ "ch": "08", "q": "闌尾炎" }, { "ch": "08", "q": "表 8-2" }]
+    },
+    "r_diverticulitis": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "憩室炎（{comp ? '有併發症／全身症狀' : '無併發症'}）",
+      "summary": "{comp ? 'IV 抗生素；膿瘍 > 3–4 cm 經皮引流；穿孔／腹膜炎／阻塞 → 外科。' : '可不用抗生素或口服 amoxicillin-clavulanate 4–7 天，清流質飲食。'}",
+      "steps": [
+        "CT 腹骨盆含顯影劑分期（膿瘍、穿孔、阻塞）；CBC、CRP、Cr、尿液",
+        "無併發症、免疫正常：清流質、止痛，可不用抗生素或口服 amoxicillin-clavulanate 4–7 天",
+        "併發症／全身症狀／免疫低下：NPO、IV 輸液、IV 抗生素（表 8-2）",
+        "膿瘍 > 3–4 cm → 經皮引流；穿孔／腹膜炎／阻塞 → 外科",
+        "避免 NSAID／鴉片過量；出院後安排大腸鏡（6–8 週）"
+      ],
+      "orders": [
+        { "drug": "Amoxicillin-clavulanate", "dose": "875/125 mg", "route": "PO", "freq": "BID × 4–7 天", "cond": "!comp", "note": "無併發症可考慮不用抗生素" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q24h", "with": "Metronidazole 500 mg IV q8h", "cond": "comp", "note": "替代 ertapenem 1 g IV q24h；來源控制後 4 天可停" },
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "cond": "comp", "note": "敗血性休克／免疫低下／近期抗生素；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "PO／IV", "freq": "q6h，max 3 g/d", "note": "避免 NSAID" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "cond": "comp", "note": "" }
+      ],
+      "watch": ["體溫、腹部理學檢查 q4–8h；WBC、CRP 48–72 hr", "痛加劇／腹膜炎徵候 → 重複 CT"],
+      "call": ["膿瘍 > 3–4 cm、穿孔、腹膜炎、阻塞、敗血症", "48–72 hr 未改善"],
+      "refs": [{ "ch": "08", "q": "憩室炎" }, { "ch": "08", "q": "表 8-2" }]
+    },
+    "r_renal_colic": {
+      "type": "result",
+      "urgency": "green",
+      "title": "腎絞痛（結石 {stone > 0 ? stone + ' mm' : '大小未知'}）",
+      "summary": "**Ketorolac 首選** ± morphine、止吐、補水維持尿量（不需大量灌）；< 5 mm 多自排；5–10 mm 遠端輸尿管結石 → tamsulosin × 4 週；> 10 mm 或 4 週未排 → 泌尿科。",
+      "steps": [
+        "尿液（血尿、膿尿、亞硝酸鹽）、Cr、CBC、Ca；hCG（育齡）；非顯影 CT（首選）或 KUB + 超音波（腎水腫）",
+        "止痛：ketorolac ± morphine；止吐",
+        "補水維持尿量（不需大量灌）；濾尿收集結石",
+        "< 5 mm 多自排；5–10 mm 遠端輸尿管 → tamsulosin 4 週；> 10 mm 或 4 週未排 → 泌尿科",
+        "出現發燒／膿尿／AKI／無法控制疼痛 → 緊急泌尿科減壓"
+      ],
+      "orders": [
+        { "drug": "Ketorolac", "dose": "{(age >= 65 || wt < 50 || crcl < 60) ? 15 : 30} mg", "route": "IV／IM", "freq": "q6h，max 5 天", "note": "首選；≥ 65 歲、< 50 kg、CrCl ↓（目前 {round(crcl)}）改 15 mg；AKI／出血／潰瘍慎" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "NSAID 不足時加" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM", "freq": "q6–8h", "note": "止吐；CrCl {round(crcl)} < 40 減半" },
+        { "drug": "Tamsulosin", "dose": "0.4 mg（台灣 0.2 mg 錠 × 2）", "route": "PO", "freq": "QD × 4 週", "cond": "stone >= 5 && stone <= 10", "note": "5–10 mm 遠端輸尿管結石排石；姿態性低血壓" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV", "freq": "維持尿量即可，不需大量", "note": "能喝水者口服" }
+      ],
+      "watch": ["疼痛 1 hr 再評估；體溫、尿量", "Cr（單腎／雙側？）；尿液培養（膿尿）"],
+      "call": ["阻塞 + 感染（發燒、膿尿、敗血症）、單腎／雙側阻塞、AKI、無法控制的疼痛／嘔吐 → 緊急泌尿科減壓", "> 10 mm 或 4 週未排 → 泌尿科"],
+      "refs": [{ "ch": "08", "q": "腎絞痛" }],
+      "next": [{ "label": "發燒／AKI／無法止痛 → 緊急減壓", "next": "r_renal_urgent" }]
+    },
+    "r_renal_urgent": {
+      "type": "result",
+      "urgency": "red",
+      "title": "阻塞性結石 + 感染／AKI／無法控制疼痛：緊急泌尿科減壓",
+      "summary": "阻塞 + 感染 = 閉鎖性膿腎，**抗生素不夠，要引流（雙 J 管／PCN）**；血液／尿液培養後抗生素、輸液、止痛；立刻聯絡泌尿科。",
+      "steps": [
+        "叫後線 + 泌尿科（雙 J 管／經皮腎造瘻）；IV × 2、Foley",
+        "血液培養 × 2、尿液培養（抗生素前）、CBC、Cr、電解質、lactate",
+        "輸液 500 mL bolus（休克重複）；抗生素 1 小時內",
+        "非顯影 CT／超音波（腎水腫、結石位置）",
+        "止痛、止吐；AKI 者避免 NSAID／顯影劑"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "1–2 g", "route": "IV", "freq": "q24h", "note": "腎盂腎炎社區型；ESBL 風險 ertapenem 1 g IV q24h；休克／院內 piperacillin-tazobactam 4.5 g IV q6h" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，休克重複", "note": "心衰竭 250 mL" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解", "note": "AKI 時避免 ketorolac" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV", "freq": "q8h", "note": "QT" }
+      ],
+      "watch": ["BP、HR、體溫、尿量 q1h；lactate", "Cr、K 每日；引流後培養"],
+      "call": ["確認阻塞 + 感染／AKI 當下 = 泌尿科減壓 + 後線", "休克、需升壓劑"],
+      "refs": [{ "ch": "08", "q": "緊急泌尿科（減壓）" }, { "ch": "08", "q": "腎盂腎炎（社區）" }]
+    },
+    "r_pyelo": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "腎盂腎炎",
+      "summary": "尿液／血液培養後 ceftriaxone（fluoroquinolone 抗藥 < 10% 才用 levofloxacin）；ESBL → ertapenem；總療程 7–14 天；阻塞（結石、腎水腫）→ 泌尿科引流。",
+      "steps": [
+        "尿液常規／培養、血液培養 × 2（抗生素前）、CBC、Cr、CRP；hCG（育齡）",
+        "輸液；抗生素 IV；退燒",
+        "超音波／CT：阻塞（結石、腎水腫）、膿瘍 → 泌尿科引流；48–72 hr 未退燒也要影像",
+        "口服 step-down（cefixime／amoxicillin-clavulanate／fluoroquinolone），總 7–14 天",
+        "Foley 病人：換管後留培養"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "1–2 g", "route": "IV", "freq": "q24h", "note": "ESBL 風險／既往 ESBL：ertapenem 1 g IV q24h" },
+        { "drug": "Levofloxacin", "dose": "750 mg", "route": "IV／PO", "freq": "QD", "note": "僅 fluoroquinolone 抗藥 < 10% 時；CrCl {round(crcl)} 依仿單調整" },
+        { "drug": "NS／LR", "dose": "500 mL bolus → 維持", "route": "IV", "freq": "STAT → 依尿量", "note": "心衰竭 250 mL" },
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "PO／IV", "freq": "q6h PRN 發燒／疼痛，max 3 g/d", "note": "" }
+      ],
+      "watch": ["體溫、HR、BP q4h；尿量", "48–72 hr 未退燒 → 影像找阻塞／膿瘍；培養結果降階"],
+      "call": ["休克、AKI、阻塞（結石／腎水腫）→ 泌尿科", "48–72 hr 未改善"],
+      "refs": [{ "ch": "08", "q": "腎盂腎炎（社區）" }, { "ch": "08", "q": "表 8-2" }]
+    },
+    "r_sbp": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "自發性細菌性腹膜炎（SBP）",
+      "summary": "腹水 PMN ≥ 250 = SBP：**cefotaxime／ceftriaxone × 5 天 + albumin（D1 1.5 g/kg、D3 1 g/kg）**；避免大量放液、暫停 β-blocker（SBP < 90 或 AKI）；48 hr 未改善 → 重複穿刺想次發性腹膜炎。",
+      "steps": [
+        "抗生素前床邊腹水穿刺：cell count/DC、albumin、total protein、culture 接血液培養瓶各 10 mL；血液培養 × 2",
+        "PMN ≥ 250 即治療（血性穿刺每 250 RBC 減 1 PMN）",
+        "Albumin（Cr > 1、BUN > 30 或 bilirubin > 4 者）D1、D3",
+        "SBP 期間避免大量放液（AKI）；SBP < 90 或 AKI → 暫停 β-blocker",
+        "48 hr 未改善 → 重複穿刺（PMN 應降 ≥ 25%）；否則次發性腹膜炎（Runyon：total protein > 1、glucose < 50、LDH > 血清上限、多種菌）→ 加 metronidazole、緊急影像 ± 外科",
+        "之後 norfloxacin／TMP-SMX 次級預防"
+      ],
+      "orders": [
+        { "drug": "Cefotaxime", "dose": "2 g", "route": "IV", "freq": "q8h × 5 天", "alt": "Ceftriaxone 2 g IV q24h × 5 天", "note": "院內／近期抗生素／重症：piperacillin-tazobactam 4.5 g IV q6h 或 meropenem 1 g IV q8h；既往 MRSA + vancomycin" },
+        { "drug": "Albumin 20%", "dose": "D1：{round(wt*1.5)} g（{round(wt*1.5*5)} mL）；D3：{round(wt)} g（{round(wt*5)} mL）", "route": "IV drip", "freq": "D1 1.5 g/kg、D3 1 g/kg", "note": "Cr > 1、BUN > 30 或 bilirubin > 4 者；依 {wt} kg；20% 100 mL ≈ 20 g" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "IV", "freq": "q8h", "note": "僅疑次發性腹膜炎時加" },
+        { "drug": "Lactulose", "dose": "20–30 g", "route": "PO／NG", "freq": "q1–2h 至解便，之後 TID", "note": "肝腦病變預防／治療（Ch1 表）" }
+      ],
+      "watch": ["體溫、BP（< 90 停 β-blocker）、意識、尿量 q4h", "Cr、BUN 每日（HRS）；48 hr 重複穿刺"],
+      "call": ["休克、AKI、意識改變", "48 hr PMN 未降 ≥ 25%、疑次發性腹膜炎 → 外科／消化科"],
+      "refs": [{ "ch": "08", "q": "腎盂腎炎、腹內膿瘍、SBP" }, { "ch": "08", "q": "肝硬化腹水穿刺" }],
+      "next": [{ "label": "腹水穿刺步驟與送檢", "next": "r_paracentesis" }]
+    },
+    "r_paracentesis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "肝硬化腹水穿刺（診斷性／治療性）",
+      "summary": "超音波定位左下腹、Z-track、16–18G；INR／血小板異常不是禁忌（DIC 除外）；**治療性放液 > 5 L → albumin 6–8 g／每 1 L**；culture 抗生素前床邊接血液培養瓶。",
+      "steps": [
+        "定位：左下腹，避開腹壁下動脈（腹直肌外側、ASIS 內上 2–4 cm）；超音波確認腹水深度",
+        "Z-track，16–18G 針或引流套件；INR／血小板異常不是禁忌（DIC、纖溶亢進除外）",
+        "送檢：cell count/DC、albumin（SAAG ≥ 1.1 = 門脈高壓；total protein < 2.5 偏肝硬化）、total protein、culture（床邊血液培養瓶各 10 mL，抗生素前）、± cytology、amylase、TG、bilirubin（深褐色：膽漏／穿孔）",
+        "血性穿刺 PMN 校正：每 250 RBC 減 1 PMN；PMN ≥ 250 = SBP",
+        "治療性放液 > 5 L → albumin 6–8 g／每 1 L；放液後監測血壓",
+        "SBP 期間避免大量放液"
+      ],
+      "orders": [
+        { "drug": "Albumin 20%", "dose": "每放 1 L 給 6–8 g（100 mL ≈ 20 g）", "route": "IV drip", "freq": "放液 > 5 L 時，放液中／後給", "note": "例：放 6 L → 36–48 g ≈ 200 mL" },
+        { "drug": "Lidocaine 1–2%", "dose": "5–10 mL", "route": "局部浸潤", "freq": "穿刺前", "note": "" }
+      ],
+      "watch": ["放液後 BP、HR、尿量；穿刺處滲漏", "Cr 24–48 hr（AKI）；PMN 結果"],
+      "call": ["PMN ≥ 250 → SBP 處置", "放液後低血壓、血性腹水、腸穿孔徵候"],
+      "refs": [{ "ch": "08", "q": "肝硬化腹水穿刺" }],
+      "next": [{ "label": "PMN ≥ 250 → SBP", "next": "r_sbp" }]
+    },
+    "r_gyn": {
+      "type": "result",
+      "urgency": "red",
+      "title": "婦科急症（子宮外孕破裂、卵巢扭轉、PID／TOA）",
+      "summary": "**hCG 陽性 + 腹痛 + 休克 = 子宮外孕破裂直到證明不是** → 緊急婦產科；輸液、備血；卵巢扭轉／TOA 也要緊急婦產科。",
+      "steps": [
+        "hCG（尿／血）STAT；IV × 2、輸液 500 mL bolus（休克重複）、備血、type & cross",
+        "立刻聯絡婦產科；經陰道超音波",
+        "CBC、Cr、PT/aPTT、type & screen、lactate；尿液",
+        "止痛（morphine）、止吐；NPO",
+        "PID／TOA：發燒 + 附件壓痛 + 分泌物 → 婦產科抗生素；卵巢扭轉：突發單側劇痛 + 嘔吐 → 緊急手術"
+      ],
+      "orders": [
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，休克重複", "note": "心衰竭 250 mL" },
+        { "drug": "pRBC", "dose": "2–4 U", "route": "IV", "freq": "備血；出血性休克時輸", "note": "Rh 陰性者注意" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解", "note": "" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV", "freq": "q8h", "note": "" }
+      ],
+      "watch": ["BP、HR q15 min；Hb q4h", "腹部理學檢查、陰道出血量"],
+      "call": ["hCG 陽性 + 腹痛／休克 → 立刻婦產科 + 後線", "疑卵巢扭轉、TOA"],
+      "refs": [{ "ch": "08", "q": "婦科急症" }]
+    },
+    "r_postop": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "術後腹痛／發燒／引流液改變",
+      "summary": "**術後 3–7 天發燒 + 腹痛 = 吻合口滲漏／腹內膿瘍直到證明不是**；引流液變膿／膽汁／糞便／鮮血 → 立即通知外科；也想腸阻塞。",
+      "steps": [
+        "查術式、日期、引流管位置；引流液顏色／量、NG 量；生命徵象、腹部理學檢查",
+        "引流液變膿／膽汁／糞便／鮮血 → 立即通知外科／後線",
+        "CBC、CRP、lactate、Cr、電解質、肝功能、lipase；血液培養（發燒）",
+        "CT 腹骨盆含顯影劑（滲漏、膿瘍、阻塞）；站立 KUB（氣液面）",
+        "NPO、輸液、止痛；疑滲漏／膿瘍 → 抗生素（表 8-2 重症列）+ 外科",
+        "術後 ileus：停鴉片、活動、矯正 K/Mg（Ch24）"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "note": "疑吻合口滲漏／腹內膿瘍（術後 ± vancomycin）；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV bolus", "freq": "STAT（低血壓／心搏過速）", "note": "心衰竭 250 mL" },
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "IV／PO", "freq": "q6h，max 3 g/d", "note": "" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "ketorolac 術後出血慎用" }
+      ],
+      "watch": ["體溫、HR、BP q4h；引流液性質與量", "WBC、CRP、lactate 每日；腹部理學檢查"],
+      "call": ["引流液性質改變（膽汁／糞便／膿／鮮血）或懷疑吻合口滲漏 → 立即外科", "腹膜炎徵候、休克、lactate↑"],
+      "refs": [{ "ch": "08", "q": "術後 3–7 天" }, { "ch": "08", "q": "表 8-2" }]
+    },
+    "r_workup": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "腹痛，診斷未明：檢查與止痛",
+      "summary": "先止痛（不掩蓋診斷）、NPO、抽血 + 尿液 + hCG、ECG（上腹痛）；**CT 腹骨盆含顯影劑是急性腹痛首選**；止痛後 1–2 小時未改善且診斷不明 → 聯絡後線。",
+      "steps": [
+        "生命徵象 + 血糖；NPO；IV",
+        "抽血：CBC/DC、電解質、BUN/Cr、血糖、肝功能、lipase、lactate、CRP、PT/aPTT；troponin（上腹痛）；VBG",
+        "尿液常規／培養、hCG（育齡女性）；ECG（上腹痛、老人、糖尿病、女性）",
+        "影像：CT 腹骨盆含顯影劑（首選）；超音波（膽道、腎水腫、腹水、AAA、婦科）；KUB + 站立腹部／CXR（游離氣體、氣液面）",
+        "止痛、止吐；1–2 小時再評估",
+        "老人／糖尿病／免疫抑制／類固醇：症狀輕仍可能嚴重 → 降低影像門檻"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "IV／PO", "freq": "q6h，max 3 g/d（肝硬化 ≤ 2 g/d）", "note": "輕中度" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "中重度；不影響診斷" },
+        { "drug": "Hyoscine butylbromide（Buscopan）", "dose": "20 mg", "route": "IV／IM", "freq": "q6–8h PRN，max 100 mg/d", "note": "絞痛輔助；青光眼、尿滯留、腸阻塞禁" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM", "freq": "q6–8h", "note": "止吐；機械性腸阻塞禁；CrCl {round(crcl)} < 40 減半" }
+      ],
+      "watch": ["疼痛與生命徵象 1–2 hr 再評估", "檢驗／影像結果回來後回到對應處置"],
+      "call": ["止痛後 1–2 小時未改善且診斷不明", "腹膜炎徵候、休克、lactate↑、影像游離氣體／缺血／阻塞"],
+      "refs": [{ "ch": "08", "q": "檢驗／檢查" }, { "ch": "08", "q": "表 8-1" }],
+      "next": [{ "label": "回到「主要在哪裡」", "next": "q_location" }, { "label": "完整止痛止吐表", "next": "r_analgesia" }]
+    },
+    "r_analgesia": {
+      "type": "result",
+      "urgency": "green",
+      "title": "腹痛止痛與止吐（表 8-1，依 {wt} kg、{age} 歲、CrCl {round(crcl)}）",
+      "summary": "嚴重疼痛先給止痛再檢查（不掩蓋診斷）；腎絞痛／膽絞痛 NSAID 首選；機械性腸阻塞 metoclopramide 禁用。",
+      "steps": [
+        "輕中度：acetaminophen；絞痛加 hyoscine",
+        "中重度：morphine（老人減量）；腎衰竭／低血壓用 fentanyl",
+        "腎絞痛、膽絞痛：ketorolac 首選",
+        "止吐：metoclopramide（阻塞禁）或 ondansetron（QT）",
+        "1–2 小時再評估疼痛與腹部"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "IV／PO", "freq": "q6h，max 3 g/d（肝硬化 ≤ 2 g/d）", "note": "< 50 kg 15 mg/kg；可與其他併用" },
+        { "drug": "Ketorolac", "dose": "{(age >= 65 || wt < 50 || crcl < 60) ? 15 : 30} mg", "route": "IV／IM", "freq": "q6h，max 5 天", "note": "≥ 65 歲、< 50 kg、CrCl ↓ 改 15 mg；出血、腎損傷、潰瘍、術後慎用" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q10–15 min 至緩解，之後 q3–4h PRN", "note": "老人 1–2 mg" },
+        { "drug": "Fentanyl", "dose": "25–50 mcg", "route": "IV", "freq": "q5–10 min PRN", "note": "腎衰竭、低血壓者" },
+        { "drug": "Tramadol", "dose": "50–100 mg", "route": "IV／IM／PO", "freq": "q6h，max 400 mg/d", "note": "中度；噁心、癲癇閾值" },
+        { "drug": "Hyoscine butylbromide（Buscopan）", "dose": "20 mg", "route": "IV／IM", "freq": "q6–8h PRN，max 100 mg/d", "note": "絞痛輔助；青光眼、尿滯留、腸阻塞禁" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM", "freq": "q6–8h", "note": "機械性腸阻塞禁用；CrCl < 40 減半" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV", "freq": "q8h", "note": "QT" }
+      ],
+      "watch": ["疼痛分數 1–2 hr、RR／鎮靜（鴉片）", "Cr（ketorolac）、QT（ondansetron）"],
+      "call": ["止痛後 1–2 小時未改善且診斷不明", "需要外科／介入處置"],
+      "refs": [{ "ch": "08", "q": "表 8-1" }]
+    }
+  }
+}

@@ -1,0 +1,1386 @@
+{
+  "id": "28",
+  "title": "血糖異常",
+  "chapter": "28",
+  "entries": [
+    {
+      "label": "血糖低（< 70）",
+      "type": "symptom",
+      "start": "q_hypo_conscious",
+      "group": "檢驗異常",
+      "keywords": [
+        "低血糖",
+        "血糖低",
+        "血糖 50",
+        "hypoglycemia",
+        "hypo",
+        "sugar low",
+        "冒冷汗",
+        "D50W"
+      ]
+    },
+    {
+      "label": "血糖高（> 250 或 HI）",
+      "type": "symptom",
+      "start": "q_glu",
+      "group": "檢驗異常",
+      "keywords": [
+        "高血糖",
+        "血糖高",
+        "血糖 400",
+        "血糖 HI",
+        "hyperglycemia",
+        "sugar high",
+        "指尖血糖"
+      ]
+    },
+    {
+      "label": "睡前／半夜血糖高，要不要打矯正",
+      "type": "symptom",
+      "start": "q_corr_glu",
+      "group": "檢驗異常",
+      "keywords": [
+        "睡前血糖",
+        "矯正胰島素",
+        "sliding scale",
+        "correction insulin",
+        "血糖 300 要打幾單位",
+        "RI 幾 U"
+      ]
+    },
+    {
+      "label": "明天 NPO／禁食，胰島素怎麼給",
+      "type": "symptom",
+      "start": "q_npo_type",
+      "group": "檢驗異常",
+      "keywords": [
+        "NPO",
+        "禁食",
+        "胰島素停不停",
+        "術前血糖",
+        "insulin NPO",
+        "hold insulin"
+      ]
+    },
+    {
+      "label": "低血糖",
+      "type": "diagnosis",
+      "start": "q_hypo_conscious",
+      "keywords": [
+        "低血糖",
+        "hypoglycemia",
+        "磺醯脲類",
+        "sulfonylurea",
+        "insulin overdose"
+      ]
+    },
+    {
+      "label": "DKA（糖尿病酮酸中毒）",
+      "type": "diagnosis",
+      "start": "q_k_dka",
+      "keywords": [
+        "DKA",
+        "酮酸中毒",
+        "diabetic ketoacidosis",
+        "euglycemic DKA",
+        "SGLT2i",
+        "anion gap",
+        "β-OHB"
+      ]
+    },
+    {
+      "label": "HHS（高血糖高滲透狀態）",
+      "type": "diagnosis",
+      "start": "q_k_hhs",
+      "keywords": [
+        "HHS",
+        "高滲透",
+        "hyperosmolar",
+        "HONK",
+        "血糖 600",
+        "滲透壓 320"
+      ]
+    },
+    {
+      "label": "DKA／HHS 緩解 → 轉 SC 胰島素",
+      "type": "diagnosis",
+      "start": "r_dka_transition",
+      "keywords": [
+        "轉 SC",
+        "停 insulin pump",
+        "insulin drip 轉皮下",
+        "glargine 起始",
+        "DKA 緩解"
+      ]
+    },
+    {
+      "label": "矯正胰島素（表 28-1）",
+      "type": "diagnosis",
+      "start": "q_corr_glu",
+      "keywords": [
+        "矯正胰島素",
+        "correction scale",
+        "sliding scale",
+        "表 28-1",
+        "RI 矯正"
+      ]
+    },
+    {
+      "label": "住院高血糖：basal-bolus 起始",
+      "type": "diagnosis",
+      "start": "q_bb_type",
+      "keywords": [
+        "basal bolus",
+        "住院血糖控制",
+        "胰島素起始",
+        "TDD",
+        "glargine",
+        "停口服藥",
+        "metformin 停"
+      ]
+    },
+    {
+      "label": "NPO 胰島素調整",
+      "type": "diagnosis",
+      "start": "q_npo_type",
+      "keywords": [
+        "NPO",
+        "禁食",
+        "術前胰島素",
+        "T1DM 基礎胰島素",
+        "hold insulin"
+      ]
+    },
+    {
+      "label": "類固醇引起高血糖",
+      "type": "diagnosis",
+      "start": "q_pred",
+      "keywords": [
+        "類固醇高血糖",
+        "steroid hyperglycemia",
+        "prednisolone 血糖",
+        "NPH 早上",
+        "下午血糖高"
+      ]
+    },
+    {
+      "label": "管灌／TPN 血糖控制",
+      "type": "diagnosis",
+      "start": "r_tubefeed",
+      "keywords": [
+        "灌食血糖",
+        "tube feeding insulin",
+        "TPN 血糖",
+        "灌食中斷 低血糖",
+        "NPH q8h"
+      ]
+    }
+  ],
+  "nodes": {
+    "q_glu": {
+      "type": "number",
+      "title": "血糖值（mg/dL）？",
+      "help": "指尖血糖誤差 ± 15%；休克、水腫、貧血時不準；顯示 HI（> 500–600）請輸入 600 並抽靜脈血",
+      "var": "glu",
+      "unit": "mg/dL",
+      "step": 1,
+      "quick": [
+        50,
+        65,
+        200,
+        300,
+        400,
+        600
+      ],
+      "branches": [
+        {
+          "if": "glu < 70",
+          "next": "q_hypo_conscious"
+        },
+        {
+          "if": "glu >= 250",
+          "next": "q_hyper_screen"
+        },
+        {
+          "if": "glu >= 141",
+          "next": "q_corr_sens"
+        },
+        {
+          "else": "r_corr_none"
+        }
+      ]
+    },
+    "q_hypo_conscious": {
+      "type": "choice",
+      "title": "低血糖：病人意識清楚、能安全吞嚥嗎？",
+      "help": "自律神經症狀（心悸、冒汗、顫抖、飢餓）→ 神經缺糖（混亂、嗜睡、抽搐、局部缺損、昏迷）；β-blocker 會掩蓋症狀",
+      "options": [
+        {
+          "label": "清楚、能吞嚥",
+          "next": "r_hypo_po"
+        },
+        {
+          "label": "意識不清／抽搐／不能安全吞嚥",
+          "next": "r_hypo_iv"
+        }
+      ]
+    },
+    "r_hypo_po": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低血糖（意識清楚）：口服 15–20 g 糖，15 分鐘複測",
+      "summary": "能吞就給糖水／果汁 150 mL／方糖 3–4 顆，15 分鐘複測 < 70 再給；之後找原因、調藥；磺醯脲類／長效胰島素造成者要觀察 24 小時。",
+      "steps": [
+        "口服 15–20 g 糖 → 15 分鐘複測；仍 < 70 再給一次；回升後給正餐或點心（含蛋白質／澱粉）",
+        "**找原因**：胰島素過量／未進食、磺醯脲類（glimepiride、glibenclamide 長效，老人腎功能差累積）、酒精、腎／肝衰竭、敗血症、腎上腺不足、灌食／TPN 中斷但胰島素照給",
+        "調藥：停磺醯脲類；基礎胰島素減 20%；隔日交班原團隊",
+        "反覆或原因不明 → **低血糖當下**抽 insulin、C-peptide、β-OHB、cortisol（C-peptide 高 = 內生：胰島素瘤／磺醯脲類；低 = 外來胰島素）",
+        "意識變差或不能吞 → 改 IV（見下方連結）"
+      ],
+      "orders": [
+        {
+          "drug": "葡萄糖（糖水／果汁／方糖）",
+          "dose": "15–20 g（果汁 150 mL、方糖 3–4 顆）",
+          "route": "PO",
+          "freq": "STAT；15 min 後複測 < 70 再給",
+          "note": "意識清楚、能安全吞嚥才用"
+        },
+        {
+          "drug": "Dextrose 10%（D10W）或 D5W",
+          "dose": "50–100 mL/hr",
+          "route": "IV drip",
+          "freq": "持續",
+          "note": "磺醯脲類／長效胰島素造成者：觀察 24 hr、q1–2h 測血糖"
+        }
+      ],
+      "watch": [
+        "15 min 複測，之後 q1–2h × 數次；磺醯脲類／長效胰島素者 24 hr",
+        "睡前給點心；避免下一劑胰島素照打",
+        "意識變差 → 立即 IV D50W"
+      ],
+      "call": [
+        "治療後 1 小時仍 < 70 或反覆低血糖",
+        "意識未恢復",
+        "磺醯脲類過量",
+        "胰島素幫浦（T1DM）病人問題"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "II. 低血糖"
+        },
+        {
+          "ch": "01",
+          "q": "表 1-1"
+        }
+      ],
+      "next": [
+        {
+          "label": "意識變差／不能吞 → IV 處置",
+          "next": "r_hypo_iv"
+        }
+      ]
+    },
+    "r_hypo_iv": {
+      "type": "result",
+      "urgency": "red",
+      "title": "低血糖（意識不清／抽搐）：D50W 40 mL IV，15 分鐘複測",
+      "summary": "**D50W 40 mL slow IV push**（昏迷／抽搐 60 mL；老年可先 20 mL），15 分鐘複測 < 70 可重複；無 IV 給 glucagon 1 mg IM；酗酒／營養不良先給 thiamine；之後 D10W 持續並找原因。",
+      "steps": [
+        "確認呼吸、脈搏、側躺防誤吸；IV 建立（大靜脈，D50W 外滲會壞死）",
+        "D50W 40 mL slow push（昏迷／抽搐 60 mL）；沒 IV → glucagon IM；沒 D50W → D10W 150–200 mL",
+        "酗酒／營養不良／肝病：thiamine 給糖前或同時（避免 Wernicke 惡化）",
+        "15 分鐘複測；< 70 重複；意識 15–30 分鐘未恢復 → 想其他原因（中風、癲癇後、藥物）並聯絡後線",
+        "接 D10W／D5W 50–100 mL/hr；磺醯脲類／長效胰島素造成者觀察 24 hr",
+        "找原因、調藥（停磺醯脲類、基礎胰島素減 20%）；反覆／不明 → 低血糖當下抽 insulin、C-peptide、β-OHB、cortisol"
+      ],
+      "orders": [
+        {
+          "drug": "Dextrose 50%（D50W）",
+          "dose": "40 mL（2 支 20 mL = 20 g）",
+          "route": "IV slow push",
+          "freq": "STAT；15 min 後複測 < 70 可重複",
+          "note": "昏迷／抽搐可給 60 mL（30 g）；老年人可先 20 mL；周邊靜脈刺激大、外滲壞死"
+        },
+        {
+          "drug": "Dextrose 10%（D10W）",
+          "dose": "150–200 mL",
+          "route": "IV drip over 15 min",
+          "freq": "可重複",
+          "note": "沒有 D50W 或小靜脈時用"
+        },
+        {
+          "drug": "Glucagon",
+          "dose": "0.5–1 mg",
+          "route": "IM／SC",
+          "freq": "STAT；15 min 無效可再 1 次",
+          "note": "無 IV 時；肝醣耗竭（酗酒、肝病、飢餓）無效；常嘔吐"
+        },
+        {
+          "drug": "Thiamine（vit B₁）",
+          "dose": "100 mg（酗酒／營養不良 200–500 mg）",
+          "route": "IV push／IM",
+          "freq": "STAT，給糖前或同時",
+          "note": "高風險者務必先給"
+        },
+        {
+          "drug": "Dextrose 10%（D10W）或 D5W",
+          "dose": "50–100 mL/hr",
+          "route": "IV drip",
+          "freq": "持續",
+          "note": "磺醯脲類／長效胰島素者觀察 24 hr，q1–2h 測血糖"
+        }
+      ],
+      "watch": [
+        "血糖 15 min 複測 → q1h × 數次 → q1–2h（磺醯脲類／長效 24 hr）",
+        "意識、GCS；抽搐 → 依 Ch1／Ch3",
+        "注射部位外滲"
+      ],
+      "call": [
+        "治療後 1 小時仍 < 70、反覆低血糖",
+        "意識未恢復（想中風、癲癇、藥物）",
+        "磺醯脲類過量",
+        "胰島素幫浦病人"
+      ],
+      "refs": [
+        {
+          "ch": "01",
+          "q": "表 1-1"
+        },
+        {
+          "ch": "28",
+          "q": "II. 低血糖"
+        }
+      ]
+    },
+    "q_hyper_screen": {
+      "type": "choice",
+      "title": "血糖 ≥ 250：DKA／HHS 檢驗結果出來了嗎？",
+      "help": "有症狀（口渴多尿、嘔吐腹痛、意識改變、Kussmaul）或 > 250–300 就要抽：血糖、Na、K、Cl、HCO₃、BUN/Cr、β-OHB（或尿酮）、VBG、Ca/Mg/P、CBC、lipase、ECG；SGLT2i 使用者血糖正常也可能 DKA",
+      "options": [
+        {
+          "label": "還沒抽／不知道 → 先抽血評估",
+          "next": "r_hyper_workup"
+        },
+        {
+          "label": "符合 DKA（pH < 7.30 或 HCO₃ < 18，β-OHB ≥ 3 或尿酮 ≥ 2+）",
+          "next": "q_k_dka"
+        },
+        {
+          "label": "符合 HHS（血糖 > 600、有效滲透壓 > 320、酮體少、pH > 7.30）",
+          "next": "q_k_hhs"
+        },
+        {
+          "label": "都不符合（單純高血糖）→ 矯正胰島素",
+          "next": "q_corr_sens"
+        }
+      ]
+    },
+    "r_hyper_workup": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "高血糖 ≥ 250：抽血排除 DKA／HHS，等待期間給矯正胰島素",
+      "summary": "先抽血算 anion gap 與有效滲透壓（2 × Na + glucose/18）；有嘔吐、腹痛、意識改變、Kussmaul、SGLT2i、T1DM 者更要想 DKA；等待期間依表 28-1 給矯正量，不要只靠 sliding scale。",
+      "steps": [
+        "抽：血糖、Na、K、Cl、HCO₃、BUN/Cr、**β-OHB（或尿酮）**、VBG（pH）、Ca、Mg、P、CBC、lipase；ECG；發燒 → 培養",
+        "計算 anion gap、有效滲透壓 = 2 × Na + glucose/18；矯正 Na = Na + 1.6–2.4 × (glucose − 100)/100",
+        "找誘因：漏藥／控制差、感染、類固醇、TPN／灌食、thiazide／抗精神病藥／tacrolimus、胰臟疾病、SGLT2i（euglycemic DKA）",
+        "有症狀或血糖 > 500 → IV、NS 開始補水（DKA 第一步）並聯絡後線",
+        "白血球與 amylase 可因 DKA 本身升高；尿酮空腹也可弱陽性",
+        "結果回來 → 依下方連結進入 DKA／HHS，或改矯正胰島素"
+      ],
+      "orders": [
+        {
+          "drug": "速效胰島素（lispro/aspart）或 Regular insulin 矯正量",
+          "dose": "{glu<=180?2:glu<=220?3:glu<=260?4:glu<=300?6:glu<=350?8:glu<=400?10:12} U（一般欄；敏感 {glu<=180?1:glu<=220?2:glu<=260?3:glu<=300?4:glu<=350?5:glu<=400?6:7} U／抗性 {glu<=180?3:glu<=220?5:glu<=260?7:glu<=300?9:glu<=350?11:glu<=400?13:15} U）",
+          "route": "SC",
+          "freq": "STAT，2–4 hr 複測",
+          "note": "表 28-1：血糖 {glu}；敏感 = TDD < 40、一般 = 40–80、抗性 = > 80／類固醇；睡前減半；DKA／HHS 確認後改 IV insulin"
+        },
+        {
+          "drug": "NS",
+          "dose": "1,000 mL",
+          "route": "IV drip over 1 hr",
+          "freq": "STAT（有脫水／症狀時）",
+          "note": "心腎衰竭者減量；等檢驗同時就開始補水"
+        }
+      ],
+      "watch": [
+        "血糖 q1–2h",
+        "意識、RR（Kussmaul）、尿量、I/O",
+        "K（胰島素會降 K）"
+      ],
+      "call": [
+        "血糖 > 500 合併症狀",
+        "pH < 7.30、意識改變、休克",
+        "懷疑 euglycemic DKA（SGLT2i）"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "III. 高血糖"
+        },
+        {
+          "ch": "28",
+          "q": "表 28-1"
+        }
+      ],
+      "next": [
+        {
+          "label": "檢驗符合 DKA",
+          "next": "q_k_dka"
+        },
+        {
+          "label": "檢驗符合 HHS",
+          "next": "q_k_hhs"
+        },
+        {
+          "label": "單純高血糖 → 矯正胰島素",
+          "next": "q_corr_sens"
+        }
+      ]
+    },
+    "q_k_dka": {
+      "type": "number",
+      "title": "DKA：目前血鉀（mEq/L）？",
+      "help": "K < 3.3 先補鉀、暫不給胰島素；血 K 正常或高時總體鉀仍缺乏（3–5 mEq/kg）",
+      "var": "k",
+      "unit": "mEq/L",
+      "step": 0.1,
+      "quick": [
+        3.0,
+        3.5,
+        4.0,
+        4.5,
+        5.0,
+        5.5
+      ],
+      "branches": [
+        {
+          "if": "k < 3.3",
+          "next": "r_k_first"
+        },
+        {
+          "else": "r_dka"
+        }
+      ]
+    },
+    "q_k_hhs": {
+      "type": "number",
+      "title": "HHS：目前血鉀（mEq/L）？",
+      "help": "K < 3.3 先補鉀、暫不給胰島素；HHS 要先充分補水再開始 insulin",
+      "var": "k",
+      "unit": "mEq/L",
+      "step": 0.1,
+      "quick": [
+        3.0,
+        3.5,
+        4.0,
+        4.5,
+        5.0,
+        5.5
+      ],
+      "branches": [
+        {
+          "if": "k < 3.3",
+          "next": "r_k_first"
+        },
+        {
+          "else": "r_hhs"
+        }
+      ]
+    },
+    "r_k_first": {
+      "type": "result",
+      "urgency": "red",
+      "title": "DKA／HHS 且 K < 3.3：先補鉀，暫不給胰島素",
+      "summary": "胰島素會把 K 推入細胞 → 致命性低血鉀；**先 KCl 20–30 mEq/hr（CVC、心電監測）補到 ≥ 3.3 再開 insulin**，輸液同時開始。",
+      "steps": [
+        "心電監測、CVC（或大周邊 ≤ 10 mEq/hr）；12 導程 ECG",
+        "NS 或 LR 1,000 mL 第 1 小時同時開始（休克者更多）",
+        "KCl 20–30 mEq/hr 至 K ≥ 3.3，q1–2h 驗 K（不用含糖輸液稀釋）",
+        "K ≥ 3.3 → 進入 DKA／HHS 流程開始 insulin 0.1 U/kg/hr",
+        "同時驗 Mg、P（DKA 常合併低磷）；聯絡後線／考慮 ICU"
+      ],
+      "orders": [
+        {
+          "drug": "KCl",
+          "dose": "20–30 mEq/hr（20 mEq in NS 100 mL over 1 hr）",
+          "route": "IV drip via CVC",
+          "freq": "每小時，q1–2h 驗 K 至 ≥ 3.3",
+          "note": "需 CVC 與心電監測；周邊 ≤ 10 mEq/hr；絕不 IV push（Ch33）"
+        },
+        {
+          "drug": "NS 或 LR",
+          "dose": "1,000 mL",
+          "route": "IV drip over 1 hr",
+          "freq": "STAT，之後 250–500 mL/hr 依體液",
+          "note": "心腎衰竭者減量"
+        },
+        {
+          "drug": "MgSO₄",
+          "dose": "1–2 g",
+          "route": "IV drip over 1 hr",
+          "freq": "Mg 偏低時（< 2.4 mg/dL）",
+          "note": "低鎂不補 K 補不起來"
+        }
+      ],
+      "watch": [
+        "K q1–2h、心電監測",
+        "血糖 q1h",
+        "尿量、I/O、意識"
+      ],
+      "call": [
+        "K < 3.3 的 DKA／HHS 一律通知後線；需要 CVC／ICU",
+        "pH < 7.0、意識改變、休克"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "DKA／HHS 治療"
+        },
+        {
+          "ch": "33",
+          "q": "KCl 靜脈（CVC）"
+        }
+      ],
+      "next": [
+        {
+          "label": "K ≥ 3.3 → DKA 處置",
+          "next": "r_dka"
+        },
+        {
+          "label": "K ≥ 3.3 → HHS 處置",
+          "next": "r_hhs"
+        }
+      ]
+    },
+    "r_dka": {
+      "type": "result",
+      "urgency": "red",
+      "title": "DKA：輸液 → 鉀 → insulin 0.1 U/kg/hr；目標 anion gap 關閉",
+      "summary": "NS/LR 1 L 第 1 小時 → 依 K 加 KCl → regular insulin 滴注 0.1 U/kg/hr（血糖每小時降 50–75）→ 血糖 < 250 改 D5-½NS 並降 insulin，**不停胰島素直到 anion gap ≤ 12、HCO₃ ≥ 18、pH > 7.3**。",
+      "steps": [
+        "IV × 2、心電監測、Foley 記 I/O；q1h 指尖血糖，q2–4h Na/K/Cl/HCO₃/AG/VBG/BUN/Cr/β-OHB",
+        "輸液：NS 或 LR 1,000 mL 第 1 小時 → 250–500 mL/hr；矯正 Na 正常／高 → ½NS，低 → NS；心腎衰竭減量",
+        "鉀：K 3.3–5.2 每 L 加 KCl 20–30 mEq；> 5.2 不加、2 hr 複驗；q2h 驗 K",
+        "Insulin regular 0.1 U/kg/hr 滴注（可先 0.1 U/kg bolus）；血糖每小時不降 50–75 → 加倍",
+        "血糖 < 250 → 輸液改 D5-½NS 150–250 mL/hr、insulin 降 0.02–0.05 U/kg/hr，維持 150–200",
+        "pH < 6.9 才給 NaHCO₃；P < 1.0 或呼吸／心臟受影響才補磷",
+        "找誘因：抗生素、停 SGLT2i、ECG 排除 MI、腹痛 24 hr 未緩解找外科原因",
+        "緩解（glucose < 200 且 HCO₃ ≥ 18、pH > 7.3、AG ≤ 12、β-OHB < 0.6）且可進食 → 轉 SC（見連結）"
+      ],
+      "orders": [
+        {
+          "drug": "NS 或 LR",
+          "dose": "1,000 mL",
+          "route": "IV drip over 1 hr",
+          "freq": "STAT → 250–500 mL/hr 持續",
+          "note": "休克者更多；心腎衰竭減量；矯正 Na 正常／高改 ½NS"
+        },
+        {
+          "drug": "KCl",
+          "dose": "20–30 mEq per L 輸液",
+          "route": "IV drip（加入輸液）",
+          "freq": "持續，q2h 驗 K",
+          "cond": "k <= 5.2",
+          "note": "K {k}：3.3–5.2 才加；腎衰竭／無尿慎"
+        },
+        {
+          "drug": "Regular insulin",
+          "dose": "{round(wt*0.1,1)} U/hr（0.1 U/kg/hr）",
+          "route": "IV drip（50 U in NS 50 mL = 1 U/mL，先沖管）",
+          "freq": "持續，q1h 血糖",
+          "note": "依 {wt} kg；可先 bolus {round(wt*0.1)} U IV；每小時降 50–75 mg/dL，不降則加倍"
+        },
+        {
+          "drug": "D5-½NS",
+          "dose": "150–250 mL/hr",
+          "route": "IV drip",
+          "freq": "血糖 < 250 時改用，持續",
+          "with": "Regular insulin 降至 {round(wt*0.02,1)}–{round(wt*0.05,1)} U/hr（0.02–0.05 U/kg/hr）",
+          "note": "維持血糖 150–200；**不要停胰島素**直到 AG 關閉"
+        },
+        {
+          "drug": "Insulin glargine（早期基礎）",
+          "dose": "{round(wt*0.15)}–{round(wt*0.3)} U（0.15–0.3 U/kg）",
+          "route": "SC",
+          "freq": "DKA 開始時給一次",
+          "note": "可減少停滴注後反彈"
+        },
+        {
+          "drug": "NaHCO₃",
+          "dose": "100 mEq in 400 mL 無菌水 + KCl 20 mEq",
+          "route": "IV drip over 2 hr",
+          "freq": "僅 pH < 6.9（或血行不穩）；pH < 7.0 可重複",
+          "note": "一般不用"
+        },
+        {
+          "drug": "Potassium phosphate",
+          "dose": "20–30 mmol",
+          "route": "IV drip（加入輸液）",
+          "freq": "P < 1.0 或呼吸／心臟功能受影響時",
+          "note": "監測 Ca"
+        },
+        {
+          "drug": "速效胰島素（輕度 DKA 病房替代）",
+          "dose": "{round(wt*0.2)} U → {round(wt*0.1)} U",
+          "route": "SC",
+          "freq": "0.2 U/kg 起始 → 0.1 U/kg q1–2h",
+          "note": "僅輕度 DKA 無法用滴注時"
+        },
+        {
+          "drug": "Mannitol 20%",
+          "dose": "{round(wt*0.5)}–{round(wt)} g（0.5–1 g/kg）",
+          "route": "IV drip",
+          "freq": "STAT 僅疑腦水腫（年輕、矯正快、意識惡化）",
+          "note": "併發症處理，同時聯絡後線"
+        }
+      ],
+      "watch": [
+        "血糖 q1h；Na/K/Cl/HCO₃/AG/VBG/BUN/Cr/β-OHB q2–4h；K q2h",
+        "意識（腦水腫）、尿量、I/O、RR",
+        "低血鉀、低血糖（滴注中最常見併發症）"
+      ],
+      "call": [
+        "pH < 7.0、K < 3.3、意識改變、休克、需 ICU insulin 滴注 → 通知後線",
+        "懷疑 euglycemic DKA（SGLT2i）",
+        "腹痛 24 hr 未緩解、疑 MI",
+        "胰島素幫浦病人"
+      ],
+      "ddx": [
+        "HHS（pH > 7.30、滲透壓 > 320）",
+        "酒精性／飢餓性酮酸中毒",
+        "乳酸中毒（metformin）"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "DKA／HHS 治療"
+        },
+        {
+          "ch": "28",
+          "q": "表 28-1"
+        }
+      ],
+      "next": [
+        {
+          "label": "緩解且可進食 → 轉 SC 胰島素",
+          "next": "r_dka_transition"
+        },
+        {
+          "label": "K < 3.3 → 先補鉀",
+          "next": "r_k_first"
+        }
+      ]
+    },
+    "r_hhs": {
+      "type": "result",
+      "urgency": "red",
+      "title": "HHS：先充分補水，再 insulin 0.05–0.1 U/kg/hr；滲透壓每小時降 ≤ 3",
+      "summary": "水分缺乏 8–10 L：NS/LR 1 L 第 1 小時 → 250–500 mL/hr，**先補水再開 insulin**（除非合併 DKA）；血糖維持 250–300 直到意識恢復；滲透壓每小時降 ≤ 3 mOsm/kg；HHS 要預防性抗凝。",
+      "steps": [
+        "IV × 2、心電監測、Foley；q1h 血糖，q2–4h Na/K/BUN/Cr/滲透壓/VBG；意識評估",
+        "有效滲透壓 = 2 × Na + glucose/18；矯正 Na = Na + 1.6–2.4 × (glucose − 100)/100",
+        "輸液 NS 或 LR 1,000 mL 第 1 小時 → 250–500 mL/hr；矯正 Na 正常／高 → ½NS；心腎衰竭者減量、頻繁評估",
+        "鉀：K 3.3–5.2 每 L 加 KCl 20–30 mEq；> 5.2 不加、2 hr 複驗",
+        "充分補水後 insulin 0.05–0.1 U/kg/hr；血糖 < 300 → D5-½NS、insulin 0.02–0.05 U/kg/hr，維持 200–300 至意識恢復",
+        "找誘因：感染、脫水、利尿劑、無法飲水、類固醇、MI（ECG）",
+        "預防血栓（HHS）；緩解 = 滲透壓正常、意識恢復 → 轉 SC"
+      ],
+      "orders": [
+        {
+          "drug": "NS 或 LR",
+          "dose": "1,000 mL",
+          "route": "IV drip over 1 hr",
+          "freq": "STAT → 250–500 mL/hr 持續",
+          "note": "滲透壓每小時降 ≤ 3 mOsm/kg；心腎衰竭減量"
+        },
+        {
+          "drug": "KCl",
+          "dose": "20–30 mEq per L 輸液",
+          "route": "IV drip（加入輸液）",
+          "freq": "持續，q2h 驗 K",
+          "cond": "k <= 5.2",
+          "note": "K {k}：3.3–5.2 才加"
+        },
+        {
+          "drug": "Regular insulin",
+          "dose": "{round(wt*0.05,1)}–{round(wt*0.1,1)} U/hr（0.05–0.1 U/kg/hr）",
+          "route": "IV drip（50 U in NS 50 mL）",
+          "freq": "持續，充分補水後才開始；q1h 血糖",
+          "note": "依 {wt} kg；血糖維持 250–300 直到意識恢復"
+        },
+        {
+          "drug": "D5-½NS",
+          "dose": "150–250 mL/hr",
+          "route": "IV drip",
+          "freq": "血糖 < 300 時改用",
+          "with": "Regular insulin 降至 {round(wt*0.02,1)}–{round(wt*0.05,1)} U/hr",
+          "note": "維持血糖 200–300"
+        },
+        {
+          "drug": "預防性抗凝（enoxaparin 或 heparin）",
+          "dose": "依院內預防劑量",
+          "route": "SC",
+          "freq": "QD／依院內",
+          "note": "章節僅註明 HHS 需預防性抗凝，劑量依院內；CrCl {round(crcl)} 需調整"
+        }
+      ],
+      "watch": [
+        "血糖 q1h、滲透壓／Na q2–4h（每小時降 ≤ 3 mOsm/kg）",
+        "意識、癲癇、局部神經缺損",
+        "K、尿量、I/O；心腎衰竭者肺水腫"
+      ],
+      "call": [
+        "HHS 一律通知後線（意識改變、休克、需 ICU）",
+        "K < 3.3、AKI、癲癇",
+        "血糖 > 500 合併症狀"
+      ],
+      "ddx": [
+        "DKA（可合併）",
+        "中風（局部缺損）"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "DKA／HHS 治療"
+        },
+        {
+          "ch": "32",
+          "q": "高血鈉"
+        }
+      ],
+      "next": [
+        {
+          "label": "緩解且可進食 → 轉 SC 胰島素",
+          "next": "r_dka_transition"
+        },
+        {
+          "label": "K < 3.3 → 先補鉀",
+          "next": "r_k_first"
+        }
+      ]
+    },
+    "r_dka_transition": {
+      "type": "result",
+      "urgency": "green",
+      "title": "DKA／HHS 緩解：轉 SC 基礎 + 餐前胰島素",
+      "summary": "緩解且可進食 → 給 glargine 0.2–0.3 U/kg（或前 6–8 hr 滴注量估算每日總量 × 0.5）+ 餐前速效；**SC 基礎打完 1–2 小時（建議重疊 2–3 小時）後才停 IV insulin**。",
+      "steps": [
+        "確認緩解：DKA glucose < 200 且 HCO₃ ≥ 18、pH > 7.3、AG ≤ 12、β-OHB < 0.6；HHS 滲透壓正常、意識恢復",
+        "可進食後：SC glargine（基礎）+ 餐前速效；重疊 1–3 小時再停 IV insulin（提早停 → 反彈 DKA）",
+        "已有病史者可回原劑量（若之前控制良好）；矯正量依表 28-1",
+        "停 SGLT2i；口服藥待病況穩定再評估",
+        "隔日：空腹高 → 基礎加 10–20%；餐後高 → 加該餐前；低血糖 → 減 20%"
+      ],
+      "orders": [
+        {
+          "drug": "Insulin glargine（Lantus/Toujeo）",
+          "dose": "{round(wt*0.2)}–{round(wt*0.3)} U（0.2–0.3 U/kg）",
+          "route": "SC",
+          "freq": "QD",
+          "note": "依 {wt} kg；或前 6–8 hr 滴注量推算每日總量 × 0.5"
+        },
+        {
+          "drug": "速效胰島素（lispro/aspart）",
+          "dose": "{round(wt*0.2/3)}–{round(wt*0.3/3)} U 每餐",
+          "route": "SC",
+          "freq": "TID AC（餐前）",
+          "note": "依 basal-bolus 50/50 原則：餐前總量 ≈ 基礎量，分 3 餐；加矯正量（表 28-1）"
+        },
+        {
+          "drug": "Regular insulin IV drip",
+          "dose": "0 U/hr（停）",
+          "route": "IV",
+          "freq": "SC 基礎後 1–2 hr（建議 2–3 hr）才停",
+          "note": "重疊期間持續 q1h 血糖"
+        }
+      ],
+      "watch": [
+        "血糖 AC + HS；停滴注後 2–4 hr 複測",
+        "AG／β-OHB 隔日（反彈）",
+        "K、P"
+      ],
+      "call": [
+        "AG 再開、血糖 > 300 且酮體再升",
+        "低血糖 < 70 反覆"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "轉換 SC"
+        },
+        {
+          "ch": "28",
+          "q": "表 28-1"
+        }
+      ]
+    },
+    "q_corr_glu": {
+      "type": "number",
+      "title": "餐前／睡前血糖（mg/dL）？",
+      "help": "矯正量要「加在」規則劑量上；單獨 sliding scale 不建議",
+      "var": "glu",
+      "unit": "mg/dL",
+      "step": 1,
+      "quick": [
+        160,
+        200,
+        250,
+        300,
+        350,
+        420
+      ],
+      "branches": [
+        {
+          "if": "glu < 70",
+          "next": "q_hypo_conscious"
+        },
+        {
+          "if": "glu < 141",
+          "next": "r_corr_none"
+        },
+        {
+          "if": "glu > 400",
+          "next": "q_hyper_screen"
+        },
+        {
+          "else": "q_corr_sens"
+        }
+      ]
+    },
+    "q_corr_sens": {
+      "type": "choice",
+      "title": "病人的胰島素敏感度？（依每日總量 TDD）",
+      "help": "TDD 不明：瘦／T1DM／老年／CKD 當「敏感」，肥胖／用類固醇當「抗性」，其餘「一般」",
+      "options": [
+        {
+          "label": "敏感（TDD < 40、瘦、T1DM、老年、CKD）",
+          "next": "q_corr_time",
+          "set": {
+            "s": 1
+          }
+        },
+        {
+          "label": "一般（TDD 40–80）",
+          "next": "q_corr_time",
+          "set": {
+            "s": 2
+          }
+        },
+        {
+          "label": "抗性（TDD > 80、類固醇、肥胖）",
+          "next": "q_corr_time",
+          "set": {
+            "s": 3
+          }
+        }
+      ]
+    },
+    "q_corr_time": {
+      "type": "choice",
+      "title": "現在是餐前還是睡前／半夜？",
+      "help": "睡前矯正量減半；不要在睡前給大量速效",
+      "options": [
+        {
+          "label": "餐前",
+          "next": "r_corr",
+          "set": {
+            "hs": false
+          }
+        },
+        {
+          "label": "睡前／半夜",
+          "next": "r_corr",
+          "set": {
+            "hs": true
+          }
+        }
+      ]
+    },
+    "r_corr": {
+      "type": "result",
+      "urgency": "green",
+      "title": "矯正胰島素（表 28-1）：加在規則餐前劑量上",
+      "summary": "依 TDD 敏感度查表 28-1 給速效／regular 矯正量，**加在**規則劑量上；睡前減半、2–4 小時複測；> 400 要抽血排除 DKA／HHS。",
+      "steps": [
+        "確認規則基礎／餐前劑量已給；矯正量加在餐前劑量上",
+        "睡前 > 300 且無 DKA：半量矯正，2–4 hr 複測",
+        "連續 2–3 次都要矯正 → 隔日調規則劑量：空腹高加基礎 10–20%、餐後高加該餐前",
+        "住院目標 140–180；避免 < 70",
+        "> 400 或有症狀 → 抽血排除 DKA／HHS（見連結）"
+      ],
+      "orders": [
+        {
+          "drug": "速效胰島素（lispro/aspart）或 Regular insulin",
+          "dose": "{round((s==1 ? (glu<=180?1:glu<=220?2:glu<=260?3:glu<=300?4:glu<=350?5:glu<=400?6:7) : s==3 ? (glu<=180?3:glu<=220?5:glu<=260?7:glu<=300?9:glu<=350?11:glu<=400?13:15) : (glu<=180?2:glu<=220?3:glu<=260?4:glu<=300?6:glu<=350?8:glu<=400?10:12)) * (hs ? 0.5 : 1))} U",
+          "route": "SC",
+          "freq": "{hs ? 'HS 一次，2–4 hr 複測' : 'AC STAT（加在餐前劑量上）'}",
+          "note": "表 28-1：血糖 {glu}，敏感度 {s==1 ? '敏感' : s==3 ? '抗性' : '一般'}{hs ? '，睡前減半' : ''}；1 U 約降 1,700／TDD（速效）"
+        }
+      ],
+      "watch": [
+        "2–4 hr 複測；睡前給藥後半夜 03:00 加測",
+        "低血糖症狀（冒汗、心悸、意識）"
+      ],
+      "call": [
+        "血糖 > 500 合併症狀",
+        "矯正後仍 > 400 或出現嘔吐／意識改變（想 DKA／HHS）"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "表 28-1"
+        },
+        {
+          "ch": "28",
+          "q": "住院血糖控制"
+        }
+      ],
+      "next": [
+        {
+          "label": "> 400 或有症狀 → 抽血排除 DKA／HHS",
+          "next": "q_hyper_screen"
+        }
+      ]
+    },
+    "r_corr_none": {
+      "type": "result",
+      "urgency": "green",
+      "title": "血糖 70–140：不需矯正",
+      "summary": "在目標內（住院 140–180；穩定者 100–140 可接受），不需額外矯正；規則劑量照給，睡前 < 100 者注意夜間低血糖。",
+      "steps": [
+        "規則基礎／餐前胰島素照原醫囑；不加矯正量",
+        "睡前 < 100 且有用胰島素／磺醯脲類：給點心、半夜 03:00 加測",
+        "NPO 或進食差 → 依 NPO 胰島素調整（見連結）"
+      ],
+      "orders": [
+        {
+          "drug": "（規則胰島素照原醫囑）",
+          "dose": "原劑量（矯正量 0 U）",
+          "route": "SC",
+          "freq": "依原醫囑",
+          "note": "睡前 < 100 且進食差可考慮減餐前劑量"
+        }
+      ],
+      "watch": [
+        "下一餐前／睡前血糖",
+        "< 70 → 低血糖流程"
+      ],
+      "call": [
+        "反覆 < 70",
+        "無法進食又已打胰島素"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "I. 定義與目標"
+        }
+      ],
+      "next": [
+        {
+          "label": "NPO 胰島素調整",
+          "next": "q_npo_type"
+        }
+      ]
+    },
+    "q_npo_type": {
+      "type": "choice",
+      "title": "NPO：病人是哪一型／用什麼藥？",
+      "help": "T1DM 基礎胰島素絕不可停（停 → DKA）",
+      "options": [
+        {
+          "label": "T1DM（或胰島素幫浦）",
+          "next": "r_npo_t1"
+        },
+        {
+          "label": "T2DM 用胰島素",
+          "next": "r_npo_t2"
+        },
+        {
+          "label": "T2DM 只用口服藥",
+          "next": "r_npo_t2"
+        }
+      ]
+    },
+    "r_npo_t1": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "T1DM NPO：基礎胰島素絕不可停",
+      "summary": "基礎 glargine／detemir 給**原量或 75%**、停餐前；矯正 q4–6h；有含糖輸液每 5 g 糖加 RI 1 U 或另開 insulin 滴注；停基礎會 DKA。",
+      "steps": [
+        "基礎胰島素照打（原量或 75%）；餐前速效停（進食再恢復）",
+        "NPO 期間 q4–6h 指尖血糖，依表 28-1 矯正",
+        "含糖輸液（D5W）每 5 g 糖加 RI 1 U，或改 insulin 滴注",
+        "胰島素幫浦病人：不可拔除幫浦而無替代基礎；聯絡後線／內分泌科",
+        "血糖 > 250 + 嘔吐／腹痛 → 抽血排除 DKA"
+      ],
+      "orders": [
+        {
+          "drug": "Insulin glargine／detemir（基礎）",
+          "dose": "原劑量的 75–100%",
+          "route": "SC",
+          "freq": "QD（原時間）",
+          "note": "T1DM 絕不可停；血糖偏低或 NPO 長者用 75%"
+        },
+        {
+          "drug": "餐前速效胰島素",
+          "dose": "0 U（暫停）",
+          "route": "SC",
+          "freq": "NPO 期間停，進食後恢復",
+          "note": "僅給矯正量"
+        },
+        {
+          "drug": "速效／Regular insulin 矯正",
+          "dose": "依表 28-1",
+          "route": "SC",
+          "freq": "q4–6h PRN（血糖 ≥ 141 依表）",
+          "note": "見「矯正胰島素」流程"
+        },
+        {
+          "drug": "Regular insulin（含糖輸液配對）",
+          "dose": "1 U per 5 g 糖（D5W 500 mL = 25 g → 5 U）",
+          "route": "加入輸液",
+          "freq": "隨輸液持續",
+          "note": "或另開 insulin 滴注"
+        }
+      ],
+      "watch": [
+        "血糖 q4–6h（含糖輸液者 q2–4h）",
+        "嘔吐、腹痛、Kussmaul → 抽 β-OHB／VBG",
+        "K"
+      ],
+      "call": [
+        "胰島素幫浦病人問題",
+        "血糖 > 250 合併酮體／症狀（DKA）",
+        "< 70 反覆"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "NPO"
+        },
+        {
+          "ch": "28",
+          "q": "表 28-1"
+        }
+      ],
+      "next": [
+        {
+          "label": "矯正胰島素查表",
+          "next": "q_corr_glu"
+        }
+      ]
+    },
+    "r_npo_t2": {
+      "type": "result",
+      "urgency": "green",
+      "title": "T2DM NPO：停口服藥與餐前，基礎給 25–75%，矯正 q4–6h",
+      "summary": "停 metformin／SGLT2i／磺醯脲類等口服藥；基礎胰島素給 25–75%（依血糖與胰島素抗性）、停餐前；矯正 q4–6h；含糖輸液每 5 g 糖加 RI 1 U。",
+      "steps": [
+        "停口服藥（metformin：顯影劑／AKI／乳酸中毒；SGLT2i：DKA；磺醯脲類：低血糖）",
+        "有用基礎胰島素者：給 25–75%（血糖偏高／抗性者 75%，偏低者 25–50%）；餐前停",
+        "q4–6h 指尖血糖，依表 28-1 矯正",
+        "含糖輸液每 5 g 糖加 RI 1 U；長時間 NPO 考慮 insulin 滴注",
+        "恢復進食後：血糖穩定、進食正常、無禁忌才恢復口服藥"
+      ],
+      "orders": [
+        {
+          "drug": "口服降血糖藥（metformin／SGLT2i／磺醯脲類等）",
+          "dose": "0（暫停）",
+          "route": "PO",
+          "freq": "NPO 期間停",
+          "note": "顯影劑後 metformin 需等腎功能確認"
+        },
+        {
+          "drug": "Insulin glargine／detemir（基礎）",
+          "dose": "原劑量的 25–75%",
+          "route": "SC",
+          "freq": "QD（原時間）",
+          "note": "依血糖與胰島素抗性；血糖偏低給 25–50%"
+        },
+        {
+          "drug": "餐前速效／預混胰島素",
+          "dose": "0 U（暫停）",
+          "route": "SC",
+          "freq": "NPO 期間停",
+          "note": "預混劑型 NPO 時不宜使用，改基礎 + 矯正"
+        },
+        {
+          "drug": "速效／Regular insulin 矯正",
+          "dose": "依表 28-1",
+          "route": "SC",
+          "freq": "q4–6h PRN（血糖 ≥ 141 依表）",
+          "note": "見「矯正胰島素」流程"
+        },
+        {
+          "drug": "Regular insulin（含糖輸液配對）",
+          "dose": "1 U per 5 g 糖（D5W 500 mL = 25 g → 5 U）",
+          "route": "加入輸液",
+          "freq": "隨輸液持續",
+          "note": "或另開 insulin 滴注"
+        }
+      ],
+      "watch": [
+        "血糖 q4–6h；含糖輸液者 q2–4h",
+        "< 70 → 低血糖流程"
+      ],
+      "call": [
+        "血糖 > 400 或 < 70 反覆",
+        "長時間 NPO 需 insulin 滴注"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "NPO"
+        },
+        {
+          "ch": "28",
+          "q": "停口服藥"
+        }
+      ],
+      "next": [
+        {
+          "label": "矯正胰島素查表",
+          "next": "q_corr_glu"
+        }
+      ]
+    },
+    "q_bb_type": {
+      "type": "choice",
+      "title": "Basal-bolus 起始：病人屬於哪一類？",
+      "help": "每日總量 TDD 0.3–0.5 U/kg；老年、CKD、瘦、未用過 0.2–0.3；肥胖、類固醇 0.5–0.6",
+      "options": [
+        {
+          "label": "老年／CKD／瘦／未用過胰島素（0.2–0.3 U/kg）",
+          "next": "r_basal_bolus",
+          "set": {
+            "f": 0.25
+          }
+        },
+        {
+          "label": "一般（0.3–0.5 U/kg）",
+          "next": "r_basal_bolus",
+          "set": {
+            "f": 0.4
+          }
+        },
+        {
+          "label": "肥胖／類固醇／明顯抗性（0.5–0.6 U/kg）",
+          "next": "r_basal_bolus",
+          "set": {
+            "f": 0.55
+          }
+        }
+      ]
+    },
+    "r_basal_bolus": {
+      "type": "result",
+      "urgency": "green",
+      "title": "住院高血糖：basal-bolus 起始",
+      "summary": "停口服藥；TDD 0.3–0.5 U/kg（依體重與類型自動算在醫囑中）：50% 基礎（glargine QD 或 NPH BID）+ 50% 餐前分 3 餐 + 矯正量（表 28-1）；目標 140–180；每 1–2 天調。",
+      "steps": [
+        "停口服藥（metformin、SGLT2i、磺醯脲類）除非病況穩定、進食正常、無禁忌",
+        "基礎：glargine／detemir QD（或 NPH BID 各半）= TDD 50%",
+        "餐前：速效或 regular，TDD 50% 分 3 餐；不進食那餐不打",
+        "矯正量依表 28-1 加在餐前劑量上；睡前減半",
+        "調整：空腹高 → 基礎 +10–20%；餐後高 → 加該餐前；低血糖 → 減 20%；每 1–2 天調",
+        "不要單獨用 sliding scale"
+      ],
+      "orders": [
+        {
+          "drug": "Insulin glargine（Lantus/Toujeo）或 detemir",
+          "dose": "{round(wt*f*0.5)} U",
+          "route": "SC",
+          "freq": "QD",
+          "note": "TDD {round(wt*f)} U 的 50%；或 NPH {round(wt*f*0.25)} U BID"
+        },
+        {
+          "drug": "速效胰島素（lispro/aspart）或 Regular insulin",
+          "dose": "{round(wt*f*0.5/3)} U 每餐",
+          "route": "SC",
+          "freq": "TID AC（速效餐前 5–15 min；regular 餐前 30 min）",
+          "note": "TDD 50% 分 3 餐；不吃就不打"
+        },
+        {
+          "drug": "矯正胰島素（同餐前劑型）",
+          "dose": "依表 28-1（{f >= 0.55 ? '抗性' : f <= 0.25 ? '敏感' : '一般'}欄）",
+          "route": "SC",
+          "freq": "AC + HS（睡前減半）",
+          "note": "加在餐前劑量上"
+        },
+        {
+          "drug": "口服降血糖藥",
+          "dose": "0（暫停）",
+          "route": "PO",
+          "freq": "住院期間停",
+          "note": "穩定後再評估恢復"
+        }
+      ],
+      "watch": [
+        "指尖血糖 AC + HS（TID AC + HS）",
+        "< 70 → 減 20%；> 180 持續 → 上調",
+        "腎功能（CrCl {round(crcl)}）差者低血糖風險高"
+      ],
+      "call": [
+        "反覆低血糖 < 70",
+        "血糖 > 400 持續或出現 DKA／HHS 徵象"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "Basal-bolus"
+        },
+        {
+          "ch": "28",
+          "q": "表 28-1"
+        },
+        {
+          "ch": "28",
+          "q": "胰島素種類"
+        }
+      ],
+      "next": [
+        {
+          "label": "類固醇病人 → 早上 NPH 加藥",
+          "next": "q_pred"
+        }
+      ]
+    },
+    "q_pred": {
+      "type": "number",
+      "title": "早上 prednisolone 劑量（mg/day）？",
+      "help": "早上類固醇 → 下午／傍晚高血糖；換算：methylprednisolone 4 mg ≈ prednisolone 5 mg（換算依院內）",
+      "var": "pred",
+      "unit": "mg",
+      "step": 5,
+      "quick": [
+        10,
+        20,
+        30,
+        40,
+        60
+      ],
+      "branches": [
+        {
+          "else": "r_steroid"
+        }
+      ]
+    },
+    "r_steroid": {
+      "type": "result",
+      "urgency": "green",
+      "title": "類固醇高血糖：早上加 NPH（0.1 U/kg per 10 mg prednisolone）",
+      "summary": "早上 prednisolone → 下午高血糖：早上加 NPH 0.1 U/kg per 10 mg prednisolone（max 0.4 U/kg，劑量已依體重算在醫囑）；類固醇減量時同步減。",
+      "steps": [
+        "確認類固醇給藥時間（早上一次 → 中午到睡前高、清晨正常）",
+        "早上與類固醇同時給 NPH；已有 basal-bolus 者加在原方案上",
+        "午餐、晚餐前矯正量用「抗性」欄（表 28-1）",
+        "類固醇減量或停用 → NPH 同步減／停（避免低血糖）",
+        "空腹血糖也高 → 另加基礎（basal-bolus）"
+      ],
+      "orders": [
+        {
+          "drug": "Insulin NPH",
+          "dose": "{round(min(wt*0.1*pred/10, wt*0.4))} U",
+          "route": "SC",
+          "freq": "QD 早上（與類固醇同時）",
+          "note": "0.1 U/kg × ({pred}/10)，max 0.4 U/kg = {round(wt*0.4)} U；依 {wt} kg"
+        },
+        {
+          "drug": "速效胰島素矯正",
+          "dose": "依表 28-1 抗性欄",
+          "route": "SC",
+          "freq": "午餐、晚餐前 PRN",
+          "note": "睡前減半"
+        }
+      ],
+      "watch": [
+        "血糖 AC 午／晚 + HS；空腹",
+        "類固醇停用後低血糖"
+      ],
+      "call": [
+        "血糖 > 400 或出現 DKA／HHS 徵象",
+        "反覆低血糖"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "類固醇"
+        },
+        {
+          "ch": "28",
+          "q": "表 28-1"
+        }
+      ]
+    },
+    "r_tubefeed": {
+      "type": "result",
+      "urgency": "green",
+      "title": "管灌／TPN 血糖控制",
+      "summary": "連續灌食用 NPH q8–12h 或 glargine + regular q6h；**灌食中斷時給 D10W 同速率**，避免胰島素照打造成低血糖；TPN 可將 RI 加入營養袋或另開滴注。",
+      "steps": [
+        "連續灌食：NPH q8–12h，或 glargine QD + regular q6h（矯正併入）",
+        "間歇（bolus）灌食：每次灌食前給速效／regular",
+        "灌食中斷（檢查、嘔吐、管路問題）→ 立刻 D10W 同灌食速率，q1–2h 血糖",
+        "TPN：每 5 g 糖 RI 1 U 起（加入袋中或另開滴注），依血糖調",
+        "TDD 起始 0.3–0.5 U/kg（老年／CKD 0.2–0.3），分配後每 1–2 天調"
+      ],
+      "orders": [
+        {
+          "drug": "Insulin NPH",
+          "dose": "依 TDD {round(wt*0.3)}–{round(wt*0.5)} U/day 分次",
+          "route": "SC",
+          "freq": "q8–12h（連續灌食）",
+          "note": "TDD 0.3–0.5 U/kg；老年／CKD 0.2–0.3 U/kg"
+        },
+        {
+          "drug": "Regular insulin",
+          "dose": "依 TDD 分 4 次 + 矯正",
+          "route": "SC",
+          "freq": "q6h（glargine + regular 方案）",
+          "note": "替代 NPH 方案"
+        },
+        {
+          "drug": "Dextrose 10%（D10W）",
+          "dose": "同灌食速率",
+          "route": "IV drip",
+          "freq": "灌食中斷期間持續",
+          "note": "避免已打胰島素的低血糖"
+        },
+        {
+          "drug": "Regular insulin（TPN）",
+          "dose": "1 U per 5 g 糖",
+          "route": "加入 TPN 或另開滴注",
+          "freq": "持續",
+          "note": "依血糖調整"
+        }
+      ],
+      "watch": [
+        "血糖 q4–6h（連續灌食）；中斷後 q1–2h",
+        "< 70 → 低血糖流程並檢查灌食是否中斷"
+      ],
+      "call": [
+        "反覆低血糖",
+        "血糖 > 400 持續"
+      ],
+      "refs": [
+        {
+          "ch": "28",
+          "q": "灌食"
+        },
+        {
+          "ch": "28",
+          "q": "Basal-bolus"
+        }
+      ],
+      "next": [
+        {
+          "label": "低血糖處置",
+          "next": "q_hypo_conscious"
+        }
+      ]
+    }
+  }
+}

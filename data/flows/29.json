@@ -1,0 +1,341 @@
+{
+  "id": "29",
+  "title": "貧血",
+  "chapter": "29",
+  "entries": [
+    { "label": "Hb 低／Hb 比之前掉", "type": "symptom", "start": "q_unstable", "group": "檢驗異常",
+      "keywords": ["貧血", "Hb 低", "Hb 掉", "Hb 7", "Hb 6", "anemia", "血紅素 低", "Hct 低", "要不要輸血"] },
+    { "label": "Hb 掉 + 黃疸／深色尿（溶血？）", "type": "symptom", "start": "q_plt_hemo", "group": "檢驗異常",
+      "keywords": ["溶血", "hemolysis", "黃疸 貧血", "深色尿", "LDH 高", "haptoglobin 低", "DAT", "Coombs"] },
+    { "label": "急性出血貧血（血行不穩）", "type": "diagnosis", "start": "r_bleeding",
+      "keywords": ["急性出血", "acute blood loss", "出血性休克", "黑便 Hb 掉", "術後 Hb 掉", "後腹腔出血"] },
+    { "label": "輸血決策（Hb 門檻）", "type": "diagnosis", "start": "q_unstable",
+      "keywords": ["輸血門檻", "Hb < 7", "Hb < 8", "pRBC", "transfusion threshold", "限制性輸血"] },
+    { "label": "缺鐵性貧血（口服／IV 鐵劑）", "type": "diagnosis", "start": "r_micro",
+      "keywords": ["缺鐵", "iron deficiency", "小球性", "MCV 80", "ferritin 低", "iron sucrose", "ferrous sulfate", "地中海型", "Mentzer"] },
+    { "label": "B12／葉酸缺乏（大球性）", "type": "diagnosis", "start": "r_macro",
+      "keywords": ["B12", "葉酸", "folate", "大球性", "MCV 100", "macrocytic", "cyanocobalamin", "惡性貧血"] },
+    { "label": "慢性病貧血／CKD 貧血（EPO）", "type": "diagnosis", "start": "r_normo",
+      "keywords": ["慢性病貧血", "anemia of chronic disease", "CKD 貧血", "EPO", "erythropoietin", "darbepoetin", "正常球"] },
+    { "label": "自體免疫溶血（AIHA）", "type": "diagnosis", "start": "r_aiha",
+      "keywords": ["自體免疫溶血", "AIHA", "溫抗體", "冷凝集素", "DAT 陽性", "Coombs 陽性", "prednisolone 溶血"] },
+    { "label": "TTP（溶血 + 血小板低）", "type": "diagnosis", "start": "r_ttp",
+      "keywords": ["TTP", "血栓性血小板低下紫斑", "MAHA", "schistocyte", "血漿置換", "plasma exchange", "PLASMIC"] },
+    { "label": "G6PD 缺乏／藥物／機械性溶血", "type": "diagnosis", "start": "r_hemo_other",
+      "keywords": ["G6PD", "蠶豆症", "藥物溶血", "機械瓣膜 溶血", "dapsone", "primaquine", "rasburicase"] },
+    { "label": "全血球低下／骨髓抑制", "type": "diagnosis", "start": "r_pancyto",
+      "keywords": ["全血球低下", "pancytopenia", "骨髓抑制", "ANC 500", "嗜中性球低下", "化療後 貧血"] }
+  ],
+  "nodes": {
+    "q_unstable": {
+      "type": "multi",
+      "title": "先問三件事：比之前掉多少？有沒有出血？生命徵象穩不穩？勾選所有符合",
+      "help": "急性出血時 Hb 一開始可能正常——看心率、血壓、出血來源",
+      "options": [
+        { "label": "心搏過速、姿態性低血壓、休克", "set": { "shock": true } },
+        { "label": "可見出血：黑便／血便、吐血、血尿、傷口／引流、術後部位腫脹", "set": { "bleed": true } },
+        { "label": "有症狀：胸痛、喘、頭暈、心悸、昏厥、意識改變", "set": { "sx": true } },
+        { "label": "冠心病／ACS／心臟術後", "set": { "cad": true } },
+        { "label": "心衰竭（輸血要慢 + furosemide）", "set": { "hf": true } },
+        { "label": "黃疸、深色尿、脾腫大（溶血徵候）", "set": { "hemo": true } }
+      ],
+      "branches": [
+        { "if": "shock || bleed", "next": "r_bleeding" },
+        { "else": "q_hb" }
+      ]
+    },
+    "q_hb": {
+      "type": "number",
+      "title": "Hb（g/dL）？",
+      "help": "輸血門檻 Hb < 7（心血管疾病 < 8）；穩定的慢性貧血不需要半夜輸血",
+      "var": "hb", "unit": "g/dL", "step": 0.1,
+      "quick": [5.5, 6.5, 7.0, 7.5, 8.0, 9.0],
+      "branches": [
+        { "if": "hb < 7", "next": "r_transfuse" },
+        { "if": "hb < 8 && (cad || sx)", "next": "r_transfuse" },
+        { "if": "sx", "next": "r_transfuse" },
+        { "else": "q_drop" }
+      ]
+    },
+    "q_drop": {
+      "type": "number",
+      "title": "比最近一次 Hb 掉了多少（g/dL）？",
+      "help": "急性下降 ≥ 2 g/dL 要找出血（消化道最常見、後腹腔、大腿／骨盆、血胸）或溶血；ICU 每天抽血 40–70 mL 也會掉",
+      "var": "drop", "unit": "g/dL", "step": 0.1,
+      "quick": [0.5, 1.0, 1.5, 2.0, 3.0],
+      "branches": [
+        { "if": "drop >= 2", "next": "r_acute_drop" },
+        { "else": "q_mcv" }
+      ]
+    },
+    "q_mcv": {
+      "type": "number",
+      "title": "MCV（fL）？",
+      "help": "< 80 小球（缺鐵、地中海型）；> 100 大球（B12／葉酸、酒精、肝病、藥物、網狀球增多）",
+      "var": "mcv", "unit": "fL", "step": 1,
+      "quick": [65, 75, 85, 95, 105, 115],
+      "branches": [
+        { "if": "mcv < 80", "next": "r_micro" },
+        { "if": "mcv > 100", "next": "r_macro" },
+        { "else": "q_hemolysis" }
+      ]
+    },
+    "q_hemolysis": {
+      "type": "choice",
+      "title": "正常球性：有溶血徵候嗎？",
+      "help": "溶血：LDH↑、間接膽紅素↑、haptoglobin↓、網狀球↑、黃疸、深色尿",
+      "options": [
+        { "label": "有溶血徵候", "next": "q_plt_hemo" },
+        { "label": "沒有（慢性病／CKD／骨髓抑制／稀釋）", "next": "r_normo" },
+        { "label": "全血球低下（WBC、血小板也低）", "next": "r_pancyto" }
+      ]
+    },
+    "q_plt_hemo": {
+      "type": "number",
+      "title": "溶血：血小板（/μL）？",
+      "help": "溶血 + 血小板低下要想 TTP／DIC（急症）；抹片找 schistocyte",
+      "var": "plt", "unit": "/μL", "step": 1000,
+      "quick": [20000, 50000, 100000, 150000, 250000],
+      "branches": [
+        { "if": "plt < 150000", "next": "r_ttp" },
+        { "else": "q_hemo_type" }
+      ]
+    },
+    "q_hemo_type": {
+      "type": "choice",
+      "title": "溶血類型？",
+      "help": "DAT（Coombs）陽性 → 自體免疫；G6PD 誘因：dapsone、primaquine、sulfa、rasburicase、nitrofurantoin、methylene blue、感染、DKA、蠶豆",
+      "options": [
+        { "label": "DAT 陽性（自體免疫：溫／冷抗體）", "next": "r_aiha" },
+        { "label": "G6PD 缺乏 + 誘發藥物／感染／蠶豆", "next": "r_hemo_other" },
+        { "label": "人工瓣膜／機械性、藥物、輸血反應、其他", "next": "r_hemo_other" },
+        { "label": "剛輸血過（輸血反應）→ Ch26", "next": "r_hemo_other" }
+      ]
+    },
+    "r_bleeding": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性出血／血行不穩的貧血",
+      "summary": "兩條 IV、輸液、備血、止血、輸血（大量 1:1:1）、停抗凝／抗血小板並逆轉（Ch30）、找來源（內視鏡、CTA、外科）；Hb 一開始可能正常。",
+      "steps": [
+        "叫人、到床邊；IV 18G × 2、心電監測、O₂ 目標 94–98%",
+        "NS bolus 500 mL（心／腎衰竭 250 mL）；抽 CBC、PT/aPTT、type & screen／備血 2–4 U、BUN/Cr、肝功能、lactate",
+        "找來源：指診（黑便）、吐血、血尿、傷口／引流、腹脹／術後部位（腹、後腹腔、大腿）→ 超音波／CT",
+        "停抗凝／抗血小板並逆轉（Ch30）；血小板 < 50,000 + 出血 → 輸血小板",
+        "輸血依血行動力，不等 Hb；1 小時 ≥ 4 U → 啟動 MTP 1:1:1（Ch26）",
+        "上消化道出血 → Ch9（PPI、內視鏡）；休克 → Ch19；聯絡後線與相關科（內視鏡／IR／外科）"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV bolus over 15 min", "freq": "STAT，可重複", "note": "心／腎衰竭 250 mL" },
+        { "drug": "pRBC", "dose": "2 U 起（緊急 O 型）", "route": "IV", "freq": "STAT 依血行動力", "note": "大量出血 pRBC:FFP:血小板 1:1:1；每 4 U calcium gluconate 1 g IV" },
+        { "drug": "Type & screen／備血", "dose": "4 U", "route": "抽血", "freq": "STAT", "note": "" },
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV over 10 min", "freq": "STAT → 1 g over 8 hr", "note": "創傷 3 小時內、產後／手術出血；消化道出血無效（Ch30）" },
+        { "drug": "Pantoprazole", "dose": "80 mg", "route": "IV", "freq": "STAT（疑上消化道出血）", "note": "Ch9：80 mg bolus → 8 mg/hr × 72 hr 或 40 mg q12h；內視鏡前就給" }
+      ],
+      "watch": ["BP、HR、尿量 q15 min", "CBC q4–6h（急性期 Hb 落後）", "凝血、K、Ca（大量輸血）"],
+      "call": ["Hb 急性下降 ≥ 2 g/dL 或 < 7 合併症狀／不穩 → 立即後線", "活動性出血找不到來源", "大量輸血啟動"],
+      "refs": [{ "ch": "29", "q": "1. 急性出血" }, { "ch": "09", "q": "上消化道出血" }, { "ch": "26", "q": "大量輸血" }, { "ch": "30", "q": "表 30-1" }]
+    },
+    "r_transfuse": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "達輸血門檻：Hb < 7（CAD／ACS < 8、有症狀）→ 1 U pRBC 再評估",
+      "summary": "限制性策略：1 U pRBC ↑ Hb 1 g/dL，輸完再評估；心衰竭者每 U 3–4 小時 + furosemide 20 mg IV；同時送貧血原因檢查。",
+      "steps": [
+        "確認無活動出血、生命徵象穩定（不穩 → 急性出血流程）",
+        "輸血前抽：網狀球、抹片、鐵／ferritin／TIBC、B12／葉酸、LDH／bilirubin／haptoglobin／DAT（輸血後判讀失真）",
+        "同意書、type & screen、兩人核對（Ch26）；前 15 分鐘慢速床邊觀察",
+        "1 U 輸完 CBC 再評估；心衰竭慢輸 + furosemide",
+        "找原因並交班（MCV 分類、出血來源）"
+      ],
+      "orders": [
+        { "drug": "pRBC（減白）", "dose": "1 U", "route": "IV（NS 共管）", "freq": "{hf ? 'over 3–4 hr' : 'over 2–4 hr'}；輸完再評估 Hb", "note": "目前 Hb {hb}；預期 ↑ 1 g/dL" },
+        { "drug": "Furosemide", "dose": "20 mg", "route": "IV", "freq": "between units", "cond": "hf", "note": "心衰竭者" },
+        { "drug": "貧血檢查組", "dose": "1 套", "route": "抽血（輸血前）", "freq": "STAT", "note": "網狀球、抹片、ferritin/iron/TIBC、B12/folate、LDH/bilirubin/haptoglobin/DAT、TSH" }
+      ],
+      "watch": ["輸血反應（發燒、喘、皮疹、腰痛 → 立刻停，Ch26）", "輸後 CBC；心衰竭者 SpO₂（TACO）"],
+      "call": ["Hb < 7 合併症狀／不穩", "輸血後反應", "拒絕輸血的嚴重貧血"],
+      "refs": [{ "ch": "29", "q": "2. 輸血" }, { "ch": "26", "q": "pRBC" }],
+      "next": [
+        { "label": "MCV < 80 → 缺鐵", "next": "r_micro" },
+        { "label": "MCV > 100 → B12／葉酸", "next": "r_macro" },
+        { "label": "溶血徵候 → 血小板？", "next": "q_plt_hemo" }
+      ]
+    },
+    "r_acute_drop": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Hb 急性下降 ≥ 2 g/dL（未達輸血門檻、目前穩定）",
+      "summary": "找隱藏出血（消化道、後腹腔、大腿／骨盆、血胸、術後部位）與溶血；type & screen 備血、停抗凝評估、追蹤 CBC；通知後線。",
+      "steps": [
+        "床邊：生命徵象、姿態性血壓、指診、傷口／引流、腹部／大腿／術後部位、皮膚黏膜",
+        "抽 CBC 重驗（稀釋？抽血量？）、PT/aPTT、網狀球、LDH／bilirubin／haptoglobin、type & screen",
+        "疑腹腔／後腹腔出血 → 超音波／CT；疑消化道 → Ch9",
+        "用抗凝／抗血小板者評估暫停（Ch30）",
+        "CBC 4–6 小時後追蹤；症狀或 Hb < 7 → 輸血"
+      ],
+      "orders": [
+        { "drug": "Type & screen／備血", "dose": "2 U", "route": "抽血", "freq": "STAT", "note": "72 小時有效" },
+        { "drug": "CBC", "dose": "1 管", "route": "抽血", "freq": "4–6 小時後追蹤", "note": "" },
+        { "drug": "Pantoprazole", "dose": "80 mg", "route": "IV", "freq": "STAT（疑消化道出血時）", "cond": "false", "note": "依 Ch9" }
+      ],
+      "watch": ["HR、BP、尿量 q1–2h", "CBC 4–6 小時", "黑便、引流量"],
+      "call": ["Hb 急性下降 ≥ 2 g/dL → 通知後線", "活動性出血找不到來源", "轉為不穩"],
+      "refs": [{ "ch": "29", "q": "II. 評估" }, { "ch": "29", "q": "何時聯絡後線" }],
+      "next": [
+        { "label": "轉為不穩／可見出血", "next": "r_bleeding" },
+        { "label": "溶血徵候 → 血小板？", "next": "q_plt_hemo" }
+      ]
+    },
+    "r_micro": {
+      "type": "result",
+      "urgency": "green",
+      "title": "小球性貧血（MCV < 80）：缺鐵 vs 地中海型",
+      "summary": "缺鐵（ferritin < 30；發炎時 < 100 仍可能）：口服元素鐵 60–100 mg QD／隔日，或 iron sucrose IV（住院、嚴重、持續失血、口服不耐、CKD、IBD、心衰竭）；**男性／停經後女性缺鐵 → 找消化道出血**；Mentzer index MCV/RBC < 13 傾向地中海型。",
+      "steps": [
+        "送 ferritin、iron/TIBC/TSAT、網狀球、抹片；Mentzer index = MCV ÷ RBC 數（< 13 地中海型、> 13 缺鐵）",
+        "缺鐵 → 找出血來源：糞便潛血、月經史；男性／停經後女性 → 消化道內視鏡（交班）",
+        "口服鐵（空腹 + vit C；PPI、鈣、茶減少吸收）或 IV iron sucrose",
+        "地中海型：鐵正常、RDW 正常、RBC 數不低 → 不補鐵（排除合併缺鐵）",
+        "貧血約 6 週改善，補足儲鐵 3–6 個月"
+      ],
+      "orders": [
+        { "drug": "Ferrous sulfate（325 mg = 65 mg 元素鐵）", "dose": "325 mg（元素鐵 60–100 mg）", "route": "PO 空腹 + vit C", "freq": "QD 或隔日（吸收較好）", "note": "便秘、黑便；fumarate／gluconate 亦可" },
+        { "drug": "Iron sucrose", "dose": "100–200 mg in NS 100 mL", "route": "IV drip over 15–30 min", "freq": "每週 1–3 次至總量", "note": "口服不耐／無效、CKD、IBD、心衰竭、住院中嚴重貧血優先 IV；Ganzoni 缺鐵量 = {wt} × (目標 Hb − 現 Hb) × 2.4 + 500 mg（{wt} kg：每差 1 g/dL 約 {round(wt*2.4)} mg + 500）" },
+        { "drug": "Ferric carboxymaltose", "dose": "500–1,000 mg", "route": "IV drip over 15 min", "freq": "1–2 次", "note": "低磷血症", "alt": "ferric derisomaltose 1,000 mg（≥ 50 kg 20 mg/kg = {round(wt*20)} mg）單次" },
+        { "drug": "糞便潛血 × 3", "dose": "3 次", "route": "檢體", "freq": "每日", "note": "找消化道出血" }
+      ],
+      "watch": ["網狀球 1–2 週、Hb 4–6 週", "IV 鐵：輸注反應（低血壓、過敏）"],
+      "call": ["Hb < 7 合併症狀", "活動性出血"],
+      "refs": [{ "ch": "29", "q": "3. 缺鐵" }, { "ch": "29", "q": "Mentzer" }]
+    },
+    "r_macro": {
+      "type": "result",
+      "urgency": "green",
+      "title": "大球性貧血（MCV > 100）：B12／葉酸缺乏、酒精、肝病、藥物、MDS",
+      "summary": "B12 缺乏：cyanocobalamin 1,000 mcg IM QD × 7 天 → 每週 × 4–8 週 → 每月終身（神經症狀者 IM）；葉酸 1–5 mg PO QD × 1–4 個月，**先排除 B12 缺乏**（否則神經病變惡化）；矯正初期監測 K。",
+      "steps": [
+        "抽 B12、folate、網狀球、抹片（過分葉嗜中性球、MDS）、TSH、肝功能；用藥史（hydroxyurea、MTX、AZT、valproate）、酒精",
+        "神經症狀（麻、步態、認知）→ IM B12 立即開始（6 個月內治療可逆）",
+        "葉酸在確認 B12 不缺乏後才給",
+        "快速造血期監測 K（低血鉀）",
+        "網狀球 1 週後應上升；無反應 → 血液科（MDS）"
+      ],
+      "orders": [
+        { "drug": "Cyanocobalamin", "dose": "1,000 mcg", "route": "IM", "freq": "QD × 7 天 → 每週 × 4–8 週 → 每月終身", "note": "神經症狀、惡性貧血、吸收不良者 IM；無神經症狀可口服 1,000 mcg QD" },
+        { "drug": "Folic acid", "dose": "1–5 mg", "route": "PO", "freq": "QD × 1–4 個月", "note": "先排除 B12 缺乏" },
+        { "drug": "K 監測", "dose": "1 管", "route": "抽血", "freq": "矯正初期每日", "note": "快速造血低血鉀" }
+      ],
+      "watch": ["K 每日（初期）", "網狀球 1 週、Hb 每週"],
+      "call": ["Hb < 7 合併症狀", "全血球低下 + 發燒"],
+      "refs": [{ "ch": "29", "q": "4. B12／葉酸缺乏" }]
+    },
+    "r_normo": {
+      "type": "result",
+      "urgency": "green",
+      "title": "正常球性、無溶血：慢性病／發炎、CKD、骨髓抑制、內分泌、稀釋",
+      "summary": "治療原發病；ferritin < 100 或 TSAT < 20% 補鐵；CKD Hb < 10 且鐵足夠 → EPO（腎臟科），目標 Hb 10–11.5；只在有症狀且等不及時輸血；癌症以治癒為目標者避免 ESA。",
+      "steps": [
+        "抽 ferritin/iron/TIBC/TSAT、網狀球、Cr、TSH、EPO（CKD）、抹片；用藥回顧（骨髓抑制藥）",
+        "慢性發炎貧血：治療原發病；合併缺鐵補鐵（IV 較佳）",
+        "CKD：鐵足夠（TSAT > 20%、ferritin > 100–500）才給 EPO；目標 Hb 10–11.5（更高預後更差）",
+        "大量輸液後稀釋性 → 追蹤即可",
+        "穩定慢性貧血不因數字輸血；交班原團隊／腎臟科"
+      ],
+      "orders": [
+        { "drug": "Iron sucrose", "dose": "100–200 mg in NS 100 mL", "route": "IV drip over 15–30 min", "freq": "每週 1–3 次", "note": "ferritin < 100 或 TSAT < 20%；CKD、心衰竭、IBD 優先 IV" },
+        { "drug": "Epoetin", "dose": "{round(wt*50)}–{round(wt*100)} U（50–100 U/kg）", "route": "SC／IV", "freq": "每週 1–3 次（腎臟科）", "note": "CKD Hb < 10 且鐵足夠；目標 Hb 10–11.5；或 darbepoetin；依 {wt} kg" }
+      ],
+      "watch": ["Hb 每週；EPO 目標不超過 11.5", "血壓（EPO）"],
+      "call": ["Hb < 7 合併症狀／不穩", "全血球低下 + 發燒"],
+      "refs": [{ "ch": "29", "q": "5. 慢性病貧血／CKD" }],
+      "next": [{ "label": "WBC／血小板也低 → 全血球低下", "next": "r_pancyto" }]
+    },
+    "r_aiha": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "自體免疫溶血性貧血（DAT 陽性）",
+      "summary": "溫抗體：prednisolone 1 mg/kg PO QD + 血液科；輸血需血庫做最相容血（可能無法完全相合，危及生命仍輸）；冷凝集素：保溫、避免冷液。",
+      "steps": [
+        "確認 DAT 陽性、LDH↑、haptoglobin↓、網狀球↑、抹片（球形紅血球）；找誘因（藥物、淋巴增生、SLE、感染）",
+        "溫抗體 → prednisolone；葉酸補充",
+        "冷凝集素 → 保溫病人與輸液、避免冷液；類固醇效果差",
+        "需輸血：通知血庫做最相容血，慢輸、密切觀察；危及生命仍輸",
+        "血液科會診"
+      ],
+      "orders": [
+        { "drug": "Prednisolone", "dose": "{round(wt)} mg（1 mg/kg）", "route": "PO", "freq": "QD", "note": "溫抗體 AIHA；依 {wt} kg；血液科" },
+        { "drug": "Folic acid", "dose": "1–5 mg", "route": "PO", "freq": "QD", "note": "溶血消耗" },
+        { "drug": "pRBC（最相容血）", "dose": "1 U", "route": "IV 慢輸", "freq": "Hb < 7 或有症狀時，與血庫討論", "note": "可能無法完全相合；危及生命仍輸" }
+      ],
+      "watch": ["Hb、網狀球、LDH 每日", "血糖、血壓（類固醇）", "輸血反應"],
+      "call": ["Hb < 7 合併症狀／不穩", "溶血 + 血小板低下（TTP／DIC）", "輸血相容性問題與血庫／血液科"],
+      "refs": [{ "ch": "29", "q": "6. 溶血" }, { "ch": "29", "q": "自體免疫（溫抗體）" }]
+    },
+    "r_ttp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "溶血 + 血小板低下：TTP／DIC（急症）",
+      "summary": "TTP（血小板↓ + MAHA ± 神經／腎／發燒）：**緊急血漿置換 + prednisolone 1 mg/kg**，**不輸血小板**（除非危及生命出血）；DIC 治原因（Ch30）；立即聯絡後線／血液科／腎臟科。",
+      "steps": [
+        "抹片找 schistocyte；PT/aPTT、fibrinogen、D-dimer（DIC 會延長；TTP 通常正常）、Cr、LDH、DAT（陰性）、ADAMTS13（送出後不等結果）",
+        "TTP：立即聯絡後線、血液科、腎臟科安排緊急血漿置換；置換前可先 FFP 輸注",
+        "Prednisolone 1 mg/kg；不輸血小板",
+        "DIC：治原因（敗血症、產科、惡性）；出血才補 FFP／cryo／血小板（Ch30）",
+        "HUS：支持性；惡性高血壓 → Ch18"
+      ],
+      "orders": [
+        { "drug": "緊急血漿置換（plasma exchange）", "dose": "1 次/日（量依血液科）", "route": "CVC（透析導管）", "freq": "每日至血小板恢復", "note": "等待期間先 FFP" },
+        { "drug": "FFP", "dose": "{round(wt*10)}–{round(wt*15)} mL（10–15 mL/kg）", "route": "IV", "freq": "等待血漿置換時", "note": "依 {wt} kg" },
+        { "drug": "Prednisolone", "dose": "{round(wt)} mg（1 mg/kg）", "route": "PO", "freq": "QD", "note": "依 {wt} kg；或等效 methylprednisolone IV" },
+        { "drug": "血小板", "dose": "0（不輸）", "route": "—", "freq": "—", "note": "TTP 不輸血小板，除非危及生命出血" }
+      ],
+      "watch": ["血小板、LDH、Cr 每日", "神經症狀（意識、局部缺損、癲癇）、尿量", "出血"],
+      "call": ["溶血 + 血小板低下 → 立即後線／血液科／腎臟科", "神經症狀、AKI、出血"],
+      "refs": [{ "ch": "29", "q": "TTP" }, { "ch": "30", "q": "TTP" }, { "ch": "30", "q": "DIC" }]
+    },
+    "r_hemo_other": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "G6PD 缺乏／藥物／機械性／輸血相關溶血",
+      "summary": "G6PD：停誘發藥物（dapsone、primaquine、sulfa、rasburicase、nitrofurantoin、methylene blue、doxorubicin）、輸液、嚴重時輸血；機械瓣膜溶血：鐵／葉酸補充、心臟科；剛輸血 → 急性溶血反應流程（Ch26）。",
+      "steps": [
+        "用藥回顧並**停止誘發藥物**；感染、DKA、蠶豆也會誘發",
+        "輸液維持尿量（血紅素尿 → AKI），監測 Cr、K",
+        "Hb < 7 或有症狀 → 輸血",
+        "機械瓣膜：LDH、抹片 schistocyte；鐵／葉酸補充；心臟科評估瓣周漏",
+        "24 小時內輸血過 → 急性溶血性輸血反應（Ch26）：停輸血、通知血庫"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL（心／腎衰竭 250 mL）", "route": "IV bolus 後依尿量／尿色調整維持", "freq": "STAT，持續至尿色清", "note": "章節僅述「輸液」維持尿量（血紅素尿保護腎）；速率依尿量與心腎功能" },
+        { "drug": "Folic acid", "dose": "1–5 mg", "route": "PO", "freq": "QD", "note": "慢性溶血" },
+        { "drug": "Ferrous sulfate", "dose": "325 mg", "route": "PO", "freq": "QD", "note": "機械瓣膜溶血合併缺鐵時" },
+        { "drug": "pRBC", "dose": "1 U", "route": "IV", "freq": "Hb < 7 或有症狀時", "note": "G6PD 嚴重溶血" }
+      ],
+      "watch": ["Hb、LDH、Cr、K 每 12–24 小時", "尿色、尿量"],
+      "call": ["Hb 急性下降 ≥ 2 或 < 7 合併症狀", "溶血 + 血小板低下", "輸血後反應"],
+      "refs": [{ "ch": "29", "q": "G6PD" }, { "ch": "29", "q": "機械瓣膜溶血" }, { "ch": "26", "q": "急性溶血（AHTR）" }]
+    },
+    "r_pancyto": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "全血球低下／骨髓抑制",
+      "summary": "停致病藥；**ANC < 500 + 發燒 → 嗜中性球低下發燒流程（Ch17）**；血小板依 Ch26 門檻；血液科（抹片、骨髓）。",
+      "steps": [
+        "CBC + differential（ANC）、抹片、網狀球、B12／葉酸、肝功能；用藥回顧（化療、藥物）",
+        "體溫：ANC < 500 且 T ≥ 38.3（或 ≥ 38.0 持續 1 小時）→ 血培養後 30 分鐘內抗生素（Ch17）",
+        "血小板 < 10,000 或 < 20,000 + 發燒 → 輸血小板（Ch26）",
+        "Hb < 7 → pRBC（血液惡性腫瘤／移植者用照射血品）",
+        "保護性措施；血液科會診（骨髓檢查）"
+      ],
+      "orders": [
+        { "drug": "Cefepime", "dose": "2 g", "route": "IV drip", "freq": "q8h（ANC < 500 + 發燒時，血培養後 30 分鐘內）", "note": "依 CrCl {round(crcl)} 調整；或 piperacillin-tazobactam 4.5 g q6h（Ch17）", "cond": "false" },
+        { "drug": "分離術血小板", "dose": "1 U", "route": "IV", "freq": "血小板 < 10,000 或 < 20,000 + 發燒", "note": "Ch26" },
+        { "drug": "pRBC（照射）", "dose": "1 U", "route": "IV", "freq": "Hb < 7", "note": "血液惡性腫瘤／移植者照射血品" }
+      ],
+      "watch": ["體溫 q4h", "CBC 每日", "出血徵候"],
+      "call": ["全血球低下 + 發燒 → 立即後線（Ch17）", "血小板 < 20,000 或出血"],
+      "refs": [{ "ch": "29", "q": "7. 骨髓抑制／全血球低下" }, { "ch": "17", "q": "嗜中性球低下發燒" }]
+    }
+  }
+}

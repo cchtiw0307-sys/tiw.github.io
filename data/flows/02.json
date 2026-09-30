@@ -1,0 +1,360 @@
+{
+  "id": "02",
+  "title": "躁動、攻擊性、譫妄",
+  "chapter": "02",
+  "entries": [
+    { "label": "病人躁動／拔管路／要下床／攻擊人", "type": "symptom", "start": "q_danger", "group": "頭部",
+      "keywords": ["躁動", "拔管", "拔 NG", "拔尿管", "要下床", "攻擊", "叫罵", "agitation", "aggressive", "violent", "約束", "restraint"] },
+    { "label": "譫妄／夜間意識混亂（老人、術後）", "type": "symptom", "start": "q_danger", "group": "頭部",
+      "keywords": ["譫妄", "delirium", "意識混亂", "日夜顛倒", "sundowning", "術後譫妄", "定向感差", "CAM", "胡言亂語"] },
+    { "label": "病人要求自動出院（AAD）", "type": "symptom", "start": "r_aad", "group": "頭部",
+      "keywords": ["自動出院", "AAD", "against medical advice", "要離院", "簽 AAD"] },
+    { "label": "譫妄的藥物控制（haloperidol 等）", "type": "diagnosis", "start": "q_parkinson",
+      "keywords": ["haloperidol", "quetiapine", "olanzapine", "risperidone", "抗精神病藥", "譫妄 藥物", "鎮靜"] },
+    { "label": "酒精／BZD 戒斷", "type": "diagnosis", "start": "r_withdrawal",
+      "keywords": ["酒精戒斷", "alcohol withdrawal", "BZD 戒斷", "benzodiazepine withdrawal", "CIWA", "DT", "戒斷"] },
+    { "label": "急性肌張力異常／靜坐不能（EPS）", "type": "diagnosis", "start": "r_eps",
+      "keywords": ["EPS", "錐體外症候群", "急性肌張力異常", "dystonia", "斜頸", "眼球上吊", "oculogyric", "靜坐不能", "akathisia", "diphenhydramine", "metoclopramide 副作用"] },
+    { "label": "抗精神病藥惡性症候群（NMS）", "type": "diagnosis", "start": "r_nms",
+      "keywords": ["NMS", "neuroleptic malignant syndrome", "惡性症候群", "鉛管樣僵硬", "dantrolene", "bromocriptine", "CK 高 發燒"] },
+    { "label": "血清素症候群", "type": "diagnosis", "start": "r_serotonin",
+      "keywords": ["血清素症候群", "serotonin syndrome", "肌陣攣", "反射過強", "cyproheptadine", "SSRI tramadol"] },
+    { "label": "緊張症（catatonia）", "type": "diagnosis", "start": "r_catatonia",
+      "keywords": ["緊張症", "catatonia", "緘默", "僵直", "不動", "lorazepam challenge"] },
+    { "label": "精神科急症（自傷／傷人）", "type": "diagnosis", "start": "r_psych",
+      "keywords": ["精神科急症", "自傷", "傷人", "自殺", "精神病症狀", "psychiatric emergency", "精神衛生法"] }
+  ],
+  "nodes": {
+    "q_danger": {
+      "type": "multi",
+      "title": "先確保安全，再勾選所有符合（電話中先叫：VS + 指尖血糖 + SpO₂）",
+      "help": "與病人保持距離、站出口側、平靜低沉、一次一個人說話；護理師勿單獨面對；先評估再約束",
+      "options": [
+        { "label": "生命徵象不穩、SpO₂ 下降、意識程度變化、新局部神經徵候", "set": { "unstable": true } },
+        { "label": "高燒 + 肌肉僵硬／肌陣攣（近期抗精神病藥或血清素藥）", "set": { "rigid": true } },
+        { "label": "酗酒／長期 BZD，最後一次使用後 6–96 hr", "set": { "wd": true } },
+        { "label": "自傷／傷人意念、精神病症狀", "set": { "psych": true } },
+        { "label": "不動／緘默／僵直，或極度激動（疑緊張症）", "set": { "cata": true } }
+      ],
+      "branches": [
+        { "if": "unstable", "next": "r_unstable" },
+        { "if": "rigid", "next": "q_rigid" },
+        { "if": "wd", "next": "r_withdrawal" },
+        { "if": "psych", "next": "r_psych" },
+        { "if": "cata", "next": "r_catatonia" },
+        { "else": "q_cause" }
+      ]
+    },
+    "q_rigid": {
+      "type": "choice",
+      "title": "高燒 + 肌肉僵硬：哪一種？",
+      "options": [
+        { "label": "抗精神病藥／metoclopramide 後：「鉛管樣」僵硬、CK↑、自律神經不穩", "next": "r_nms" },
+        { "label": "血清素藥（SSRI、tramadol、linezolid）後：肌陣攣、反射過強、瞳孔散大、腹瀉", "next": "r_serotonin" }
+      ]
+    },
+    "q_cause": {
+      "type": "choice",
+      "title": "床邊快篩後（SpO₂、血糖、VS、瞳孔、局部徵候、頸僵；膀胱掃描、最後排便、疼痛、管路）：",
+      "help": "CAM：急性起伏 + 注意力不集中 + 思考混亂或意識改變 = 譫妄；老人三大可逆原因：感染、尿滯留、便秘",
+      "options": [
+        { "label": "找到可逆誘因（尿滯留、便秘、疼痛、缺氧、管路不適），行為可用非藥物處理", "next": "r_nonpharm" },
+        { "label": "危及安全（拔管路、下床跌倒、攻擊）或影響必要治療，非藥物無效 → 需要藥物", "next": "q_parkinson" }
+      ]
+    },
+    "q_parkinson": {
+      "type": "choice",
+      "title": "病人狀況？",
+      "help": "給藥前後 ECG 看 QTc；小劑量、口服優先、老年減半、30–60 min 再評估",
+      "options": [
+        { "label": "Parkinson 病／Lewy body 失智", "next": "r_quetiapine" },
+        { "label": "ICU 插管／需持續鎮靜", "next": "r_icu" },
+        { "label": "一般病房病人", "next": "q_qtc" }
+      ]
+    },
+    "q_qtc": {
+      "type": "number",
+      "title": "ECG QTc（ms）？",
+      "help": "QTc > 500 或增加 > 60 ms 禁用抗精神病藥；先矯正 K、Mg",
+      "var": "qtc", "unit": "ms", "step": 1,
+      "quick": [420, 450, 480, 500, 520],
+      "branches": [
+        { "if": "qtc > 500", "next": "r_qt_long" },
+        { "else": "r_delirium_drug" }
+      ]
+    },
+    "r_unstable": {
+      "type": "result",
+      "urgency": "red",
+      "title": "躁動 + 生命徵象不穩／SpO₂↓／意識改變／新局部徵候",
+      "summary": "躁動是症狀不是診斷：缺氧、低血糖、休克、中風、感染都會躁動。先 ABC、O₂、血糖，依 Ch1 意識改變完整評估，**不要先鎮靜**。",
+      "steps": [
+        "SpO₂（缺氧最常被漏掉）、血糖、BP／HR／體溫、瞳孔、局部神經徵候、頸部僵硬",
+        "O₂、IV、心電監測；指尖血糖 < 70 → D50W（Ch1）",
+        "抽血：CBC、Na／Ca／Mg、BUN/Cr、肝功能、血糖、ABG；尿液常規、CXR、ECG；發燒 → 培養",
+        "新局部徵候或跌倒 → 頭部 CT；懷疑中風 → 依 Ch1 中風流程",
+        "鎮靜只在完成評估後仍危及安全時（小劑量 haloperidol），且需監測"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續，目標 SpO₂ 94–98%（COPD 88–92%）", "note": "缺氧本身造成躁動" },
+        { "drug": "Dextrose 50%（D50W）", "dose": "40 mL（20 g）", "route": "IVP slow push", "freq": "血糖 < 70 時 STAT", "note": "酗酒／營養不良先 thiamine 100 mg IV" },
+        { "drug": "Haloperidol", "dose": "{age >= 65 ? '0.5–1 mg' : '2–5 mg'}", "route": "IM／IV", "freq": "評估完成後仍危及安全時；30–60 min 可重複", "note": "IV 需心電監測；QTc > 500、Parkinson／Lewy body 禁用；年齡 {age} 歲" }
+      ],
+      "watch": ["VS、SpO₂ q15 min 至穩定", "GCS 分項；下降 ≥ 2 分即有意義"],
+      "call": ["生命徵象不穩、SpO₂ 下降、意識程度變化、新局部神經徵候 → 立刻後線", "需要 IV 抗精神病藥"],
+      "refs": [{ "ch": "02", "q": "快速排除致命原因" }, { "ch": "01", "q": "床邊初步評估" }]
+    },
+    "r_nonpharm": {
+      "type": "result",
+      "urgency": "green",
+      "title": "譫妄：處理誘因 + 非藥物治療（所有病人都要做）",
+      "summary": "找到並處理誘因（感染、尿滯留、便秘、疼痛、藥物），重新定向、家人陪伴、減藥；**約束是最後手段**，每 2 小時評估。",
+      "steps": [
+        "誘因處置：尿滯留 → 導尿；便秘 → 通便；疼痛 → 規則 acetaminophen；缺氧 → O₂；感染 → 培養 + 抗生素",
+        "減藥：停或減鎮靜劑、抗膽鹼藥（diphenhydramine、TCA、hyoscine）、鴉片（meperidine、tramadol）、H2 blocker、fluoroquinolone",
+        "重新定向：時鐘、日曆、窗邊、熟悉家人／物品；眼鏡、助聽器戴上",
+        "白天開燈活動、鼓勵下床；夜間減少干擾、集中護理時間",
+        "早期移除尿管、不必要的管路與監測；充足水分與營養",
+        "拔管風險：家屬／看護陪伴、床欄、看好管路；約束只在立即危險且其他方法無效時，最小限制、最短時間、q2h 評估記錄、告知家屬",
+        "檢驗依 Ch1：CBC、電解質、BUN/Cr、肝功能、血糖、尿液常規、CXR、ECG"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h 規則給（疼痛者），max 3 g/d", "note": "規則止痛比 PRN 好（劑量同 Ch4）；肝硬化減量" },
+        { "drug": "Melatonin", "dose": "2–5 mg", "route": "PO", "freq": "HS", "note": "睡眠倒置輔助，證據弱、安全" },
+        { "drug": "Bladder scan／單次導尿", "dose": "1 次膀胱掃描，殘尿多依院內標準導尿", "route": "—", "freq": "STAT", "note": "尿滯留是老人譫妄常見原因" }
+      ],
+      "watch": ["CAM 每班評估；安靜型譫妄更常見、常被漏掉", "約束者 q2h 評估循環、皮膚、是否可解除", "尿量、排便"],
+      "call": ["生命徵象不穩、意識程度變化、新局部徵候", "需要約束超過 4 小時、非藥物無效需 IV 藥物"],
+      "refs": [{ "ch": "02", "q": "非藥物治療" }, { "ch": "02", "q": "三大常見可逆原因" }],
+      "next": [{ "label": "非藥物無效、危及安全 → 藥物", "next": "q_parkinson" }]
+    },
+    "r_delirium_drug": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "譫妄躁動的藥物控制（首選 haloperidol）",
+      "summary": "僅用於躁動危及安全或影響必要治療：小劑量、口服優先、老年減半、30–60 min 再評估；**不用 BZD**（戒斷除外）；抗精神病藥不縮短譫妄病程。",
+      "steps": [
+        "非藥物措施與誘因處置持續進行（見前）",
+        "ECG QTc（{qtc} ms）：> 500 或增加 > 60 ms 禁用；矯正 K、Mg",
+        "首選 haloperidol PO；不能口服 IM；IV 需心電監測",
+        "30–60 min 後再評估，可重複；達 max 仍無法控制 → 聯絡後線",
+        "每天檢討是否可停；老年人劑量減半",
+        "出現斜頸／眼球上吊／喉痙攣（急性肌張力異常）→ diphenhydramine（見 EPS）"
+      ],
+      "orders": [
+        { "drug": "Haloperidol", "dose": "{age >= 65 ? '0.5–1 mg' : '2–5 mg'}", "route": "PO／IM／IV", "freq": "30–60 min 後可重複；max {age >= 65 ? '5' : '20'} mg/d", "note": "年齡 {age} 歲（老年／衰弱 0.5–1 mg；年輕壯碩 2–5 mg）；IV 需心電監測（TdP）；EPS 風險高；Parkinson／Lewy body 禁用" },
+        { "drug": "Quetiapine", "dose": "12.5–25 mg（可增至 50 mg）", "route": "PO", "freq": "BID 或 HS，PRN q4h", "note": "鎮靜、姿態性低血壓；Parkinson 首選", "alt": "haloperidol" },
+        { "drug": "Olanzapine", "dose": "2.5–5 mg（IM 5–10 mg）", "route": "PO／ODT／IM", "freq": "q2–4h PRN，max 20 mg/d（IM 30 mg/d）", "note": "鎮靜較強；IM olanzapine 與 IM/IV BZD 間隔 ≥ 1 hr" },
+        { "drug": "Risperidone", "dose": "0.25–0.5 mg", "route": "PO", "freq": "BID，max 2 mg/d", "note": "EPS 較 haloperidol 低；老年人易低血壓" },
+        { "drug": "Diphenhydramine（急性肌張力異常時）", "dose": "30–50 mg", "route": "IM／IV", "freq": "PRN，30 min 後可重複", "note": "台灣 30 mg/amp；備用" }
+      ],
+      "watch": ["給藥後 30–60 min 再評估躁動與鎮靜程度", "ECG QTc（IV haloperidol 心電監測）、BP", "EPS：斜頸、眼球上吊、靜坐不能"],
+      "call": ["需要 IV 抗精神病藥、超過建議 max 仍無法控制", "生命徵象不穩、意識程度變化、高燒 + 肌肉僵硬（NMS）", "需要約束 > 4 小時"],
+      "refs": [{ "ch": "02", "q": "Haloperidol" }, { "ch": "02", "q": "藥物治療" }],
+      "next": [{ "label": "斜頸／眼球上吊 → EPS 處置", "next": "r_eps" }, { "label": "高燒 + 鉛管樣僵硬 → NMS", "next": "r_nms" }]
+    },
+    "r_quetiapine": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Parkinson／Lewy body 失智的譫妄：quetiapine",
+      "summary": "**haloperidol 禁用**（嚴重 EPS、惡化）；首選 quetiapine 小劑量；抗精神病藥禁忌時才用 lorazepam。",
+      "steps": [
+        "非藥物措施與誘因處置持續；確認抗帕金森藥有按時給（漏給會惡化）",
+        "ECG QTc；小劑量 quetiapine，30–60 min 再評估",
+        "避免 haloperidol、risperidone（高 EPS）；metoclopramide 也避免",
+        "無法用抗精神病藥時 → lorazepam 小劑量"
+      ],
+      "orders": [
+        { "drug": "Quetiapine", "dose": "12.5–25 mg（可增至 50 mg）", "route": "PO", "freq": "BID 或 HS，PRN q4h", "note": "Parkinson／Lewy body 譫妄首選；鎮靜、姿態性低血壓" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO／IM／IV", "freq": "q30–60 min PRN，max 2–4 mg/d", "note": "僅抗精神病藥禁忌時；其他譫妄會惡化", "alt": "quetiapine" }
+      ],
+      "watch": ["30–60 min 再評估；姿態性低血壓、跌倒", "QTc"],
+      "call": ["需要 IV 藥物或無法控制", "意識程度變化、生命徵象不穩"],
+      "refs": [{ "ch": "02", "q": "Quetiapine" }]
+    },
+    "r_icu": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "ICU／插管病人的躁動：dexmedetomidine",
+      "summary": "插管或 ICU 病人以 dexmedetomidine 持續輸注（不 loading）；注意心搏過緩、低血壓；同時做非藥物措施與找誘因。",
+      "steps": [
+        "確認疼痛已處理（先止痛再鎮靜）、呼吸器不同步、缺氧、尿滯留",
+        "Dexmedetomidine 持續輸注，依鎮靜量表（RASS）調整",
+        "心電監測、BP；心搏過緩／低血壓減量",
+        "每日鎮靜中斷評估；早期活動"
+      ],
+      "orders": [
+        { "drug": "Dexmedetomidine", "dose": "{round(wt*0.2)}–{round(wt*0.7)} mcg/hr（0.2–0.7 mcg/kg/hr；ICU 可至 {round(wt*1.4)} mcg/hr）", "route": "IVD", "freq": "持續，不 loading", "note": "依 {wt} kg；心搏過緩、低血壓" },
+        { "drug": "Haloperidol", "dose": "{age >= 65 ? '0.5–1 mg' : '2–5 mg'}", "route": "IV", "freq": "30–60 min 後可重複；max {age >= 65 ? '5' : '20'} mg/d", "note": "IV 需心電監測；QTc > 500 禁", "alt": "dexmedetomidine" }
+      ],
+      "watch": ["HR、BP q15 min 起始後", "RASS／CAM-ICU 每班"],
+      "call": ["心搏過緩 < 50、低血壓", "鎮靜無法達標"],
+      "refs": [{ "ch": "02", "q": "Dexmedetomidine" }]
+    },
+    "r_qt_long": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "QTc > 500 ms：避免抗精神病藥",
+      "summary": "QTc {qtc} ms > 500 → 抗精神病藥禁用（TdP）；矯正 K、Mg、停 QT 延長藥；以非藥物與誘因處置為主，無法避免時小劑量 lorazepam。",
+      "steps": [
+        "重看 ECG（確認 QTc 計算）；抽 K、Mg、Ca；停其他 QT 延長藥（ondansetron、macrolide、fluoroquinolone）",
+        "矯正 K > 4、Mg > 2",
+        "非藥物措施與誘因處置（尿滯留、便秘、疼痛、缺氧）加強",
+        "仍危及安全 → lorazepam 小劑量（抗精神病藥禁忌情境）；約束最小限制、q2h 評估",
+        "聯絡後線討論；QTc 回到 < 500 後可考慮小劑量抗精神病藥"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO／IM／IV", "freq": "q30–60 min PRN，max 2–4 mg/d", "note": "抗精神病藥禁忌時；BZD 可能惡化譫妄，老年人減量" },
+        { "drug": "KCl／MgSO₄", "dose": "依 Ch33／Ch36", "route": "PO／IV", "freq": "矯正至 K > 4、Mg > 2", "note": "降低 TdP 風險" }
+      ],
+      "watch": ["心電監測；QTc 複查", "RR、SpO₂（BZD 後）"],
+      "call": ["需要 IV 藥物、無法控制、需約束 > 4 小時", "TdP／心律不整"],
+      "refs": [{ "ch": "02", "q": "QTc" }, { "ch": "02", "q": "Lorazepam" }]
+    },
+    "r_withdrawal": {
+      "type": "result",
+      "urgency": "red",
+      "title": "酒精／BZD 戒斷的躁動",
+      "summary": "戒斷是**唯一以 BZD 為首選**的躁動：lorazepam 2–4 mg IV q15–20 min 或 diazepam 至適度鎮靜，之後依 CIWA-Ar；thiamine 先給；矯正 Mg、K、P；BZD 戒斷恢復原藥。",
+      "steps": [
+        "時程：最後一次飲酒後 6–48 hr 焦慮顫抖；12–48 hr 幻覺／癲癇；48–96 hr DT（ICU 等級）",
+        "排除／同時處理：感染、顱內出血、癲癇、藥物過量、肝衰竭、消化道出血",
+        "CIWA-Ar ≥ 10 給藥；先鎮靜到可喚醒，之後 q1–4h 評分",
+        "需要時可先短暫約束直到藥物生效",
+        "BZD 戒斷：恢復原 BZD 或改長效 diazepam 等效劑量，之後每 1–2 週減 10–25%",
+        "抽 Mg、K、P、血糖、肝功能；心電／SpO₂ 監測"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "2–4 mg", "route": "IVP", "freq": "q15–20 min 至適度鎮靜，之後依 CIWA-Ar", "note": "肝硬化、老年人首選；PO 1–2 mg q6–8h 漸減" },
+        { "drug": "Diazepam", "dose": "5–10 mg（嚴重 10–15 mg）", "route": "IVP", "freq": "q5–15 min 至適度鎮靜", "note": "長效；肝功能差者累積；不可 IM", "alt": "lorazepam" },
+        { "drug": "Thiamine（vit B₁）", "dose": "100–200 mg", "route": "IVD／IM", "freq": "QD × 3 天", "note": "先給再給含糖輸液；疑 Wernicke 500 mg TID（Ch1）" },
+        { "drug": "MgSO₄／KCl／phosphate", "dose": "依 Ch36／Ch33／Ch35", "route": "IV", "freq": "矯正", "note": "戒斷常低 Mg" }
+      ],
+      "watch": ["CIWA-Ar q1–4h；RR、SpO₂、BP（過度鎮靜）", "體溫、HR、幻覺（進展為 DT）"],
+      "call": ["懷疑戒斷併發 DT → 後線／ICU", "BZD 大量仍無法鎮靜、呼吸抑制、戒斷性癲癇"],
+      "refs": [{ "ch": "02", "q": "酒精／BZD 戒斷" }, { "ch": "01", "q": "酒精戒斷" }]
+    },
+    "r_eps": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "急性肌張力異常／靜坐不能（EPS）",
+      "summary": "斜頸、眼球上吊、喉痙攣 → diphenhydramine 30–50 mg IM/IV（或 benztropine），停或減致病藥；靜坐不能 → propranolol 或 lorazepam。",
+      "steps": [
+        "確認致病藥：haloperidol、metoclopramide、prochlorperazine；停或減量",
+        "喉痙攣／呼吸困難 → 立即 IV diphenhydramine、備氣道",
+        "急性肌張力異常：diphenhydramine IM/IV，30 min 可重複，之後 PO q6–8h × 2–3 天",
+        "靜坐不能（坐立不安）：減量致病藥 + propranolol 或 lorazepam"
+      ],
+      "orders": [
+        { "drug": "Diphenhydramine", "dose": "30–50 mg", "route": "IM／IV", "freq": "STAT，30 min 後可重複；之後 PO q6–8h × 2–3 天", "note": "台灣 30 mg/amp" },
+        { "drug": "Benztropine", "dose": "1–2 mg", "route": "IM／IV", "freq": "STAT，30 min 後可重複", "note": "diphenhydramine 替代", "alt": "diphenhydramine" },
+        { "drug": "Propranolol（靜坐不能）", "dose": "10–20 mg", "route": "PO", "freq": "TID", "note": "氣喘、心搏過緩禁" },
+        { "drug": "Lorazepam（靜坐不能）", "dose": "0.5–1 mg", "route": "PO", "freq": "PRN", "note": "propranolol 替代", "alt": "propranolol" }
+      ],
+      "watch": ["呼吸道（喉痙攣）、SpO₂", "症狀 30 min 內應緩解；否則重複並另想原因"],
+      "call": ["喉痙攣／呼吸困難", "高燒 + 全身僵硬（NMS）"],
+      "refs": [{ "ch": "02", "q": "急性肌張力異常" }]
+    },
+    "r_nms": {
+      "type": "result",
+      "urgency": "red",
+      "title": "抗精神病藥惡性症候群（NMS）",
+      "summary": "發燒 + 鉛管樣僵硬 + CK↑ + 自律神經不穩：**停抗精神病藥／metoclopramide**、積極降溫、大量輸液、dantrolene／bromocriptine，ICU。",
+      "steps": [
+        "立即停所有抗精神病藥、metoclopramide、prochlorperazine；躁動改用 lorazepam",
+        "抽 CK、Cr、K、肝功能、CBC、乳酸；ECG；心電監測",
+        "積極降溫（冰毯、冰敷）、NS 大量輸液（橫紋肌溶解 → AKI）",
+        "dantrolene IV + bromocriptine PO；ICU",
+        "鑑別：血清素症候群（肌陣攣、腹瀉）、惡性高熱、腦膜炎（LP）"
+      ],
+      "orders": [
+        { "drug": "Dantrolene", "dose": "{round(wt)}–{round(wt*2.5)} mg（1–2.5 mg/kg）", "route": "IV", "freq": "q6h", "note": "依 {wt} kg；肝毒性" },
+        { "drug": "Bromocriptine", "dose": "2.5–5 mg", "route": "PO／NG", "freq": "q8h", "note": "與 dantrolene 併用" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15–30 min", "freq": "STAT，可重複，之後維持尿量", "note": "CK↑ 防 AKI；心／腎衰竭 250 mL" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "IV", "freq": "q30–60 min PRN 躁動", "note": "抗精神病藥禁忌情境" }
+      ],
+      "watch": ["體溫、HR、BP q15 min；CK、Cr、K q6–12h", "尿量、肌紅蛋白尿"],
+      "call": ["懷疑 NMS 立刻後線 + ICU", "體溫 > 40℃、CK 急升、AKI、心律不整"],
+      "refs": [{ "ch": "02", "q": "抗精神病藥惡性症候群" }]
+    },
+    "r_serotonin": {
+      "type": "result",
+      "urgency": "red",
+      "title": "血清素症候群",
+      "summary": "肌陣攣 + 反射過強 + 瞳孔散大 + 腹瀉 + 發燒（SSRI + tramadol／linezolid／MAOI）：停血清素藥、BZD 鎮靜、降溫，cyproheptadine。",
+      "steps": [
+        "停所有血清素藥（SSRI/SNRI、tramadol、meperidine、linezolid、ondansetron、metoclopramide、lithium）",
+        "BZD 鎮靜（躁動、肌陣攣）；降溫、輸液",
+        "cyproheptadine 12 mg PO → 2 mg q2h",
+        "體溫 > 41℃、僵硬嚴重 → 插管、肌鬆、ICU",
+        "抽 CK、Cr、電解質；ECG"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "IV", "freq": "q30–60 min PRN 躁動／肌陣攣", "note": "BZD 為血清素症候群鎮靜首選（Ch2 表劑量）；嚴重躁動／肌陣攣需更高劑量時聯絡後線" },
+        { "drug": "Cyproheptadine", "dose": "12 mg → 2 mg", "route": "PO／NG", "freq": "負荷後 q2h，max 32 mg/d", "note": "5-HT2A 拮抗" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15–30 min", "freq": "STAT，可重複", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["體溫、HR、BP q15 min", "CK、Cr；肌陣攣、意識"],
+      "call": ["體溫 > 40℃、僵硬需插管、意識改變 → 後線／ICU"],
+      "refs": [{ "ch": "02", "q": "血清素症候群" }]
+    },
+    "r_catatonia": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "緊張症（catatonia）",
+      "summary": "不動／緘默／僵直或激動，可為昏迷的擬態：**lorazepam 有效且具診斷性；抗精神病藥可能惡化**（惡性緊張症）。會診精神科。",
+      "steps": [
+        "排除器質性原因（Ch1：血糖、電解質、感染、NCSE → EEG）",
+        "lorazepam challenge：給藥後 觀察反應（可短暫改善）",
+        "避免抗精神病藥（惡化、NMS 風險）",
+        "水分營養、DVT 預防、壓瘡預防；會診精神科（ECT 適應症）"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "IV／IM／PO", "freq": "q30–60 min PRN，max 2–4 mg/d（緊張症依精神科可增）", "note": "緊張症為 BZD 適應症之一" }
+      ],
+      "watch": ["反應（緘默／僵直改善）、RR、SpO₂", "體溫、CK（惡性緊張症）"],
+      "call": ["發燒、自律神經不穩（惡性緊張症）→ 後線／精神科", "無法進食、需 ECT 評估"],
+      "refs": [{ "ch": "02", "q": "緊張症" }, { "ch": "02", "q": "Lorazepam" }]
+    },
+    "r_psych": {
+      "type": "result",
+      "urgency": "red",
+      "title": "精神科急症：自傷／傷人意念、精神病症狀",
+      "summary": "安全第一：移除危險物品、保全、勿單獨面對；通知後線與精神科值班；必要時依《精神衛生法》程序；仍要排除譫妄／器質性原因。",
+      "steps": [
+        "移除危險物品，護理師勿單獨面對；通知保全；一對一看護",
+        "評估自殺／暴力風險；先排除譫妄（CAM）、中毒、戒斷、器質性原因（血糖、SpO₂、VS）",
+        "去激化：平靜低沉語調、說明你是誰與要做什麼、給選擇",
+        "口服藥優先（haloperidol 或 olanzapine），拒絕且立即危險才 IM；約束最小限制、q2h 評估",
+        "通知後線與精神科值班；必要時依《精神衛生法》緊急安置程序"
+      ],
+      "orders": [
+        { "drug": "Haloperidol", "dose": "{age >= 65 ? '0.5–1 mg' : '2–5 mg'}", "route": "PO／IM", "freq": "30–60 min 後可重複；max {age >= 65 ? '5' : '20'} mg/d", "note": "年齡 {age} 歲；QTc > 500 禁；Parkinson 禁" },
+        { "drug": "Olanzapine", "dose": "5–10 mg（IM）／2.5–5 mg（PO／ODT）", "route": "IM／PO", "freq": "q2–4h PRN，max 20 mg/d（IM 30 mg/d）", "note": "IM olanzapine 與 IM/IV BZD 間隔 ≥ 1 hr", "alt": "haloperidol" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO／IM", "freq": "q30–60 min PRN，max 2–4 mg/d", "note": "焦慮／恐慌、抗精神病藥禁忌時" }
+      ],
+      "watch": ["約束者 q2h 評估、VS、循環", "給藥後 30–60 min 再評估、ECG QTc"],
+      "call": ["有自傷／傷人危險 → 立刻後線 + 精神科值班", "需約束 > 4 小時、需 IV 藥物、病人要求自動出院"],
+      "refs": [{ "ch": "02", "q": "精神科急症" }]
+    },
+    "r_aad": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "病人要求自動出院（AAD）",
+      "summary": "先評估**判斷能力**：譫妄、中毒、精神症狀致判斷能力受損者不可讓其離開，聯絡後線、社工、保全；有判斷能力者說明風險、記錄、簽署。",
+      "steps": [
+        "評估判斷能力：能理解病情與風險、表達選擇、推理一致？譫妄（CAM）、中毒、戒斷、精神病症狀？",
+        "判斷能力受損 → 不可讓其離開，聯絡後線、社工、保全，必要時依《精神衛生法》",
+        "有判斷能力 → 說明離院風險與替代方案、找出離院原因（疼痛、焦慮、家庭、經濟）可否解決",
+        "仍堅持 → 通知主治／後線、詳細記錄、簽署 AAD 文件、給予出院用藥與回診指示",
+        "戒斷／焦慮造成 → 處理症狀（見戒斷）"
+      ],
+      "orders": [
+        { "drug": "Lorazepam（焦慮／戒斷時）", "dose": "0.5–1 mg", "route": "PO", "freq": "q30–60 min PRN，max 2–4 mg/d", "note": "只在焦慮／戒斷情境；先找原因" }
+      ],
+      "watch": ["判斷能力可隨譫妄起伏，重複評估", "離院前 VS、管路移除"],
+      "call": ["病人要求自動出院一律通知後線／主治", "判斷能力受損、有自傷／傷人危險 → 後線、社工、保全、精神科"],
+      "refs": [{ "ch": "02", "q": "自動出院" }]
+    }
+  }
+}

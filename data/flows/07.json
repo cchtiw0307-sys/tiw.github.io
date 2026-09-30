@@ -1,0 +1,725 @@
+{
+  "id": "07",
+  "title": "喘、呼吸困難、呼吸衰竭",
+  "chapter": "07",
+  "entries": [
+    { "label": "喘／呼吸困難（護理師通知 SpO₂ 掉、RR 快）", "type": "symptom", "start": "q_danger", "group": "胸部",
+      "keywords": ["喘", "呼吸困難", "呼吸急促", "dyspnea", "SOB", "shortness of breath", "SpO2 掉", "SpO2 88", "血氧下降", "desaturation", "RR 30", "呼吸喘", "需要加氧"] },
+    { "label": "喘鳴（stridor）／喉嚨腫、臉腫", "type": "symptom", "start": "q_danger", "group": "胸部",
+      "keywords": ["喘鳴", "stridor", "上呼吸道阻塞", "喉水腫", "臉腫", "蕁麻疹", "angioedema", "異物", "哽到"] },
+    { "label": "插管病人突然惡化（SpO₂↓、PIP↑、BP↓）", "type": "symptom", "start": "r_dope", "group": "管路",
+      "keywords": ["插管後惡化", "呼吸器 alarm", "PIP 高", "高壓警報", "DOPE", "ETT 滑出", "自拔管", "ventilator"] },
+    { "label": "急性心衰竭／心因性肺水腫", "type": "diagnosis", "start": "q_pe_sbp",
+      "keywords": ["肺水腫", "pulmonary edema", "急性心衰竭", "acute heart failure", "ADHF", "flash pulmonary edema", "囉音", "粉紅泡沫痰"] },
+    { "label": "氣喘急性發作", "type": "diagnosis", "start": "q_asthma_sev",
+      "keywords": ["氣喘", "asthma", "asthma attack", "哮鳴", "wheezing", "status asthmaticus"] },
+    { "label": "COPD 急性惡化", "type": "diagnosis", "start": "q_copd",
+      "keywords": ["COPD", "AECOPD", "慢性阻塞性肺病", "CO2 滯留", "hypercapnia", "肺氣腫"] },
+    { "label": "肺炎（CAP／HAP／吸入性／PJP）", "type": "diagnosis", "start": "q_pna_type",
+      "keywords": ["肺炎", "pneumonia", "CAP", "HAP", "VAP", "吸入性肺炎", "aspiration", "PJP", "抗生素 肺炎"] },
+    { "label": "過敏性反應／過敏性休克", "type": "diagnosis", "start": "r_anaphylaxis",
+      "keywords": ["過敏性休克", "anaphylaxis", "過敏", "epinephrine", "蕁麻疹", "顯影劑過敏", "輸血過敏", "血管性水腫", "ACEI angioedema"] },
+    { "label": "上呼吸道阻塞／異物", "type": "diagnosis", "start": "r_stridor",
+      "keywords": ["上呼吸道阻塞", "upper airway obstruction", "stridor", "喉痙攣", "異物", "foreign body", "哈姆立克", "Heimlich"] },
+    { "label": "張力性氣胸", "type": "diagnosis", "start": "r_tension",
+      "keywords": ["張力性氣胸", "tension pneumothorax", "針刺減壓", "needle decompression", "氣管偏移"] },
+    { "label": "肋膜積液", "type": "diagnosis", "start": "r_effusion",
+      "keywords": ["肋膜積液", "pleural effusion", "胸水", "胸腔穿刺", "thoracentesis", "膿胸", "empyema", "Light's criteria"] },
+    { "label": "大量咳血", "type": "diagnosis", "start": "r_hemoptysis",
+      "keywords": ["咳血", "hemoptysis", "massive hemoptysis", "tranexamic acid"] },
+    { "label": "呼吸衰竭：NIV／插管（RSI）", "type": "diagnosis", "start": "r_resp_failure",
+      "keywords": ["呼吸衰竭", "respiratory failure", "插管", "intubation", "RSI", "NIV", "BiPAP", "CPAP", "HFNC", "BVM", "呼吸器設定"] },
+    { "label": "插管後鎮靜與呼吸器初始設定", "type": "diagnosis", "start": "r_postintub",
+      "keywords": ["插管後鎮靜", "sedation", "fentanyl", "propofol", "dexmedetomidine", "呼吸器設定", "ventilator setting", "RASS"] },
+    { "label": "鴉片類過量（RR < 8、針尖瞳孔）", "type": "diagnosis", "start": "r_opioid",
+      "keywords": ["naloxone", "鴉片過量", "opioid overdose", "針尖瞳孔", "呼吸抑制", "morphine 過量"] }
+  ],
+  "nodes": {
+    "q_danger": {
+      "type": "multi",
+      "title": "先看有沒有危險徵象（勾選所有符合）",
+      "help": "電話中先口頭：坐起 ≥ 45°、O₂ 目標 94–98%（CO₂ 滯留 88–92%）、接監測、portable CXR + ECG + ABG；有哮鳴備霧化、有臉腫備 epinephrine",
+      "options": [
+        { "label": "RR > 30 或 < 8、講不出完整句子、輔助肌／胸腹反常呼吸", "set": { "rf": true } },
+        { "label": "SpO₂ < 90%（給氧後仍 < 92%）或意識變差（躁動／嗜睡）", "set": { "hypox": true } },
+        { "label": "喘鳴（stridor）、坐姿前傾、流口水", "set": { "stridor": true } },
+        { "label": "單側呼吸音消失 + 低血壓 + 氣管偏移", "set": { "tension": true } },
+        { "label": "蕁麻疹／臉唇腫／喉水腫 + 喘或低血壓", "set": { "allergy": true } },
+        { "label": "RR < 8 + 針尖瞳孔（鴉片類）", "set": { "opioid": true } }
+      ],
+      "branches": [
+        { "if": "tension", "next": "r_tension" },
+        { "if": "allergy", "next": "r_anaphylaxis" },
+        { "if": "stridor", "next": "r_stridor" },
+        { "if": "opioid", "next": "r_opioid" },
+        { "if": "rf || hypox", "next": "r_resp_failure" },
+        { "else": "q_cause" }
+      ]
+    },
+    "q_cause": {
+      "type": "choice",
+      "title": "床邊看起來最像哪一種？",
+      "help": "聽診：雙側基底囉音 = 肺水腫；哮鳴 = 氣喘／COPD／心臟性氣喘；局部囉音 + 發燒 = 肺炎；呼吸音消失 = 氣胸／積液／痰栓",
+      "options": [
+        { "label": "雙側囉音、JVP↑、粉紅泡沫痰、端坐呼吸、正水平衡（肺水腫）", "next": "q_pe_sbp" },
+        { "label": "哮鳴 + 氣喘病史", "next": "q_asthma_sev" },
+        { "label": "哮鳴 + COPD 病史（CO₂ 滯留風險）", "next": "q_copd" },
+        { "label": "發燒、咳痰、局部囉音／CXR 浸潤（肺炎）", "next": "q_pna_type" },
+        { "label": "突發胸痛、單側呼吸音↓、VTE 危險因子（PE／氣胸／填塞）", "next": "r_pe_ptx" },
+        { "label": "打擊音濁、CXR 積液（肋膜積液）", "next": "r_effusion" },
+        { "label": "術後、痰多、呼吸音減弱、低燒（肺塌陷）", "next": "r_atelectasis" },
+        { "label": "咳血 > 100 mL/hr", "next": "r_hemoptysis" },
+        { "label": "神經肌肉無力（GBS、重症肌無力、高位脊髓）", "next": "r_resp_failure" },
+        { "label": "檢查正常、手腳麻、焦慮（過度換氣）", "next": "r_hyperventilation" },
+        { "label": "不確定／都不像", "next": "r_workup" }
+      ]
+    },
+    "q_pe_sbp": {
+      "type": "number",
+      "title": "肺水腫：收縮壓（SBP）？",
+      "help": "低血壓的肺水腫 = 心因性休克 → 升壓／強心，勿給 NTG／大量利尿",
+      "var": "sbp", "unit": "mmHg", "step": 1,
+      "quick": [80, 95, 110, 140, 180],
+      "branches": [
+        { "if": "sbp < 85", "next": "r_cs" },
+        { "if": "sbp < 110", "next": "r_pe_lowbp" },
+        { "else": "r_pulm_edema" }
+      ]
+    },
+    "r_pulm_edema": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性心衰竭／心因性肺水腫（SBP ≥ 110）",
+      "summary": "坐姿、O₂／NIV、**NTG（肺水腫 + 高血壓首選）+ furosemide IV**；找誘因（ACS、心律不整、感染、不遵醫囑、NSAID、輸液過多、甲狀腺）。",
+      "steps": [
+        "坐起 ≥ 45°；O₂ 目標 94–98%（CO₂ 滯留 88–92%）；SpO₂ < 90% 或呼吸費力 → CPAP／BiPAP",
+        "心電監測、IV、Foley 記尿量；12 導程 ECG（缺血？）",
+        "CXR、ABG、troponin、NT-proBNP、電解質、BUN/Cr、Mg",
+        "NTG 舌下 → 滴注快速上調；furosemide IV 一次給足",
+        "1–2 hr 後尿量 < 100–150 mL/hr → furosemide 加倍再給；目標 6 hr 尿量 > 1 L",
+        "限水 1.5 L/d、限鈉 < 2 g/d；停 NSAID、non-DHP CCB；失代償時暫停或減 β-blocker（不完全停除非休克）",
+        "NIV 1–2 小時無改善或 pH ↓ → 插管準備"
+      ],
+      "orders": [
+        { "drug": "Nitroglycerin（NTG）", "dose": "0.6 mg", "route": "SL", "freq": "q5 min × 3（等滴注準備時）", "note": "SBP > 110 才用；sildenafil／vardenafil 24 hr、tadalafil 48 hr 內禁（Ch6）" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "10–20 mcg/min 起，每 3–5 min ↑ 10–20，max 200 mcg/min", "route": "IV drip", "freq": "持續", "note": "泡法 50 mg in D5W 250 mL（200 mcg/mL）→ 10 mcg/min = 3 mL/hr" },
+        { "drug": "Furosemide", "dose": "40 mg（長期口服者：口服每日劑量的 1–2.5 倍）", "route": "IV push（≤ 4 mg/min）", "freq": "STAT 一次給；1–2 hr 尿量 < 100–150 mL/hr → 加倍再給；之後 q6–12h", "note": "監測 K、Mg、Cr；快推／併 aminoglycoside 耳毒性；CrCl {round(crcl)}" },
+        { "drug": "Furosemide 持續", "dose": "5–20 mg/hr", "route": "IV drip", "freq": "持續", "note": "bolus 反應差時" },
+        { "drug": "CPAP／BiPAP", "dose": "CPAP 5–10 cmH₂O 或 BiPAP IPAP 10–15／EPAP 5", "route": "面罩", "freq": "持續至改善", "note": "意識不清、嘔吐、血行不穩禁；1–2 hr 無改善 → 插管" },
+        { "drug": "Metolazone", "dose": "2.5–5 mg", "route": "PO", "freq": "QD（利尿劑前 30 min）", "note": "利尿劑抗性加成；低血鉀" },
+        { "drug": "Spironolactone", "dose": "25 mg", "route": "PO", "freq": "QD", "note": "保鉀、長期預後；K > 5 或 CrCl {round(crcl)} 差者慎" }
+      ],
+      "watch": ["SpO₂、RR、BP q5–15 min；尿量每小時（目標 6 hr > 1 L）", "K、Mg、Cr（利尿後）", "每日體重、I/O"],
+      "call": ["需要 NIV／HFNC／插管", "SBP < 85（心因性休克）、ACS、NTG 200 mcg/min 仍喘", "需要升壓劑、意識改變"],
+      "ddx": ["ACS（ECG／troponin）", "肺炎、PE、TACO（近期輸血）"],
+      "refs": [{ "ch": "07", "q": "急性心衰竭／心因性肺水腫" }, { "ch": "18", "q": "急性肺水腫" }],
+      "next": [{ "label": "血壓掉 < 85 → 心因性休克", "next": "r_cs" }, { "label": "需要 NIV → 設定與禁忌", "next": "r_niv" }]
+    },
+    "r_pe_lowbp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "肺水腫 + SBP 85–109：低輸出，用 dobutamine，不給 NTG",
+      "summary": "SBP < 110 不用 NTG；SBP 85–100 且低輸出 → **dobutamine**；利尿劑小心；隨時可能進展為心因性休克（Ch19）。",
+      "steps": [
+        "坐起、O₂ 目標 94–98%；CPAP 5–10 cmH₂O（血行動力尚穩定者）",
+        "心電監測、IV × 2、Foley；ECG、troponin、乳酸、ABG、CXR、床邊 echo（EF、心包積液）",
+        "先 dobutamine 提升輸出，再視尿量給 furosemide",
+        "找原因：ACS、心律不整、填塞、瓣膜、敗血症",
+        "SBP 掉 < 85 → norepinephrine（Ch19）"
+      ],
+      "orders": [
+        { "drug": "Dobutamine", "dose": "2.5–10（max 20）mcg/kg/min ＝ {round(wt*0.15,1)}–{round(wt*0.6,1)} mL/hr", "route": "IV drip", "freq": "持續", "note": "泡法 250 mg in D5W 250 mL（1 mg/mL）；依 {wt} kg；心律不整" },
+        { "drug": "Milrinone", "dose": "0.125–0.5 mcg/kg/min ＝ {round(wt*0.125,1)}–{round(wt*0.5,1)} mcg/min", "route": "IV drip", "freq": "持續", "note": "β-blocker 使用者；腎功能調整（CrCl {round(crcl)}）；低血壓" },
+        { "drug": "Furosemide", "dose": "40 mg（長期口服者：口服每日量 1–2.5 倍）", "route": "IV push（≤ 4 mg/min）", "freq": "STAT；灌流改善後再評估", "note": "低血壓時小量、看尿量" },
+        { "drug": "CPAP", "dose": "5–10 cmH₂O", "route": "面罩", "freq": "持續", "note": "血行動力不穩禁" }
+      ],
+      "watch": ["BP／HR q5 min、尿量每小時、乳酸", "SpO₂／RR；NIV 1 小時無改善 → 插管"],
+      "call": ["SBP < 85 或需升壓劑 → 立即後線 + ICU", "ACS、心律不整、乳酸 ↑"],
+      "refs": [{ "ch": "07", "q": "Dobutamine" }, { "ch": "19", "q": "心因性休克" }],
+      "next": [{ "label": "SBP < 85 → 心因性休克", "next": "r_cs" }]
+    },
+    "r_cs": {
+      "type": "result",
+      "urgency": "red",
+      "title": "肺水腫 + SBP < 85：心因性休克",
+      "summary": "**升壓（norepinephrine）→ 強心（dobutamine）**；勿給 NTG／大量利尿；立刻叫後線 + ICU，依 Ch19。",
+      "steps": [
+        "叫後線、ICU；心電監測、IV × 2、動脈導管、Foley",
+        "ECG（STEMI → 心臟科）、troponin、乳酸、ABG、床邊 echo（EF、填塞、右心）",
+        "O₂／NIV（血行動力允許時）；插管準備（插管後低血壓更常見）",
+        "Norepinephrine 先拉 MAP，再 dobutamine 增加輸出",
+        "灌流改善後才小心利尿"
+      ],
+      "orders": [
+        { "drug": "Norepinephrine", "dose": "0.05–0.5 mcg/kg/min ＝ {round(wt*0.05,1)}–{round(wt*0.5,1)} mcg/min", "route": "IV drip（中央靜脈為佳）", "freq": "持續", "note": "SBP < 85 或休克；依 {wt} kg" },
+        { "drug": "Dobutamine", "dose": "2.5–10（max 20）mcg/kg/min ＝ {round(wt*0.15,1)}–{round(wt*0.6,1)} mL/hr", "route": "IV drip", "freq": "持續（MAP 拉起後）", "note": "250 mg in D5W 250 mL（1 mg/mL）" },
+        { "drug": "Furosemide", "dose": "40 mg", "route": "IV push", "freq": "灌流改善後 STAT", "note": "休克時先不給大量" }
+      ],
+      "watch": ["MAP、HR、乳酸 q1–2h、尿量每小時", "ECG、心律"],
+      "call": ["立刻：後線 + ICU ± 心臟科（STEMI、需機械循環支持）"],
+      "refs": [{ "ch": "19", "q": "心因性休克" }, { "ch": "07", "q": "Norepinephrine" }]
+    },
+    "q_asthma_sev": {
+      "type": "choice",
+      "title": "氣喘：嚴重度？",
+      "help": "嚴重 = 說話單字、RR > 30、HR > 120、SpO₂ < 90%、PEF < 50%、用輔助肌；瀕危 = 嗜睡、沉默胸、PaCO₂ 正常或升高、發紺",
+      "options": [
+        { "label": "瀕危：嗜睡、沉默胸、PaCO₂ 正常／↑、發紺", "next": "r_asthma_critical", "set": { "sev": true } },
+        { "label": "嚴重：單字、RR > 30、HR > 120、SpO₂ < 90%、PEF < 50%", "next": "r_asthma", "set": { "sev": true } },
+        { "label": "輕–中度：可講片語／句子、SpO₂ ≥ 90%", "next": "r_asthma", "set": { "sev": false } }
+      ]
+    },
+    "r_asthma": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "氣喘急性發作（{sev ? '嚴重' : '輕–中度'}）",
+      "summary": "O₂ 目標 94–98%、**salbutamol + ipratropium 霧化 q20 min × 3**、**類固醇 1 小時內給**；嚴重或 1 小時反應差加 MgSO₄；PaCO₂「正常化」= 快要呼吸衰竭。",
+      "steps": [
+        "坐起、O₂ 目標 94–98%（過高濃度反而增加 CO₂）；SpO₂／心電監測",
+        "霧化 salbutamol + ipratropium q20 min × 3；能配合者 MDI + spacer 4–8 puffs q20 min 同樣有效",
+        "類固醇 1 小時內給（IV 或 PO 等效）",
+        "PEF／SpO₂／RR 每 20 min 再評估；1 小時反應差 → MgSO₄、叫後線",
+        "ABG（SpO₂ < 92%、嗜睡、重度）：PaCO₂ 正常或升高 = 瀕危",
+        "找誘因：感染、過敏原、停藥、NSAID／β-blocker",
+        "出院前：吸入性類固醇 + LABA、口服類固醇 5–7 天"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "nasal cannula／mask", "freq": "持續", "note": "GINA 93–95% 亦可" },
+        { "drug": "Salbutamol（Ventolin）", "dose": "2.5–5 mg", "route": "霧化（O₂ 6–8 L 驅動）", "freq": "q20 min × 3 → q1–4h PRN", "note": "nebule 2.5 mg/2.5 mL 或 solution 5 mg/mL 1 mL + NS 3 mL；嚴重可持續霧化 10–15 mg/hr" },
+        { "drug": "Ipratropium", "dose": "0.5 mg", "route": "霧化（與 salbutamol 混合）", "freq": "q20 min × 3 → q4–6h", "note": "急性期加成；之後不需常規" },
+        { "drug": "Methylprednisolone", "dose": "40 mg", "route": "IV", "freq": "q12h（或 80 mg QD）；1 小時內給", "note": "40–80 mg/日；更高劑量無額外益處", "alt": "Prednisolone 40–50 mg PO QD × 5–7 天" },
+        { "drug": "MgSO₄", "dose": "2 g in NS 100 mL", "route": "IV drip over 20 min", "freq": "單次（可再 1 次）", "cond": "sev", "note": "嚴重發作或 1 小時反應差；腎衰竭（CrCl {round(crcl)}）慎用" },
+        { "drug": "Terbutaline", "dose": "0.25 mg", "route": "SC", "freq": "q20 min × 3", "note": "無法霧化時" }
+      ],
+      "watch": ["PEF、SpO₂、RR、HR 每 20 min × 1 hr，之後 q1h", "嗜睡、沉默胸、PaCO₂ ↑ → 瀕危", "K（β-agonist 高劑量）、血糖（類固醇）"],
+      "call": ["1 小時治療無效、SpO₂ < 90%、PaCO₂ 正常或升高", "需要 NIV／插管、意識改變"],
+      "refs": [{ "ch": "07", "q": "氣喘急性發作" }],
+      "next": [{ "label": "惡化：嗜睡、沉默胸 → 瀕危處置", "next": "r_asthma_critical" }]
+    },
+    "r_asthma_critical": {
+      "type": "result",
+      "urgency": "red",
+      "title": "瀕危氣喘（嗜睡、沉默胸、PaCO₂ 正常／↑、發紺）",
+      "summary": "立刻叫後線 + ICU、**準備插管（ketamine 誘導）**；持續霧化 + MgSO₄ + 類固醇；無法霧化給 epinephrine IM；**不要用 NIV 拖延插管**。",
+      "steps": [
+        "叫後線／ICU／麻醉；推急救車、BVM、O₂ 15 L",
+        "持續霧化 salbutamol 10–15 mg/hr + ipratropium；MgSO₄ IV；methylprednisolone IV",
+        "無法霧化／瀕危 → epinephrine IM",
+        "ABG、心電監測、IV × 2；準備 RSI（ketamine 首選，rocuronium）",
+        "插管後：大管徑 ETT ≥ 8.0、RR 10–12、低 VT、I:E ≥ 1:3、Pplat < 30、允許 PaCO₂ 上升；SpO₂ 突降先想氣胸／痰栓／breath-stacking（脫離呼吸器讓病人吐氣）"
+      ],
+      "orders": [
+        { "drug": "Salbutamol（Ventolin）", "dose": "10–15 mg/hr（持續霧化）或 5 mg", "route": "霧化（O₂ 驅動）", "freq": "持續／q20 min", "note": "solution 5 mg/mL" },
+        { "drug": "Ipratropium", "dose": "0.5 mg", "route": "霧化", "freq": "q20 min × 3", "note": "與 salbutamol 混合" },
+        { "drug": "MgSO₄", "dose": "2 g in NS 100 mL", "route": "IV drip over 20 min", "freq": "單次（可再 1 次）", "note": "腎衰竭慎用（CrCl {round(crcl)}）" },
+        { "drug": "Methylprednisolone", "dose": "80 mg", "route": "IV", "freq": "STAT（之後 40 mg q12h 或 80 mg QD）", "note": "40–80 mg/日" },
+        { "drug": "Epinephrine 1:1,000", "dose": "{wt < 50 ? 0.3 : 0.5} mg", "route": "IM 大腿外側", "freq": "q5–15 min PRN（通常 ≤ 3 次）", "note": "過敏引起或瀕危無法霧化；< 50 kg 0.3 mg（{wt} kg）" },
+        { "drug": "Ketamine（RSI 誘導）", "dose": "{round(wt)}–{round(wt*2)} mg（1–2 mg/kg）", "route": "IV push", "freq": "插管時單次", "note": "支氣管擴張作用；依 {wt} kg；肌鬆見 RSI 表" }
+      ],
+      "watch": ["SpO₂、RR、意識 連續；ABG 30 min", "插管後 PIP／Pplat、auto-PEEP、血壓（正壓 + 脫水 → 低血壓）"],
+      "call": ["立刻：後線 + ICU + 麻醉（插管前，邊叫邊做）"],
+      "refs": [{ "ch": "07", "q": "瀕危" }, { "ch": "07", "q": "表 7-2" }],
+      "next": [{ "label": "RSI 藥物與 7 P 步驟", "next": "r_intubate" }]
+    },
+    "q_copd": {
+      "type": "multi",
+      "title": "COPD 急性惡化：勾選符合的",
+      "help": "目標 SpO₂ 88–92%（Venturi 24–28% 或 nasal 1–2 L）；1 小時後 ABG",
+      "options": [
+        { "label": "痰量↑ + 膿痰，或需要 NIV／插管（給抗生素）", "set": { "abx": true } },
+        { "label": "Pseudomonas 風險：FEV₁ < 30%、支氣管擴張症、近期 PsA、常用抗生素／類固醇", "set": { "psa_copd": true } },
+        { "label": "ABG：pH < 7.35 且 PaCO₂ > 45（高碳酸）→ NIV", "set": { "hypercap": true } },
+        { "label": "意識差／無法保護氣道／NIV 1–2 hr 未改善", "set": { "copd_fail": true } }
+      ],
+      "branches": [
+        { "if": "copd_fail", "next": "r_resp_failure" },
+        { "else": "r_copd" }
+      ]
+    },
+    "r_copd": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "COPD 急性惡化",
+      "summary": "**控制氧 88–92%**、霧化 salbutamol + ipratropium、**prednisolone 40 mg × 5 天**；膿痰／需 NIV 者抗生素；pH < 7.35 且 PaCO₂ > 45 → **BiPAP**，1–2 hr 未改善 → 插管。",
+      "steps": [
+        "O₂ 目標 88–92%（Venturi 24–28% 或 nasal 1–2 L）；霧化用空氣驅動、氧氣改鼻導管同時給",
+        "ABG（現在與 1 小時後）、CXR、ECG、CBC、電解質、CRP、痰培養（抗生素前）、流感／COVID PCR",
+        "霧化支氣管擴張劑（急性期 q1–2h）；類固醇 PO（無法口服改 IV）",
+        "pH < 7.35 且 PaCO₂ > 45 → BiPAP；1–2 hr 後評估 pH、PaCO₂、RR、意識",
+        "抗生素：痰量↑ + 膿痰 或 需 NIV／插管；CRP < 20 且無膿痰可不給",
+        "VTE 預防、早期活動；嗜睡 = CO₂↑ 或疲乏，不是「睡著了」"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "Venturi 24–28% 或 nasal 1–2 L/min", "route": "面罩／鼻導管", "freq": "持續，目標 SpO₂ 88–92%", "note": "過高 FiO₂ → CO₂ 滯留" },
+        { "drug": "Salbutamol + ipratropium", "dose": "2.5–5 mg + 0.5 mg", "route": "霧化（空氣驅動）", "freq": "q4–6h（急性期 q1–2h）", "note": "CO₂ 滯留者用空氣驅動" },
+        { "drug": "Prednisolone", "dose": "40 mg", "route": "PO", "freq": "QD × 5 天（不需漸減）", "alt": "Methylprednisolone 40 mg IV QD（無法口服）" },
+        { "drug": "Amoxicillin-clavulanate", "dose": "875/125 mg PO（或 1.2 g IV）", "route": "PO／IV", "freq": "PO BID（IV q8h）× 5–7 天", "cond": "abx && !psa_copd", "note": "替代：cefuroxime 500 mg PO BID 或 levofloxacin 750 mg PO/IV QD；依院內抗藥性；CrCl {round(crcl)}" },
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h × 5–7 天", "cond": "abx && psa_copd", "note": "Pseudomonas 風險；替代 cefepime 2 g IV q8h；CrCl {round(crcl)} < 40 依院內調整" },
+        { "drug": "BiPAP", "dose": "IPAP 10–12（可至 20）cmH₂O／EPAP 4–6", "route": "面罩", "freq": "持續；1–2 hr 後評估", "cond": "hypercap", "note": "禁忌：意識不清（GCS < 10，CO₂ 麻醉可短暫試）、大量分泌物、嘔吐、血行不穩；無改善 → 插管不要拖" },
+        { "drug": "Enoxaparin", "dose": "40 mg", "route": "SC", "freq": "QD（住院期間）", "note": "VTE 預防；CrCl {round(crcl)}{crcl < 30 ? '：< 30 依院內減量' : ''}" }
+      ],
+      "watch": ["SpO₂（88–92%）、RR、意識 q1h；1 小時後 ABG", "NIV 後 1–2 hr：pH、PaCO₂、RR、舒適度", "血糖（類固醇）、K"],
+      "call": ["PaCO₂ 急性 > 50 且 pH < 7.30、意識改變", "1 小時治療無效、需 NIV／插管"],
+      "refs": [{ "ch": "07", "q": "COPD 急性惡化" }],
+      "next": [{ "label": "NIV 設定與禁忌", "next": "r_niv" }, { "label": "NIV 無效 → 插管", "next": "r_intubate" }]
+    },
+    "q_pna_type": {
+      "type": "choice",
+      "title": "肺炎：哪一種情境？",
+      "help": "先留血液／痰培養再給藥；敗血症 1 小時內給；CURB-65（意識、BUN > 20、RR ≥ 30、BP < 90/60、≥ 65 歲）",
+      "options": [
+        { "label": "社區型（CAP）一般病房", "next": "q_pna_risk", "set": { "pna": "cap" } },
+        { "label": "社區型重症（ICU、CURB-65 高、休克）", "next": "q_pna_risk", "set": { "pna": "sev" } },
+        { "label": "院內型（入院 ≥ 48 hr）／VAP", "next": "q_pna_risk", "set": { "pna": "hap" } },
+        { "label": "吸入性（嗆咳、臥床、意識差）", "next": "r_aspiration", "set": { "pna": "asp" } },
+        { "label": "PJP（HIV／免疫抑制、乾咳 + 低氧 + 間質浸潤）", "next": "r_pjp", "set": { "pna": "pjp" } }
+      ]
+    },
+    "q_pna_risk": {
+      "type": "multi",
+      "title": "勾選危險因子（決定抗生素）",
+      "options": [
+        { "label": "MRSA：既往 MRSA、90 天內住院 + IV 抗生素、流感後壞死性肺炎、透析、長照", "set": { "mrsa": true } },
+        { "label": "Pseudomonas：結構性肺病、既往 PsA、90 天內廣效抗生素、氣切", "set": { "psa": true } },
+        { "label": "HAP／VAP 高抗藥風險或休克", "set": { "hap_hi": true } },
+        { "label": "流感季（發燒 + 咳嗽 + 肌痛；PCR）", "set": { "flu": true } }
+      ],
+      "branches": [
+        { "if": "pna == 'hap'", "next": "r_hap" },
+        { "else": "r_cap" }
+      ]
+    },
+    "r_cap": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "社區型肺炎（{pna == 'sev' ? '重症' : '一般病房'}）",
+      "summary": "**先留血液／痰培養**，ceftriaxone + azithromycin（{pna == 'sev' ? '重症加 MRSA／Pseudomonas 涵蓋' : '有危險因子才加 vancomycin／pip-tazo'}）；敗血症 1 小時內給；48–72 hr 培養降階。",
+      "steps": [
+        "O₂ 目標 94–98%；SpO₂ < 92% 抽 ABG；CURB-65 決定去處（重症 → ICU）",
+        "抗生素前：血液培養 × 2、痰培養、尿液肺炎鏈球菌／退伍軍人菌抗原、流感／COVID PCR；CBC、CRP／procalcitonin、Cr、電解質",
+        "CXR；懷疑積液 → 超音波 → 肺炎旁積液盡早穿刺",
+        "拍痰、化痰、退燒、DVT 預防、早期活動",
+        "48–72 hr 未改善 → 重新評估（膿胸、膿瘍、抗藥菌、非感染）；退燒可能要 ≥ 72 hr",
+        "療程 5–7 天，臨床穩定即 IV 改 PO；疑結核（慢性咳、體重↓、上葉空洞）勿單用 fluoroquinolone",
+        "重症 CAP（CRP > 200）可與後線討論加類固醇；流感肺炎不加"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q24h", "cond": "!psa", "note": "替代 ampicillin-sulbactam 3 g IV q6h 或 cefotaxime 2 g IV q8h" },
+        { "drug": "Azithromycin", "dose": "500 mg", "route": "IV／PO", "freq": "QD", "note": "或 clarithromycin 500 mg BID；QT" },
+        { "drug": "Levofloxacin", "dose": "750 mg", "route": "IV／PO", "freq": "QD", "cond": "!psa", "note": "β-lactam 過敏時單用替代（或 moxifloxacin 400 mg QD）；疑結核勿單用；CrCl {round(crcl)} 依仿單調整" },
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h", "cond": "psa", "note": "Pseudomonas 風險；替代 cefepime 2 g q8h／ceftazidime 2 g q8h／meropenem 1 g q8h；± amikacin {round(wt*15)}–{round(wt*20)} mg QD；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Vancomycin", "dose": "loading {round(wt*25)}–{round(wt*30)} mg → {round(wt*15)}–{round(wt*20)} mg", "route": "IV", "freq": "loading STAT → q8–12h（trough 15–20 或 AUC）", "cond": "mrsa", "note": "MRSA 風險；依 {wt} kg；CrCl {round(crcl)} 依藥師調整；替代 linezolid 600 mg IV/PO q12h 或 teicoplanin 12 mg/kg q12h × 3 → q24h；鼻腔 MRSA PCR 陰性可停" },
+        { "drug": "Oseltamivir", "dose": "75 mg", "route": "PO", "freq": "BID × 5 天", "cond": "flu", "note": "48 hr 內效果最好，住院者仍給；CrCl {round(crcl)}{crcl < 60 ? '：< 60 依仿單減量' : ''}" },
+        { "drug": "Acetylcysteine", "dose": "600 mg", "route": "PO", "freq": "QD", "note": "化痰" },
+        { "drug": "Enoxaparin", "dose": "40 mg", "route": "SC", "freq": "QD", "note": "DVT 預防；CrCl {round(crcl)}{crcl < 30 ? '：< 30 依院內減量' : ''}" }
+      ],
+      "watch": ["SpO₂、RR、BP、體溫 q4h；48–72 hr 評估反應", "培養結果 48–72 hr 降階", "Cr（vancomycin／aminoglycoside）、QT（azithromycin + fluoroquinolone）"],
+      "call": ["SpO₂ < 90%（NRM 下 < 92%）、RR > 30、需 NIV／HFNC／插管", "敗血性休克、需升壓劑、意識改變", "免疫低下發燒咳嗽"],
+      "refs": [{ "ch": "07", "q": "肺炎（抗生素表）" }, { "ch": "07", "q": "CAP 一般病房" }],
+      "next": [{ "label": "積液 → 穿刺與胸管指標", "next": "r_effusion" }]
+    },
+    "r_hap": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "院內肺炎（HAP／VAP）{hap_hi ? '高抗藥風險／休克' : '低抗藥風險'}",
+      "summary": "先留培養；anti-pseudomonal β-lactam{hap_hi ? ' 雙藥 + vancomycin／linezolid' : ''}；ESBL 多者 meropenem；療程 7 天。",
+      "steps": [
+        "O₂ 目標 94–98%；血液培養 × 2、痰（或氣管抽吸）培養、CXR、CBC、CRP、Cr",
+        "休克 → 1 小時內抗生素 + 輸液（Ch19）",
+        "48–72 hr 依培養降階；療程 7 天",
+        "拍痰、抽痰、抬床頭 30°、DVT 預防"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV", "freq": "q6h × 7 天", "note": "替代 cefepime 2 g IV q8h；ESBL 多者 meropenem 1 g IV q8h；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Levofloxacin", "dose": "750 mg", "route": "IV", "freq": "QD", "cond": "hap_hi", "note": "第二個 anti-pseudomonal；或 amikacin {round(wt*15)}–{round(wt*20)} mg IV QD（CrCl {round(crcl)}）" },
+        { "drug": "Vancomycin", "dose": "loading {round(wt*25)}–{round(wt*30)} mg → {round(wt*15)}–{round(wt*20)} mg", "route": "IV", "freq": "loading STAT → q8–12h", "cond": "hap_hi || mrsa", "note": "或 linezolid 600 mg IV q12h；依 {wt} kg、CrCl {round(crcl)} 藥師調整" },
+        { "drug": "Oseltamivir", "dose": "75 mg", "route": "PO", "freq": "BID × 5 天", "cond": "flu", "note": "CrCl {round(crcl)}{crcl < 60 ? '：< 60 依仿單減量' : ''}" },
+        { "drug": "Enoxaparin", "dose": "40 mg", "route": "SC", "freq": "QD", "note": "DVT 預防；CrCl {round(crcl)}{crcl < 30 ? '：< 30 依院內減量' : ''}" }
+      ],
+      "watch": ["SpO₂、RR、BP、體溫 q4h", "培養 48–72 hr 降階；Cr（vancomycin／amikacin 濃度）"],
+      "call": ["休克、需升壓劑、需 NIV／插管", "48–72 hr 未改善"],
+      "refs": [{ "ch": "07", "q": "HAP" }, { "ch": "07", "q": "肺炎（抗生素表）" }]
+    },
+    "r_aspiration": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "吸入性肺炎",
+      "summary": "單純嗆咳無浸潤可觀察 24–48 hr（不急給抗生素）；有浸潤 → ampicillin-sulbactam；膿瘍／膿胸再加厭氧菌涵蓋。",
+      "steps": [
+        "抬床頭 30–45°、抽痰、O₂ 目標 94–98%；NPO、評估吞嚥",
+        "CXR（右下葉／依臥姿）、血液培養、痰培養、CBC、CRP",
+        "無浸潤、無發燒 → 觀察 24–48 hr 再決定抗生素",
+        "有浸潤 → 抗生素 5–7 天；膿瘍／膿胸 2–6 週",
+        "找原因：意識、鼻胃管、吞嚥障礙、鎮靜劑"
+      ],
+      "orders": [
+        { "drug": "Ampicillin-sulbactam", "dose": "3 g", "route": "IV", "freq": "q6h", "note": "替代 amoxicillin-clavulanate 1.2 g IV q8h 或 ceftriaxone 2 g IV QD；CrCl {round(crcl)} 依院內調整" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "IV", "freq": "q8h", "note": "僅膿瘍／膿胸時加（或 clindamycin 600 mg IV q8h）" }
+      ],
+      "watch": ["SpO₂、RR、體溫 q4h", "48–72 hr 未改善 → 膿胸／膿瘍（超音波／CT）"],
+      "call": ["SpO₂ < 90%、需 NIV／插管、休克", "反覆吸入、無法保護氣道"],
+      "refs": [{ "ch": "07", "q": "吸入性肺炎（社區）" }]
+    },
+    "r_pjp": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "PJP（Pneumocystis 肺炎）",
+      "summary": "TMP-SMX 高劑量；PaO₂ < 70 加 prednisolone；會診感染科。",
+      "steps": [
+        "O₂；ABG（PaO₂ 決定是否加類固醇）、LDH、HIV 檢驗、CXR／HRCT",
+        "痰誘導／支氣管鏡 PJP PCR（抗生素後仍可驗）",
+        "會診感染科；同時考慮其他機會性感染"
+      ],
+      "orders": [
+        { "drug": "TMP-SMX", "dose": "TMP {round(wt*15)}–{round(wt*20)} mg/日（15–20 mg/kg/d）", "route": "IV／PO", "freq": "分 q6–8h（療程依感染科）", "note": "依 {wt} kg；CrCl {round(crcl)} 依藥師調整；監測 K、Cr、CBC" },
+        { "drug": "Prednisolone", "dose": "40 mg", "route": "PO", "freq": "BID × 5 天 → 漸減", "note": "僅 PaO₂ < 70 mmHg 時；抗生素前或同時給" }
+      ],
+      "watch": ["SpO₂、RR；治療初期可能先惡化", "K、Cr、CBC（TMP-SMX）"],
+      "call": ["SpO₂ < 90%、需 NIV／HFNC／插管", "會診感染科"],
+      "refs": [{ "ch": "07", "q": "PJP" }]
+    },
+    "r_pe_ptx": {
+      "type": "result",
+      "urgency": "red",
+      "title": "疑肺栓塞／氣胸／心包填塞 → 走 Ch6",
+      "summary": "突發喘 + 胸痛：先 O₂、監測、ECG、CXR／床邊超音波；張力性氣胸立刻針刺減壓；PE／填塞處置見 Ch6。",
+      "steps": [
+        "O₂ 目標 94–98%、心電監測、IV × 2、ECG（右心負荷、缺血）",
+        "CXR／床邊超音波：肺滑動消失（氣胸）、右心擴大／IVC（PE）、心包積液（填塞）",
+        "低血壓 + 單側呼吸音消失 + 氣管偏移 → 針刺減壓，不等 CXR",
+        "PE：troponin、D-dimer（驗前機率低–中）、CTPA；抗凝／溶栓依 Ch6",
+        "填塞：緊急心臟科 pericardiocentesis（Ch6）"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "nasal cannula → NRM", "freq": "持續", "note": "NRM 15 L 仍 < 90% → BVM + 插管準備" }
+      ],
+      "watch": ["BP、HR、SpO₂ q5–15 min", "低血壓 = 大量 PE／張力性氣胸／填塞"],
+      "call": ["懷疑張力性氣胸、大量 PE、填塞 → 立刻後線 ± 心臟科／胸腔科"],
+      "refs": [{ "ch": "06", "q": "肺栓塞" }, { "ch": "06", "q": "氣胸" }, { "ch": "06", "q": "心包填塞" }],
+      "next": [{ "label": "張力性氣胸 → 針刺減壓", "next": "r_tension" }]
+    },
+    "r_tension": {
+      "type": "result",
+      "urgency": "red",
+      "title": "張力性氣胸（單側呼吸音消失 + 低血壓 + 氣管偏移）",
+      "summary": "臨床診斷，**不等 CXR：立刻針刺減壓**，接著胸管（Ch6）；同時叫後線。",
+      "steps": [
+        "叫後線；O₂ 15 L NRM／BVM",
+        "立刻針刺減壓（大口徑留置針），聽到氣體逸出、血壓回升",
+        "接著放胸管（Ch6）；CXR 確認",
+        "插管病人：先脫離呼吸器改 BVM，減壓後再接回",
+        "IV × 2、輸液至血壓回升"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "15 L/min", "route": "NRM／BVM", "freq": "持續", "note": "儲氣袋要充滿" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，低血壓可重複", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["減壓後 BP、SpO₂、呼吸音 q5 min；針可能阻塞 → 復發", "胸管後 CXR"],
+      "call": ["懷疑當下立刻後線；減壓後仍不穩 → 胸腔科／外科"],
+      "refs": [{ "ch": "06", "q": "氣胸" }, { "ch": "07", "q": "張力性氣胸" }]
+    },
+    "r_effusion": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "肋膜積液",
+      "summary": "症狀性或疑感染 → 超音波導引穿刺（一次 ≤ 1–1.5 L）；**pH < 7.2、glucose < 60、Gram stain／培養陽性、膿 = 膿胸 → 胸管**；心衰竭雙側積液先利尿；肝性積液避免胸管。",
+      "steps": [
+        "O₂ 依 SpO₂；CXR／超音波定位（分隔？量？）",
+        "心衰竭雙側對稱積液 → 先利尿（75% 在 48 hr 內消退）；不對稱／發燒／胸痛／利尿無效再穿刺",
+        "肺炎旁積液盡早穿刺（臨床無法排除感染）；穿刺前確認 INR、血小板（INR ~1.9、DOAC、clopidogrel 下超音波導引出血風險仍低，不必延誤）",
+        "送檢：cell count/DC、protein、LDH、glucose、pH、Gram stain／培養、細胞學、ADA、TG、cholesterol；Light's criteria（積液/血清 protein > 0.5、LDH > 0.6、LDH > 2/3 血清上限任一 = 滲出液）",
+        "胸管指標：pH < 7.2、glucose < 60、培養陽性、膿、> 半側胸腔或分隔（分隔者胸腔科可考慮胸腔內 tPA + DNase）",
+        "肝硬化肝性積液（多右側）：避免胸管，用利尿／治療性穿刺／TIPS；發燒要穿刺排除自發性細菌性膿胸",
+        "一次放液 ≤ 1–1.5 L（再擴張性肺水腫）"
+      ],
+      "orders": [
+        { "drug": "Furosemide", "dose": "40 mg（長期口服者：口服每日量 1–2.5 倍）", "route": "IV push", "freq": "STAT；依尿量調整", "note": "僅心衰竭雙側積液；CrCl {round(crcl)}" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q24h", "note": "肺炎旁積液／膿胸：依肺炎表；膿胸加 metronidazole 500 mg IV q8h，療程 2–6 週" }
+      ],
+      "watch": ["穿刺後 SpO₂、RR、胸痛（氣胸、再擴張性肺水腫）", "積液檢驗 pH／glucose／培養 → 是否胸管"],
+      "call": ["膿胸／複雜性肺炎旁積液 → 胸腔科放胸管", "SpO₂ < 90%、穿刺後惡化（氣胸、出血）"],
+      "refs": [{ "ch": "07", "q": "肋膜積液" }]
+    },
+    "r_atelectasis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "術後肺塌陷",
+      "summary": "止痛（讓病人敢深呼吸）、深呼吸誘發器、坐起／下床、拍痰／抽痰；大葉塌陷且低氧 → 胸腔科支氣管鏡。",
+      "steps": [
+        "O₂ 目標 94–98%；CXR 確認（大葉塌陷？）",
+        "止痛到位（Ch25）；深呼吸誘發器 q1h 清醒時、坐起／下床",
+        "拍痰、抽痰、化痰；哮鳴 → 支氣管擴張劑",
+        "發燒 + 浸潤 → 依肺炎處理",
+        "大葉塌陷且低氧 → 胸腔科支氣管鏡"
+      ],
+      "orders": [
+        { "drug": "Salbutamol", "dose": "2.5–5 mg", "route": "霧化", "freq": "q4–6h PRN", "note": "有哮鳴時" },
+        { "drug": "Acetylcysteine", "dose": "600 mg", "route": "PO", "freq": "QD", "note": "化痰" }
+      ],
+      "watch": ["SpO₂、RR、體溫 q4h", "24 hr 未改善或發燒 → CXR 重照"],
+      "call": ["SpO₂ < 90%、大葉塌陷需支氣管鏡", "發燒 + 浸潤惡化"],
+      "refs": [{ "ch": "07", "q": "肺塌陷（術後）" }]
+    },
+    "r_hemoptysis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "大量咳血（> 100 mL/hr 或 > 500 mL/24 hr）",
+      "summary": "死因是**窒息不是失血**：患側朝下、保護氣道（大管徑 ETT ≥ 8.0）、矯正凝血、**不給鎮咳劑**、tranexamic acid；緊急胸腔科（硬式支氣管鏡）／介入放射科（支氣管動脈栓塞）。",
+      "steps": [
+        "叫後線 + 胸腔科／介入放射科；患側朝下側躺（已知側）；O₂、抽吸備妥",
+        "IV × 2、CBC、PT/aPTT/INR、type & cross、ABG；停抗凝／抗血小板、矯正凝血（Ch30）",
+        "先排除口鼻／上消化道來源",
+        "氣道惡化 → 早期插管（大管徑 ETT ≥ 8.0，必要時選擇性插入健側）",
+        "CXR → CT 血管攝影定位；緊急硬式支氣管鏡／支氣管動脈栓塞",
+        "**不給鎮咳劑**"
+      ],
+      "orders": [
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV", "freq": "q8h", "alt": "霧化 500 mg", "note": "CrCl {round(crcl)} 依院內調整" },
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "NRM", "freq": "持續", "note": "隨時準備插管" }
+      ],
+      "watch": ["SpO₂、RR、出血量每 15 min", "Hb q4–6h、凝血"],
+      "call": ["大量咳血當下立刻後線 + 胸腔科／介入放射科", "需插管、SpO₂ < 90%"],
+      "refs": [{ "ch": "07", "q": "大量咳血" }, { "ch": "30", "q": "逆轉" }]
+    },
+    "r_hyperventilation": {
+      "type": "result",
+      "urgency": "green",
+      "title": "過度換氣／焦慮（排除診斷）",
+      "summary": "先排除低氧與代謝原因（SpO₂、ABG、血糖、ECG）後才能下此診斷；安撫、腹式呼吸、lorazepam；**不要用紙袋**。",
+      "steps": [
+        "SpO₂ 正常、肺部聽診正常、ECG 正常、血糖正常；ABG 排除代謝性酸中毒（DKA、乳酸）",
+        "排除 PE（VTE 危險因子？）、氣喘、ACS",
+        "安撫、腹式呼吸、減少刺激；不要用紙袋（可能缺氧）",
+        "反覆發作或不確定 → 觀察並交班"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO", "freq": "STAT，可 q6h PRN", "note": "老人、CO₂ 滯留者小心" }
+      ],
+      "watch": ["SpO₂、RR 30 分鐘後複評", "新出現胸痛、低氧 → 重新評估"],
+      "call": ["SpO₂ < 92%、RR > 30 持續、意識改變"],
+      "refs": [{ "ch": "07", "q": "過度換氣" }]
+    },
+    "r_opioid": {
+      "type": "result",
+      "urgency": "red",
+      "title": "鴉片類過量：RR < 8 + 針尖瞳孔",
+      "summary": "BVM 給氧，**naloxone 0.4 mg IV**，停鴉片類；長效製劑（貼片、緩釋）需持續觀察。",
+      "steps": [
+        "BVM + O₂ 15 L 每 5–6 秒一次；SpO₂／心電監測",
+        "Naloxone IV；停所有鴉片類（撕貼片、停 PCA）",
+        "血糖、ABG；找其他鎮靜劑（BZD）",
+        "反應後仍需觀察（naloxone 作用比多數鴉片短）；長效製劑考慮重複給或滴注（依後線）"
+      ],
+      "orders": [
+        { "drug": "Naloxone", "dose": "0.4 mg", "route": "IV", "freq": "STAT；q2–3 min 可重複，直到 RR ≥ 12（Ch1）", "note": "目標「維持呼吸」不必完全清醒（急性戒斷）；藥效 30–60 min 需觀察" },
+        { "drug": "O₂", "dose": "15 L/min", "route": "BVM／NRM", "freq": "持續", "note": "RR < 8 用 BVM" }
+      ],
+      "watch": ["RR、SpO₂、意識 q15 min × 2 hr 以上（再鎮靜）", "疼痛反彈"],
+      "call": ["RR < 8、需 BVM、naloxone 無反應", "需要 naloxone 滴注／ICU"],
+      "refs": [{ "ch": "07", "q": "naloxone" }]
+    },
+    "r_stridor": {
+      "type": "result",
+      "urgency": "red",
+      "title": "上呼吸道阻塞（喘鳴 stridor）／異物",
+      "summary": "**立刻叫後線／ENT／麻醉，準備困難氣道（環甲膜切開）**；坐姿、高流量 O₂、epinephrine 霧化、dexamethasone IV；能講話代表氣道暫時通。",
+      "steps": [
+        "叫後線 + ENT + 麻醉；不要平躺、不要壓舌；推急救車、困難氣道車（環甲膜切開組）",
+        "坐姿、高流量 O₂；移除異物／假牙、抽吸",
+        "Epinephrine 霧化 + dexamethasone IV；過敏（蕁麻疹／臉腫）→ epinephrine IM",
+        "異物：清醒可咳 → 鼓勵咳嗽；無法咳／說話 → 背部拍擊 5 次 + 腹部推擠 5 次交替（AHA 2025）；失去意識 → CPR，每次給氣前檢查口腔可見異物",
+        "穩定者：頸部側位 X 光／CT；不穩定不要送檢查"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1:1,000", "dose": "1–5 mg", "route": "霧化", "freq": "STAT，可重複", "note": "喉水腫" },
+        { "drug": "Dexamethasone", "dose": "8–10 mg", "route": "IV", "freq": "STAT", "note": "" },
+        { "drug": "O₂", "dose": "15 L/min", "route": "NRM（高流量）", "freq": "持續", "note": "" },
+        { "drug": "Epinephrine 1:1,000", "dose": "{wt < 50 ? 0.3 : 0.5} mg", "route": "IM 大腿外側", "freq": "q5–15 min PRN", "note": "僅過敏性（蕁麻疹／臉腫／已知過敏原）；依 {wt} kg" }
+      ],
+      "watch": ["喘鳴、講話、SpO₂、意識 連續", "惡化 = 立刻氣道處置，不等檢查"],
+      "call": ["喘鳴當下 = 後線 + ENT + 麻醉", "無法 BVM、SpO₂ 掉 → 環甲膜切開"],
+      "refs": [{ "ch": "07", "q": "上呼吸道阻塞、異物" }, { "ch": "23", "q": "紅旗（氣道急症）" }],
+      "next": [{ "label": "過敏性 → 過敏性休克處置", "next": "r_anaphylaxis" }, { "label": "需插管 → RSI", "next": "r_intubate" }]
+    },
+    "r_anaphylaxis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "過敏性反應／過敏性休克",
+      "summary": "**Epinephrine IM 是唯一一線藥**（抗組織胺與類固醇不能取代）；輸液 1 L bolus；IM × 2–3 次無效 → epinephrine 滴注；停致敏藥；觀察 ≥ 6–24 hr（雙相反應）。",
+      "steps": [
+        "停致敏藥／輸血／顯影劑；叫後線；平躺抬腿（喘者坐起）",
+        "Epinephrine IM 大腿外側，5–15 min 可重複；O₂ 15 L；IV × 2、輸液 bolus",
+        "心電監測、SpO₂；喉水腫惡化 → 早期插管（困難氣道，叫麻醉）",
+        "哮鳴 → salbutamol 霧化；IM × 2–3 次無效或持續低血壓 → epinephrine 滴注（避免只用純 α 升壓劑）",
+        "輔助：diphenhydramine、famotidine、methylprednisolone（不治療休克）",
+        "服用 β-blocker 對 epinephrine 反應差 → glucagon",
+        "觀察：僅蕁麻疹／輕微支氣管痙攣 ≥ 6 hr，其餘住院；記錄過敏",
+        "ACEI／ARNI 血管性水腫（無蕁麻疹、舌唇喉）：藥效差 → 停藥、以氣道為主"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1:1,000（1 mg/mL）", "dose": "{wt < 50 ? '0.3 mg（0.3 mL）' : '0.5 mg（0.5 mL）'}", "route": "IM 大腿外側", "freq": "q5–15 min PRN（通常 ≤ 3 次）", "note": "首選；勿 IV bolus（除非心跳停止）；< 50 kg 0.3 mg（{wt} kg）" },
+        { "drug": "NS／LR", "dose": "1,000 mL", "route": "IV bolus", "freq": "重複至血壓改善（可至 2–3 L）", "note": "心衰竭 250–500 mL" },
+        { "drug": "O₂", "dose": "15 L/min", "route": "NRM", "freq": "持續", "note": "" },
+        { "drug": "Epinephrine 持續", "dose": "0.05–0.1 mcg/kg/min ＝ {round(wt*0.3)}–{round(wt*0.6)} mL/hr，titrate to max 0.5 mcg/kg/min", "route": "IV drip", "freq": "持續", "note": "IM × 2–3 次無效或持續低血壓；泡法 1 mg in NS 100 mL（10 mcg/mL）；依 {wt} kg" },
+        { "drug": "Salbutamol", "dose": "5 mg", "route": "霧化", "freq": "q20 min PRN", "note": "支氣管痙攣" },
+        { "drug": "Diphenhydramine", "dose": "30–50 mg", "route": "IV／IM", "freq": "q6h", "note": "只緩解蕁麻疹／癢；不治療休克" },
+        { "drug": "Famotidine", "dose": "20 mg", "route": "IV", "freq": "q12h", "note": "輔助" },
+        { "drug": "Methylprednisolone", "dose": "{clamp(round(wt),40,125)}–{clamp(round(wt*2),40,125)} mg（1–2 mg/kg）", "route": "IV", "freq": "QD × 1–2 天", "note": "可能減少雙相反應（證據弱）；依 {wt} kg" },
+        { "drug": "Glucagon", "dose": "1–2 mg over 5 min → 5–15 mcg/min", "route": "IV", "freq": "持續", "note": "服用 β-blocker 對 epinephrine 反應差者；嘔吐" }
+      ],
+      "watch": ["BP、HR、SpO₂、喘鳴 q5 min 至穩定，之後 q1h", "雙相反應 8–10 hr 內最多、最晚 72 hr；觀察 ≥ 6–24 hr", "epinephrine 副作用：心悸、胸痛（老人 ECG）"],
+      "call": ["過敏性休克當下 = 後線；喉水腫／喘鳴 → 麻醉／ENT", "IM × 2 無效、需 epinephrine 滴注、需插管"],
+      "ddx": ["ACEI 血管性水腫（無蕁麻疹）", "輸血反應（TRALI／TACO）", "氣喘發作"],
+      "refs": [{ "ch": "07", "q": "過敏性反應／過敏性休克" }, { "ch": "14", "q": "過敏" }],
+      "next": [{ "label": "喉水腫惡化 → 氣道處置", "next": "r_stridor" }, { "label": "需插管 → RSI", "next": "r_intubate" }]
+    },
+    "r_workup": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "喘、原因不明：系統性評估",
+      "summary": "給氧、監測，做 ABG、CXR、ECG、床邊超音波與抽血，依結果回到對應處置；別忘代謝性酸中毒（Kussmaul）與貧血。",
+      "steps": [
+        "O₂ 目標 94–98%（CO₂ 滯留 88–92%）；上調後 5–10 min 重新評估",
+        "ABG：pH、PaCO₂（Type 1 vs Type 2）、P/F、乳酸、HCO₃⁻；A–a gradient",
+        "CXR、12 導程 ECG、床邊超音波（B-lines、肺滑動、積液、心功能、IVC）",
+        "CBC（貧血）、電解質、BUN/Cr、血糖、肝功能、NT-proBNP（< 300 幾乎排除心衰竭）、troponin、D-dimer（PE 驗前機率低–中）、CRP",
+        "近期輸血（TACO／TRALI）、新藥（過敏、amiodarone、β-blocker）、顯影劑、I/O 正平衡",
+        "依結果：肺水腫／氣喘／COPD／肺炎／PE／積液 → 對應處置"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "nasal cannula 2–6 L → simple mask 6–10 L → NRM 10–15 L", "route": "依需求上調", "freq": "持續，目標 SpO₂ 94–98%", "note": "COPD／CO₂ 滯留 88–92%；NRM 15 L 仍 < 90% → BVM + 插管準備／HFNC／NIV" }
+      ],
+      "watch": ["RR、SpO₂、意識 q15–30 min 至診斷明確", "ABG 1 小時後（若初次異常）"],
+      "call": ["RR > 30 或 < 8、SpO₂ < 90%（NRM < 92%）、需 NIV／HFNC／插管", "PaCO₂ 急性 > 50 且 pH < 7.30、意識改變、需升壓劑"],
+      "refs": [{ "ch": "07", "q": "動脈血氣快速判讀" }, { "ch": "07", "q": "檢驗／檢查" }],
+      "next": [{ "label": "回到「最像哪一種」", "next": "q_cause" }]
+    },
+    "r_resp_failure": {
+      "type": "result",
+      "urgency": "red",
+      "title": "呼吸衰竭前兆：先撐住氣道與氧合，再找原因",
+      "summary": "RR > 30／< 8、SpO₂ < 90%、講不出句子、意識變差、反常呼吸：**BVM 給氧、叫後線、準備 NIV／HFNC／插管**；同時 ABG 決定型態。",
+      "steps": [
+        "叫後線（邊叫邊做）；推急救車、BVM + O₂ 15 L、抽吸；心電監測、IV × 2",
+        "NRM 15 L；仍 < 90% → BVM（每 5–6 秒一次、看到胸起即可）",
+        "ABG：Type 1（PaO₂ < 60、PaCO₂ 正常／低）→ HFNC／NIV／插管；Type 2（PaCO₂ > 45–50、pH < 7.35）→ NIV，pH < 7.25 或無效 → 插管",
+        "神經肌肉無力：NIF < −30 cmH₂O 或 VC < 15–20 mL/kg → ICU、準備插管",
+        "插管適應症：NRM／HFNC 下 SpO₂ < 88–90%、P/F < 100–150、NIV 無效 pH < 7.25、GCS ≤ 8／無法保護氣道、RR > 35 反常呼吸、休克；「你覺得他快不行了」也是",
+        "同時快速處置可逆原因：哮鳴 → 霧化；肺水腫 → furosemide + NTG + NIV；過敏 → epinephrine；氣胸 → 減壓；RR < 8 + 針尖瞳孔 → naloxone",
+        "HFNC：低氧性（P/F < 300、PaCO₂ 正常）；ROX（SpO₂/FiO₂ ÷ RR）2 hr < 2.85、6 hr < 3.47、12 hr < 3.85 → 失敗風險高，考慮插管"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "15 L/min", "route": "NRM → BVM", "freq": "持續", "note": "儲氣袋充滿；BVM 雙手 E-C 手法、口咽呼吸道" },
+        { "drug": "HFNC", "dose": "30–60 L/min，FiO₂ 依目標", "route": "鼻", "freq": "持續", "note": "低氧性呼吸衰竭（PaCO₂ 正常）、拔管後；ROX index 追蹤" }
+      ],
+      "watch": ["RR、SpO₂、意識、呼吸功 連續", "ABG 30–60 min 後（NIV／HFNC 後 1–2 hr）", "NIV／HFNC 無改善 → 插管，不要拖"],
+      "call": ["RR > 30 或 < 8、SpO₂ < 90%（NRM < 92%）、需 NIV／HFNC／插管", "PaCO₂ 急性 > 50 且 pH < 7.30、意識改變、需升壓劑", "插管前一定叫後線（除非已無時間，也要邊叫邊做）"],
+      "refs": [{ "ch": "07", "q": "呼吸衰竭的處置" }, { "ch": "07", "q": "表 7-1" }],
+      "next": [
+        { "label": "NIV 設定與禁忌", "next": "r_niv" },
+        { "label": "插管：7 P + RSI 藥物", "next": "r_intubate" },
+        { "label": "找原因：最像哪一種？", "next": "q_cause" }
+      ]
+    },
+    "r_niv": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "非侵襲性正壓通氣（NIV）",
+      "summary": "最有實證：COPD 高碳酸（pH < 7.35）、心因性肺水腫；**1–2 小時後評估**（pH、PaCO₂、RR、意識），無改善或惡化 → 插管，不要拖。",
+      "steps": [
+        "確認無禁忌：呼吸／心跳停止、無法保護氣道／GCS < 10（CO₂ 麻醉可短暫試）、大量分泌物／嘔吐、上消化道出血、面部創傷／手術、氣胸未引流、血行不穩、不合作",
+        "坐起、選合適面罩、先低壓讓病人適應再上調；床邊備 BVM 與插管車",
+        "SpO₂／心電監測；FiO₂ 依目標（94–98%；CO₂ 滯留 88–92%）",
+        "1–2 小時後 ABG：pH、PaCO₂、RR、意識、舒適度",
+        "瀕危氣喘（嗜睡、沉默胸）不要用 NIV 拖延插管"
+      ],
+      "orders": [
+        { "drug": "BiPAP", "dose": "IPAP 10–12（可至 20）cmH₂O／EPAP 4–6 cmH₂O", "route": "面罩", "freq": "持續；1–2 hr 後評估", "note": "COPD 高碳酸首選" },
+        { "drug": "CPAP", "dose": "5–10 cmH₂O", "route": "面罩", "freq": "持續", "note": "心因性肺水腫" }
+      ],
+      "watch": ["RR、SpO₂、意識、同步性 q15 min × 1 hr", "ABG 1–2 hr；血壓（正壓 → 低血壓）、腹脹／嘔吐", "皮膚壓傷（鼻樑）"],
+      "call": ["開始 NIV 就通知後線", "1–2 hr 無改善、pH ↓、意識變差、無法耐受 → 插管"],
+      "refs": [{ "ch": "07", "q": "非侵襲性正壓通氣" }],
+      "next": [{ "label": "NIV 無效 → 插管", "next": "r_intubate" }]
+    },
+    "r_intubate": {
+      "type": "result",
+      "urgency": "red",
+      "title": "氣管內插管：7 P + RSI 藥物（依 {wt} kg）",
+      "summary": "叫後線／麻醉（困難氣道一律叫，勿單獨嘗試）；預氧 3–5 min + apneic oxygenation；低血壓先輸液／升壓劑；**先誘導再肌鬆**，30–45 秒後插管；EtCO₂ 波形確認。",
+      "steps": [
+        "Preparation：吸痰、BVM、ETT（女 7.0–7.5、男 7.5–8.0）+ 10 mL 空針測 cuff、通條、喉頭鏡 Mac 3/4 或影像喉頭鏡、口咽呼吸道、bougie、LMA 備用、EtCO₂、固定帶；監測 ECG／SpO₂／BP q1–2 min；IV × 2；升壓劑備用；LEMON 評估困難氣道",
+        "Pre-oxygenation：NRM 15 L 或 BVM 3–5 min 至 SpO₂ ≥ 95%；nasal cannula 15 L 做 apneic oxygenation；低氧者可用 NIV 預氧；床頭 20–30°",
+        "Pre-treatment／Optimization：低血壓先 NS 500 mL、升壓劑；PE／右心衰竭者插管風險極高",
+        "Paralysis with induction：誘導（ketamine／etomidate／propofol）→ 肌鬆（succinylcholine／rocuronium），30–45 秒後插管",
+        "Positioning：sniffing position（外耳道與胸骨切跡同高）",
+        "Placement with proof：看到聲門 → 過聲帶 → 深度門牙處男 22–23、女 20–21 cm → cuff 5–8 mL → **EtCO₂ 波形** + 雙側呼吸音 + 上腹無氣泡音 → CXR（尖端 carina 上 3–5 cm）",
+        "Post-intubation：鎮靜／止痛、呼吸器設定、胃管、抬床頭 30°、血壓（插管後低血壓常見）、PPI",
+        "不確定能插上、後線不在、無法 BVM → 考慮只用 ketamine 鎮靜保留自主呼吸，或等麻醉科"
+      ],
+      "orders": [
+        { "drug": "O₂（預氧）", "dose": "NRM 15 L/min + nasal cannula 15 L/min", "route": "面罩 + 鼻導管", "freq": "3–5 min 至 SpO₂ ≥ 95%，鼻導管插管中持續", "note": "apneic oxygenation" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV bolus", "freq": "插管前（低血壓者）", "note": "心／腎衰竭 250 mL；升壓劑備用" },
+        { "drug": "Fentanyl（前給藥）", "dose": "{round(wt)}–{round(wt*3)} mcg（1–3 mcg/kg）", "route": "IV push over 1–2 min", "freq": "誘導前 2–3 min", "note": "減少交感反應（ICP↑、主動脈剝離、ACS）；胸壁僵硬；非必要" },
+        { "drug": "Ketamine（誘導）", "dose": "{round(wt)}–{round(wt*2)} mg（1–2 mg/kg；休克 {round(wt*0.5)}–{round(wt)} mg）", "route": "IV push", "freq": "單次，起效 45–60 s", "note": "血行動力不穩、氣喘首選；ICP↑ 非禁忌" },
+        { "drug": "Etomidate（誘導）", "dose": "{round(wt*0.3,1)} mg（0.3 mg/kg）", "route": "IV push", "freq": "單次，起效 30–60 s", "note": "血行動力最穩；短暫腎上腺抑制（敗血症可用但避免重複）；肌陣攣", "alt": "Propofol {round(wt)}–{round(wt*2)} mg（低血壓／老年 {round(wt*0.5)}–{round(wt)} mg）：低血壓明顯" },
+        { "drug": "Succinylcholine（肌鬆）", "dose": "{round(wt*1.5)} mg（1.5 mg/kg，總量 100–150 mg）", "route": "IV push", "freq": "誘導後單次，起效 45–60 s，持續 6–10 min", "note": "禁忌：高血鉀、燒傷／大面積創傷／中風／脊髓損傷／臥床去神經 > 72 hr、神經肌肉疾病、橫紋肌溶解、惡性高熱史、心搏過緩史" },
+        { "drug": "Rocuronium（肌鬆）", "dose": "{round(wt)}–{round(wt*1.2)} mg（1.0–1.2 mg/kg）", "route": "IV push", "freq": "誘導後單次，起效 45–60 s，持續 45–70 min", "note": "無 succinylcholine 禁忌疑慮；插管失敗可 sugammadex 16 mg/kg ＝ {round(wt*16)} mg 逆轉" },
+        { "drug": "Epinephrine push-dose", "dose": "10–20 mcg", "route": "IV push", "freq": "PRN 插管後低血壓", "note": "或 norepinephrine 滴注備用" }
+      ],
+      "watch": ["SpO₂、BP q1–2 min 插管中；EtCO₂ 波形", "插管後 15–30 min BP（低血壓）、CXR、ABG 30 min", "突然惡化 → DOPE"],
+      "call": ["插管前一定通知後線／麻醉（困難氣道一律叫）", "兩次失敗、無法 BVM、SpO₂ 持續掉 → 聲門上氣道／環甲膜切開，立刻叫麻醉"],
+      "refs": [{ "ch": "07", "q": "表 7-2" }, { "ch": "07", "q": "氣管內插管" }],
+      "next": [{ "label": "插管後鎮靜 + 呼吸器設定", "next": "r_postintub" }, { "label": "插管後突然惡化 → DOPE", "next": "r_dope" }]
+    },
+    "r_postintub": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "插管後：呼吸器初始設定 + 鎮靜止痛（依 {wt} kg）",
+      "summary": "VC／AC：VT 6–8 mL/kg 理想體重（ARDS 6）、RR 16–20、PEEP 5、FiO₂ 1.0 → 下調；**先止痛再鎮靜**，目標 RASS 0 至 −2；30 分鐘後 ABG。",
+      "steps": [
+        "呼吸器（volume control／AC）：VT 6–8 mL/kg 理想體重（實重 {wt} kg 約 {round(wt*6)}–{round(wt*8)} mL，肥胖者以 IBW 計；ARDS 6）、RR 16–20、PEEP 5 cmH₂O、FiO₂ 1.0 → 依 SpO₂ 94–98%（CO₂ 滯留 88–92%）下調至 FiO₂ < 0.6，不夠再加 PEEP",
+        "30 分鐘後 ABG 調 RR／VT；Pplat ≤ 30、driving pressure（Pplat − PEEP）< 15 cmH₂O；ARDS P/F < 150 → 俯臥 ≥ 16 hr（ICU）",
+        "先止痛（fentanyl）再鎮靜（propofol／dexmedetomidine）；每日鎮靜中斷、自主呼吸試驗",
+        "胃管、抬床頭 30°、PPI 壓力性潰瘍預防、CXR 確認深度",
+        "血壓：插管後低血壓常見（正壓 + 藥物 + 交感消失）→ 輸液／升壓劑",
+        "突然惡化（PIP↑、SpO₂↓、BP↓）→ DOPE"
+      ],
+      "orders": [
+        { "drug": "Fentanyl", "dose": "25–100 mcg bolus → {round(wt*0.5)}–{round(wt*3)} mcg/hr（0.5–3 mcg/kg/hr；一般 25–200 mcg/hr）", "route": "IV drip", "freq": "持續", "note": "首選止痛；泡法 1,000 mcg in NS 100 mL（10 mcg/mL）→ mcg/hr ÷ 10 = mL/hr；血壓影響小；長期累積" },
+        { "drug": "Propofol", "dose": "5–50 mcg/kg/min ＝ {round(wt*0.3)}–{round(wt*3)} mg/hr（0.3–3 mg/kg/hr）", "route": "IV drip", "freq": "持續", "note": "原液 10 mg/mL；快醒；低血壓、高 TG、PRIS（> 4 mg/kg/hr > 48 hr）" },
+        { "drug": "Dexmedetomidine", "dose": "0.2–1.4 mcg/kg/hr ＝ {round(wt*0.2)}–{round(wt*1.4)} mcg/hr（不 loading）", "route": "IV drip", "freq": "持續", "note": "泡法 200 mcg in NS 50 mL（4 mcg/mL）→ mcg/hr ÷ 4 = mL/hr；保留呼吸驅動、譫妄少；心搏過緩、低血壓；不適合深鎮靜" },
+        { "drug": "Midazolam", "dose": "1–2 mg bolus → 1–5 mg/hr（0.02–0.1 mg/kg/hr）", "route": "IV drip", "freq": "持續", "note": "二線；50 mg in NS 50 mL；累積、譫妄" },
+        { "drug": "Morphine", "dose": "2–4 mg bolus → 1–10 mg/hr", "route": "IV drip", "freq": "持續", "note": "fentanyl 替代；50 mg in NS 50 mL（1 mg/mL）；低血壓、腎衰竭累積（CrCl {round(crcl)}）" },
+        { "drug": "Pantoprazole", "dose": "40 mg", "route": "IV", "freq": "QD", "note": "壓力性潰瘍預防（劑量依 Ch8）" }
+      ],
+      "watch": ["RASS q1–2h（目標 0 至 −2）、BP、HR", "ABG 30 min 後、Pplat／driving pressure q4h、PIP alarm", "每日鎮靜中斷、SBT；TG（propofol > 48 hr）"],
+      "call": ["插管後低血壓需升壓劑、Pplat > 30、P/F < 150", "ICU 轉入安排"],
+      "refs": [{ "ch": "07", "q": "表 7-3" }, { "ch": "07", "q": "初始呼吸器設定" }],
+      "next": [{ "label": "突然惡化 → DOPE", "next": "r_dope" }]
+    },
+    "r_dope": {
+      "type": "result",
+      "urgency": "red",
+      "title": "插管病人突然惡化（PIP↑、SpO₂↓、BP↓）：DOPE",
+      "summary": "**先脫離呼吸器改 BVM 100% O₂**、聽診、抽痰、查 CXR／ABG；**D**isplacement、**O**bstruction、**P**neumothorax（張力性 → 針刺減壓）、**E**quipment。",
+      "steps": [
+        "脫離呼吸器 → BVM + O₂ 15 L 手壓（感受阻力）；叫後線／RT",
+        "D：管子移位／滑出 → 深度（男 22–23、女 20–21 cm）、EtCO₂、雙側呼吸音；滑出 → 拔掉 BVM 重插",
+        "O：痰栓、咬管 → 抽痰、bite block；抽痰管過不去 = 阻塞 → 換管",
+        "P：單側呼吸音消失 + 低血壓 + 氣管偏移 → 針刺減壓（不等 CXR）",
+        "E：管路、呼吸器故障 → 換 BVM 就改善 = 機器問題",
+        "PIP↑ 而 Pplat 正常 = 氣道阻力（支氣管痙攣、痰）→ 霧化、抽痰；兩者都↑ = 肺順應性差（氣胸、肺水腫、auto-PEEP → 脫離呼吸器讓病人吐氣）",
+        "CXR、ABG；鎮靜不足／人機不同步 → 加深鎮靜"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "15 L/min（FiO₂ 100%）", "route": "BVM 手壓", "freq": "持續至找到原因", "note": "抽吸備妥" },
+        { "drug": "Salbutamol", "dose": "2.5–5 mg", "route": "霧化（經呼吸器）", "freq": "STAT", "note": "支氣管痙攣（PIP↑、Pplat 正常）" }
+      ],
+      "watch": ["SpO₂、BP、EtCO₂、PIP／Pplat 連續", "CXR 後管子位置、氣胸"],
+      "call": ["惡化當下立刻後線／RT／ICU；疑張力性氣胸、ETT 滑出需重插"],
+      "refs": [{ "ch": "07", "q": "插管後突然惡化" }],
+      "next": [{ "label": "張力性氣胸 → 針刺減壓", "next": "r_tension" }, { "label": "需重新插管 → RSI", "next": "r_intubate" }]
+    }
+  }
+}

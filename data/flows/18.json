@@ -1,0 +1,351 @@
+{
+  "id": "18",
+  "title": "高血壓",
+  "chapter": "18",
+  "entries": [
+    { "label": "血壓高（護理師通知 BP 高）", "type": "symptom", "start": "q_recheck", "group": "生命徵象",
+      "keywords": ["高血壓", "血壓高", "血壓飆高", "HTN", "hypertension", "BP 180", "BP 200", "血壓 190"] },
+    { "label": "高血壓急症（有器官損傷）", "type": "diagnosis", "start": "q_organ",
+      "keywords": ["高血壓急症", "hypertensive emergency", "急性標的器官損傷"] },
+    { "label": "高血壓 urgency／住院血壓高（無症狀）", "type": "diagnosis", "start": "r_urgency",
+      "keywords": ["hypertensive urgency", "無症狀高血壓", "嚴重無症狀高血壓"] },
+    { "label": "子癲前症／子癲症", "type": "diagnosis", "start": "r_preeclampsia",
+      "keywords": ["子癲前症", "子癲症", "preeclampsia", "eclampsia", "HELLP", "懷孕高血壓"] },
+    { "label": "自律神經反射失調（脊髓損傷）", "type": "diagnosis", "start": "r_autonomic",
+      "keywords": ["自律神經反射失調", "autonomic dysreflexia", "脊髓損傷 高血壓"] },
+    { "label": "嗜鉻細胞瘤／擬交感中毒高血壓", "type": "diagnosis", "start": "r_pheo",
+      "keywords": ["嗜鉻細胞瘤", "pheochromocytoma", "安非他命 高血壓", "cocaine", "古柯鹼"] }
+  ],
+  "nodes": {
+    "q_recheck": {
+      "type": "info",
+      "title": "電話中先確認三件事",
+      "body": [
+        "**重測**：休息 5 分鐘、正確壓脈帶（氣囊 ≥ 上臂周長 80%）、坐姿手臂與心臟同高、**雙側**都量",
+        "**症狀**：頭痛、視力模糊、意識改變、抽搐、胸痛、喘、背痛、局部無力、少尿",
+        "**今天血壓藥有沒有給**（NPO 被停？漏給？）；疼痛、焦慮、尿滯留、便秘？",
+        "有症狀 → IV、監測器、ECG、立刻到床邊；無症狀 → 先給該給的口服藥、30–60 分鐘後複測"
+      ],
+      "next": "q_sbp"
+    },
+    "q_sbp": {
+      "type": "number",
+      "title": "重測後收縮壓（SBP）？",
+      "help": "雙側差 > 20 mmHg → 想主動脈剝離／鎖骨下狹窄，以較高側為準",
+      "var": "sbp", "unit": "mmHg", "step": 1,
+      "quick": [150, 170, 180, 200, 220],
+      "branches": [
+        { "if": "sbp >= 180", "next": "q_organ" },
+        { "if": "sbp >= 160", "next": "q_sx_mod" },
+        { "else": "r_mild" }
+      ]
+    },
+    "q_sx_mod": {
+      "type": "choice",
+      "title": "SBP 160–179：有任何器官損傷症狀嗎？",
+      "help": "頭痛+視力／意識改變、胸痛、背痛、喘、局部無力、少尿",
+      "options": [
+        { "label": "有症狀", "next": "q_organ" },
+        { "label": "沒有症狀", "next": "r_urgency" }
+      ]
+    },
+    "q_organ": {
+      "type": "choice",
+      "title": "哪一種標的器官表現？（選最主要的）",
+      "help": "高血壓急症 = BP 通常 > 180/120 + 急性器官損傷；沒有損傷就不是急症",
+      "options": [
+        { "label": "撕裂樣胸／背痛、脈搏不對稱、雙側血壓差 > 20", "next": "r_dissection" },
+        { "label": "胸痛、ECG 缺血變化（ACS）", "next": "r_acs" },
+        { "label": "喘、囉音、SpO₂ 掉（急性肺水腫）", "next": "r_pulm_edema" },
+        { "label": "局部無力／失語（懷疑中風）", "next": "r_stroke" },
+        { "label": "頭痛 + 意識改變／視力／癲癇（腦病變、PRES；CT 正常）", "next": "r_enceph" },
+        { "label": "已知顱內出血／SAH", "next": "r_ich" },
+        { "label": "Cr 急升、血尿、MAHA（AKI／TMA）", "next": "r_aki" },
+        { "label": "懷孕 > 20 週或產後 6 週內", "next": "r_preeclampsia" },
+        { "label": "陣發心悸、盜汗、躁動（嗜鉻細胞瘤／安非他命）", "next": "r_pheo" },
+        { "label": "T6 以上脊髓損傷 + 頭痛潮紅", "next": "r_autonomic" },
+        { "label": "以上都沒有（純粹血壓高）", "next": "r_urgency" }
+      ]
+    },
+    "r_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "SBP < 160，無症狀：處理原因、口服藥、複測",
+      "summary": "這不是急症。找反應性原因（疼痛、焦慮、尿滯留、便秘、缺氧、譫妄），補回漏掉的長期藥，不需要 IV 藥、不需要快速降壓。",
+      "steps": [
+        "確認今天的降壓藥是否已給；NPO 被停的藥多數可以恢復（可配少量水服）",
+        "處理反應性原因：止痛、抗焦慮、導尿（膀胱脹）、通便、給氧、處理譫妄",
+        "30–60 分鐘後複測；記錄並交班給原團隊調整長期藥",
+        "**不要用舌下／咬破 nifedipine 速效劑**"
+      ],
+      "orders": [
+        { "drug": "（恢復原有降壓藥）", "dose": "原劑量", "route": "PO", "freq": "依原醫囑", "note": "漏給者補給；clonidine／β-blocker 停用會反彈" },
+        { "drug": "Amlodipine", "dose": "5 mg", "route": "PO", "freq": "QD（新加藥時）", "note": "起效 6–12 hr，平穩；持續 > 160/100 且無法補原藥時考慮" }
+      ],
+      "watch": ["30–60 分鐘複測 BP", "新出現症狀 → 回到「器官損傷」評估"],
+      "call": ["口服藥後 2–4 小時仍 > 200/120 且有症狀", "出現任何標的器官症狀"],
+      "refs": [{ "ch": "18", "q": "IV. 高血壓急症以外" }, { "ch": "18", "q": "表 18-3" }]
+    },
+    "r_urgency": {
+      "type": "result",
+      "urgency": "green",
+      "title": "嚴重無症狀高血壓（hypertensive urgency）",
+      "summary": "BP ≥ 180/120 但**沒有急性器官損傷**：不需 IV 藥，口服藥數小時至 24–48 小時內降到 < 160/100，數天內回目標；一次不降 > 25%。",
+      "steps": [
+        "重測（正確壓脈帶、雙側）；快速排除器官損傷：神經學檢查、胸痛／喘、尿量",
+        "處理反應性原因：疼痛、焦慮、尿滯留、便秘、缺氧／CO₂ 滯留、譫妄、寒冷",
+        "恢復／補給漏掉的長期降壓藥（最常見原因）",
+        "檢驗：BUN/Cr、電解質、尿液（蛋白／血尿）、ECG；依症狀加 troponin、CXR",
+        "口服加藥（下列擇一），1–2 小時複測；交班原團隊調整"
+      ],
+      "orders": [
+        { "drug": "Amlodipine", "dose": "5–10 mg", "route": "PO", "freq": "QD", "note": "平穩、慢（6–12 hr 起效）；長期首選之一" },
+        { "drug": "Nifedipine ER（緩釋）", "dose": "30–60 mg", "route": "PO", "freq": "QD", "note": "1–2 hr 起效；懷孕可用；**速效 nifedipine 禁用**" },
+        { "drug": "Labetalol", "dose": "100–200 mg", "route": "PO", "freq": "q8–12h", "note": "懷孕可用；氣喘／COPD、HR < 60、AV block 禁" },
+        { "drug": "Captopril", "dose": "12.5–25 mg", "route": "PO", "freq": "STAT，可 q6–8h", "note": "15–30 min 起效；腎動脈狹窄、高血鉀、懷孕禁；AKI 慎" },
+        { "drug": "Hydralazine", "dose": "10–25 mg", "route": "PO", "freq": "q6–8h", "note": "反射頻脈、頭痛" },
+        { "drug": "Furosemide", "dose": "20–40 mg", "route": "PO／IV", "freq": "STAT", "note": "僅體液過多（水腫、囉音）時" }
+      ],
+      "watch": ["1–2 小時複測；目標 24–48 小時 < 160/100", "降壓後新神經症狀 = 降太快"],
+      "call": ["口服藥後 2–4 小時仍 > 200/120 且有症狀", "出現任何標的器官損傷症狀 → 改依急症處理"],
+      "refs": [{ "ch": "18", "q": "IV. 高血壓急症以外" }, { "ch": "18", "q": "表 18-3" }],
+      "next": [{ "label": "體液過多（水腫、囉音）→ 加 furosemide", "next": "r_pulm_edema" }]
+    },
+    "r_dissection": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血壓急症：疑主動脈剝離",
+      "summary": "**20 分鐘內 HR < 60、SBP 100–120**：先 β-blocker（esmolol／labetalol）控制心率，再加血管擴張劑；立刻 CTA、聯絡後線與心臟外科。",
+      "steps": [
+        "雙側血壓、四肢脈搏；以**較高側**血壓為準（鎖骨下動脈受累會假性低血壓）",
+        "IV × 2、心電監測、ECG（排除 STEMI）、CXR；type & screen、CBC、Cr、troponin、D-dimer",
+        "**緊急 CTA 主動脈**（腎功能不是延誤理由）",
+        "先 β-blocker 降心率，**再**加 nicardipine 降壓；不可先給純血管擴張劑（反射頻脈增加剪力）",
+        "止痛：morphine 2–4 mg IV",
+        "Type A → 心臟外科急診手術；Type B → 藥物控制 ± 血管內治療",
+        "低血壓 → 想填塞／破裂／急性 AR，輸液至正常血容，MAP 60–65"
+      ],
+      "orders": [
+        { "drug": "Esmolol", "dose": "{round(wt*0.5)} mg（500 mcg/kg）", "route": "IV push over 1 min", "freq": "STAT → 接續滴注", "with": "Esmolol 滴注 50–300 mcg/kg/min（2,500 mg/250 mL；60 kg 50 mcg/kg/min ≈ 18 mL/hr）", "note": "依體重 {wt} kg 計算；目標 HR < 60" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IV push over 2 min", "freq": "q10 min 加倍（20、40、80）至累計 max 300 mg，或滴注 0.5–2 mg/min", "note": "esmolol 替代；氣喘／COPD、AV block、失代償心衰竭禁", "alt": "esmolol" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min ↑ 2.5 mg/hr，max 15 mg/hr", "route": "IV drip", "freq": "持續（β-blocker 之後才加）", "note": "泡法 20 mg in NS total 40 mL（0.5 mg/mL）→ 5 mg/hr = 10 mL/hr" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN 疼痛", "note": "止痛本身就降交感" },
+        { "drug": "NS", "dose": "250 mL", "route": "IV drip over 15 min", "freq": "僅低血壓時，可重複", "note": "低血壓時想填塞／破裂；MAP 目標 60–65" }
+      ],
+      "watch": ["q5 min BP／HR（動脈導管）；目標 20 分鐘內 HR < 60、SBP 100–120", "神經學、尿量、四肢脈搏（分支缺血）", "疼痛再發或血壓失控 = 進展"],
+      "call": ["懷疑剝離當下就聯絡後線 + 心臟外科／心臟科；Type A 一律緊急手術評估", "低血壓、意識改變、新神經缺損、少尿"],
+      "ddx": ["STEMI（ECG）", "PE", "心包填塞"],
+      "refs": [{ "ch": "06", "q": "主動脈剝離" }, { "ch": "18", "q": "表 18-2" }]
+    },
+    "r_acs": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血壓急症：ACS（胸痛 + ECG 缺血）",
+      "summary": "NTG + β-blocker，第 1 小時 MAP 降 ≤ 25%；避免 hydralazine／nifedipine（反射頻脈）；同時走 ACS 流程。",
+      "steps": [
+        "12 導程 ECG 10 分鐘內（STEMI → 立刻通知心臟科啟動 PCI）、心電監測、IV × 2",
+        "Troponin、CBC、Cr、電解質、CXR；O₂ 只在 SpO₂ < 94% 時給",
+        "Aspirin 嚼服（無禁忌）；其餘 ACS 藥物見 Ch6",
+        "NTG 滴注控制胸痛與血壓；仍高且 HR 允許 → labetalol",
+        "**24 小時內用過 sildenafil／vardenafil（tadalafil 48 小時）→ 禁 NTG**"
+      ],
+      "orders": [
+        { "drug": "Aspirin", "dose": "300 mg", "route": "PO 嚼服", "freq": "STAT", "note": "無過敏／活動性出血" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "5–10 mcg/min 起，每 3–5 min ↑ 5–10，max 200 mcg/min", "route": "IV drip", "freq": "持續", "note": "泡法 50 mg/250 mL（200 mcg/mL）→ 10 mcg/min = 3 mL/hr；SBP < 90、右心梗塞、PDE5i 禁" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IV push over 2 min", "freq": "q10 min 可加倍，累計 max 300 mg", "note": "HR < 60、AV block、氣喘、失代償心衰竭、急性肺水腫禁" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q5–15 min PRN NTG 無效的胸痛", "note": "低血壓、呼吸抑制慎" }
+      ],
+      "watch": ["q5–15 min BP；第 1 小時 MAP 降 ≤ 25%", "持續胸痛、ECG 動態變化、心律"],
+      "call": ["STEMI 或持續胸痛 → 立刻心臟科", "血壓仍 > 180 或 SBP < 90、新心衰竭"],
+      "refs": [{ "ch": "06", "q": "ACS" }, { "ch": "18", "q": "表 18-1" }]
+    },
+    "r_pulm_edema": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血壓急症：急性肺水腫（flash pulmonary edema）",
+      "summary": "坐直、O₂／NIV、**NTG 高劑量 + furosemide**；避免 β-blocker、hydralazine。降後負荷比利尿更重要。",
+      "steps": [
+        "坐起 ≥ 45°、O₂ 目標 94–98%（CO₂ 滯留 88–92%）；SpO₂ < 90% 或呼吸費力 → CPAP／BiPAP",
+        "心電監測、ECG（缺血？）、IV、Foley 記尿量",
+        "CXR、troponin、BNP、Cr、電解質、ABG（呼吸費力）",
+        "NTG 舌下 → 滴注快速上調；furosemide IV",
+        "血壓仍高 → 加 nicardipine；血壓掉／休克 → 改依 Ch19",
+        "找誘因：ACS、漏藥、輸液過多、AF、腎衰竭、瓣膜"
+      ],
+      "orders": [
+        { "drug": "Nitroglycerin（NTG）", "dose": "0.6 mg", "route": "SL", "freq": "q5 min × 3（等滴注準備時）", "note": "SBP > 110 才用（Ch7）；PDE5i 48 hr 內禁" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "10–20 mcg/min 起，每 3–5 min ↑ 10–20，max 200 mcg/min", "route": "IV drip", "freq": "持續", "note": "50 mg/250 mL（200 mcg/mL）→ 20 mcg/min = 6 mL/hr；肺水腫可較快上調" },
+        { "drug": "Furosemide", "dose": "40 mg（長期口服者：平日口服每日量的 1–2.5 倍）", "route": "IV push", "freq": "STAT；1 小時無尿量反應加倍再給", "note": "腎功能差（CrCl {round(crcl)}）者需較高劑量 80–200 mg" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min ↑ 2.5，max 15 mg/hr", "route": "IV drip", "freq": "持續（NTG 後血壓仍 > 160）", "note": "20 mg in NS total 40 mL → 5 mg/hr = 10 mL/hr" },
+        { "drug": "CPAP／BiPAP", "dose": "CPAP 5–10 cmH₂O 或 IPAP 10／EPAP 5", "route": "面罩", "freq": "持續至改善", "note": "意識不清、嘔吐、血行不穩禁；無效 30–60 min 考慮插管" }
+      ],
+      "watch": ["SpO₂、RR、BP q5–15 min；尿量每小時", "NIV 1 小時無改善或 pH ↓ → 插管準備", "K、Cr（利尿後）"],
+      "call": ["需要 NIV 或考慮插管", "SBP < 90（心因性休克）、ACS、NTG 200 mcg/min 仍喘"],
+      "refs": [{ "ch": "07", "q": "急性心衰竭" }, { "ch": "18", "q": "表 18-2" }]
+    },
+    "r_stroke": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血壓 + 疑急性缺血性中風",
+      "summary": "**不打血栓溶解就不降**（≤ 220/120 容許）；要打藥／取栓才降到 < 185/110，打後 < 180/105。先啟動中風流程（Ch1）。",
+      "steps": [
+        "記錄最後正常時間、NIHSS；立刻通知中風團隊、急做 CT（± CTA）",
+        "血糖、ECG、IV、心電監測；SpO₂ < 94% 才給氧；床頭平放（除非誤吸風險）",
+        "可溶栓者：BP < 185/110 才能打，打後 24 小時 < 180/105",
+        "不溶栓者：BP ≤ 220/120 不處理；> 220/120 才小心降 15%",
+        "降壓藥用 labetalol／nicardipine，避免舌下 nifedipine 與 hydralazine 大幅波動"
+      ],
+      "orders": [
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IV push over 2 min", "freq": "q10 min 可重複（溶栓前 BP > 185/110 時）", "note": "HR < 60、AV block、氣喘禁" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min ↑ 2.5，max 15 mg/hr", "route": "IV drip", "freq": "持續", "note": "labetalol 無效或有禁忌；20 mg in NS total 40 mL → 5 mg/hr = 10 mL/hr" }
+      ],
+      "watch": ["溶栓後 BP q15 min × 2 hr → q30 min × 6 hr → q1h；目標 < 180/105", "神經學惡化（出血）→ 停藥、急 CT"],
+      "call": ["懷疑中風當下 = 中風團隊／後線", "溶栓前 BP 兩次降不下來（> 185/110）", "降壓後神經症狀惡化"],
+      "refs": [{ "ch": "01", "q": "急性缺血性中風" }, { "ch": "18", "q": "表 18-1" }]
+    },
+    "r_enceph": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血壓腦病變／PRES",
+      "summary": "排除中風與出血（CT）後：第 1 小時 MAP 降 20–25%、之後 2–6 小時 160/100；nicardipine 或 labetalol，癲癇給 lorazepam。",
+      "steps": [
+        "ABC、血糖、GCS、瞳孔；**先 CT 頭部**排除出血／中風（PRES 需 MRI：後腦白質水腫）",
+        "IV、心電監測、ECG；Cr、電解質、CBC + 抹片（MAHA）、尿液、驗孕（育齡）",
+        "動脈導管或 q5 min BP；監測床／ICU",
+        "癲癇 → lorazepam；避免降太快（腦缺血）",
+        "找原因：漏藥、擬交感、calcineurin inhibitor、子癲前症、腎衰竭"
+      ],
+      "orders": [
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min ↑ 2.5 mg/hr，max 15 mg/hr；達標降至 3 mg/hr", "route": "IV drip", "freq": "持續", "note": "首選；20 mg in NS total 40 mL（0.5 mg/mL）→ 5 mg/hr = 10 mL/hr" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IV push over 2 min", "freq": "q10 min 加倍至累計 max 300 mg，或 0.5–2 mg/min 滴注", "note": "替代；氣喘、AV block、HR < 60 禁" },
+        { "drug": "Lorazepam", "dose": "{round(clamp(wt*0.1, 2, 4))} mg（0.1 mg/kg，max 4 mg）", "route": "IV push", "freq": "STAT，5 分鐘後可重複一次", "note": "癲癇時；依 {wt} kg；備 BVM" }
+      ],
+      "watch": ["BP q5 min；第 1 小時 MAP ↓ 20–25%，不可更多", "GCS、新局部神經徵候（降太快 → 缺血）", "尿量、Cr"],
+      "call": ["需要 IV 降壓藥／動脈導管就聯絡後線與 ICU", "GCS 下降、癲癇、局部神經徵候"],
+      "ddx": ["缺血性中風／ICH（CT）", "子癲症（懷孕）", "腦膜腦炎（發燒）"],
+      "refs": [{ "ch": "18", "q": "表 18-1" }, { "ch": "01", "q": "高血壓腦病變" }]
+    },
+    "r_ich": {
+      "type": "result",
+      "urgency": "red",
+      "title": "顱內出血／SAH 的血壓控制",
+      "summary": "ICH：SBP 目標 **140（130–150）**、避免 < 130；SAH：SBP < 160 並加 nimodipine。用 nicardipine／labetalol 平穩降，1 小時內達標。",
+      "steps": [
+        "ABC、GCS、瞳孔；床頭 30°；神經外科／神經科會診",
+        "逆轉抗凝／抗血小板（Ch1、Ch30）：warfarin → 4F-PCC + vit K；dabigatran → idarucizumab",
+        "IV、心電監測、動脈導管；血糖 140–180；體溫正常",
+        "SAH：nimodipine 60 mg PO q4h × 21 天，避免低血壓"
+      ],
+      "orders": [
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min ↑ 2.5 mg/hr，max 15 mg/hr", "route": "IV drip", "freq": "持續", "note": "首選；20 mg in NS total 40 mL → 5 mg/hr = 10 mL/hr；ICH 目標 SBP 140" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IV push over 2 min", "freq": "q10 min 可加倍（等滴注準備時）", "note": "HR < 60、AV block 禁" },
+        { "drug": "Nimodipine", "dose": "60 mg", "route": "PO／NG", "freq": "q4h × 21 天", "note": "SAH 專用（預防血管痙攣）；避免低血壓（Ch4）" }
+      ],
+      "watch": ["BP q5 min 至穩定，之後 q15 min；避免 SBP < 130（ICH）", "GCS q1h；惡化 → 急 CT", "INR／血小板（逆轉後）"],
+      "call": ["確診出血當下 = 神經外科 + 後線", "GCS 下降 ≥ 2、瞳孔不等大、新癲癇"],
+      "refs": [{ "ch": "01", "q": "顱內出血" }, { "ch": "18", "q": "表 18-1" }, { "ch": "30", "q": "逆轉" }]
+    },
+    "r_aki": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "高血壓急症 + AKI／血尿／MAHA（TMA、硬皮症腎危象）",
+      "summary": "nicardipine／labetalol 第 1 小時 MAP ↓ ≤ 25%；抹片找破碎紅血球（TMA）；**硬皮症腎危象例外：captopril 首選**。",
+      "steps": [
+        "Cr、電解質、CBC + 抹片（schistocyte）、LDH、haptoglobin、尿液（蛋白／血尿／cast）、腎臟超音波",
+        "急性期一般避免 ACEI/ARB（例外：硬皮症腎危象 = 硬皮症 + 急性高血壓 + AKI → captopril）",
+        "TMA（血小板低 + MAHA + AKI）→ 血液科／腎臟科，考慮血漿置換（Ch30）",
+        "體液過多 → furosemide；尿量、I/O"
+      ],
+      "orders": [
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min ↑ 2.5，max 15 mg/hr", "route": "IV drip", "freq": "持續", "note": "20 mg in NS total 40 mL → 5 mg/hr = 10 mL/hr" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IV push over 2 min", "freq": "q10 min 可加倍，累計 max 300 mg", "note": "替代" },
+        { "drug": "Furosemide", "dose": "40–80 mg", "route": "IV push", "freq": "STAT，體液過多時", "note": "CrCl {round(crcl)}：腎功能差者需較高劑量" }
+      ],
+      "watch": ["BP q15 min；MAP 第 1 小時 ↓ ≤ 25%", "尿量每小時、Cr q12–24h、血小板／抹片"],
+      "call": ["MAHA + 血小板低（TMA）→ 血液科／腎臟科", "無尿、K > 6、體液過多需透析"],
+      "refs": [{ "ch": "18", "q": "表 18-1" }, { "ch": "11", "q": "AKI" }],
+      "next": [{ "label": "硬皮症腎危象 → 顯示 captopril 醫囑", "next": "r_scleroderma" }]
+    },
+    "r_scleroderma": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "硬皮症腎危象",
+      "summary": "硬皮症 + 新發高血壓 + AKI：**ACEI 是治療**，captopril 短效快速上調至血壓控制；不用 nicardipine 取代。",
+      "steps": ["確認硬皮症病史（皮膚硬化、雷諾）", "Cr、抹片（MAHA 常見）、尿液", "captopril 起始並每 4–8 小時上調；風濕科／腎臟科會診", "避免高劑量類固醇（誘因）"],
+      "orders": [
+        { "drug": "Captopril", "dose": "12.5–25 mg", "route": "PO", "freq": "q8h，每 4–8 小時依血壓上調", "note": "表 18-3 劑量；起效 15–30 min；Cr 上升不是停藥理由（風濕科共識）" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr", "route": "IV drip", "freq": "持續（僅作為 captopril 起效前的橋接）", "note": "不可取代 ACEI" }
+      ],
+      "watch": ["BP q1h；目標數天內 < 140/90", "Cr、K 每日"],
+      "call": ["確診即會診風濕科／腎臟科", "無尿、需透析"],
+      "refs": [{ "ch": "18", "q": "硬皮症腎危象" }]
+    },
+    "r_preeclampsia": {
+      "type": "result",
+      "urgency": "red",
+      "title": "子癲前症／子癲症（懷孕 > 20 週至產後 6 週）",
+      "summary": "SBP ≥ 160 或 DBP ≥ 110 **持續 15 分鐘就要治**：labetalol IV／hydralazine IV／nifedipine ER；**MgSO₄** 預防與治療抽搐；緊急婦產科，生產是根本治療。",
+      "steps": [
+        "立刻聯絡婦產科；左側臥、IV、心電監測、胎兒監測",
+        "檢驗：CBC（血小板）、肝功能、Cr、LDH、尿蛋白、凝血（HELLP？）",
+        "降壓目標 140–150／90–100，不要降到正常以下（胎盤灌流）",
+        "MgSO₄ 負荷 + 維持；監測膝反射、RR、尿量（中毒 → calcium gluconate）",
+        "子癲症抽搐：MgSO₄ 再給 2 g；持續 → lorazepam；ACEI/ARB 禁"
+      ],
+      "orders": [
+        { "drug": "Labetalol", "dose": "20 mg", "route": "IV push over 2 min", "freq": "10 分鐘後未達標 → 40 mg → 80 mg（累計 max 300 mg）", "note": "首選；氣喘、HR < 60 禁" },
+        { "drug": "Hydralazine", "dose": "5–10 mg", "route": "IV push over 2 min", "freq": "q20–30 min，累計 max 20–30 mg", "note": "labetalol 替代；反射頻脈、頭痛" },
+        { "drug": "Nifedipine ER（緩釋）", "dose": "30 mg", "route": "PO", "freq": "STAT，可 q12–24h", "note": "口服替代；速效劑禁" },
+        { "drug": "MgSO₄", "dose": "4–6 g", "route": "IV drip over 15–20 min", "freq": "負荷 STAT → 維持 1–2 g/hr 持續至產後 24 hr", "note": "膝反射消失、RR < 12、尿量 < 30 mL/hr → 停藥、驗 Mg；中毒解藥 calcium gluconate 1 g IV" },
+        { "drug": "Calcium gluconate 10%", "dose": "1 g (10 mL)", "route": "IV push over 3 min", "freq": "PRN MgSO₄ 中毒", "note": "備床邊" }
+      ],
+      "watch": ["BP q15 min 至穩定；目標 140–150／90–100", "膝反射、RR、尿量 q1h（MgSO₄）", "血小板、肝酶、LDH（HELLP 進展）"],
+      "call": ["懷疑子癲前症當下 = 婦產科 + 後線", "抽搐、頭痛視力惡化、上腹痛、血小板 < 100k、肝酶上升"],
+      "refs": [{ "ch": "18", "q": "子癲前症" }, { "ch": "36", "q": "MgSO₄" }]
+    },
+    "r_pheo": {
+      "type": "result",
+      "urgency": "red",
+      "title": "嗜鉻細胞瘤／擬交感中毒（古柯鹼、安非他命、MAOI）",
+      "summary": "**不可單用 β-blocker**（α 無對抗 → 更高）：phentolamine、nicardipine；藥物中毒先 BZD。",
+      "steps": [
+        "心電監測、ECG（ACS？）、troponin；體溫（惡性高熱／血清素症候群？）",
+        "擬交感中毒：BZD 為第一線（躁動、心悸、高血壓一起處理）",
+        "血壓仍高 → phentolamine IV push 或 nicardipine 滴注",
+        "嗜鉻細胞瘤：α-blocker（phenoxybenzamine／doxazosin）穩定後才可加 β-blocker；內分泌科",
+        "胸痛 → NTG／CCB + aspirin，避免純 β-blocker（labetalol 相對安全）"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "1–2 mg", "route": "IV push", "freq": "q10–15 min PRN 躁動／心悸（擬交感中毒）", "note": "或 diazepam 5–10 mg IV" },
+        { "drug": "Phentolamine", "dose": "5 mg", "route": "IV push", "freq": "q10 min PRN", "note": "起效 1–2 min；台灣不一定常備" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min ↑ 2.5，max 15 mg/hr", "route": "IV drip", "freq": "持續", "note": "20 mg in NS total 40 mL → 5 mg/hr = 10 mL/hr" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "5–10 mcg/min 起，max 200", "route": "IV drip", "freq": "持續（合併胸痛時）", "note": "50 mg/250 mL → 10 mcg/min = 3 mL/hr" },
+        { "drug": "Doxazosin", "dose": "1–2 mg", "route": "PO", "freq": "HS（嗜鉻細胞瘤長期 α 阻斷起始）", "note": "姿態性低血壓；依內分泌科" }
+      ],
+      "watch": ["BP／HR q5–15 min；體溫", "ECG 變化、troponin；躁動與意識"],
+      "call": ["需要 IV 降壓或懷疑嗜鉻細胞瘤 → 後線／內分泌科", "胸痛 + ECG 變化、體溫 > 39.5、癲癇"],
+      "refs": [{ "ch": "18", "q": "嗜鉻細胞瘤" }, { "ch": "02", "q": "安非他命" }]
+    },
+    "r_autonomic": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "自律神經反射失調（T6 以上脊髓損傷）",
+      "summary": "坐起、**找並移除刺激源**（尿管阻塞／膀胱脹、糞便嵌塞、褥瘡、緊衣物）多半就解決；仍 > 150 → nifedipine 嚼碎吞（唯一速效 nifedipine 例外）或 NTG 貼片。",
+      "steps": [
+        "坐起、雙腿下垂、鬆開束縛與衣物",
+        "檢查尿管是否阻塞／膀胱脹 → 導尿或換管（可先塗 lidocaine 凝膠）",
+        "肛診排除糞便嵌塞（塗 lidocaine 凝膠，刺激會加重）",
+        "找皮膚壓瘡、嵌甲、骨折、腹部急症",
+        "BP q2–5 min；> 150 且刺激源已移除仍高 → 藥物"
+      ],
+      "orders": [
+        { "drug": "Nifedipine", "dose": "10 mg", "route": "PO 嚼碎吞（bite and swallow）", "freq": "STAT，20–30 min 可重複一次", "note": "速效 nifedipine 唯一例外情境；不要舌下" },
+        { "drug": "Nitroglycerin 貼片", "dose": "1 片（5–10 mg/24h）", "route": "貼於心臟平面以上皮膚", "freq": "STAT；血壓降後撕除", "note": "PDE5i 48 hr 內禁" },
+        { "drug": "Lidocaine 2% 凝膠", "dose": "適量", "route": "尿道／肛門局部", "freq": "導尿或肛診前", "note": "減少刺激" }
+      ],
+      "watch": ["BP q2–5 min 至 < 150；藥後注意反跳低血壓（平躺、抬腿）", "頭痛消失 = 刺激源已除"],
+      "call": ["刺激源移除 + 藥物後仍 > 180 或有神經症狀", "反覆發作"],
+      "refs": [{ "ch": "18", "q": "自律神經反射失調" }]
+    }
+  }
+}

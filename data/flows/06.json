@@ -1,0 +1,515 @@
+{
+  "id": "06",
+  "title": "胸痛",
+  "chapter": "06",
+  "entries": [
+    { "label": "胸痛（護理師通知病人胸痛／胸悶）", "type": "symptom", "start": "i_phone", "group": "胸部",
+      "keywords": ["胸痛", "胸悶", "胸口痛", "胸口緊", "心口痛", "chest pain", "chest tightness", "angina", "冒冷汗"] },
+    { "label": "胸痛 + 血壓低／休克", "type": "symptom", "start": "r_shock", "group": "胸部",
+      "keywords": ["胸痛 低血壓", "胸痛 休克", "chest pain hypotension", "胸痛 血壓掉", "冒冷汗 血壓低"] },
+    { "label": "胸痛 + 喘／SpO₂ 掉", "type": "symptom", "start": "q_danger", "group": "胸部",
+      "keywords": ["胸痛 喘", "胸痛 缺氧", "SpO2 掉 胸痛", "肋膜痛", "pleuritic chest pain", "呼吸會痛"] },
+    { "label": "STEMI／STEMI equivalent", "type": "diagnosis", "start": "r_stemi",
+      "keywords": ["STEMI", "ST 上升", "ST elevation", "心肌梗塞", "MI", "急性心肌梗塞", "Sgarbossa", "de Winter", "Wellens", "後壁 MI"] },
+    { "label": "NSTE-ACS／不穩定心絞痛", "type": "diagnosis", "start": "r_nstemi",
+      "keywords": ["NSTEMI", "NSTE-ACS", "不穩定心絞痛", "unstable angina", "ACS", "急性冠心症", "troponin 上升", "ST 下降"] },
+    { "label": "右心梗塞", "type": "diagnosis", "start": "r_rv_mi",
+      "keywords": ["右心梗塞", "RV infarction", "下壁 MI", "inferior MI", "V4R"] },
+    { "label": "主動脈剝離", "type": "diagnosis", "start": "r_dissection",
+      "keywords": ["主動脈剝離", "aortic dissection", "撕裂痛", "剝離", "type A", "type B"] },
+    { "label": "肺栓塞（PE）", "type": "diagnosis", "start": "q_wells",
+      "keywords": ["肺栓塞", "PE", "pulmonary embolism", "VTE", "Wells", "D-dimer", "CTPA", "血栓"] },
+    { "label": "張力性氣胸", "type": "diagnosis", "start": "r_tension",
+      "keywords": ["張力性氣胸", "tension pneumothorax", "針刺減壓", "氣管偏移", "needle decompression"] },
+    { "label": "氣胸（非張力性）", "type": "diagnosis", "start": "q_ptx",
+      "keywords": ["氣胸", "pneumothorax", "PTX", "pigtail", "胸管", "chest tube"] },
+    { "label": "心包膜炎", "type": "diagnosis", "start": "r_pericarditis",
+      "keywords": ["心包膜炎", "pericarditis", "摩擦音", "PR 下降", "colchicine"] },
+    { "label": "心包填塞", "type": "diagnosis", "start": "r_tamponade",
+      "keywords": ["心包填塞", "tamponade", "奇脈", "pulsus paradoxus", "心包積液", "pericardial effusion", "心包穿刺"] },
+    { "label": "食道破裂（Boerhaave）", "type": "diagnosis", "start": "r_boerhaave",
+      "keywords": ["食道破裂", "Boerhaave", "esophageal rupture", "嘔吐後胸痛", "縱膈氣腫", "皮下氣腫"] },
+    { "label": "胸壁痛／GERD／焦慮（良性胸痛）", "type": "diagnosis", "start": "r_benign",
+      "keywords": ["胸壁痛", "肋軟骨炎", "costochondritis", "GERD", "胃食道逆流", "食道痙攣", "焦慮", "恐慌", "panic", "肋骨骨折", "帶狀皰疹"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中立即口頭醫囑（到床邊前就開）",
+      "body": [
+        "**12 導程 ECG STAT**（10 分鐘內拿到、與舊 ECG 比較），接心電監測",
+        "完整生命徵象 + SpO₂（可能的話**雙側血壓**）；SpO₂ < 94% 才給 O₂ nasal cannula 2–4 L/min",
+        "確認 IV；備 NTG 舌下錠**先不要給**，等你評估",
+        "portable CXR、抽血：troponin、CBC、電解質、PT/aPTT（D-dimer 視情況）",
+        "問：疼痛性質／放射／開始時間、喘、冒冷汗、昏厥、近期處置（心導管、CVC、內視鏡）、抗凝血劑；**立刻到床邊**"
+      ],
+      "next": "q_danger"
+    },
+    "q_danger": {
+      "type": "multi",
+      "title": "到床邊：有沒有下列危險徵象？",
+      "help": "先看「像不像會死的人」：冒冷汗、蒼白、喘、講不完整句子",
+      "options": [
+        { "label": "SBP < 90、休克徵候（花斑、意識改變、冒冷汗）", "set": { "shock": true } },
+        { "label": "氣管偏移 + 單側呼吸音消失 + 低血壓", "set": { "tension": true } },
+        { "label": "撕裂樣痛、雙上肢血壓差 > 20 mmHg、脈搏不對稱、新 AR 雜音", "set": { "tear": true } },
+        { "label": "SpO₂ < 94% 或明顯喘", "set": { "hypox": true } }
+      ],
+      "branches": [
+        { "if": "tension", "next": "r_tension" },
+        { "if": "shock", "next": "r_shock" },
+        { "if": "tear", "next": "r_dissection" },
+        { "else": "q_ecg" }
+      ]
+    },
+    "q_ecg": {
+      "type": "choice",
+      "title": "12 導程 ECG 看到什麼？",
+      "help": "STEMI：≥ 2 相鄰導程 J 點 ST↑（V2–V3 男 < 40 歲 ≥ 2.5 mm、男 ≥ 40 歲 ≥ 2 mm、女 ≥ 1.5 mm；其他 ≥ 1 mm）。下壁 MI → 加做 V4R、V7–V9",
+      "options": [
+        { "label": "ST 上升（STEMI）或 equivalent：新 LBBB + Sgarbossa、後壁 MI、de Winter、Wellens、aVR↑ + 廣泛 ST↓、hyperacute T", "next": "r_stemi" },
+        { "label": "ST 下降／T 波倒置／動態變化，或典型缺血症狀（ECG 可正常）", "next": "r_nstemi" },
+        { "label": "廣泛下凹型 ST↑ + PR 下降（aVR 相反）", "next": "r_pericarditis" },
+        { "label": "竇速、S1Q3T3、新 RBBB、V1–V4 T 倒（或臨床像 PE）", "next": "q_wells" },
+        { "label": "低電位、electrical alternans（填塞）", "next": "r_tamponade" },
+        { "label": "正常或非特異", "next": "q_features" }
+      ]
+    },
+    "q_features": {
+      "type": "choice",
+      "title": "ECG 正常／非特異：臨床最像哪一種？",
+      "help": "正常 ECG 不能排除 ACS：症狀持續或改變時 15–30 分鐘重做，之後 q6h；troponin 0 hr 與 1–3 hr",
+      "options": [
+        { "label": "突發喘 + 肋膜性痛 + 頻脈、SpO₂↓、VTE 危險因子（臥床 ≥ 3 天、手術 4 週內、癌症）", "next": "q_wells" },
+        { "label": "突發單側尖銳肋膜痛 + 喘（高瘦年輕、COPD、近期胸腔處置／CVC／機械通氣）→ CXR 見氣胸", "next": "q_ptx" },
+        { "label": "劇烈嘔吐後劇痛、皮下氣腫（捻髮音）、發燒", "next": "r_boerhaave" },
+        { "label": "尖銳、吸氣／平躺加劇、前傾緩解、放射斜方肌、摩擦音", "next": "r_pericarditis" },
+        { "label": "胸骨後壓迫感、放射下巴／左臂、冒冷汗、活動加劇（典型缺血）或女性／老人／糖尿病的非典型（上腹痛、單純喘、疲倦）", "next": "r_nstemi" },
+        { "label": "燒灼感、餐後／平躺加劇、酸逆流；或局部壓痛可重現、與姿勢有關；或焦慮恐慌", "next": "r_benign" }
+      ]
+    },
+    "q_wells": {
+      "type": "number",
+      "title": "PE 驗前機率：Wells 分數？",
+      "help": "既往 DVT/PE 1.5、HR > 100 1.5、手術／臥床 4 週內 1.5、咳血 1、癌症 1、DVT 臨床徵候 3、PE 最可能 3",
+      "var": "wells", "unit": "分", "step": 0.5,
+      "quick": [0, 1.5, 3, 4.5, 6, 7.5],
+      "branches": [
+        { "if": "wells > 4", "next": "q_pe_hemo" },
+        { "else": "r_pe_lowprob" }
+      ]
+    },
+    "q_pe_hemo": {
+      "type": "choice",
+      "title": "Wells > 4（高機率）→ 直接 CTPA。血行動力？",
+      "help": "高度懷疑而 CTPA 要等 ≥ 4 小時 → 先開始抗凝（血小板 > 50,000 即安全）",
+      "options": [
+        { "label": "SBP < 90 持續 ≥ 15 分鐘、需升壓劑、或心跳停止（高風險）", "next": "r_pe_high" },
+        { "label": "血壓穩定（含 RV 功能異常 + troponin↑ 的中高風險）", "next": "r_pe_stable" }
+      ]
+    },
+    "q_ptx": {
+      "type": "choice",
+      "title": "氣胸（CXR 確認、非張力性）：症狀與背景？",
+      "help": "BTS 2023：依症狀而非大小決定。氣管偏移 + 單側呼吸音消失 + 低血壓 = 張力性 → 立即針刺減壓",
+      "options": [
+        { "label": "無或輕微症狀（任何大小）、原發性、無肺病", "next": "r_ptx_obs" },
+        { "label": "有症狀（喘、痛明顯）", "next": "r_ptx_drain" },
+        { "label": "次發性（COPD 等）、> 50 歲有肺病、血氣胸、雙側、機械通氣", "next": "r_ptx_drain" },
+        { "label": "氣管偏移 + 呼吸音消失 + 低血壓（張力性）", "next": "r_tension" }
+      ]
+    },
+    "r_shock": {
+      "type": "result",
+      "urgency": "red",
+      "title": "胸痛 + 低血壓／休克",
+      "summary": "想五件會死的事：**心因性休克（大範圍 MI／右心梗塞）、PE、心包填塞、張力性氣胸、剝離破裂**。床邊超音波 5 分鐘分型；肺音乾淨才給 NS 250–500 mL，仍低 → norepinephrine；立刻叫後線。",
+      "steps": [
+        "叫後線；IV × 2、心電監測、12 導程 ECG（STEMI？下壁 → 加 V4R）",
+        "**床邊超音波**：心包積液？右心擴大（PE）？肺滑動消失（氣胸）？主動脈根部擴大／剝離瓣？心室壁運動？",
+        "氣管偏移 + 單側呼吸音消失 → **立即針刺減壓，不等 CXR**",
+        "肺音乾淨 → NS 250–500 mL bolus；肺水腫 → 不給輸液，直接升壓劑",
+        "MAP 仍 < 65 → norepinephrine（可先周邊給，Ch19）",
+        "抽血：troponin、CBC、電解質、PT/aPTT、lactate、type & screen；portable CXR",
+        "依超音波／ECG 走對應流程（下方「後續」）；避免插管前大量鎮靜（血行崩潰）"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "250–500 mL", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "肺音乾淨才給；PE／填塞勿過量（右心負荷）" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起，每 5–10 min 調", "route": "IV drip（CVC；周邊大靜脈短暫可）", "freq": "持續", "note": "8 mg in D5W 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr（Ch19 表 19-1）" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "SpO₂ < 94% 才給，目標 94–98%" },
+        { "drug": "Aspirin", "dose": "300 mg", "route": "PO 嚼服", "freq": "STAT", "note": "ECG 缺血且**不疑剝離**時才給" }
+      ],
+      "watch": ["BP／HR q5 min、SpO₂、意識、尿量", "每次 bolus 後肺音、SpO₂、JVP", "ECG 15–30 分鐘重做"],
+      "call": ["胸痛 + 低血壓／休克 = 當下就叫後線 + 心臟科", "懷疑剝離、PE、填塞、張力性氣胸 → 對應緊急處置團隊"],
+      "ddx": ["心因性休克（大範圍 MI、右心梗塞）", "肺栓塞", "心包填塞", "張力性氣胸", "主動脈剝離破裂"],
+      "refs": [{ "ch": "06", "q": "低血壓（SBP < 90）" }, { "ch": "19", "q": "表 19-1" }],
+      "next": [
+        { "label": "STEMI → 啟動心導管", "next": "r_stemi" },
+        { "label": "下壁 MI + V4R ST↑ → 右心梗塞", "next": "r_rv_mi" },
+        { "label": "右心擴大／高度疑 PE → 高風險 PE", "next": "r_pe_high" },
+        { "label": "心包積液 + 右心塌陷 → 填塞", "next": "r_tamponade" },
+        { "label": "氣管偏移、無肺滑動 → 張力性氣胸", "next": "r_tension" },
+        { "label": "撕裂痛、剝離瓣 → 主動脈剝離", "next": "r_dissection" }
+      ]
+    },
+    "r_tension": {
+      "type": "result",
+      "urgency": "red",
+      "title": "張力性氣胸",
+      "summary": "氣管偏移 + 單側呼吸音消失 + 低血壓：**立即針刺減壓，不等 CXR**（14–16G 留置針，第 4–5 肋間腋前線或第 2 肋間鎖骨中線，肋骨上緣進針）→ 接著放胸管／pigtail。",
+      "steps": [
+        "叫後線；O₂、IV、心電監測",
+        "**針刺減壓**：14–16G 留置針，第 4–5 肋間腋前線（或第 2 肋間鎖骨中線），沿肋骨上緣進針，聽到氣體逸出並留置",
+        "立即接著放胸管（或 pigtail）接水下引流；聯絡胸腔科／胸腔外科",
+        "胸管後 CXR 確認位置；持續 bubbling 觀察",
+        "止痛；找原因（機械通氣、近期 CVC／胸腔處置、COPD）"
+      ],
+      "orders": [
+        { "drug": "14–16G 留置針（針刺減壓）", "dose": "1 支", "route": "第 4–5 肋間腋前線或第 2 肋間鎖骨中線，肋骨上緣", "freq": "STAT，不等 CXR", "note": "減壓後不可拔，等胸管放好" },
+        { "drug": "胸管（或 pigtail 8–14 Fr）", "dose": "1 條", "route": "接單向閥／水下引流", "freq": "針刺減壓後立即", "note": "機械通氣、血氣胸、次發性 → 胸管" },
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%（CO₂ 滯留 88–92%）", "route": "面罩／nasal cannula", "freq": "持續", "note": "" },
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h", "note": "胸管後止痛" },
+        { "drug": "Ketorolac", "dose": "30 mg", "route": "IV/IM", "freq": "q6h，≤ 5 天", "note": "腎功能差（CrCl {round(crcl)}）、出血風險者避免" }
+      ],
+      "watch": ["減壓後 BP、SpO₂、呼吸音立即改善？未改善 → 針阻塞／位置錯，重做", "胸管 bubbling、引流量、皮下氣腫"],
+      "call": ["懷疑張力性氣胸當下就叫後線；胸管由胸腔科／胸腔外科", "減壓後仍低血壓、雙側、血氣胸"],
+      "refs": [{ "ch": "06", "q": "張力性" }, { "ch": "06", "q": "氣胸" }]
+    },
+    "r_dissection": {
+      "type": "result",
+      "urgency": "red",
+      "title": "主動脈剝離",
+      "summary": "**20 分鐘內 HR < 60、SBP 100–120**：先 β-blocker（esmolol／labetalol）再血管擴張劑（避免反射頻脈增加剪力）；止痛；緊急 CTA；備血、避免抗凝／抗血小板；type A 緊急心外手術。",
+      "steps": [
+        "雙側血壓、四肢脈搏；剝離波及鎖骨下動脈 → 患側偏低，**以較高側為準**",
+        "IV × 2、心電監測、動脈導管、尿管；ECG（排除 STEMI）、CXR（縱膈 > 8 cm）",
+        "**緊急 CTA 主動脈**（主動脈弓到髂動脈；腎功能差仍以救命為先）；經食道超音波為替代",
+        "先 β-blocker 降心率至 < 60，**再**加 nicardipine 降 SBP 至 100–120；不可先單用血管擴張劑",
+        "止痛 morphine；備血 pRBC 4–6 U、FFP、血小板；**停**抗凝／抗血小板",
+        "Type A → 心臟外科急診手術（未手術死亡率每小時 +1–2%）；Type B → 藥物為主，併發症才介入",
+        "真正低血壓 → 想填塞、破裂、急性 AR：輸液至正常血容、升壓劑 MAP 60–65，緊急心外；填塞**不要**心包穿刺（除非 PEA）"
+      ],
+      "orders": [
+        { "drug": "Esmolol", "dose": "{round(wt*0.5)} mg（500 mcg/kg）", "route": "IV push over 1 min", "freq": "STAT → 接續滴注 50 mcg/kg/min，每 5 min 可再 bolus 並 ↑ 50，max 300 mcg/kg/min", "note": "泡法 2,500 mg in 250 mL（10 mg/mL）：{wt} kg 50 mcg/kg/min ≈ {round(wt*0.3)} mL/hr；半衰期 9 分鐘；氣喘相對禁忌" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IV push over 2 min", "freq": "每 10 min 20–80 mg（累計 max 300 mg）或 0.5–2 mg/min 滴注", "note": "esmolol 替代；兼 α／β；泡法 200 mg in NS 200 mL", "alt": "esmolol" },
+        { "drug": "Diltiazem", "dose": "{round(wt*0.25)} mg（0.25 mg/kg）", "route": "IV push over 2 min", "freq": "→ 5–15 mg/hr 滴注", "note": "**β-blocker 禁忌時**；泡法 125 mg（25 mL）+ NS 100 mL（1 mg/mL）" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min ↑ 2.5 mg/hr，max 15 mg/hr", "route": "IV drip", "freq": "持續（**心率達標後**血壓仍高才加）", "note": "不可單獨先用" },
+        { "drug": "Nitroprusside", "dose": "0.3–0.5 mcg/kg/min 起，每 5 min ↑ 0.5，max 10 mcg/kg/min", "route": "IV drip", "freq": "持續（nicardipine 替代）", "note": "泡法 50 mg in D5W 250 mL 避光；8–10 mcg/kg/min 勿 > 10 min；氰化物中毒（> 2 mcg/kg/min 長時間、腎肝衰竭）" },
+        { "drug": "Morphine", "dose": "2–5 mg", "route": "IV push", "freq": "q5–10 min PRN 疼痛", "note": "止痛本身降交感" },
+        { "drug": "備血 pRBC", "dose": "4–6 U", "route": "type & cross（+ FFP、血小板）", "freq": "STAT", "note": "避免抗凝／抗血小板" }
+      ],
+      "watch": ["動脈導管 BP／HR q5 min；目標 20 分鐘內 HR < 60、SBP 100–120", "神經學、尿量、四肢脈搏（分支缺血）", "疼痛再發、血壓失控、低血壓 = 進展／破裂／填塞"],
+      "call": ["懷疑剝離當下就聯絡後線 + 心臟外科／心臟科；Type A 一律緊急手術評估", "低血壓、意識改變、新神經缺損、少尿、新 AR 雜音"],
+      "ddx": ["STEMI（ECG；剝離波及冠狀動脈可合併）", "PE", "心包填塞"],
+      "refs": [{ "ch": "06", "q": "主動脈剝離" }, { "ch": "18", "q": "表 18-2" }]
+    },
+    "r_stemi": {
+      "type": "result",
+      "urgency": "red",
+      "title": "STEMI／STEMI equivalent",
+      "summary": "**不等 troponin，立刻聯絡心臟科啟動心導管室**（door-to-balloon ≤ 90 分鐘；120 分鐘內無法 PCI → 30 分鐘內血栓溶解）。Aspirin 嚼服 + P2Y12 + heparin；NTG 先確認禁忌；O₂ 只在 SpO₂ < 94%。",
+      "steps": [
+        "**立刻聯絡心臟內科／後線，啟動心導管室**；心電監測、IV × 2、備電擊器",
+        "下壁 MI（II、III、aVF）→ 加做 V4R（ST↑ ≥ 1 mm = 右心梗塞：避免 NTG／morphine／利尿劑／β-blocker）與 V7–V9",
+        "Aspirin 嚼服 → ticagrelor（做 PCI 者盡早）→ UFH bolus + 滴注",
+        "NTG 前確認：SBP > 90、HR 50–100、無右心梗塞徵候、24 hr 內無 sildenafil／vardenafil（tadalafil 48 hr）",
+        "抽血：troponin（0 hr、1–3 hr）、CBC、電解質（K、Mg）、Cr、PT/aPTT、血糖；portable CXR（勿延誤導管）",
+        "無法 120 分鐘內 PCI → 30 分鐘內 tenecteplase／alteplase（禁忌同 Ch1 中風血栓溶解；疑剝離禁），之後 3–24 hr 轉 PCI",
+        "24 hr 內開始 metoprolol PO（無心衰竭／休克風險／HR < 60／AV block／氣喘）與高強度 statin",
+        "古柯鹼／安非他命相關：BZD + NTG／CCB + aspirin，避免純 β-blocker"
+      ],
+      "orders": [
+        { "drug": "Aspirin", "dose": "300 mg（160–325 mg；或 100 mg × 3）", "route": "PO 嚼服", "freq": "STAT → 之後 100 mg QD", "note": "除非真正過敏；已服者仍給" },
+        { "drug": "Ticagrelor", "dose": "180 mg loading", "route": "PO", "freq": "STAT → 90 mg BID", "note": "STEMI 做 PCI 者盡早給；併用 aspirin ≤ 100 mg；喘、心搏過緩副作用。Prasugrel 60 mg（台灣仿單 20 mg）僅 PCI 時、中風／TIA 史禁用" },
+        { "drug": "Clopidogrel", "dose": "{age > 75 ? '75 mg（> 75 歲不 loading）' : '300–600 mg loading'}", "route": "PO", "freq": "STAT → 75 mg QD", "note": "ticagrelor 替代：要打血栓溶解劑、出血高風險、需口服抗凝者", "alt": "ticagrelor" },
+        { "drug": "Heparin（UFH）", "dose": "{min(round(wt*60), 4000)} U（60 U/kg，max 4,000）", "route": "IV push", "freq": "STAT → 滴注 {min(round(wt*12), 1000)} U/hr（12 U/kg/hr，max 1,000）", "note": "泡法 25,000 U in NS 250 mL（100 U/mL）→ {round(min(wt*12, 1000)/100, 1)} mL/hr；q6h aPTT 1.5–2 ×；warfarin 使用者 INR < 2 才開始；血小板 < 50,000、活動出血禁" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "0.6 mg", "route": "SL", "freq": "q5 min × 3", "note": "禁忌：SBP < 90 或比平常低 > 30、HR < 50 或 > 100、右心梗塞、嚴重 AS／HCM、PDE5i" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "5–10 mcg/min 起，每 3–5 min ↑ 5–10，max 200 mcg/min", "route": "IV drip", "freq": "持續（持續疼痛、肺水腫、高血壓）", "note": "泡法 50 mg in D5W 250 mL（200 mcg/mL）→ 3 mL/hr = 10 mcg/min；24 hr 產生耐受" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q5–15 min PRN（NTG 後仍嚴重疼痛）", "note": "會延緩 P2Y12 吸收；低血壓／右心梗塞慎用" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "**只在 SpO₂ < 94%**（目標 94–98%）" },
+        { "drug": "Atorvastatin", "dose": "80 mg（或 rosuvastatin 20–40 mg）", "route": "PO", "freq": "QD，盡早", "note": "高強度 statin" },
+        { "drug": "Tenecteplase", "dose": "{(wt < 60 ? 30 : wt < 70 ? 35 : wt < 80 ? 40 : wt < 90 ? 45 : 50) / (age >= 75 ? 2 : 1)} mg", "route": "IV push 單次", "freq": "STAT（僅無法 120 分鐘內 PCI）", "note": "依 {wt} kg、{age} 歲（≥ 75 歲減半）；或 alteplase 15 mg IVP → {min(round(wt*0.75), 50)} mg over 30 min → {min(round(wt*0.5), 35)} mg over 60 min；禁忌：顱內出血史、3 個月內中風、活動出血、疑剝離、嚴重高血壓" }
+      ],
+      "watch": ["心電監測（VT／VF、AV block）；BP q5–15 min", "ECG 15–30 分鐘重做（症狀持續／改變）；溶栓後 3–24 hr 內轉 PCI", "troponin 1–3 hr、K/Mg、出血徵候"],
+      "call": ["STEMI／equivalent 當下 = 心臟科 + 後線", "低血壓、心律不整、持續胸痛、肺水腫、新雜音（機械併發症）"],
+      "refs": [{ "ch": "06", "q": "急性冠心症（ACS）" }, { "ch": "06", "q": "ECG 判讀" }, { "ch": "06", "q": "血栓溶解" }],
+      "next": [
+        { "label": "下壁 MI + V4R ST↑／低血壓 → 右心梗塞", "next": "r_rv_mi" },
+        { "label": "低血壓／心因性休克", "next": "r_shock" }
+      ]
+    },
+    "r_rv_mi": {
+      "type": "result",
+      "urgency": "red",
+      "title": "右心梗塞（下壁 MI + V4R ST↑ ≥ 1 mm）",
+      "summary": "低血壓 + JVP↑ + 肺音乾淨：**避免 NTG、morphine、利尿劑、β-blocker**；NS 500 mL bolus（可至 1–2 L），仍低給 dobutamine；AV block 維持房室同步；盡早再灌流。",
+      "steps": [
+        "確認 V4R（ST↑ ≥ 1 mm）、V7–V9；心電監測、IV × 2",
+        "**停／不給** NTG、morphine、利尿劑、β-blocker（前負荷依賴）",
+        "NS 500 mL bolus，依血壓／肺音重複至 1–2 L",
+        "仍低血壓 → dobutamine（± norepinephrine，Ch19）",
+        "合併高度 AV block → atropine／臨時節律維持房室同步（Ch21）",
+        "Aspirin、P2Y12、heparin 同 STEMI；**盡早再灌流**（心導管）"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，可重複至 1–2 L", "note": "每次後聽肺音；肺水腫出現即停" },
+        { "drug": "Dobutamine", "dose": "2.5–10 mcg/kg/min（max 20）", "route": "IV drip", "freq": "持續（輸液後仍低血壓）", "note": "250 mg in 250 mL（1 mg/mL）：{wt} kg 5 mcg/kg/min ≈ {round(wt*0.3)} mL/hr；會降血壓，常與 NE 併用（Ch19 表 19-1）" },
+        { "drug": "Aspirin", "dose": "300 mg", "route": "PO 嚼服", "freq": "STAT → 100 mg QD", "note": "" },
+        { "drug": "Heparin（UFH）", "dose": "{min(round(wt*60), 4000)} U", "route": "IV push", "freq": "STAT → {min(round(wt*12), 1000)} U/hr 滴注", "note": "25,000 U in NS 250 mL（100 U/mL）" }
+      ],
+      "watch": ["BP q5 min、JVP、肺音（輸液過量）、尿量", "心電監測：AV block、心搏過緩", "SpO₂"],
+      "call": ["STEMI 當下 = 心臟科啟動導管", "輸液 1 L 後仍低血壓、需 dobutamine／升壓劑、高度 AV block"],
+      "refs": [{ "ch": "06", "q": "右心梗塞" }, { "ch": "19", "q": "表 19-1" }]
+    },
+    "r_nstemi": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "NSTE-ACS／疑似 ACS（ECG 無 ST 上升）",
+      "summary": "Aspirin 嚼服 + 抗凝（UFH 或 enoxaparin）+ NTG（無禁忌）+ 高強度 statin；troponin 0/1–3 hr；**不穩定（血行不穩、頑固胸痛、動態 ST、心衰竭、致命心律不整）→ 立刻心臟科（< 2 hr 導管）**。",
+      "steps": [
+        "心電監測、IV；ECG 15–30 分鐘重做（症狀持續／改變），之後 q6h；與舊 ECG 比較",
+        "hs-troponin 0 hr 與 1–3 hr（院內 0/1 h 或 0/3 h 演算法）；看 Δ 與絕對值（> 5 倍上限 + 典型症狀幾乎 rule-in）",
+        "CBC、電解質（K、Mg）、Cr、血糖、PT/aPTT、CXR；SpO₂ < 94% 才給 O₂",
+        "Aspirin → 抗凝（UFH 或 enoxaparin，選一種用到底）；P2Y12（ticagrelor）依心臟科，可等到導管時",
+        "NTG SL → 持續痛／高血壓 → IV NTG；先確認禁忌（SBP、HR、右心、PDE5i）",
+        "24 hr 內 metoprolol PO（無禁忌）、atorvastatin 80 mg；消化道出血高風險加 PPI",
+        "導管時機（ESC 2023）：immediate < 2 hr（不穩）；early < 24 hr（確診 NSTEMI、GRACE > 140、動態 ST-T）；其餘依心臟科",
+        "其他 troponin 上升原因：心衰竭、腎衰竭、敗血症、PE、心肌炎、剝離、心搏過速、中風、Takotsubo"
+      ],
+      "orders": [
+        { "drug": "Aspirin", "dose": "300 mg（160–325 mg）", "route": "PO 嚼服", "freq": "STAT → 100 mg QD", "note": "除非真正過敏" },
+        { "drug": "Ticagrelor", "dose": "180 mg loading", "route": "PO", "freq": "STAT → 90 mg BID", "note": "NSTE-ACS 依心臟科（可等到導管時）；併用 aspirin ≤ 100 mg" },
+        { "drug": "Heparin（UFH）", "dose": "{min(round(wt*60), 4000)} U（60 U/kg，max 4,000）", "route": "IV push", "freq": "STAT → {min(round(wt*12), 1000)} U/hr（12 U/kg/hr，max 1,000）", "note": "25,000 U in NS 250 mL（100 U/mL）→ {round(min(wt*12, 1000)/100, 1)} mL/hr；q6h aPTT 1.5–2 ×；要 PCI 者心臟科偏好 UFH" },
+        { "drug": "Enoxaparin", "dose": "{round(wt)} mg（1 mg/kg）", "route": "SC", "freq": "{crcl < 30 ? 'QD（CrCl < 30）' : 'q12h'}", "note": "UFH 替代；CrCl {round(crcl)}；接受血栓溶解且 ≥ 75 歲 0.75 mg/kg；與 UFH 互換增加出血", "alt": "UFH" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "0.6 mg", "route": "SL", "freq": "q5 min × 3", "note": "禁忌：SBP < 90 或比平常低 > 30、HR < 50 或 > 100、右心梗塞、嚴重 AS／HCM、PDE5i 24–48 hr" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "5–10 mcg/min 起，每 3–5 min ↑ 5–10，max 200 mcg/min", "route": "IV drip", "freq": "持續（持續疼痛、肺水腫、高血壓）", "note": "50 mg in D5W 250 mL（200 mcg/mL）→ 3 mL/hr = 10 mcg/min" },
+        { "drug": "Metoprolol", "dose": "25–50 mg（速效）", "route": "PO", "freq": "q6–12h，24 hr 內開始", "note": "禁忌：心衰竭／肺水腫、休克風險（> 70 歲、HR > 110、SBP < 120）、HR < 60、PR > 0.24 s、2–3° AV block、氣喘；IV 5 mg q5 min × 3 只在持續缺血 + 高血壓 + 頻脈且無心衰竭" },
+        { "drug": "Atorvastatin", "dose": "80 mg（或 rosuvastatin 20–40 mg）", "route": "PO", "freq": "QD，盡早", "note": "" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q5–15 min PRN（NTG 後仍嚴重疼痛）", "note": "延緩 P2Y12 吸收；低血壓慎用" },
+        { "drug": "Pantoprazole", "dose": "40 mg", "route": "PO／IV", "freq": "QD", "note": "消化道出血高風險者" }
+      ],
+      "watch": ["ECG 15–30 min（症狀時）→ q6h；troponin 1–3 hr", "胸痛再發、BP／HR、心律", "出血徵候、aPTT q6h（UFH）"],
+      "call": ["troponin 上升或動態 ST-T 變化 → 心臟科", "血行不穩、頑固胸痛、急性心衰竭、致命心律不整 → immediate（< 2 hr）導管", "NTG × 3 後仍痛；需要 IV NTG／heparin"],
+      "refs": [{ "ch": "06", "q": "急性冠心症（ACS）" }, { "ch": "06", "q": "hs-troponin" }, { "ch": "06", "q": "NSTE-ACS 導管時機" }],
+      "next": [
+        { "label": "ECG 變成 ST 上升 → STEMI", "next": "r_stemi" },
+        { "label": "ECG／troponin 陰性、非缺血表現 → 其他原因", "next": "q_features" }
+      ]
+    },
+    "r_pericarditis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "急性心包膜炎",
+      "summary": "診斷需 ≥ 2/4（典型胸痛、摩擦音、ECG 廣泛下凹 STE + PR↓、心包積液）：**NSAID（MI 後用 aspirin）+ colchicine + PPI**；troponin↑ = 合併心肌炎；先超音波排除填塞。",
+      "steps": [
+        "ECG 與 STEMI 區分（廣泛下凹 STE、PR 下降、aVR 相反、無對應導程 ST↓）；troponin（約 30% ↑ = 心肌心包膜炎 → 心臟科）",
+        "床邊／正式心臟超音波：心包積液？填塞徵候（右心舒張期塌陷）？",
+        "CBC、Cr、CRP；找原因：病毒、MI 後、尿毒、自體免疫、腫瘤、結核",
+        "NSAID（ibuprofen；MI 後改 aspirin，勿用其他 NSAID／類固醇）+ colchicine + PPI",
+        "類固醇只在 NSAID 禁忌、自體免疫、懷孕、尿毒",
+        "大量積液、填塞徵候、發燒 + 白血球↑（化膿性）、troponin↑ → 心臟科"
+      ],
+      "orders": [
+        { "drug": "Ibuprofen", "dose": "600–800 mg", "route": "PO", "freq": "TID × 1–2 週後漸減", "note": "MI 後心包膜炎改 aspirin 750–1,000 mg TID" },
+        { "drug": "Colchicine", "dose": "0.5 mg", "route": "PO", "freq": "{wt <= 70 ? 'QD（≤ 70 kg）' : 'BID'} × 3 個月", "note": "依 {wt} kg；復發風險減半；腹瀉；腎功能調整（CrCl {round(crcl)}）；併用 amiodarone／diltiazem／verapamil／atorvastatin 毒性↑" },
+        { "drug": "Pantoprazole", "dose": "40 mg", "route": "PO", "freq": "QD", "note": "高劑量 NSAID 期間" },
+        { "drug": "Prednisolone", "dose": "{round(wt*0.25)}–{round(wt*0.5)} mg（0.25–0.5 mg/kg/d）", "route": "PO", "freq": "QD，漸減", "note": "**只在** NSAID 禁忌、自體免疫、懷孕、尿毒" }
+      ],
+      "watch": ["疼痛緩解（24–48 hr）、BP、JVP、心音（填塞進展）", "troponin 動態（心肌炎）", "Cr、K（NSAID）"],
+      "call": ["填塞徵候（低血壓、JVP↑、奇脈）、大量積液", "troponin↑（心肌心包膜炎）、發燒 + 化膿性疑慮、免疫低下"],
+      "ddx": ["STEMI", "PE", "心肌炎"],
+      "refs": [{ "ch": "06", "q": "心包膜炎與心包填塞" }, { "ch": "06", "q": "診斷需符合" }],
+      "next": [{ "label": "低血壓 + JVP↑ + 奇脈 → 心包填塞", "next": "r_tamponade" }]
+    },
+    "r_tamponade": {
+      "type": "result",
+      "urgency": "red",
+      "title": "心包填塞",
+      "summary": "低血壓 + JVP↑ + 心音遠 + 奇脈 > 10；超音波確診（右心舒張期塌陷）。**謹慎輸液維持前負荷、避免利尿劑／NTG／β-blocker／正壓通氣（插管前先引流）**；dobutamine 橋接；緊急心臟科心包穿刺。",
+      "steps": [
+        "叫後線 + 心臟科；心電監測、IV × 2、ECG（低電位、electrical alternans）",
+        "床邊超音波確診：心包積液 + 右心舒張期塌陷、IVC 擴張",
+        "NS 250–500 mL 維持前負荷（灌太多反而惡化）",
+        "**不給**利尿劑、NTG、β-blocker；**避免正壓通氣**（需插管時先引流）",
+        "升壓劑效果有限；dobutamine 橋接",
+        "緊急心包穿刺（心臟科）；主動脈剝離／心肌破裂 → 心外手術（太不穩才少量穿刺防 PEA）；出血性／化膿性／局部性 → 外科引流",
+        "找原因：惡性、尿毒、剝離、MI 後破裂、結核、術後"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "250–500 mL", "route": "IV drip over 15 min", "freq": "STAT，謹慎重複", "note": "維持前負荷；灌太多惡化" },
+        { "drug": "Dobutamine", "dose": "2.5–10 mcg/kg/min（max 20）", "route": "IV drip", "freq": "持續（橋接到引流）", "note": "250 mg in 250 mL（1 mg/mL）：{wt} kg 5 mcg/kg/min ≈ {round(wt*0.3)} mL/hr（Ch19 表 19-1）" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "SpO₂ < 94% 才給；避免正壓通氣" }
+      ],
+      "watch": ["BP／HR q5 min、奇脈、JVP、意識、尿量", "PEA 準備（超音波看心臟活動）", "引流後 BP 改善、再累積"],
+      "call": ["懷疑填塞當下 = 後線 + 心臟科緊急心包穿刺", "主動脈剝離／心肌破裂 → 心臟外科", "PEA／心跳停止 → ACLS + 心包穿刺"],
+      "refs": [{ "ch": "06", "q": "心包填塞" }, { "ch": "19", "q": "阻塞性休克" }]
+    },
+    "r_pe_lowprob": {
+      "type": "result",
+      "urgency": "green",
+      "title": "PE 驗前機率低–中（Wells ≤ 4）：D-dimer 排除流程",
+      "summary": "PERC 全陰性 + 低驗前機率可不驗 D-dimer；否則驗 D-dimer：陰性（< 500 ng/mL；≥ 50 歲用年齡 × 10 = {age >= 50 ? age*10 : 500} ng/mL）可排除，陽性 → CTPA。",
+      "steps": [
+        "PERC（< 50 歲、HR < 100、SpO₂ ≥ 95、無咳血、無雌激素、無手術／外傷、無 VTE 史、無單側腿腫）全陰性 + 低機率 → 不必 D-dimer",
+        "D-dimer：{age} 歲切點 {age >= 50 ? age*10 : 500} ng/mL；陰性可排除 PE",
+        "D-dimer 陽性 → CTPA（腎功能差仍以救命為先）；另加 ECG、CXR、troponin、NT-proBNP",
+        "CTPA 要等 ≥ 4 hr 且臨床高度懷疑 → 先抗凝（血小板 > 50,000）",
+        "等待期間 SpO₂ < 94% 給 O₂；找其他原因（氣胸、肺炎、肋膜炎、ACS）"
+      ],
+      "orders": [
+        { "drug": "D-dimer（抽血）", "dose": "1 管", "route": "抽血", "freq": "STAT", "note": "≥ 50 歲切點年齡 × 10 ng/mL；剝離低風險（ADD-RS ≤ 1）+ D-dimer < 500 亦可排除剝離" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "SpO₂ < 94% 才給，目標 94–98%" }
+      ],
+      "watch": ["SpO₂、HR、BP；新出現喘／低血壓 → 提高機率、直接 CTPA", "D-dimer 結果、CTPA 排程時間"],
+      "call": ["D-dimer 陽性且 CTPA 延誤、或臨床惡化", "確診 PE、需要抗凝決策"],
+      "refs": [{ "ch": "06", "q": "D-dimer" }, { "ch": "06", "q": "Wells（PE）" }],
+      "next": [{ "label": "CTPA 確診 PE（血壓穩定）→ 抗凝", "next": "r_pe_stable" }, { "label": "低血壓／高風險 PE", "next": "r_pe_high" }]
+    },
+    "r_pe_high": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高風險 PE（SBP < 90 持續 ≥ 15 分鐘、需升壓劑、心跳停止）",
+      "summary": "**血栓溶解 alteplase 100 mg over 2 hr**（心跳停止：50 mg IVP，15–30 min 後可再 50 mg）；UFH；輸液勿過量（NS 250–500 mL）→ norepinephrine；溶栓禁忌／失敗 → 導管取栓／手術。",
+      "steps": [
+        "叫後線 + 心臟科／胸腔科；IV × 2、心電監測；床邊超音波（右心擴大、IVC 擴張）",
+        "**避免插管前大量鎮靜**（血行崩潰）；SpO₂ < 94% 給 O₂",
+        "NS 250–500 mL bolus（勿過量，右心負荷）→ MAP < 65 給 norepinephrine",
+        "確認溶栓禁忌（顱內出血史、3 個月內中風、活動出血、疑剝離、嚴重高血壓；ICH 風險 2–5%）→ alteplase",
+        "溶栓後 aPTT < 2 × 再接 UFH（無 bolus）；溶栓禁忌／失敗 → 導管取栓／手術（心臟外科／介入放射科）",
+        "抗凝禁忌 → IVC filter；troponin、NT-proBNP、CBC、Cr、PT/aPTT、type & screen"
+      ],
+      "orders": [
+        { "drug": "Alteplase", "dose": "100 mg", "route": "IV drip over 2 hr", "freq": "單次", "note": "心跳停止：50 mg IV push，15–30 min 後可再 50 mg（Ch38）；之後 aPTT < 2 × 再接 UFH" },
+        { "drug": "Heparin（UFH）", "dose": "{round(wt*80)} U（80 U/kg）", "route": "IV push", "freq": "STAT → {round(wt*18)} U/hr（18 U/kg/hr）滴注，q6h aPTT 1.5–2.5 ×", "note": "25,000 U in NS 250 mL（100 U/mL）→ {round(wt*18/100, 1)} mL/hr；溶栓時先不 bolus，等 aPTT < 2 × 再接滴注" },
+        { "drug": "NS", "dose": "250–500 mL", "route": "IV drip over 15 min", "freq": "STAT，勿過量", "note": "右心負荷；超音波看 IVC／RV" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起", "route": "IV drip（周邊短暫可）", "freq": "持續，MAP ≥ 65", "note": "8 mg in 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr（Ch19 表 19-1）" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "SpO₂ < 94% 才給" }
+      ],
+      "watch": ["BP／HR／SpO₂ q5 min；意識", "溶栓中出血徵候（神經學、穿刺處、消化道）；Hb", "aPTT q6h；血小板"],
+      "call": ["高風險 PE 當下 = 後線 + 心臟科／胸腔科（溶栓決策）", "溶栓禁忌或失敗 → 導管取栓／心臟外科", "心跳停止 → ACLS（Ch38）+ alteplase 50 mg"],
+      "refs": [{ "ch": "06", "q": "肺栓塞" }, { "ch": "06", "q": "Alteplase（高風險 PE）" }]
+    },
+    "r_pe_stable": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "PE 血壓穩定（中高／中低／低風險）：抗凝",
+      "summary": "穩定者一線 **apixaban／rivaroxaban**（不需先 heparin）或 enoxaparin；可能要溶栓／取栓、CrCl < 30、血行不穩、極端體重、可能手術 → **UFH**。RV 異常 + troponin↑（中高風險）→ 監測床，惡化再溶栓。",
+      "steps": [
+        "確認 CTPA（或高度懷疑且檢查 ≥ 4 hr 才排到 → 先抗凝，血小板 > 50,000 即安全）",
+        "風險分層：sPESI、心臟超音波（RV）、troponin、NT-proBNP；中高風險（RV 異常 + troponin↑）→ 監測床、密切觀察",
+        "選一種抗凝用到底：DOAC（穩定、腎功能可）／enoxaparin／UFH（可能溶栓、CrCl < 30、不穩、極端體重、可能手術）",
+        "CBC、Cr、PT/aPTT、肝功能；SpO₂ < 94% 給 O₂；止痛（acetaminophen）",
+        "抗凝禁忌（活動出血、血小板 < 50,000）→ IVC filter；HIT 病史 → fondaparinux",
+        "惡化（低血壓、需升壓劑）→ 溶栓（< 75 歲、低出血風險）或導管取栓"
+      ],
+      "orders": [
+        { "drug": "Apixaban", "dose": "10 mg BID × 7 天 → 5 mg BID", "route": "PO", "freq": "BID", "note": "穩定者一線，不需先打 heparin；CrCl {round(crcl)}（< 25 資料少）" },
+        { "drug": "Rivaroxaban", "dose": "15 mg BID × 21 天 → 20 mg QD", "route": "PO 隨餐", "freq": "BID → QD", "note": "CrCl < 15 避免", "alt": "apixaban" },
+        { "drug": "Enoxaparin", "dose": "{round(wt)} mg（1 mg/kg）", "route": "SC", "freq": "{crcl < 30 ? 'QD（CrCl < 30）' : 'q12h'}", "note": "依 {wt} kg、CrCl {round(crcl)}；> 120 kg 用實際體重並考慮 anti-Xa" },
+        { "drug": "Heparin（UFH）", "dose": "{round(wt*80)} U（80 U/kg）", "route": "IV push", "freq": "STAT → {round(wt*18)} U/hr（18 U/kg/hr），q6h aPTT 1.5–2.5 ×", "note": "25,000 U in NS 250 mL（100 U/mL）→ {round(wt*18/100, 1)} mL/hr；首選於可能溶栓／取栓、CrCl < 30、血行不穩、極端體重、可能手術" },
+        { "drug": "Fondaparinux", "dose": "{wt < 50 ? 5 : (wt > 100 ? 10 : 7.5)} mg", "route": "SC", "freq": "QD", "note": "HIT 病史者；依 {wt} kg（< 50 kg 5、50–100 kg 7.5、> 100 kg 10 mg）" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "SpO₂ < 94% 才給" }
+      ],
+      "watch": ["BP／HR／SpO₂ q1–4h（中高風險更密）；惡化 → 高風險流程", "出血徵候、Hb、血小板（HIT）", "aPTT q6h（UFH）"],
+      "call": ["低血壓、需升壓劑、SpO₂ 持續下降 → 溶栓／取栓決策", "抗凝禁忌、活動出血、血小板 < 50,000", "新發 PE 抗凝選擇與後線討論"],
+      "refs": [{ "ch": "06", "q": "肺栓塞" }, { "ch": "06", "q": "風險分層" }],
+      "next": [{ "label": "惡化：SBP < 90、需升壓劑 → 高風險 PE", "next": "r_pe_high" }]
+    },
+    "r_ptx_obs": {
+      "type": "result",
+      "urgency": "green",
+      "title": "氣胸：無／輕微症狀 → 保守觀察",
+      "summary": "BTS 2023 依症狀而非大小：無或輕微症狀（任何大小）→ O₂ 2–4 L/min 加速吸收、4–6 hr 後追蹤 CXR，穩定可續觀；有症狀變化隨時改引流。",
+      "steps": [
+        "確認非張力性、原發性、無明顯症狀；生命徵象、SpO₂",
+        "O₂ nasal cannula 2–4 L/min（加速吸收）",
+        "4–6 hr 後追蹤 CXR；穩定可續觀，交班原團隊",
+        "止痛；避免用力、高壓環境",
+        "出現喘、痛加劇、SpO₂↓、氣胸擴大 → 抽氣／pigtail"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "加速氣體吸收；CO₂ 滯留者目標 88–92%" },
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h", "note": "" },
+        { "drug": "Ibuprofen", "dose": "400 mg", "route": "PO", "freq": "q6–8h PRN", "note": "腎功能差（CrCl {round(crcl)}）、出血風險者避免" }
+      ],
+      "watch": ["SpO₂、RR、症狀 q4h；4–6 hr 追蹤 CXR", "氣管位置、呼吸音（張力性轉變）"],
+      "call": ["症狀出現／加劇、CXR 擴大、SpO₂ 下降", "次發性氣胸、雙側、機械通氣者（一律胸管）"],
+      "refs": [{ "ch": "06", "q": "非張力性（BTS 2023" }],
+      "next": [{ "label": "有症狀 → 抽氣／pigtail／胸管", "next": "r_ptx_drain" }, { "label": "張力性徵候", "next": "r_tension" }]
+    },
+    "r_ptx_drain": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "氣胸：有症狀／次發性 → 抽氣、pigtail 或胸管",
+      "summary": "有症狀（喘、痛明顯）→ 抽氣（14–16G + 三路活塞，抽至 < 2.5 L 或阻力）或 pigtail 8–14 Fr；**次發性（COPD）、> 50 歲有肺病、血氣胸、雙側、機械通氣 → 胸管**；胸管後 CXR。",
+      "steps": [
+        "O₂、IV、心電監測、SpO₂；確認非張力性",
+        "原發性有症狀：抽氣（14–16G 針 + 三路活塞，抽至 < 2.5 L 或有阻力）或 pigtail 8–14 Fr 接單向閥／水下引流",
+        "次發性、> 50 歲有肺病、血氣胸、雙側、機械通氣 → 胸管（胸腔科／胸腔外科）",
+        "引流後 CXR 確認位置；持續 bubbling 觀察",
+        "止痛；復發或持續漏氣 > 3–5 天 → 胸腔外科"
+      ],
+      "orders": [
+        { "drug": "抽氣（14–16G 針 + 三路活塞）", "dose": "抽至 < 2.5 L 或阻力", "route": "第 2 肋間鎖骨中線或第 4–5 肋間腋前線", "freq": "單次", "note": "原發性有症狀者" },
+        { "drug": "Pigtail", "dose": "8–14 Fr", "route": "接單向閥／水下引流", "freq": "留置", "note": "抽氣替代；次發性／機械通氣者改胸管" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "目標 94–98%（CO₂ 滯留 88–92%）" },
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h", "note": "" },
+        { "drug": "Ketorolac", "dose": "30 mg", "route": "IV/IM", "freq": "q6h，≤ 5 天", "note": "腎功能差（CrCl {round(crcl)}）、出血風險者避免" }
+      ],
+      "watch": ["引流後 SpO₂、RR、呼吸音、CXR", "bubbling、引流量、皮下氣腫、管路脫落", "張力性徵候（管路阻塞時）"],
+      "call": ["需要胸管、次發性、機械通氣、血氣胸、雙側", "引流後仍喘／SpO₂↓、持續漏氣 > 3–5 天、復發"],
+      "refs": [{ "ch": "06", "q": "非張力性（BTS 2023" }],
+      "next": [{ "label": "張力性徵候 → 針刺減壓", "next": "r_tension" }]
+    },
+    "r_boerhaave": {
+      "type": "result",
+      "urgency": "red",
+      "title": "食道破裂（Boerhaave）",
+      "summary": "劇烈嘔吐後劇烈胸痛 + 皮下氣腫／縱膈氣腫／發燒／休克：**NPO、NG 減壓（小心）、輸液、止痛、廣效抗生素 + 抗黴菌、緊急胸腔外科／消化科**。",
+      "steps": [
+        "叫後線；NPO、IV × 2、心電監測；低血壓 → NS 500 mL bolus（Ch19）",
+        "CT 胸部（縱膈氣體／積液）、水溶性顯影劑食道攝影；CXR（縱膈氣腫、肋膜積液）",
+        "NG 減壓（小心置放）；止痛 morphine",
+        "抽血：CBC、電解質、Cr、lactate、血液培養；type & screen",
+        "廣效抗生素 + 抗黴菌（1 小時內）",
+        "緊急聯絡胸腔外科／消化科（手術／內視鏡支架／引流）"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "4.5 g", "route": "IV drip", "freq": "q6h", "note": "或 meropenem 1 g IV q8h；CrCl {round(crcl)} 依腎功能調整", "alt": "meropenem 1 g IV q8h" },
+        { "drug": "Fluconazole", "dose": "400 mg", "route": "IV drip", "freq": "QD", "note": "抗黴菌併用" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10 min PRN 疼痛", "note": "低血壓慎用" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，低血壓時可重複", "note": "心／腎衰竭 250 mL" },
+        { "drug": "NPO + NG 減壓", "dose": "1 條 NG", "route": "NG 接引流", "freq": "持續", "note": "置放小心" }
+      ],
+      "watch": ["BP／HR／體溫 q15–30 min（敗血症、休克）", "皮下氣腫擴大、呼吸窘迫、肋膜積液", "lactate、WBC"],
+      "call": ["懷疑食道破裂當下 = 後線 + 胸腔外科／消化科", "休克、呼吸窘迫、需升壓劑"],
+      "refs": [{ "ch": "06", "q": "食道破裂" }]
+    },
+    "r_benign": {
+      "type": "result",
+      "urgency": "green",
+      "title": "良性胸痛：胸壁痛／GERD／食道痙攣／焦慮",
+      "summary": "**排除診斷**：ECG 與 troponin 陰性、無危險徵象後才下。胸壁：acetaminophen／NSAID + 熱敷；GERD：床頭抬高、制酸劑、PPI；焦慮：腹式呼吸、lorazepam。帶狀皰疹疹前 2–3 天可只有痛。",
+      "steps": [
+        "再確認：ECG 正常（症狀持續時重做）、troponin 0 hr 與 1–3 hr 陰性、無危險徵象",
+        "胸壁痛（局部壓痛可重現、與姿勢／活動相關）：止痛、熱敷；肋骨骨折需良好止痛避免肺塌陷",
+        "GERD／食道痙攣（燒灼、餐後／平躺加劇）：床頭抬高、餐後 3 小時勿平躺、制酸劑、PPI；食道痙攣可 NTG／CCB",
+        "焦慮／恐慌：腹式呼吸、安撫、lorazepam PRN",
+        "皮膚看帶狀皰疹（疹前疼痛，Ch14）；上腹壓痛想潰瘍／膽道／胰臟（Ch8）",
+        "交班原團隊；症狀改變 → 重新評估"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h", "note": "胸壁痛／肋膜炎" },
+        { "drug": "Ibuprofen", "dose": "400 mg", "route": "PO", "freq": "q6–8h PRN", "note": "或 ketorolac 30 mg IV/IM q6h ≤ 5 天；腎功能差（CrCl {round(crcl)}）、潰瘍、出血風險者避免" },
+        { "drug": "制酸劑（Al/Mg 複方）", "dose": "1–2 錠", "route": "PO", "freq": "q6h PRN", "note": "GERD" },
+        { "drug": "Pantoprazole", "dose": "40 mg", "route": "PO", "freq": "QD", "note": "GERD" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO", "freq": "PRN", "note": "焦慮／恐慌，排除診斷後" }
+      ],
+      "watch": ["症狀改變、新危險徵象 → 回到危險徵象評估", "troponin 1–3 hr 結果"],
+      "call": ["troponin 陽性、ECG 變化、NTG × 3 後仍痛", "出現低血壓、SpO₂↓、新雜音、脈搏不對稱"],
+      "ddx": ["ACS（非典型）", "PE", "心包膜炎", "帶狀皰疹"],
+      "refs": [{ "ch": "06", "q": "消化道原因" }, { "ch": "06", "q": "胸壁疼痛" }, { "ch": "06", "q": "焦慮／恐慌" }],
+      "next": [{ "label": "重新評估危險徵象", "next": "q_danger" }]
+    }
+  }
+}

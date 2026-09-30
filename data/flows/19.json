@@ -1,0 +1,524 @@
+{
+  "id": "19",
+  "title": "低血壓與休克",
+  "chapter": "19",
+  "entries": [
+    { "label": "血壓低（護理師通知 BP 低）", "type": "symptom", "start": "i_phone", "group": "生命徵象",
+      "keywords": ["低血壓", "血壓低", "血壓掉", "hypotension", "BP 80", "SBP 80", "血壓 70", "休克", "shock", "MAP 低"] },
+    { "label": "血壓低 + 發燒／疑感染", "type": "symptom", "start": "r_septic", "group": "生命徵象",
+      "keywords": ["敗血性休克", "septic shock", "發燒 血壓低", "sepsis 低血壓", "乳酸高"] },
+    { "label": "灌流不足（尿少、花斑、意識差、乳酸高）", "type": "symptom", "start": "q_type", "group": "生命徵象",
+      "keywords": ["灌流不足", "花斑", "mottling", "尿量少 血壓低", "乳酸", "lactate", "CRT 延長", "四肢冰冷"] },
+    { "label": "敗血性休克", "type": "diagnosis", "start": "r_septic",
+      "keywords": ["敗血性休克", "septic shock", "sepsis", "敗血症", "30 mL/kg"] },
+    { "label": "出血性休克", "type": "diagnosis", "start": "r_hemorrhagic",
+      "keywords": ["出血性休克", "hemorrhagic shock", "大量出血", "massive transfusion", "1:1:1", "TXA"] },
+    { "label": "低血容性休克（脫水）", "type": "diagnosis", "start": "r_hypovolemic",
+      "keywords": ["低血容", "hypovolemic", "脫水", "dehydration", "第三空間", "嘔吐腹瀉 血壓低"] },
+    { "label": "心因性休克", "type": "diagnosis", "start": "r_cardiogenic",
+      "keywords": ["心因性休克", "cardiogenic shock", "低輸出", "dobutamine", "milrinone", "肺水腫 低血壓"] },
+    { "label": "阻塞性休克（PE／填塞／張力性氣胸）", "type": "diagnosis", "start": "q_obstructive",
+      "keywords": ["阻塞性休克", "obstructive shock", "PE 休克", "心包填塞", "tamponade", "張力性氣胸", "auto-PEEP"] },
+    { "label": "過敏性休克", "type": "diagnosis", "start": "r_anaphylaxis",
+      "keywords": ["過敏性休克", "anaphylaxis", "anaphylactic shock", "epinephrine IM", "輸血反應 低血壓", "顯影劑過敏"] },
+    { "label": "神經性休克（脊髓損傷）", "type": "diagnosis", "start": "r_neurogenic",
+      "keywords": ["神經性休克", "neurogenic shock", "脊髓損傷 低血壓", "spinal shock", "低血壓 心搏過緩 溫暖"] },
+    { "label": "藥物性低血壓", "type": "diagnosis", "start": "q_drug",
+      "keywords": ["藥物性低血壓", "降壓藥 低血壓", "鴉片 低血壓", "naloxone", "透析後低血壓", "鎮靜 低血壓"] },
+    { "label": "β-blocker／CCB 過量", "type": "diagnosis", "start": "r_bb_ccb",
+      "keywords": ["β-blocker 過量", "CCB 過量", "beta blocker overdose", "calcium channel blocker overdose", "glucagon", "高劑量 insulin"] },
+    { "label": "腎上腺危症", "type": "diagnosis", "start": "r_adrenal",
+      "keywords": ["腎上腺危症", "adrenal crisis", "腎上腺不足", "adrenal insufficiency", "hydrocortisone", "類固醇 停藥 低血壓"] },
+    { "label": "升壓劑／強心劑速查（表 19-1）", "type": "diagnosis", "start": "r_pressors",
+      "keywords": ["升壓劑", "vasopressor", "norepinephrine", "levophed", "vasopressin", "dopamine", "dobutamine", "泡法", "inotrope"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中立即口頭醫囑",
+      "body": [
+        "**平躺（抬腿）**、O₂、IV × 2 大口徑、監測器、12 導程 ECG",
+        "**NS/LR 500 mL bolus**（明顯肺水腫者不給）",
+        "抽血：CBC、電解質、Cr、lactate、troponin、血液／尿液培養、type & screen",
+        "問：雙側血壓與壓脈帶大小、平常血壓、意識、尿量、發燒、胸痛／喘、出血、新藥／輸血／顯影劑、剛給的降壓藥／鴉片／鎮靜、透析後",
+        "**SBP < 85、意識改變、任何休克徵候 → 立刻到床邊並叫後線**"
+      ],
+      "next": "q_pulse"
+    },
+    "q_pulse": {
+      "type": "choice",
+      "title": "到床邊：先確認有沒有脈搏",
+      "options": [
+        { "label": "有脈搏", "next": "q_sbp" },
+        { "label": "沒有脈搏／PEA", "next": "r_arrest" }
+      ]
+    },
+    "q_sbp": {
+      "type": "number",
+      "title": "重測收縮壓（SBP）？",
+      "help": "壓脈帶大小正確、雙側；MAP < 65 或比平常低 > 40 也算；shock index HR/SBP > 0.9–1 = 警訊",
+      "var": "sbp", "unit": "mmHg", "step": 1,
+      "quick": [60, 70, 80, 85, 90, 100],
+      "branches": [
+        { "if": "sbp < 70", "next": "r_crash" },
+        { "else": "q_perf" }
+      ]
+    },
+    "q_perf": {
+      "type": "multi",
+      "title": "有沒有灌流不足徵候？（血壓正常不代表沒有休克）",
+      "help": "看意識、皮膚、尿量、乳酸",
+      "options": [
+        { "label": "意識改變", "set": { "altered": true } },
+        { "label": "皮膚花斑（mottling）、CRT > 3 秒、四肢冷", "set": { "skin": true } },
+        { "label": "尿量 < 0.5 mL/kg/hr（{round(wt*0.5)} mL/hr）", "set": { "oliguria": true } },
+        { "label": "乳酸 > 2 mmol/L", "set": { "lactate": true } },
+        { "label": "MAP < 65 或比平常低 > 40 mmHg", "set": { "lowmap": true } }
+      ],
+      "branches": [
+        { "if": "altered || skin || oliguria || lactate || lowmap || sbp < 90", "next": "q_type" },
+        { "else": "r_mild" }
+      ]
+    },
+    "q_type": {
+      "type": "choice",
+      "title": "快速分型：JVP、肺音、皮膚、床邊超音波（RUSH：pump／tank／pipes）",
+      "help": "JVP 低 = 低血容／分佈性；JVP 高 + 囉音 = 心因性；JVP 高 + 肺清 = 阻塞性",
+      "options": [
+        { "label": "發燒／感染源、四肢溫暖、JVP 低（敗血症）", "next": "r_septic" },
+        { "label": "出血：黑便／血便、術後、Hb 下降、抗凝（出血性）", "next": "r_hemorrhagic" },
+        { "label": "嘔吐／腹瀉／NPO 未補／第三空間，JVP 低、IVC 塌陷（脫水）", "next": "r_hypovolemic" },
+        { "label": "胸痛／ECG 缺血、囉音／肺水腫、JVP 高、四肢冷；或心律不整造成（心因性）", "next": "r_cardiogenic" },
+        { "label": "JVP 高 + 肺清：PE、填塞、張力性氣胸、呼吸器 auto-PEEP（阻塞性）", "next": "q_obstructive" },
+        { "label": "新藥／輸血／顯影劑後：蕁麻疹、喘鳴、喉水腫（過敏性）", "next": "r_anaphylaxis" },
+        { "label": "脊髓損傷：低血壓 + 心搏過緩 + 皮膚溫暖（神經性）", "next": "r_neurogenic" },
+        { "label": "剛給降壓藥／鴉片／鎮靜／NTG、透析後（藥物性）", "next": "q_drug" },
+        { "label": "長期類固醇、低血糖／低 Na／高 K、原因不明（腎上腺危症）", "next": "r_adrenal" },
+        { "label": "原因不明／危急 → 先穩定再分型", "next": "r_crash" }
+      ]
+    },
+    "q_obstructive": {
+      "type": "choice",
+      "title": "阻塞性休克：哪一種？（超音波／理學檢查）",
+      "options": [
+        { "label": "右心擴大、DVT、突發喘 + 低血壓（PE）", "next": "r_pe" },
+        { "label": "心包積液 + 右心塌陷、心音遠、奇脈（填塞）", "next": "r_tamponade" },
+        { "label": "氣管偏移 + 單側呼吸音消失、無肺滑動（張力性氣胸）", "next": "r_tension" },
+        { "label": "呼吸器病人（COPD／氣喘）：auto-PEEP", "next": "r_autopeep" }
+      ]
+    },
+    "q_drug": {
+      "type": "choice",
+      "title": "藥物性低血壓：哪一類藥？",
+      "options": [
+        { "label": "鴉片類（意識差、RR 慢、瞳孔小）", "next": "r_opioid" },
+        { "label": "β-blocker／CCB 過量（心搏過緩 + 低血壓）", "next": "r_bb_ccb" },
+        { "label": "降壓藥、NTG、透析後、BZD／鎮靜劑（病況穩定）", "next": "r_mild" }
+      ]
+    },
+    "r_arrest": {
+      "type": "result",
+      "urgency": "red",
+      "title": "無脈搏 → ACLS（Ch38）",
+      "summary": "立刻 CPR、叫急救團隊、貼電擊器；VF/pVT → 去顫；PEA/asystole → epinephrine 1 mg q3–5 min；找 H's & T's（低血容、缺氧、高血鉀、填塞、張力性氣胸、PE、毒物）。",
+      "steps": [
+        "叫急救團隊、推急救車；CPR 100–120/min、深 5–6 cm、減少中斷",
+        "貼電擊器：VF/pVT → 去顫；PEA/asystole → 不電",
+        "IV/IO、epinephrine 1 mg q3–5 min；頑固 VF/pVT → amiodarone",
+        "床邊超音波找可逆原因：填塞、PE（右心擴大）、張力性氣胸、低血容",
+        "高血鉀 → calcium chloride 1 g、NaHCO₃、insulin/glucose；疑 PE → alteplase 50 mg"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg（10 mL 1:10,000）", "route": "IV/IO push", "freq": "q3–5 min", "note": "每次後沖 20 mL NS、抬手" },
+        { "drug": "Amiodarone", "dose": "300 mg → 150 mg", "route": "IV/IO push", "freq": "1 次 → 1 次（頑固 VF/pVT）", "note": "D5W 稀釋 20 mL" },
+        { "drug": "Alteplase", "dose": "50 mg", "route": "IV push", "freq": "單次，可再 50 mg", "note": "疑 PE 的心跳停止" }
+      ],
+      "watch": ["每 2 分鐘換手、看節律", "ETCO₂、ROSC 徵候"],
+      "call": ["心跳停止 = 急救團隊 + 後線 + ICU"],
+      "refs": [{ "ch": "38", "q": "Epinephrine 1 mg/mL" }, { "ch": "19", "q": "確認有脈搏" }]
+    },
+    "r_crash": {
+      "type": "result",
+      "urgency": "red",
+      "title": "危急低血壓（SBP < 70）／原因不明休克：先穩定再分型",
+      "summary": "叫後線；NS/LR 500 mL bolus（肺水腫不給）+ **立即 norepinephrine**（周邊大靜脈可先給）；床邊超音波 RUSH 5 分鐘分型；抽 lactate、培養、cortisol；尿管、停降壓藥。",
+      "steps": [
+        "叫後線；平躺抬腿、O₂、IV × 2 大口徑（打不上 → 骨內針）、心電監測、12 導程 ECG",
+        "NS/LR 500 mL bolus over 15 min（肺水腫不給；心因性肺音乾淨 250 mL 試）；每次後評估 BP、HR、肺音、SpO₂、passive leg raise",
+        "**SBP < 70／危急 → 不等輸液完，立即 norepinephrine**（周邊 ≤ 24–48 hr、稀釋濃度、每小時看外滲）；準備 CVC／動脈導管",
+        "床邊超音波 RUSH：pump（心包積液、LV 收縮、RV 擴大）、tank（IVC、腹腔／胸腔積液、B-lines）、pipes（AAA、DVT）",
+        "快速鑑別：JVP、肺音、心音、氣管／呼吸音、腹部、皮膚（蕁麻疹、感染、出血）、直腸（黑便）",
+        "抽血：CBC、電解質、Cr、血糖、lactate、ABG/VBG、troponin、PT/aPTT、fibrinogen、type & screen、培養 × 2、cortisol（不明時）",
+        "尿管 q1h 尿量；q2–6h lactate；**停**降壓藥／利尿劑／NTG",
+        "依分型走對應流程（下方「後續」）；長期類固醇者先給 hydrocortisone"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，重複至 MAP ≥ 65 或 1–2 L", "note": "肺水腫不給；心／腎衰竭每 250 mL 評估" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起，每 5–10 min 調，常用至 0.5–1", "route": "IV drip（CVC；周邊大靜脈短暫可）", "freq": "持續，目標 MAP ≥ 65", "note": "8 mg in D5W/NS 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr；周邊用 4 mg/250 mL；外滲 → phentolamine 5–10 mg 局部" },
+        { "drug": "Vasopressin", "dose": "0.03–0.04 U/min 固定", "route": "IV drip", "freq": "持續（NE ≥ 0.25 mcg/kg/min 時加）", "note": "20 U in NS 100 mL（0.2 U/mL）：0.03 U/min = 9 mL/hr；不 titrate" },
+        { "drug": "Hydrocortisone", "dose": "100 mg", "route": "IV push", "freq": "STAT（長期類固醇者／疑腎上腺危症）", "note": "先給藥再等 cortisol" },
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "面罩／nasal cannula", "freq": "持續", "note": "CO₂ 滯留 88–92%" }
+      ],
+      "watch": ["BP／HR q5 min（動脈導管）；MAP ≥ 65（慢性高血壓 70–75）", "尿量 ≥ 0.5 mL/kg/hr（{round(wt*0.5)} mL/hr）、CRT ≤ 3 秒 q30 min、乳酸 2 hr 內下降 ≥ 20%", "每次 bolus 後肺音、SpO₂；周邊升壓劑外滲"],
+      "call": ["SBP < 70、需升壓劑、灌流不足徵候 = 當下叫後線 + ICU", "500–1,000 mL 輸液無改善；休克原因不明；懷疑心因性／阻塞性 → 心臟科"],
+      "refs": [{ "ch": "19", "q": "升壓劑（表 19-1）" }, { "ch": "19", "q": "床邊超音波（RUSH）" }],
+      "next": [
+        { "label": "發燒／感染 → 敗血性休克", "next": "r_septic" },
+        { "label": "出血 → 出血性休克", "next": "r_hemorrhagic" },
+        { "label": "JVP 高 + 囉音 → 心因性", "next": "r_cardiogenic" },
+        { "label": "JVP 高 + 肺清 → 阻塞性", "next": "q_obstructive" },
+        { "label": "蕁麻疹／喘鳴 → 過敏性", "next": "r_anaphylaxis" },
+        { "label": "長期類固醇 → 腎上腺危症", "next": "r_adrenal" },
+        { "label": "升壓劑速查", "next": "r_pressors" }
+      ]
+    },
+    "r_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "血壓略低、無灌流不足：找原因、觀察",
+      "summary": "病況穩定、意識清、尿量與皮膚正常：**NS 500 mL over 1–2 hr**、暫停降壓藥／NTG／利尿劑、找原因（剛給的藥、透析、脫水、鎮靜），30 分鐘複測；出現灌流不足徵候即改依休克處理。",
+      "steps": [
+        "重測（壓脈帶大小、雙側）；與平常血壓比較",
+        "找原因：剛給的降壓藥／鴉片／鎮靜／NTG、透析後、NPO 未補、嘔吐腹瀉、出血、發燒",
+        "暫停降壓藥、利尿劑、NTG；NS 500 mL over 1–2 hr",
+        "平躺、q30 min 複測 BP／HR、意識、尿量",
+        "抽血（CBC、電解質、Cr、lactate）看趨勢；交班原團隊"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 1–2 hr", "freq": "單次，可再 250–500 mL", "note": "心／腎衰竭者 250 mL 並評估肺音" },
+        { "drug": "（暫停降壓藥／利尿劑／NTG）", "dose": "0 mg（hold）", "route": "—", "freq": "至血壓回穩", "note": "白天由原團隊決定恢復" }
+      ],
+      "watch": ["BP／HR q30 min × 2 hr，之後 q4h", "尿量、意識、皮膚；乳酸（若抽）"],
+      "call": ["SBP < 85 或 MAP < 65 經 500–1,000 mL 無改善", "出現意識改變、乳酸 > 2、少尿、花斑"],
+      "refs": [{ "ch": "19", "q": "藥物性低血壓" }, { "ch": "19", "q": "病況穩定、僅血壓略低" }],
+      "next": [{ "label": "出現灌流不足徵候 → 分型", "next": "q_type" }]
+    },
+    "r_septic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "敗血性休克",
+      "summary": "1 小時 bundle：**培養 × 2 → 廣效抗生素（1 小時內）、LR 30 mL/kg（{round(wt*30)} mL）前 3 小時、MAP < 65 就上 norepinephrine（不等灌完）** → vasopressin → hydrocortisone；6–12 小時內來源控制。",
+      "steps": [
+        "叫後線；IV × 2、監測、O₂；抽 lactate（> 2 則 2–4 hr 後再抽）、血液培養 × 2（抗生素前）、尿液培養、CBC、Cr、PT/aPTT",
+        "**1 小時內廣效抗生素**（依來源與抗藥風險，Ch17 表 17-3）",
+        "LR（或 NS）30 mL/kg = {round(wt*30)} mL 前 3 小時，先 500 mL bolus；心／腎衰竭仍要給，每 250 mL 評估（passive leg raise、IVC、B-lines）",
+        "MAP < 65 → norepinephrine（周邊可先給）；NE ≥ 0.25 → 加 vasopressin；仍不穩 ≥ 4 hr → hydrocortisone",
+        "來源控制 6–12 小時內：移除可疑管路、引流膿瘍、清創、解除阻塞",
+        "尿管 q1h 尿量；q6h lactate／電解質／CBC／Cr；血糖 140–180",
+        "心輸出低 + 灌流差 → dobutamine；第三線 epinephrine"
+      ],
+      "orders": [
+        { "drug": "LR（或 NS）", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip，前 3 小時", "freq": "先 500 mL over 15 min，之後依評估 250–500 mL bolus", "note": "依 {wt} kg；平衡液優先；避免 HES；大量晶體後可加 albumin" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起，titrate（常用至 0.5–1）", "route": "IV drip（周邊短暫可）", "freq": "持續，**MAP < 65 就給**", "note": "8 mg in D5W 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr" },
+        { "drug": "Vasopressin", "dose": "0.03 U/min 固定", "route": "IV drip", "freq": "持續（NE ≥ 0.25 mcg/kg/min 時加）", "note": "20 U in NS 100 mL（0.2 U/mL）= 9 mL/hr；不 titrate" },
+        { "drug": "Hydrocortisone", "dose": "50 mg", "route": "IV push", "freq": "q6h（或 200 mg/d 持續）× 5–7 天", "note": "NE ≥ 0.25 mcg/kg/min ≥ 4 小時仍不穩" },
+        { "drug": "Fludrocortisone", "dose": "50 mcg", "route": "PO/NG", "freq": "QD", "note": "可與 hydrocortisone 併用（縮短休克時間）" },
+        { "drug": "Epinephrine", "dose": "0.05–0.5 mcg/kg/min", "route": "IV drip", "freq": "持續（第三線或心功能差）", "note": "1 mg in NS 100 mL（10 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.6)} mL/hr；乳酸↑、心律不整" },
+        { "drug": "Dobutamine", "dose": "2.5–10 mcg/kg/min", "route": "IV drip", "freq": "持續（心輸出低且灌流不足）", "note": "250 mg in 250 mL（1 mg/mL）：{wt} kg 5 mcg/kg/min ≈ {round(wt*0.3)} mL/hr；會降血壓，與 NE 併用" }
+      ],
+      "watch": ["MAP ≥ 65 q15–30 min 重新評估；尿量 ≥ {round(wt*0.5)} mL/hr", "乳酸 2 hr 內下降 ≥ 20%、CRT ≤ 3 秒 q30 min", "每次 bolus 後肺音／SpO₂；q6h 電解質、Cr、CBC、血糖"],
+      "call": ["需要升壓劑、乳酸 > 2 經輸液無改善、意識改變 = 後線 + ICU", "來源需手術／引流、免疫低下、抗生素選擇"],
+      "refs": [{ "ch": "17", "q": "表 17-1" }, { "ch": "19", "q": "敗血性休克" }],
+      "next": [{ "label": "升壓劑速查", "next": "r_pressors" }]
+    },
+    "r_hemorrhagic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "出血性休克",
+      "summary": "兩條大 IV／骨內針、晶體 ≤ 1–2 L 後**輸血（大量出血 1:1:1）**、止血（加壓／內視鏡／栓塞／手術）、**允許性低血壓 SBP 80–90 直到止血**（頭部外傷除外）、保溫、逆轉抗凝、每 4 U 血品補 calcium。",
+      "steps": [
+        "叫後線；IV × 2 大口徑（或骨內針）、監測、O₂、保溫",
+        "Type & cross、CBC、PT/aPTT、fibrinogen、電解質、Ca、lactate、ABG；緊急備血（大量出血啟動 MTP）",
+        "NS/LR 500 mL bolus，晶體 ≤ 1–2 L 後改輸血；pRBC，大量出血 pRBC:FFP:血小板 1:1:1",
+        "**止血**：直接加壓；消化道 → 內視鏡（Ch9）；後腹腔／骨盆 → 栓塞；術後 → 外科",
+        "允許性低血壓 SBP 80–90 直到止血（頭部外傷除外，MAP ≥ 65）",
+        "創傷 3 小時內 TXA；逆轉抗凝（Ch30）；每 4 U 血品 calcium gluconate 1 g",
+        "尿管、q1h 尿量；q1–2h Hb、lactate、體溫"
+      ],
+      "orders": [
+        { "drug": "pRBC", "dose": "2–4 U（大量出血 pRBC:FFP:血小板 = 1:1:1）", "route": "IV 輸血", "freq": "STAT，依 Hb／血行動力重複", "note": "啟動大量輸血流程；保溫" },
+        { "drug": "NS 或 LR", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，總量 ≤ 1–2 L 後改輸血", "note": "過多晶體稀釋凝血因子" },
+        { "drug": "Tranexamic acid（TXA）", "dose": "1 g", "route": "IV drip over 10 min", "freq": "STAT → 1 g over 8 hr", "note": "**創傷 3 小時內**；消化道出血無效" },
+        { "drug": "Calcium gluconate 10%", "dose": "1 g（10 mL）", "route": "IV drip", "freq": "每 4 U 血品", "note": "citrate 造成低血鈣；監測 iCa" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起", "route": "IV drip", "freq": "持續（輸液／輸血中血壓仍危急）", "note": "8 mg in 250 mL：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr；出血性休克以容積與止血為主" }
+      ],
+      "watch": ["BP／HR q5 min；SBP 80–90 直到止血（頭部外傷 MAP ≥ 65）", "Hb q1–2h、血小板、INR、fibrinogen、iCa、體溫、K", "尿量、意識、輸血反應"],
+      "call": ["出血性休克需輸血／止血處置 = 後線 + 消化科／外科／介入放射科", "Hb 持續下降、需大量輸血、抗凝逆轉決策（Ch30）"],
+      "refs": [{ "ch": "19", "q": "出血性／低血容性休克" }, { "ch": "09", "q": "上消化道出血" }, { "ch": "30", "q": "逆轉" }]
+    },
+    "r_hypovolemic": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低血容性休克（脫水、第三空間）",
+      "summary": "NS/LR 500 mL bolus 重複至 MAP ≥ 65 或 1–2 L（每次後評估肺音、SpO₂、passive leg raise）；輸液 1 L 後 MAP 仍 < 65 → norepinephrine；之後補維持與流失（Ch10）。",
+      "steps": [
+        "IV × 2、監測；平躺抬腿",
+        "NS/LR 500 mL bolus over 15 min，重複至 MAP ≥ 65 或 1–2 L；每次後評估 BP、HR、肺音、SpO₂、IVC",
+        "找原因：嘔吐、腹瀉、多尿（高血糖、利尿劑）、NPO 未補、胰臟炎／腸阻塞／腹膜炎（第三空間）、燒燙傷；排除出血（Hb、直腸）",
+        "電解質、Cr、血糖、lactate、Ca；矯正 K／Na（Ch10、Ch32、Ch33）",
+        "1 L 後 MAP 仍 < 65 → norepinephrine，並想其他型休克（敗血、腎上腺）",
+        "尿管 q1h 尿量；復甦後開維持與流失補充"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，重複至 MAP ≥ 65 或 1–2 L", "note": "心／腎衰竭 250 mL 並每次評估肺音" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起", "route": "IV drip（周邊短暫可）", "freq": "持續（輸液 1 L 後 MAP < 65）", "note": "8 mg in 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr" }
+      ],
+      "watch": ["BP／HR q15 min；每次 bolus 後肺音、SpO₂、JVP", "尿量 ≥ {round(wt*0.5)} mL/hr、乳酸、電解質（Na、K）q4–6h"],
+      "call": ["500–1,000 mL 無改善、需升壓劑", "乳酸 > 2、少尿持續、懷疑出血或腹內急症"],
+      "refs": [{ "ch": "19", "q": "出血性／低血容性休克" }, { "ch": "10", "q": "維持" }],
+      "next": [{ "label": "出血 → 出血性休克", "next": "r_hemorrhagic" }]
+    },
+    "r_cardiogenic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "心因性休克",
+      "summary": "**聯絡心臟科**：ACS → 緊急 PCI；心律不整 → 整流／節律（Ch20–21）；**norepinephrine 維持 MAP（首選）+ dobutamine／milrinone 增輸出**；肺水腫血壓穩後才利尿；避免 β-blocker、CCB、NTG；右心梗塞 → 輸液。",
+      "steps": [
+        "叫後線 + 心臟科；監測、IV × 2、12 導程 ECG（STEMI？下壁 → V4R）、動脈導管",
+        "床邊超音波：LV 收縮、RV、心包積液、瓣膜（急性 MR／AR）、B-lines",
+        "肺音乾淨 → NS 250 mL 試；肺水腫 → 不給輸液",
+        "MAP < 65 → norepinephrine（首選）；低輸出 → 加 dobutamine（或 milrinone：β-blocker 使用者、肺高壓）",
+        "**停** β-blocker、CCB、NTG（低血壓時）；肺水腫在血壓穩定後小心利尿",
+        "ACS → 緊急 PCI；心律不整 → 整流／節律；右心梗塞 → 輸液；機械輔助（IABP／Impella／ECMO）依心臟科",
+        "需插管：ketamine／etomidate 小劑量誘導 + 備升壓劑（push-dose epinephrine）",
+        "troponin、NT-proBNP、lactate、Cr、電解質；尿管 q1h 尿量"
+      ],
+      "orders": [
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起，每 5–10 min 調", "route": "IV drip（CVC；周邊短暫可）", "freq": "持續，目標 MAP ≥ 65", "note": "8 mg in D5W 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr" },
+        { "drug": "Dobutamine", "dose": "2.5–10 mcg/kg/min（max 20）", "route": "IV drip", "freq": "持續（低輸出）", "note": "250 mg in 250 mL（1 mg/mL）：{wt} kg 5 mcg/kg/min ≈ {round(wt*0.3)} mL/hr；會降血壓，常與 NE 併用" },
+        { "drug": "Milrinone", "dose": "0.125–0.5 mcg/kg/min（不 loading）", "route": "IV drip", "freq": "持續", "note": "20 mg in 100 mL；β-blocker 使用者、肺高壓；CrCl {round(crcl)} → 腎功能減量" },
+        { "drug": "NS", "dose": "250 mL", "route": "IV drip over 15 min", "freq": "試一次（肺音乾淨才給）", "note": "右心梗塞可至 1–2 L；肺水腫不給" },
+        { "drug": "Epinephrine", "dose": "0.05–0.5 mcg/kg/min", "route": "IV drip", "freq": "持續（強心 + 升壓，第三線）", "note": "1 mg in NS 100 mL（10 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.6)} mL/hr" },
+        { "drug": "Push-dose epinephrine", "dose": "10–20 mcg（1 mg 稀釋至 100 mL 取 1–2 mL）", "route": "IV push", "freq": "PRN 插管前後短暫低血壓", "note": "10 mcg/mL" }
+      ],
+      "watch": ["動脈導管 BP、HR／心律 q5 min；MAP ≥ 65", "尿量 ≥ {round(wt*0.5)} mL/hr、乳酸 q2h、SpO₂／肺音", "心律不整（dobutamine／epinephrine）"],
+      "call": ["心因性休克當下 = 心臟科 + 後線 + ICU（PCI／機械輔助）", "STEMI、致命心律不整、需插管"],
+      "refs": [{ "ch": "19", "q": "心因性休克" }, { "ch": "19", "q": "表 19-1" }, { "ch": "06", "q": "右心梗塞" }],
+      "next": [{ "label": "升壓劑速查", "next": "r_pressors" }]
+    },
+    "r_pe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "阻塞性休克：高風險 PE",
+      "summary": "SBP < 90 ≥ 15 分鐘／需升壓劑：**alteplase 100 mg over 2 hr**（心跳停止 50 mg IVP）；NS 250–500 mL 勿過量 → norepinephrine；避免插管前大量鎮靜；溶栓禁忌／失敗 → 導管取栓／手術。",
+      "steps": [
+        "叫後線 + 心臟科／胸腔科；IV × 2、監測；床邊超音波（右心擴大、IVC 擴張、DVT）",
+        "NS 250–500 mL bolus（勿過量，右心負荷）→ MAP < 65 給 norepinephrine",
+        "確認溶栓禁忌 → alteplase；之後 aPTT < 2 × 再接 UFH",
+        "溶栓禁忌／失敗 → 導管取栓／手術（心臟外科／介入放射科）",
+        "避免插管前大量鎮靜（血行崩潰）；SpO₂ < 94% 給 O₂"
+      ],
+      "orders": [
+        { "drug": "Alteplase", "dose": "100 mg", "route": "IV drip over 2 hr", "freq": "單次", "note": "心跳停止：50 mg IV push，15–30 min 後可再 50 mg（Ch38）" },
+        { "drug": "Heparin（UFH）", "dose": "{round(wt*80)} U（80 U/kg）", "route": "IV push", "freq": "STAT → {round(wt*18)} U/hr（18 U/kg/hr），q6h aPTT 1.5–2.5 ×", "note": "溶栓時先不 bolus，aPTT < 2 × 再接滴注；25,000 U in NS 250 mL（100 U/mL）" },
+        { "drug": "NS", "dose": "250–500 mL", "route": "IV drip over 15 min", "freq": "STAT，勿過量", "note": "右心負荷" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起", "route": "IV drip（周邊短暫可）", "freq": "持續，MAP ≥ 65", "note": "8 mg in 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr" }
+      ],
+      "watch": ["BP／HR／SpO₂ q5 min", "溶栓中出血徵候；aPTT q6h"],
+      "call": ["高風險 PE = 後線 + 心臟科／胸腔科溶栓決策", "溶栓禁忌／失敗 → 導管取栓／心臟外科"],
+      "refs": [{ "ch": "06", "q": "肺栓塞" }, { "ch": "19", "q": "阻塞性休克" }]
+    },
+    "r_tamponade": {
+      "type": "result",
+      "urgency": "red",
+      "title": "阻塞性休克：心包填塞",
+      "summary": "低血壓 + JVP↑ + 心音遠 + 奇脈；超音波確診。**小量輸液維持前負荷（灌太多惡化）、避免 β-blocker／利尿劑／NTG／正壓通氣**；升壓劑效果有限，dobutamine 橋接；緊急心包穿刺（剝離／心肌破裂 → 心外手術）。",
+      "steps": [
+        "叫後線 + 心臟科；監測、IV × 2、ECG（低電位、electrical alternans）",
+        "床邊超音波：心包積液 + 右心舒張期塌陷、IVC 擴張",
+        "NS 250–500 mL 維持前負荷；**避免**利尿劑、NTG、β-blocker、正壓通氣（插管前先引流）",
+        "dobutamine 橋接；升壓劑效果有限",
+        "緊急心包穿刺；主動脈剝離／心肌破裂 → 心臟外科；出血性／化膿性 → 外科引流"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "250–500 mL", "route": "IV drip over 15 min", "freq": "STAT，謹慎重複", "note": "維持前負荷；灌太多惡化" },
+        { "drug": "Dobutamine", "dose": "2.5–10 mcg/kg/min", "route": "IV drip", "freq": "持續（橋接到引流）", "note": "250 mg in 250 mL（1 mg/mL）：{wt} kg 5 mcg/kg/min ≈ {round(wt*0.3)} mL/hr" }
+      ],
+      "watch": ["BP／HR q5 min、奇脈、JVP、意識", "PEA 準備；引流後再累積"],
+      "call": ["懷疑填塞當下 = 後線 + 心臟科緊急心包穿刺", "剝離／心肌破裂 → 心臟外科"],
+      "refs": [{ "ch": "19", "q": "阻塞性休克" }, { "ch": "06", "q": "心包填塞" }]
+    },
+    "r_tension": {
+      "type": "result",
+      "urgency": "red",
+      "title": "阻塞性休克：張力性氣胸",
+      "summary": "氣管偏移 + 單側呼吸音消失 + 低血壓：**立即針刺減壓，不等 CXR**（14–16G，第 4–5 肋間腋前線或第 2 肋間鎖骨中線，肋骨上緣）→ 胸管。呼吸器病人先脫離呼吸器改 BVM。",
+      "steps": [
+        "叫後線；O₂、IV、監測；呼吸器病人先脫離呼吸器改 BVM 100% O₂",
+        "**針刺減壓**：14–16G 留置針，第 4–5 肋間腋前線（或第 2 肋間鎖骨中線），肋骨上緣進針",
+        "接著放胸管接水下引流（胸腔科／胸腔外科）；CXR 確認",
+        "減壓後仍低血壓 → 想另一側、其他型休克"
+      ],
+      "orders": [
+        { "drug": "14–16G 留置針（針刺減壓）", "dose": "1 支", "route": "第 4–5 肋間腋前線或第 2 肋間鎖骨中線，肋骨上緣", "freq": "STAT，不等 CXR", "note": "留置至胸管放好" },
+        { "drug": "胸管", "dose": "1 條", "route": "接水下引流", "freq": "針刺減壓後立即", "note": "機械通氣者一律胸管" },
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "面罩／BVM", "freq": "持續", "note": "" }
+      ],
+      "watch": ["減壓後 BP、SpO₂、呼吸音立即改善？", "胸管 bubbling、皮下氣腫、對側"],
+      "call": ["懷疑張力性氣胸當下叫後線；胸管由胸腔科／胸腔外科", "減壓後仍不穩"],
+      "refs": [{ "ch": "06", "q": "張力性" }, { "ch": "19", "q": "阻塞性休克" }]
+    },
+    "r_autopeep": {
+      "type": "result",
+      "urgency": "red",
+      "title": "阻塞性休克：呼吸器 auto-PEEP",
+      "summary": "COPD／氣喘呼吸器病人突然低血壓、PIP↑：**暫時斷開呼吸器讓病人完全吐氣**（可壓胸協助），血壓回升即確診；之後降 RR、延長吐氣時間、支氣管擴張劑；同時排除張力性氣胸（DOPE）。",
+      "steps": [
+        "叫後線／呼吸治療師；暫時斷開呼吸器讓完全吐氣（可輕壓胸壁）；BVM 慢速通氣",
+        "聽診雙側呼吸音（張力性氣胸？）、檢查管路（DOPE：移位、阻塞、氣胸、設備）",
+        "血壓回升 → 調整呼吸器：降 RR、降潮氣量、延長吐氣（I:E）、降 PEEP；支氣管擴張劑、抽痰",
+        "NS 250–500 mL bolus 輔助；持續低血壓 → 想其他型休克",
+        "ABG、CXR"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "250–500 mL", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "斷開呼吸器仍低血壓時" }
+      ],
+      "watch": ["斷開後 BP 是否立即回升（確診）", "PIP／Pplat、SpO₂、ABG"],
+      "call": ["斷開呼吸器後血壓未回升；懷疑張力性氣胸", "需調整呼吸器設定 → 呼吸治療師／ICU"],
+      "refs": [{ "ch": "19", "q": "auto-PEEP" }, { "ch": "07", "q": "DOPE" }],
+      "next": [{ "label": "張力性氣胸 → 針刺減壓", "next": "r_tension" }]
+    },
+    "r_anaphylaxis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "過敏性休克",
+      "summary": "**Epinephrine 0.5 mg IM 大腿外側 q5–15 min**（唯一一線藥）；停可疑輸注；平躺抬腿、O₂、輸液 1–2 L；IM 無反應 → epinephrine 滴注 0.1 mcg/kg/min 起；避免單用純 α 升壓劑；抗組織胺／類固醇不改善血行動力。",
+      "steps": [
+        "**立即 epinephrine 0.5 mg IM 大腿外側**；停止可疑藥物／輸血／顯影劑；叫後線",
+        "平躺抬腿、O₂、IV × 2、監測；NS/LR 1–2 L 快速輸液（可外滲達血管內容積 35%）",
+        "喘鳴／喉水腫／聲音改變 → 早期準備插管（叫麻醉；備環甲膜切開）",
+        "2–3 次 IM 無效或持續低血壓 → epinephrine 滴注；避免只用純 α 升壓劑",
+        "抗組織胺、類固醇為輔（不改善血行動力，Ch14 表 14-1）",
+        "觀察雙相反應；記錄過敏原"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1 mg/mL（1:1,000）", "dose": "0.5 mg（0.5 mL；< 50 kg 0.3 mg）", "route": "IM 大腿外側", "freq": "q5–15 min PRN，通常 ≤ 3 次", "note": "依 {wt} kg → {wt < 50 ? 0.3 : 0.5} mg；勿 SC、勿 IV push（心跳停止除外）" },
+        { "drug": "NS 或 LR", "dose": "1,000 mL", "route": "IV drip 快速", "freq": "STAT，可至 1–2 L", "note": "先 500 mL bolus 評估" },
+        { "drug": "Epinephrine", "dose": "0.1 mcg/kg/min 起，titrate to 0.5", "route": "IV drip", "freq": "持續（IM 2–3 次無效、持續低血壓／喉水腫）", "note": "1 mg in NS 100 mL（10 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.6)} mL/hr；需監測" },
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "面罩", "freq": "持續", "note": "" }
+      ],
+      "watch": ["BP／HR／SpO₂ q5 min；喘鳴、聲音、喉水腫（氣道）", "雙相反應 4–12 hr；監測床", "epinephrine 滴注：心律不整"],
+      "call": ["過敏性休克當下 = 後線；氣道症狀 → 麻醉科", "IM 2–3 次無效、需 epinephrine 滴注"],
+      "refs": [{ "ch": "19", "q": "過敏性休克" }, { "ch": "14", "q": "表 14-1" }]
+    },
+    "r_neurogenic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "神經性休克（脊髓損傷）",
+      "summary": "低血壓 + 心搏過緩 + 皮膚溫暖：輸液 → norepinephrine（或 phenylephrine）；心搏過緩 atropine 1 mg IV；急性脊髓損傷 **MAP 85–90 維持 7 天**（依神經外科）。",
+      "steps": [
+        "叫後線 + 神經外科；脊椎固定；監測、IV × 2、尿管",
+        "NS/LR 500 mL bolus，重複至 MAP 目標或 1–2 L；排除出血（創傷病人先想出血性）",
+        "MAP 仍低 → norepinephrine（首選，兼 β 升心率）或 phenylephrine",
+        "心搏過緩有症狀 → atropine 1 mg IV（Ch21）",
+        "MAP 85–90 維持 7 天（脊髓損傷，依神外）；保溫、預防壓瘡／DVT"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，重複至 1–2 L", "note": "先排除出血" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起", "route": "IV drip（CVC；周邊短暫可）", "freq": "持續，MAP 85–90（脊髓損傷）", "note": "8 mg in 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr" },
+        { "drug": "Phenylephrine", "dose": "0.5–2 mcg/kg/min；bolus 50–100 mcg", "route": "IV drip／IV push", "freq": "持續", "note": "10 mg in 100 mL（100 mcg/mL）：{wt} kg 1 mcg/kg/min ≈ {round(wt*0.6)} mL/hr；純 α 可能加重心搏過緩", "alt": "norepinephrine" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg（有症狀心搏過緩）", "note": "Ch21 表 21-1" }
+      ],
+      "watch": ["MAP q15 min（目標 85–90 × 7 天）、HR", "尿量、體溫（無法調溫）、神經學"],
+      "call": ["需升壓劑、心搏過緩不穩 = 後線 + 神經外科 + ICU", "MAP 目標與期間依神外"],
+      "refs": [{ "ch": "19", "q": "神經性休克" }, { "ch": "21", "q": "表 21-1" }]
+    },
+    "r_opioid": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "鴉片類造成的低血壓／呼吸抑制",
+      "summary": "**Naloxone 0.04–0.4 mg IV**（小劑量起，避免急性戒斷）、O₂、BVM 支持呼吸；停鴉片；BZD 過量只支持治療（flumazenil 不建議：誘發戒斷／抽搐）。",
+      "steps": [
+        "評估氣道／呼吸：RR、SpO₂、意識；BVM 支持；O₂",
+        "Naloxone 小劑量 IV 起，無反應可重複／加量",
+        "停鴉片（含 PCA、貼片撕除）；NS 500 mL over 1–2 hr",
+        "找併用鎮靜劑（BZD → 支持，不用 flumazenil）；血糖、ABG",
+        "醒後持續觀察（naloxone 作用可能短於鴉片，再鎮靜）"
+      ],
+      "orders": [
+        { "drug": "Naloxone", "dose": "0.04–0.4 mg", "route": "IV push", "freq": "q2–3 min PRN 至 RR ≥ 12／意識改善", "note": "小劑量起避免急性戒斷／疼痛失控；呼吸停止可 0.4–2 mg（Ch38）" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 1–2 hr", "freq": "單次", "note": "" },
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "面罩／nasal cannula", "freq": "持續", "note": "CO₂ 滯留 88–92%；RR < 8 → BVM" }
+      ],
+      "watch": ["RR、SpO₂、意識 q15 min × 2 hr（再鎮靜）", "BP；戒斷症狀（躁動、嘔吐）"],
+      "call": ["naloxone 後仍呼吸抑制／意識差、需插管", "低血壓經輸液無改善、疑合併其他藥物"],
+      "refs": [{ "ch": "19", "q": "藥物性低血壓" }, { "ch": "38", "q": "Naloxone" }]
+    },
+    "r_bb_ccb": {
+      "type": "result",
+      "urgency": "red",
+      "title": "β-blocker／CCB 過量（心搏過緩 + 低血壓）",
+      "summary": "Atropine 常無效：**calcium chloride 1 g IV、glucagon 3–5 mg IV、高劑量 insulin 1 U/kg bolus → 1 U/kg/hr + 葡萄糖**；norepinephrine／epinephrine；脂肪乳劑、ECMO；聯絡毒物科。",
+      "steps": [
+        "叫後線 + 毒物科；監測、IV × 2、12 導程 ECG、血糖、K、Ca",
+        "Atropine 1 mg 可試（常無效）；TCP 備用（Ch21）",
+        "Calcium chloride 1 g IV（或 gluconate 3 g）q10–20 min × 3",
+        "Glucagon 3–5 mg IV push（可重複 → 3–5 mg/hr 滴注）；嘔吐常見",
+        "高劑量 insulin：regular insulin 1 U/kg bolus → 1 U/kg/hr + D10W 維持血糖；q30 min 血糖、q1h K",
+        "低血壓 → norepinephrine／epinephrine；頑固 → 脂肪乳劑、ECMO",
+        "NS 500 mL bolus（小心肺水腫）；停所有負性肌力／變時藥"
+      ],
+      "orders": [
+        { "drug": "Calcium chloride 10%", "dose": "1 g（10 mL）", "route": "IV push（CVC 為佳）", "freq": "q10–20 min × 3", "note": "或 calcium gluconate 10% 3 g（30 mL）周邊" },
+        { "drug": "Glucagon", "dose": "3–5 mg", "route": "IV push", "freq": "可重複 → 3–5 mg/hr 滴注", "note": "嘔吐、高血糖" },
+        { "drug": "Regular insulin（高劑量）", "dose": "{round(wt)} U（1 U/kg）", "route": "IV push", "freq": "STAT → {round(wt)} U/hr 滴注", "note": "依 {wt} kg；併 D10W 維持血糖；監測血糖 q30 min、K q1h" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起", "route": "IV drip", "freq": "持續", "note": "8 mg in 250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr" },
+        { "drug": "Epinephrine", "dose": "2–10 mcg/min", "route": "IV drip", "freq": "持續（心搏過緩 + 低血壓）", "note": "1 mg in NS 100 mL（10 mcg/mL）：2 mcg/min = 12 mL/hr（Ch21）" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg", "note": "常無效" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "小心肺水腫（負性肌力）" }
+      ],
+      "watch": ["HR／BP q5 min、心律", "血糖 q30 min、K q1h（高劑量 insulin）、iCa", "肺水腫、意識"],
+      "call": ["β-blocker／CCB 過量 = 後線 + 毒物科 + ICU", "需 TCP／升壓劑／高劑量 insulin、考慮 ECMO"],
+      "refs": [{ "ch": "19", "q": "藥物性低血壓" }, { "ch": "21", "q": "β-blocker／CCB 過量" }]
+    },
+    "r_adrenal": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腎上腺危症",
+      "summary": "長期類固醇／低血糖／低 Na／高 K／不明休克：**先給 hydrocortisone 100 mg IV STAT 再等 cortisol** → 50 mg q6h；NS 1 L bolus；血糖；找誘因；黏液水腫昏迷合併者先類固醇再 levothyroxine。",
+      "steps": [
+        "抽 cortisol（危重病人判讀不可靠，**不等結果**）、電解質、血糖、ACTH",
+        "Hydrocortisone 100 mg IV STAT → 50 mg q6h",
+        "NS 1 L bolus；低血糖 → 葡萄糖；矯正 Na／K",
+        "找誘因：感染、手術、停類固醇、出血（Waterhouse-Friderichsen）",
+        "長期類固醇者手術／敗血症 → 壓力劑量；內分泌科",
+        "疑黏液水腫昏迷 → 類固醇後才 levothyroxine（Ch21）"
+      ],
+      "orders": [
+        { "drug": "Hydrocortisone", "dose": "100 mg", "route": "IV push", "freq": "STAT → 50 mg q6h", "note": "先給藥再等 cortisol" },
+        { "drug": "NS", "dose": "1,000 mL", "route": "IV drip", "freq": "STAT bolus", "note": "先 500 mL 評估；心衰竭者分次" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起", "route": "IV drip", "freq": "持續（輸液 + 類固醇後 MAP 仍 < 65）", "note": "8 mg in 250 mL：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr" }
+      ],
+      "watch": ["BP／HR q15 min；血糖 q1h、Na／K q4–6h", "意識、體溫、發燒（誘因）"],
+      "call": ["疑腎上腺危症 = 後線 + 內分泌科", "類固醇 + 輸液後仍需升壓劑"],
+      "refs": [{ "ch": "19", "q": "腎上腺危症" }, { "ch": "19", "q": "Hydrocortisone" }]
+    },
+    "r_pressors": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "升壓劑／強心劑速查（表 19-1，{wt} kg）",
+      "summary": "幾乎所有休克首選 **norepinephrine**；NE ≥ 0.25 → 加 vasopressin；過敏／心因 → epinephrine；低輸出 → dobutamine／milrinone；純 α（phenylephrine）只在 AS／HCM、頻脈性心律不整。目標 MAP ≥ 65、尿量 ≥ 0.5 mL/kg/hr、乳酸 2 hr ↓ ≥ 20%。",
+      "steps": [
+        "周邊給 NE：大靜脈、稀釋濃度（4 mg/250 mL）、≤ 24–48 hr、每小時看外滲（外滲 → phentolamine 5–10 mg 局部注射）",
+        "同時準備 CVC／動脈導管；每 15–30 分鐘重新評估",
+        "目標：MAP ≥ 65（慢性高血壓 70–75）、尿量 ≥ {round(wt*0.5)} mL/hr、乳酸 2 hr 內 ↓ ≥ 20%、CRT ≤ 3 秒、意識改善",
+        "NE > 1 mcg/kg/min → 加第二種（vasopressin／epinephrine）、想 hydrocortisone、找未處理原因",
+        "Dopamine 只在心搏過緩 + 低血壓的替代（心律不整多，敗血症不建議）"
+      ],
+      "orders": [
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起，每 5–10 min 調，常用至 0.5–1（> 1 加第二種）", "route": "IV drip（CVC；周邊短暫可）", "freq": "持續", "note": "8 mg in D5W/NS 250 mL（32 mcg/mL）：0.1 mcg/kg/min ≈ {round(wt*0.1*60/32)} mL/hr；周邊 4 mg/250 mL（16 mcg/mL）≈ {round(wt*0.1*60/16)} mL/hr" },
+        { "drug": "Vasopressin", "dose": "0.03–0.04 U/min 固定", "route": "IV drip", "freq": "持續（NE ≥ 0.25 時加）", "note": "20 U in NS 100 mL（0.2 U/mL）：0.03 U/min = 9 mL/hr；不 titrate" },
+        { "drug": "Epinephrine", "dose": "0.05–0.5 mcg/kg/min（過敏性休克 0.1 起）", "route": "IV drip", "freq": "持續", "note": "1 mg in NS 100 mL（10 mcg/mL）：0.1 mcg/kg/min ≈ {round(wt*0.6)} mL/hr；或 4 mg/250 mL；乳酸↑、心律不整" },
+        { "drug": "Push-dose epinephrine", "dose": "10–20 mcg（1 mg 稀釋至 100 mL 取 1–2 mL）", "route": "IV push", "freq": "PRN 插管前後短暫低血壓", "note": "10 mcg/mL" },
+        { "drug": "Dopamine", "dose": "5–20 mcg/kg/min", "route": "IV drip", "freq": "持續", "note": "400 mg in 250 mL（1,600 mcg/mL）：5 mcg/kg/min ≈ {round(wt*5*60/1600, 1)} mL/hr；心搏過緩 + 低血壓替代；心律不整多" },
+        { "drug": "Phenylephrine", "dose": "0.5–2 mcg/kg/min；bolus 50–100 mcg", "route": "IV drip／IV push", "freq": "持續", "note": "10 mg in 100 mL（100 mcg/mL）：1 mcg/kg/min ≈ {round(wt*0.6)} mL/hr；純 α：AS／HCM、頻脈性心律不整；不增心輸出" },
+        { "drug": "Dobutamine", "dose": "2.5–10（max 20）mcg/kg/min", "route": "IV drip", "freq": "持續", "note": "250 mg in 250 mL（1 mg/mL）：5 mcg/kg/min ≈ {round(wt*0.3)} mL/hr；心因性低輸出；會降血壓，常與 NE 併用" },
+        { "drug": "Milrinone", "dose": "0.125–0.5 mcg/kg/min（不 loading）", "route": "IV drip", "freq": "持續", "note": "20 mg in 100 mL；心因性、β-blocker 使用者、肺高壓；CrCl {round(crcl)} → 腎功能減量" },
+        { "drug": "Hydrocortisone", "dose": "50 mg", "route": "IV push", "freq": "q6h（或 200 mg/d）", "note": "敗血性休克 NE ≥ 0.25 ≥ 4 hr（可加 fludrocortisone 50 mcg PO/NG QD）；腎上腺危症 100 mg STAT" }
+      ],
+      "watch": ["MAP／HR q5–15 min（動脈導管）；每 15–30 分鐘重新評估", "周邊升壓劑外滲 q1h；尿量、乳酸 q2–6h、心律不整"],
+      "call": ["需要升壓劑 = 後線 + ICU", "NE > 1 mcg/kg/min、需第二種升壓劑、休克原因不明"],
+      "refs": [{ "ch": "19", "q": "表 19-1" }, { "ch": "19", "q": "目標：MAP ≥ 65" }]
+    }
+  }
+}

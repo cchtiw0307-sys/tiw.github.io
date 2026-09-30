@@ -1,0 +1,770 @@
+{
+ "id": "09",
+ "title": "消化道出血",
+ "chapter": "09",
+ "entries": [
+  {
+   "label": "吐血／咖啡渣／NG 抽出鮮血",
+   "type": "symptom",
+   "start": "q_danger",
+   "group": "腹部",
+   "keywords": [
+    "吐血",
+    "hematemesis",
+    "咖啡渣",
+    "coffee ground",
+    "NG 鮮血",
+    "上消化道出血",
+    "UGIB",
+    "GI bleeding",
+    "消化道出血"
+   ]
+  },
+  {
+   "label": "黑便／鮮血便／血便",
+   "type": "symptom",
+   "start": "q_danger",
+   "group": "腹部",
+   "keywords": [
+    "黑便",
+    "melena",
+    "tarry stool",
+    "鮮血便",
+    "hematochezia",
+    "血便",
+    "解血",
+    "下消化道出血",
+    "LGIB",
+    "痔瘡出血"
+   ]
+  },
+  {
+   "label": "非靜脈曲張性上消化道出血（潰瘍）",
+   "type": "diagnosis",
+   "start": "q_hb_nv",
+   "keywords": [
+    "消化性潰瘍出血",
+    "peptic ulcer bleeding",
+    "PPI 高劑量",
+    "pantoprazole 8 mg/hr",
+    "Mallory-Weiss",
+    "Dieulafoy",
+    "非靜脈曲張"
+   ]
+  },
+  {
+   "label": "靜脈曲張出血（肝硬化）",
+   "type": "diagnosis",
+   "start": "q_hb_var",
+   "keywords": [
+    "靜脈曲張",
+    "variceal bleeding",
+    "食道靜脈瘤",
+    "esophageal varices",
+    "terlipressin",
+    "octreotide",
+    "肝硬化吐血",
+    "EVL",
+    "Sengstaken"
+   ]
+  },
+  {
+   "label": "下消化道出血",
+   "type": "diagnosis",
+   "start": "r_lgib",
+   "keywords": [
+    "下消化道出血",
+    "lower GI bleeding",
+    "憩室出血",
+    "diverticular bleeding",
+    "缺血性結腸炎",
+    "ischemic colitis",
+    "CTA 栓塞",
+    "大腸鏡"
+   ]
+  },
+  {
+   "label": "輸血策略／大量輸血",
+   "type": "diagnosis",
+   "start": "r_transfusion",
+   "keywords": [
+    "輸血",
+    "transfusion",
+    "大量輸血",
+    "MTP",
+    "massive transfusion",
+    "pRBC",
+    "FFP",
+    "血小板",
+    "Hb 7"
+   ]
+  },
+  {
+   "label": "尿毒性出血／凝血異常",
+   "type": "diagnosis",
+   "start": "r_uremic",
+   "keywords": [
+    "尿毒性出血",
+    "uremic bleeding",
+    "desmopressin",
+    "DDAVP",
+    "凝血異常出血",
+    "血小板低下出血"
+   ]
+  }
+ ],
+ "nodes": {
+  "q_danger": {
+   "type": "multi",
+   "title": "先評估出血量與血行動力（勾選所有符合）",
+   "help": "電話中先口頭：兩條大口徑 IV（≥ 18G）、NS/LR 500 mL bolus（不穩者）、監測器、抽 CBC/PT/aPTT/INR/BUN/Cr/肝功能 + type & cross 備 pRBC 2–4 U、NPO、側躺備抽吸",
+   "options": [
+    {
+     "label": "SBP < 90、HR > 110、姿態性低血壓、shock index > 1、意識改變、冒冷汗",
+     "set": {
+      "unstable": true
+     }
+    },
+    {
+     "label": "持續大量吐鮮血／意識不清／需要緊急內視鏡（氣道風險）",
+     "set": {
+      "airway": true
+     }
+    },
+    {
+     "label": "肝硬化／靜脈曲張史",
+     "set": {
+      "cirrhosis": true
+     }
+    },
+    {
+     "label": "抗凝血劑（warfarin、DOAC、heparin）或抗血小板",
+     "set": {
+      "anticoag": true
+     }
+    },
+    {
+     "label": "主動脈手術／移植物史（主動脈腸瘻管）",
+     "set": {
+      "aorta": true
+     }
+    },
+    {
+     "label": "腹痛 + 出血（缺血性結腸炎、穿孔）",
+     "set": {
+      "pain": true
+     }
+    }
+   ],
+   "branches": [
+    {
+     "if": "unstable || airway",
+     "next": "r_unstable"
+    },
+    {
+     "else": "q_source"
+    }
+   ]
+  },
+  "q_source": {
+   "type": "choice",
+   "title": "血行穩定：出血來源最像哪裡？",
+   "help": "黑便通常 = 上消化道（或右側大腸）；BUN/Cr > 30 支持上消化道；鮮血便 + 不穩 10–15% 其實是大量上消化道出血；直腸指診必做",
+   "options": [
+    {
+     "label": "上消化道（吐血／咖啡渣／黑便）+ 肝硬化／靜脈曲張史",
+     "next": "q_hb_var"
+    },
+    {
+     "label": "上消化道（吐血／咖啡渣／黑便），非肝硬化",
+     "next": "q_hb_nv"
+    },
+    {
+     "label": "鮮血便（下消化道）",
+     "next": "r_lgib"
+    }
+   ]
+  },
+  "q_hb_nv": {
+   "type": "number",
+   "title": "最近一次 Hb（g/dL）？",
+   "help": "初期 Hb 可正常（尚未稀釋）；Hb < 7 才輸（CAD／不穩 < 8）；不穩／持續大量出血不看 Hb 直接輸",
+   "var": "hb",
+   "unit": "g/dL",
+   "step": 0.1,
+   "quick": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    12
+   ],
+   "branches": [
+    {
+     "else": "r_nonvariceal"
+    }
+   ]
+  },
+  "q_hb_var": {
+   "type": "number",
+   "title": "最近一次 Hb（g/dL）？",
+   "help": "靜脈曲張：目標 Hb 7–8，勿 > 10（過度輸血增加門脈壓、再出血）",
+   "var": "hb",
+   "unit": "g/dL",
+   "step": 0.1,
+   "quick": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    12
+   ],
+   "branches": [
+    {
+     "else": "r_variceal"
+    }
+   ]
+  },
+  "r_unstable": {
+   "type": "result",
+   "urgency": "red",
+   "title": "血行動力不穩的消化道出血",
+   "summary": "兩條大口徑 IV、**500 mL bolus 重複（總 1–2 L）、大量輸液前就開始輸血（不等 Hb）**；氣道風險 → 先插管；立刻聯絡後線 + 消化科；上消化道 PPI 高劑量，肝硬化同時 terlipressin／octreotide + ceftriaxone。",
+   "steps": [
+    "叫後線 + 消化科（緊急內視鏡）；IV × 2（≥ 18G）、心電監測、O₂、側躺備抽吸",
+    "抽血：CBC、PT/aPTT/INR、BUN/Cr、電解質、肝功能、lactate、type & cross 備 pRBC 4 U 以上 + FFP；ECG（老人、CAD）",
+    "NS/LR 500 mL bolus 重複至灌流改善（總 1–2 L；心衰竭 250 mL）；大量輸液前就要開始輸血",
+    "持續大量吐血、意識不清、需緊急內視鏡 → 先插管保護氣道（先叫後線；備抽吸）",
+    "Foley 記尿量（目標 > 0.5 mL/kg/hr ＝ > {round(wt*0.5)} mL/hr）；NG 抽出鮮血可確認來源（不常規灌洗）",
+    "停抗凝／抗血小板，逆轉見 Ch30（warfarin → 4F-PCC；冠狀動脈支架 aspirin 盡量留）",
+    "1 hr ≥ 4 U 或 24 hr ≥ 10 U → 啟動 MTP（1:1:1）",
+    "主動脈移植物史 → CTA 優先（主動脈腸瘻管）"
+   ],
+   "orders": [
+    {
+     "drug": "NS／LR",
+     "dose": "500 mL",
+     "route": "IV bolus（大口徑）",
+     "freq": "STAT，重複至灌流改善（總 1–2 L）",
+     "note": "心衰竭 250 mL；肝硬化避免大量晶體液（門脈壓↑）"
+    },
+    {
+     "drug": "pRBC",
+     "dose": "2 U（不穩不看 Hb 直接輸；1 U ≈ Hb ↑ 1）",
+     "route": "IV",
+     "freq": "STAT，依出血重複",
+     "note": "不知血型先 O 型；目標 Hb 7–9（靜脈曲張 7–8）"
+    },
+    {
+     "drug": "FFP",
+     "dose": "{round(wt*10)}–{round(wt*15)} mL（10–15 mL/kg ≈ 2–4 U）",
+     "route": "IV",
+     "freq": "INR > 1.5–2 且出血",
+     "note": "warfarin 出血改 4F-PCC；肝硬化 INR 不反映出血風險，不常規矯正；依 {wt} kg"
+    },
+    {
+     "drug": "Pantoprazole",
+     "dose": "80 mg bolus → 8 mg/hr",
+     "route": "IV push → IV drip",
+     "freq": "持續 72 hr（或 40 mg IV q12h 等效）",
+     "note": "內視鏡前就給；台灣 40 mg/vial"
+    },
+    {
+     "drug": "Terlipressin",
+     "dose": "2 mg",
+     "route": "IV push",
+     "freq": "q4h × 48 hr → 1 mg q4h，共 2–5 天",
+     "cond": "cirrhosis",
+     "note": "肝硬化首選；低氧／呼吸衰竭、體液過多、心血管疾病慎用；監測 SpO₂、Na；台灣 1 mg/vial"
+    },
+    {
+     "drug": "Octreotide",
+     "dose": "50 mcg bolus → 50 mcg/hr",
+     "route": "IV push → IV drip",
+     "freq": "持續 2–5 天",
+     "cond": "cirrhosis",
+     "note": "terlipressin 替代；泡法 500 mcg in NS 50 mL（10 mcg/mL）→ 5 mL/hr"
+    },
+    {
+     "drug": "Ceftriaxone",
+     "dose": "1 g（台灣常用 2 g）",
+     "route": "IV",
+     "freq": "q24h × 5–7 天",
+     "cond": "cirrhosis",
+     "note": "肝硬化預防性抗生素必給（降死亡率）"
+    },
+    {
+     "drug": "Erythromycin",
+     "dose": "250 mg",
+     "route": "IV drip over 30 min",
+     "freq": "內視鏡前 30–120 min",
+     "note": "改善視野；QT 延長者避免"
+    },
+    {
+     "drug": "Calcium gluconate 10%",
+     "dose": "1 g (10 mL)",
+     "route": "IV drip",
+     "freq": "每輸 4 U 血品給 1 次",
+     "note": "大量輸血低血鈣"
+    }
+   ],
+   "watch": [
+    "BP、HR、意識 q5–15 min；尿量 q1h",
+    "Hb q4–6h（初期可正常）；INR、血小板、Ca、K、體溫、fibrinogen（< 150 → cryo 10 U）",
+    "shock index（HR/SBP）> 1 = 顯著失血；β-blocker 使用者心率可能不快"
+   ],
+   "call": [
+    "立刻：後線 + 消化科（不穩者 12 小時內內視鏡）",
+    "1 小時內需 ≥ 2 U 血、Hb 下降 ≥ 2、持續吐血／鮮血便、需插管",
+    "無法內視鏡定位 → 血管攝影栓塞／外科"
+   ],
+   "refs": [
+    {
+     "ch": "09",
+     "q": "床邊初步評估與處置"
+    },
+    {
+     "ch": "09",
+     "q": "表 9-1"
+    },
+    {
+     "ch": "30",
+     "q": "逆轉"
+    }
+   ],
+   "next": [
+    {
+     "label": "穩定後：非靜脈曲張性 UGIB 處置",
+     "next": "q_hb_nv"
+    },
+    {
+     "label": "肝硬化：靜脈曲張出血處置",
+     "next": "q_hb_var"
+    },
+    {
+     "label": "鮮血便：下消化道出血",
+     "next": "r_lgib"
+    },
+    {
+     "label": "大量輸血 MTP 細節",
+     "next": "r_transfusion"
+    }
+   ]
+  },
+  "r_nonvariceal": {
+   "type": "result",
+   "urgency": "orange",
+   "title": "非靜脈曲張性上消化道出血（Hb {hb}）",
+   "summary": "**PPI 高劑量**（80 mg bolus → 8 mg/hr × 72 hr，或 40 mg IV q12h 等效）、內視鏡前 erythromycin、**血行穩定後 24 小時內內視鏡**；{hb < 7 ? '**Hb < 7 → 輸 pRBC 2 U**。' : hb < 8 ? 'Hb 7–8：CAD／不穩者輸。' : 'Hb ≥ 8：不需輸血，勿 > 10。'}",
+   "steps": [
+    "IV × 2、NPO、監測；CBC q4–6h、INR、BUN/Cr（BUN/Cr > 30 支持上消化道）、type & screen",
+    "PPI 內視鏡前就給；停 NSAID／抗凝／抗血小板（支架 aspirin 盡量留，與心臟科討論）",
+    "內視鏡前 30–120 min erythromycin（QT 正常者）；不常規 NG 灌洗",
+    "內視鏡 24 小時內；Glasgow-Blatchford ≤ 1 可考慮門診",
+    "內視鏡後：高風險（噴血、可見血管、附著血塊）→ 止血 + IV PPI 72 hr；滲血且穩定 → 止血後口服 PPI 觀察 24–48 hr；清潔基底 → 口服 PPI 早出院",
+    "再出血 → 再內視鏡 → 血管栓塞／外科",
+    "抗血小板：一級預防停；二級預防（支架）止血後 1–3 天內恢復；抗凝：出血控制後 7 天內依栓塞風險恢復（Ch30）",
+    "H. pylori 切片；陽性三合一／四合一 14 天；出院前安排"
+   ],
+   "orders": [
+    {
+     "drug": "Pantoprazole",
+     "dose": "80 mg bolus → 8 mg/hr",
+     "route": "IV push → IV drip",
+     "freq": "持續 72 hr → PO 40 mg BID × 2 週 → QD",
+     "note": "或 40 mg IV q12h（等效）；esomeprazole／omeprazole 同；台灣 40 mg/vial"
+    },
+    {
+     "drug": "Erythromycin",
+     "dose": "250 mg",
+     "route": "IV drip over 30 min",
+     "freq": "內視鏡前 30–120 min 單次",
+     "note": "促胃排空改善視野；QT 延長者避免"
+    },
+    {
+     "drug": "pRBC",
+     "dose": "2 U（1 U ≈ Hb ↑ 1 g/dL）",
+     "route": "IV",
+     "freq": "Hb < 7（CAD／不穩 < 8）時；依出血重複",
+     "cond": "hb < 8",
+     "note": "目前 Hb {hb}；目標 Hb 7–9，勿 > 10；不穩不看 Hb 直接輸"
+    },
+    {
+     "drug": "NS／LR",
+     "dose": "500 mL",
+     "route": "IV bolus",
+     "freq": "姿態性低血壓／HR↑ 時，可重複",
+     "note": "心衰竭 250 mL"
+    },
+    {
+     "drug": "血小板（分離術）",
+     "dose": "1 U（≈ 12 U 濃厚血小板）",
+     "route": "IV",
+     "freq": "血小板 < 50,000 且出血時",
+     "note": "升 30,000–60,000；抗血小板藥使用者不常規輸"
+    },
+    {
+     "drug": "FFP",
+     "dose": "{round(wt*10)}–{round(wt*15)} mL（10–15 mL/kg ≈ 2–4 U）",
+     "route": "IV",
+     "freq": "INR > 1.5–2 且出血時",
+     "note": "warfarin 出血改 4F-PCC（Ch30）"
+    }
+   ],
+   "watch": [
+    "BP、HR q1–4h（穩定後）；Hb q4–6h × 24 hr",
+    "再出血徵候：吐血、黑便增加、HR↑、Hb ↓ ≥ 2",
+    "QT（erythromycin）"
+   ],
+   "call": [
+    "SBP < 90、HR > 110、姿態性低血壓、意識改變",
+    "吐鮮血或持續黑便、1 小時內需 ≥ 2 U 血、Hb 下降 ≥ 2 g/dL",
+    "抗凝血劑使用者出血、需緊急內視鏡／血管攝影"
+   ],
+   "ddx": [
+    "靜脈曲張（肝病徵候）",
+    "主動脈腸瘻管（主動脈移植物史 → CTA）",
+    "假性吐血（口鼻來源）"
+   ],
+   "refs": [
+    {
+     "ch": "09",
+     "q": "非靜脈曲張性上消化道出血"
+    },
+    {
+     "ch": "09",
+     "q": "表 9-1"
+    }
+   ],
+   "next": [
+    {
+     "label": "轉為不穩 → 復甦",
+     "next": "r_unstable",
+     "set": {
+      "unstable": true,
+      "cirrhosis": false
+     }
+    },
+    {
+     "label": "輸血策略／MTP",
+     "next": "r_transfusion"
+    }
+   ]
+  },
+  "r_variceal": {
+   "type": "result",
+   "urgency": "red",
+   "title": "靜脈曲張出血（肝硬化；Hb {hb}）",
+   "summary": "**Terlipressin（或 octreotide）+ ceftriaxone 預防性抗生素 + PPI + lactulose**；**12 小時內 EVL**；輸血目標 Hb 7–8（勿過度）；避免大量晶體液；救援：Sengstaken-Blakemore、TIPS。",
+   "steps": [
+    "叫後線 + 消化科（12 小時內內視鏡結紮）；IV × 2、監測、NPO；氣道風險 → 先插管",
+    "CBC、INR、Cr、電解質、肝功能、lactate、type & cross；血液培養（發燒）",
+    "血管活性藥（terlipressin 首選）+ 預防性抗生素立刻給；PPI 短期（結紮後潰瘍預防）",
+    "輸血目標 Hb 7–8，勿 > 10（門脈壓↑、再出血）；避免大量晶體液；INR 不常規矯正",
+    "Lactulose 預防肝腦病變；NG 不是禁忌",
+    "內視鏡失敗／大量出血 → Sengstaken-Blakemore（≤ 24 hr，需插管）→ 早期 TIPS（Child C < 14 或 B 合併活動性出血）",
+    "出血穩定後 β-blocker（propranolol／carvedilol）二級預防；胃靜脈曲張：組織膠"
+   ],
+   "orders": [
+    {
+     "drug": "Terlipressin",
+     "dose": "2 mg",
+     "route": "IV push（可 IVD）",
+     "freq": "q4h × 48 hr → 1 mg q4h，共 2–5 天",
+     "note": "首選；缺血副作用（心血管／周邊血管病慎）、低血鈉；低氧／呼吸衰竭、體液過多者避免（監測 SpO₂）；台灣 1 mg/vial"
+    },
+    {
+     "drug": "Octreotide",
+     "dose": "50 mcg bolus → 50 mcg/hr",
+     "route": "IV push → IV drip",
+     "freq": "持續 2–5 天",
+     "alt": "terlipressin 替代",
+     "note": "泡法 500 mcg in NS 50 mL（10 mcg/mL）→ 5 mL/hr"
+    },
+    {
+     "drug": "Ceftriaxone",
+     "dose": "1 g（台灣常用 2 g）",
+     "route": "IV",
+     "freq": "q24h × 5–7 天",
+     "note": "預防性抗生素必給；能進食後改 ciprofloxacin 500 mg PO BID 完成療程"
+    },
+    {
+     "drug": "Pantoprazole",
+     "dose": "40 mg",
+     "route": "IV",
+     "freq": "q12h（短期）",
+     "note": "內視鏡結紮後潰瘍預防"
+    },
+    {
+     "drug": "Lactulose",
+     "dose": "20–30 g",
+     "route": "PO／NG",
+     "freq": "q1–2h 至解便，之後 TID",
+     "note": "預防肝腦病變"
+    },
+    {
+     "drug": "pRBC",
+     "dose": "2 U",
+     "route": "IV",
+     "freq": "Hb < 7 時（目標 7–8）",
+     "cond": "hb < 7",
+     "note": "目前 Hb {hb}；勿 > 10；不穩不看 Hb 直接輸"
+    },
+    {
+     "drug": "NS／LR",
+     "dose": "250–500 mL",
+     "route": "IV bolus",
+     "freq": "僅低血壓時，小量",
+     "note": "避免大量晶體液（門脈壓↑）"
+    },
+    {
+     "drug": "Erythromycin",
+     "dose": "250 mg",
+     "route": "IV drip over 30 min",
+     "freq": "內視鏡前 30–120 min",
+     "note": "QT 正常者"
+    }
+   ],
+   "watch": [
+    "BP、HR、意識 q15 min 至穩定；SpO₂（terlipressin 呼吸衰竭）",
+    "Hb q4–6h、Na（terlipressin）、INR、血小板；肝腦病變、腹水／SBP",
+    "再出血：5 天內最高"
+   ],
+   "call": [
+    "懷疑靜脈曲張出血當下 = 後線 + 消化科（12 小時內內視鏡）",
+    "SBP < 90、HR > 110、意識改變、需插管、1 小時內 ≥ 2 U 血",
+    "內視鏡失敗 → 消化科／介入放射科（TIPS）"
+   ],
+   "refs": [
+    {
+     "ch": "09",
+     "q": "靜脈曲張出血（肝硬化）"
+    },
+    {
+     "ch": "09",
+     "q": "Terlipressin"
+    }
+   ],
+   "next": [
+    {
+     "label": "不穩 → 復甦與 MTP",
+     "next": "r_unstable",
+     "set": {
+      "cirrhosis": true,
+      "unstable": true
+     }
+    }
+   ]
+  },
+  "r_lgib": {
+   "type": "result",
+   "urgency": "orange",
+   "title": "下消化道出血（鮮血便）",
+   "summary": "多數自行停止（憩室 75%）；輸液／輸血、停抗凝；**穩定者腸道準備後大腸鏡（不必急於 24 小時內）**；持續出血不穩 → 先排除上消化道 → **CTA → 血管攝影栓塞**。",
+   "steps": [
+    "IV × 2、監測；CBC q4–6h、INR、BUN/Cr、type & screen；直腸指診（痔瘡、腫塊、黑便 vs 鮮血）",
+    "鮮血便 + 姿態性低血壓／不穩 → 先排除上消化道（NG／內視鏡；10–15%）",
+    "穩定：腸道準備後大腸鏡；12 個月內高品質大腸鏡且出血已停可免",
+    "持續鮮血便或不穩無法做大腸鏡 → CTA（出血 ≥ 0.3–0.5 mL/min 可見）→ 血管攝影栓塞；RBC scan 敏感但定位差",
+    "主動脈移植物史 → CTA 優先（主動脈腸瘻管）",
+    "腹痛 + 血便（缺血性結腸炎）：支持性、輸液、重症抗生素；痔瘡：局部藥物、坐浴；息肉切除後：內視鏡止血",
+    "反覆或無法定位且致命 → 外科（剖腹探查為最後手段）",
+    "停抗凝／抗血小板（權衡），逆轉見 Ch30"
+   ],
+   "orders": [
+    {
+     "drug": "NS／LR",
+     "dose": "500 mL",
+     "route": "IV bolus",
+     "freq": "HR↑／姿態性低血壓時，重複",
+     "note": "心衰竭 250 mL"
+    },
+    {
+     "drug": "pRBC",
+     "dose": "2 U",
+     "route": "IV",
+     "freq": "Hb < 7（CAD／不穩 < 8）時",
+     "note": "目標 7–9；不穩不看 Hb 直接輸"
+    },
+    {
+     "drug": "腸道準備（PEG）",
+     "dose": "依院內 4 L 或分次",
+     "route": "PO／NG",
+     "freq": "大腸鏡前",
+     "note": "穩定者；快速 4–6 hr 內完成"
+    },
+    {
+     "drug": "Ceftriaxone",
+     "dose": "2 g",
+     "route": "IV",
+     "freq": "q24h",
+     "with": "Metronidazole 500 mg IV q8h",
+     "note": "僅缺血性結腸炎重症（腹膜炎徵候、敗血症）；劑量依 Ch8 表 8-2"
+    }
+   ],
+   "watch": [
+    "BP、HR q1–4h；出血次數與量",
+    "Hb q4–6h × 24 hr；Hb ↓ ≥ 2 或 1 hr ≥ 2 U → 不穩處理"
+   ],
+   "call": [
+    "SBP < 90、HR > 110、姿態性低血壓、意識改變、持續鮮血便",
+    "1 小時內需 ≥ 2 U 血、Hb 下降 ≥ 2、需血管攝影",
+    "腹痛 + 出血（缺血／穿孔）、主動脈手術史"
+   ],
+   "ddx": [
+    "大量上消化道出血（10–15%）",
+    "缺血性結腸炎",
+    "憩室出血",
+    "息肉切除後、腫瘤、IBD、放射線腸炎"
+   ],
+   "refs": [
+    {
+     "ch": "09",
+     "q": "下消化道出血"
+    },
+    {
+     "ch": "09",
+     "q": "檢驗／檢查"
+    }
+   ],
+   "next": [
+    {
+     "label": "不穩 → 復甦",
+     "next": "r_unstable",
+     "set": {
+      "unstable": true,
+      "cirrhosis": false
+     }
+    },
+    {
+     "label": "疑上消化道來源",
+     "next": "q_hb_nv"
+    }
+   ]
+  },
+  "r_transfusion": {
+   "type": "result",
+   "urgency": "orange",
+   "title": "輸血策略與大量輸血（表 9-1，依 {wt} kg）",
+   "summary": "**Hb < 7 才輸（CAD／不穩 < 8）**，目標 7–9、勿 > 10；不穩／持續大量出血不看 Hb 直接輸；1 hr ≥ 4 U 或 24 hr ≥ 10 U → MTP 1:1:1；**tranexamic acid 不建議**（HALT-IT）。",
+   "steps": [
+    "Type & cross；不知血型先 O 型；啟動院內 MTP",
+    "pRBC：1 U ≈ Hb ↑ 1 g/dL；靜脈曲張者過度輸血增加門脈壓",
+    "血小板 < 50,000 且出血 → 1 U 分離術血小板（≈ 12 U 濃厚）；抗血小板藥使用者不常規輸",
+    "INR > 1.5–2 且出血 → FFP 10–15 mL/kg；warfarin 改 4F-PCC；肝硬化 INR 不常規矯正",
+    "大量輸血：pRBC:FFP:血小板 = 1:1:1；每 4 U calcium gluconate 1 g；監測 K、體溫（保溫）、fibrinogen < 150 → cryoprecipitate 10 U",
+    "Tranexamic acid 不建議（無益且增加 VTE）"
+   ],
+   "orders": [
+    {
+     "drug": "pRBC",
+     "dose": "2 U",
+     "route": "IV",
+     "freq": "Hb < 7（CAD／不穩 < 8）；依出血重複",
+     "note": "目標 Hb 7–9，勿 > 10"
+    },
+    {
+     "drug": "血小板（分離術）",
+     "dose": "1 U（≈ 台灣 12 U 濃厚血小板 = 1 治療量）",
+     "route": "IV",
+     "freq": "血小板 < 50,000 且出血",
+     "note": "升 30,000–60,000"
+    },
+    {
+     "drug": "FFP",
+     "dose": "{round(wt*10)}–{round(wt*15)} mL（10–15 mL/kg ≈ 2–4 U）",
+     "route": "IV",
+     "freq": "INR > 1.5–2 且出血",
+     "note": "warfarin 出血改 4F-PCC；依 {wt} kg"
+    },
+    {
+     "drug": "Calcium gluconate 10%",
+     "dose": "1 g (10 mL)",
+     "route": "IV drip",
+     "freq": "每輸 4 U 給 1 次",
+     "note": "大量輸血低血鈣"
+    },
+    {
+     "drug": "Cryoprecipitate",
+     "dose": "10 U",
+     "route": "IV",
+     "freq": "fibrinogen < 150 mg/dL 時",
+     "note": ""
+    }
+   ],
+   "watch": [
+    "Hb q4–6h；大量輸血時 Ca、K、體溫、fibrinogen、INR 每 4 U",
+    "輸血反應：發燒、蕁麻疹、喘（TACO／TRALI）"
+   ],
+   "call": [
+    "1 小時內需 ≥ 2 U 血、啟動 MTP",
+    "輸血反應、Hb 持續下降"
+   ],
+   "refs": [
+    {
+     "ch": "09",
+     "q": "表 9-1"
+    },
+    {
+     "ch": "30",
+     "q": "逆轉"
+    }
+   ]
+  },
+  "r_uremic": {
+   "type": "result",
+   "urgency": "orange",
+   "title": "尿毒性出血／凝血異常、血小板低下",
+   "summary": "尿毒性出血：透析 + desmopressin 0.3 mcg/kg IV；凝血異常與血小板低下的矯正見 Ch30；同時處理出血來源。",
+   "steps": [
+    "CBC、INR/aPTT、BUN/Cr、fibrinogen；出血來源評估（同消化道出血流程）",
+    "尿毒性出血：安排透析（腎臟科）、desmopressin",
+    "血小板 < 50,000 且出血 → 血小板；INR > 1.5–2 且出血 → FFP／4F-PCC（Ch30）",
+    "停抗凝／抗血小板、逆轉（Ch30）"
+   ],
+   "orders": [
+    {
+     "drug": "Desmopressin（DDAVP）",
+     "dose": "{round(wt*0.3)} mcg（0.3 mcg/kg）",
+     "route": "IV",
+     "freq": "單次",
+     "note": "尿毒性出血；依 {wt} kg；低血鈉、輸液限制"
+    },
+    {
+     "drug": "血小板（分離術）",
+     "dose": "1 U",
+     "route": "IV",
+     "freq": "血小板 < 50,000 且出血",
+     "note": ""
+    },
+    {
+     "drug": "FFP",
+     "dose": "{round(wt*10)}–{round(wt*15)} mL（10–15 mL/kg）",
+     "route": "IV",
+     "freq": "INR > 1.5–2 且出血",
+     "note": "warfarin 改 4F-PCC"
+    }
+   ],
+   "watch": [
+    "Hb、血小板、INR q6–12h",
+    "Na（desmopressin）"
+   ],
+   "call": [
+    "需透析（腎臟科）、抗凝血劑使用者出血",
+    "血行不穩、Hb 下降 ≥ 2"
+   ],
+   "refs": [
+    {
+     "ch": "09",
+     "q": "凝血異常、血小板低下"
+    },
+    {
+     "ch": "30",
+     "q": "逆轉"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,418 @@
+{
+  "id": "23",
+  "title": "上呼吸道症狀",
+  "chapter": "23",
+  "entries": [
+    { "label": "喉嚨痛／吞嚥痛", "type": "symptom", "start": "q_throat", "group": "症狀治療",
+      "keywords": ["喉嚨痛", "sore throat", "咽炎", "pharyngitis", "扁桃腺炎", "tonsillitis", "吞嚥痛", "odynophagia", "喉嚨腫"] },
+    { "label": "咳嗽／有痰／咳不出來", "type": "symptom", "start": "q_cough", "group": "症狀治療",
+      "keywords": ["咳嗽", "cough", "有痰", "sputum", "化痰", "止咳", "咳不停", "痰很多", "乾咳", "咳血"] },
+    { "label": "鼻塞／流鼻水", "type": "symptom", "start": "q_nose", "group": "症狀治療",
+      "keywords": ["鼻塞", "nasal congestion", "流鼻水", "rhinorrhea", "鼻炎", "rhinitis", "過敏性鼻炎", "打噴嚏", "鼻竇炎"] },
+    { "label": "會厭炎／深頸部感染（氣道急症）", "type": "diagnosis", "start": "r_airway_emerg",
+      "keywords": ["會厭炎", "epiglottitis", "深頸部感染", "deep neck infection", "Ludwig", "咽後膿瘍", "retropharyngeal abscess", "流口水", "熱馬鈴薯聲音", "thumb sign"] },
+    { "label": "扁桃腺周圍膿瘍", "type": "diagnosis", "start": "r_pta",
+      "keywords": ["扁桃腺周圍膿瘍", "peritonsillar abscess", "PTA", "quinsy", "懸雍垂偏移", "牙關緊閉", "trismus"] },
+    { "label": "A 群鏈球菌咽炎", "type": "diagnosis", "start": "q_centor",
+      "keywords": ["鏈球菌咽炎", "strep throat", "GAS pharyngitis", "Centor", "amoxicillin 咽炎", "扁桃腺滲出"] },
+    { "label": "口腔念珠菌／食道念珠菌", "type": "diagnosis", "start": "r_candida",
+      "keywords": ["口腔念珠菌", "鵝口瘡", "oral candidiasis", "thrush", "食道念珠菌", "esophageal candidiasis", "nystatin", "fluconazole"] },
+    { "label": "口腔黏膜炎／潰瘍（化療）", "type": "diagnosis", "start": "r_mucositis",
+      "keywords": ["口腔黏膜炎", "mucositis", "口腔潰瘍", "oral ulcer", "化療嘴破", "lidocaine viscous"] },
+    { "label": "流感", "type": "diagnosis", "start": "r_flu",
+      "keywords": ["流感", "influenza", "flu", "oseltamivir", "克流感", "Tamiflu", "流感快篩", "流感預防"] },
+    { "label": "過敏性鼻炎", "type": "diagnosis", "start": "r_rhinitis",
+      "keywords": ["過敏性鼻炎", "allergic rhinitis", "抗組織胺", "antihistamine", "鼻用類固醇", "cetirizine", "loratadine"] }
+  ],
+  "nodes": {
+    "q_throat": {
+      "type": "multi",
+      "title": "喉嚨痛：有沒有氣道急症的紅旗？（勾選所有符合）",
+      "help": "有任一紅旗：不要壓舌、不要平躺，立刻叫後線 + ENT + 麻醉",
+      "options": [
+        { "label": "吞嚥困難／流口水", "set": { "drool": true } },
+        { "label": "含糊「熱馬鈴薯」聲音", "set": { "voice": true } },
+        { "label": "喘鳴（stridor）、坐姿前傾", "set": { "stridor": true } },
+        { "label": "頸部腫脹／僵硬、牙關緊閉", "set": { "neck": true } },
+        { "label": "高燒、毒性外觀", "set": { "toxic": true } }
+      ],
+      "branches": [
+        { "if": "drool || voice || stridor || neck || toxic", "next": "r_airway_emerg" },
+        { "else": "q_throat_type" }
+      ]
+    },
+    "q_throat_type": {
+      "type": "choice",
+      "title": "無紅旗：最像哪一種？",
+      "help": "病毒最常見；插管後、胃食道逆流也會喉嚨痛",
+      "options": [
+        { "label": "單側腫、懸雍垂偏移、牙關緊閉（扁桃腺周圍膿瘍）", "next": "r_pta" },
+        { "label": "發燒、扁桃腺滲出、前頸淋巴結壓痛、無咳嗽（疑鏈球菌）", "next": "q_centor" },
+        { "label": "口腔白斑可刮除、吸入類固醇／抗生素／免疫低下（念珠菌）", "next": "r_candida" },
+        { "label": "化療後口腔黏膜炎／潰瘍", "next": "r_mucositis" },
+        { "label": "病毒性／插管後／逆流：症狀治療", "next": "r_sore_sx" }
+      ]
+    },
+    "q_centor": {
+      "type": "number",
+      "title": "Centor 分數（0–4）？",
+      "help": "各 1 分：發燒、扁桃腺滲出、前頸淋巴結壓痛、無咳嗽；≥ 3 分考慮快篩／治療",
+      "var": "centor", "unit": "分", "step": 1,
+      "quick": [0, 1, 2, 3, 4],
+      "branches": [
+        { "if": "centor >= 3", "next": "r_gas" },
+        { "else": "r_sore_sx" }
+      ]
+    },
+    "r_airway_emerg": {
+      "type": "result",
+      "urgency": "red",
+      "title": "喉嚨痛 + 紅旗：會厭炎／深頸部感染（氣道急症）",
+      "summary": "**不要壓舌、不要平躺，立刻叫後線 + ENT + 麻醉，準備困難氣道**；IV 抗生素 + dexamethasone；穩定者才做頸部側位 X 光／CT；ICU 觀察氣道。",
+      "steps": [
+        "叫後線 + ENT + 麻醉；病人維持舒適坐姿；困難氣道車（環甲膜切開組）到床邊",
+        "不壓舌、不強迫檢查口咽；高流量 O₂、SpO₂／心電監測；IV（避免刺激哭鬧）",
+        "血液培養 × 2（抗生素前）、CBC、CRP；穩定者頸部側位 X 光（會厭增厚 thumb sign、椎前軟組織 C2 > 7 mm、C6 > 21 mm）或 CT",
+        "會厭炎：ceftriaxone + vancomycin + dexamethasone；ICU 觀察氣道",
+        "深頸部感染（Ludwig、咽後膿瘍）：ampicillin-sulbactam 或 piperacillin-tazobactam ± vancomycin；緊急 CT、ENT 引流",
+        "喘鳴惡化 → 早期插管（麻醉／ENT 在場）；上呼吸道阻塞處置見 Ch7"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q24h", "note": "會厭炎" },
+        { "drug": "Vancomycin", "dose": "loading {round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）→ {round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "loading STAT → {crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "會厭炎 MRSA 涵蓋；依 {wt} kg、CrCl {round(crcl)}（附錄 A5）；trough 15–20" },
+        { "drug": "Dexamethasone", "dose": "10 mg", "route": "IV", "freq": "STAT", "note": "" },
+        { "drug": "Ampicillin-sulbactam", "dose": "3 g", "route": "IV drip", "freq": "{crcl > 50 ? 'q6h' : crcl >= 30 ? 'q6–8h' : crcl >= 15 ? 'q12h' : 'q24h'}", "note": "深頸部感染；替代 piperacillin-tazobactam 4.5 g IV q6h（依 A5）；± vancomycin；CrCl {round(crcl)} 依附錄 A5" },
+        { "drug": "O₂", "dose": "高流量 15 L/min", "route": "NRM", "freq": "持續", "note": "坐姿" }
+      ],
+      "watch": ["喘鳴、講話、流口水、SpO₂、RR 連續（ICU）", "惡化 = 立刻氣道處置，不等影像"],
+      "call": ["喉嚨痛合併流口水、喘鳴、聲音含糊、頸部腫脹 → 立刻後線 + ENT + 麻醉", "需插管、SpO₂ 掉"],
+      "refs": [{ "ch": "23", "q": "紅旗（氣道急症）" }, { "ch": "23", "q": "會厭炎" }, { "ch": "07", "q": "上呼吸道阻塞、異物" }]
+    },
+    "r_pta": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "扁桃腺周圍膿瘍",
+      "summary": "IV ampicillin-sulbactam（或 amoxicillin-clavulanate／clindamycin）+ dexamethasone + **ENT 針抽／切開引流**；牙關緊閉、流口水、喘鳴 → 氣道急症。",
+      "steps": [
+        "確認無氣道紅旗（流口水、喘鳴、頸部腫脹）；有 → 氣道急症流程",
+        "IV、CBC、CRP；會診 ENT 針抽／切開引流（診斷兼治療）",
+        "IV 抗生素 → 改善後改 PO 完成療程",
+        "止痛（acetaminophen／ibuprofen）、補水；能吞後進食"
+      ],
+      "orders": [
+        { "drug": "Ampicillin-sulbactam", "dose": "3 g", "route": "IV drip", "freq": "{crcl > 50 ? 'q6h' : crcl >= 30 ? 'q6–8h' : crcl >= 15 ? 'q12h' : 'q24h'} → 改善後 PO", "note": "替代 amoxicillin-clavulanate 1.2 g IV q8h 或 clindamycin 600 mg IV q8h（β-lactam 過敏）；CrCl {round(crcl)} 依附錄 A5" },
+        { "drug": "Dexamethasone", "dose": "10 mg", "route": "IV", "freq": "單次", "note": "" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN", "note": "或 ibuprofen 400 mg q6–8h" },
+        { "drug": "Benzydamine 0.15%", "dose": "噴 4–8 噴或漱口 15 mL", "route": "局部", "freq": "q1.5–3h PRN", "note": "" }
+      ],
+      "watch": ["吞嚥、張口度、發燒 q4h；引流後 24 hr 改善", "出現流口水／喘鳴／頸部腫脹 → 氣道急症"],
+      "call": ["ENT 引流；牙關緊閉加重、流口水、喘鳴、頸部腫脹", "48 hr 未改善（深頸部擴散 → CT）"],
+      "refs": [{ "ch": "23", "q": "扁桃腺周圍膿瘍" }],
+      "next": [{ "label": "紅旗出現 → 氣道急症", "next": "r_airway_emerg" }]
+    },
+    "r_gas": {
+      "type": "result",
+      "urgency": "green",
+      "title": "A 群鏈球菌咽炎（Centor {centor} 分）",
+      "summary": "快篩／培養後 **amoxicillin 500 mg BID × 10 天**（或 penicillin V）；過敏改 cephalexin／azithromycin／clindamycin；單劑 dexamethasone 可減痛。",
+      "steps": [
+        "快篩（陰性可培養）；排除 EBV（脾腫大、淋巴結廣泛）、扁桃腺周圍膿瘍（單側、懸雍垂偏移）",
+        "抗生素 10 天（azithromycin 5 天）；24 hr 後不具傳染性",
+        "症狀治療：止痛、benzydamine、溫鹽水漱口；補水",
+        "無法吞嚥／流口水／頸部腫 → 氣道急症"
+      ],
+      "orders": [
+        { "drug": "Amoxicillin", "dose": "500 mg", "route": "PO", "freq": "BID × 10 天（或 1 g QD）", "alt": "Penicillin V 500 mg PO BID–TID × 10 天", "note": "" },
+        { "drug": "Cephalexin", "dose": "500 mg", "route": "PO", "freq": "BID × 10 天", "note": "penicillin 過敏（非嚴重）；或 azithromycin 500 mg QD × 5 天、clindamycin 300 mg TID × 10 天" },
+        { "drug": "Dexamethasone", "dose": "10 mg", "route": "PO／IM", "freq": "單劑", "note": "減痛" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN", "note": "或 ibuprofen 400 mg q6–8h" },
+        { "drug": "Benzydamine 0.15%", "dose": "噴 4–8 噴或漱口 15 mL", "route": "局部", "freq": "q1.5–3h PRN", "note": "" }
+      ],
+      "watch": ["48–72 hr 退燒；吞嚥、張口", "皮疹（amoxicillin + EBV）"],
+      "call": ["流口水、喘鳴、聲音含糊、頸部腫脹", "單側腫／懸雍垂偏移（膿瘍）"],
+      "refs": [{ "ch": "23", "q": "A 群鏈球菌咽炎" }]
+    },
+    "r_candida": {
+      "type": "result",
+      "urgency": "green",
+      "title": "口腔念珠菌／食道念珠菌",
+      "summary": "輕度 nystatin 含漱後吞 × 7–14 天；中重度 fluconazole 100–200 mg QD；**吞嚥痛 = 食道念珠菌 → fluconazole 200–400 mg × 14–21 天**；不明原因鵝口瘡想 HIV／糖尿病。",
+      "steps": [
+        "拿掉假牙清潔；吸入類固醇後漱口；血糖",
+        "輕度：nystatin；中重度／免疫低下：fluconazole",
+        "吞嚥痛（食道念珠菌）：fluconazole 較高劑量 14–21 天；無效 → 消化科內視鏡",
+        "不明原因鵝口瘡 → HIV 檢驗、糖尿病篩檢"
+      ],
+      "orders": [
+        { "drug": "Nystatin 懸液", "dose": "5 mL（500,000 U）", "route": "含漱後吞", "freq": "QID × 7–14 天", "note": "輕度" },
+        { "drug": "Fluconazole", "dose": "100–200 mg", "route": "PO", "freq": "QD × 7–14 天", "note": "中重度口腔念珠菌；QT、藥物交互作用；CrCl {round(crcl)} 依仿單調整" },
+        { "drug": "Fluconazole", "dose": "200–400 mg", "route": "PO／IV", "freq": "QD × 14–21 天", "note": "食道念珠菌（吞嚥痛）" }
+      ],
+      "watch": ["3–5 天改善；吞嚥痛持續 → 內視鏡", "肝功能（fluconazole 長期）"],
+      "call": ["無法進食／脫水、fluconazole 無效", "免疫低下發燒"],
+      "refs": [{ "ch": "23", "q": "口腔念珠菌" }]
+    },
+    "r_mucositis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "口腔黏膜炎／潰瘍（化療）",
+      "summary": "生理食鹽水／碳酸氫鈉漱口 q2–4h、lidocaine viscous 含漱、triamcinolone 口內膏；化療者注意嗜中性球低下與念珠菌／HSV 重疊感染。",
+      "steps": [
+        "口腔評估：白斑（念珠菌）、群聚水泡（HSV）；CBC（嗜中性球）",
+        "漱口 q2–4h；進食前 lidocaine viscous；軟質／冷食",
+        "止痛階梯（acetaminophen → 鴉片，Ch22）；無法進食 → IV 輸液",
+        "嗜中性球低下發燒 → Ch17"
+      ],
+      "orders": [
+        { "drug": "生理食鹽水／碳酸氫鈉漱口", "dose": "15–30 mL", "route": "漱口", "freq": "q2–4h", "note": "" },
+        { "drug": "Lidocaine 2% viscous", "dose": "5–15 mL", "route": "含漱（進食前）", "freq": "q3h PRN", "note": "吞嚥前小心嗆咳" },
+        { "drug": "Triamcinolone 0.1% 口內膏", "dose": "適量（1 次）", "route": "局部", "freq": "BID–TID", "note": "潰瘍；念珠菌時避免" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN", "note": "" }
+      ],
+      "watch": ["進食量、脫水；體溫（嗜中性球低下）", "白斑／水泡 → 念珠菌／HSV"],
+      "call": ["嗜中性球低下 + 發燒", "無法進食／吞嚥、疼痛失控"],
+      "refs": [{ "ch": "23", "q": "口腔黏膜炎／潰瘍" }]
+    },
+    "r_sore_sx": {
+      "type": "result",
+      "urgency": "green",
+      "title": "喉嚨痛：症狀治療（病毒性／插管後／逆流）",
+      "summary": "多數是病毒性：acetaminophen／ibuprofen、benzydamine 噴劑或漱口、喉糖、溫鹽水漱口；不需抗生素。",
+      "steps": [
+        "確認無紅旗（流口水、喘鳴、含糊聲、頸部腫、牙關緊閉）",
+        "症狀治療；補水；插管後聲音沙啞多 1–2 週恢復",
+        "逆流 → PPI（Ch8）；Centor ≥ 3 → 快篩",
+        "3–5 天未改善或惡化 → 重新評估（EBV、膿瘍）"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN", "note": "" },
+        { "drug": "Ibuprofen", "dose": "400 mg", "route": "PO", "freq": "q6–8h PRN", "note": "腎功能（CrCl {round(crcl)}）、潰瘍、抗凝者避免" },
+        { "drug": "Benzydamine 0.15%", "dose": "噴 4–8 噴或漱口 15 mL", "route": "局部", "freq": "q1.5–3h PRN", "note": "" },
+        { "drug": "溫鹽水漱口／喉糖", "dose": "1 次", "route": "局部", "freq": "PRN", "note": "" }
+      ],
+      "watch": ["紅旗出現（流口水、喘鳴、頸部腫）", "3–5 天未改善"],
+      "call": ["流口水、喘鳴、聲音含糊、頸部腫脹（氣道急症）"],
+      "refs": [{ "ch": "23", "q": "症狀治療" }]
+    },
+    "q_cough": {
+      "type": "multi",
+      "title": "咳嗽：有沒有紅旗？（勾選所有符合）",
+      "help": "紅旗 → 先當肺炎／PE／心衰竭處理（Ch7），不要只開止咳藥",
+      "options": [
+        { "label": "咳血（> 少量血絲）", "set": { "hemop": true } },
+        { "label": "發燒 + SpO₂ < 92% 或 RR > 24、局部囉音", "set": { "pna": true } },
+        { "label": "呼吸困難、胸痛、單側腿腫（PE？）", "set": { "dysp": true } },
+        { "label": "免疫低下、體重減輕、結核接觸", "set": { "immuno": true } }
+      ],
+      "branches": [
+        { "if": "hemop || pna || dysp || immuno", "next": "r_cough_redflag" },
+        { "else": "q_cough_type" }
+      ]
+    },
+    "q_cough_type": {
+      "type": "choice",
+      "title": "無紅旗：哪一種咳嗽？",
+      "help": "急性 < 3 週多病毒；亞急性 3–8 週感染後；慢性 > 8 週想鼻涕倒流、氣喘、GERD、ACEI",
+      "options": [
+        { "label": "有痰、咳不出來、臥床／術後（化痰、拍痰）", "next": "r_sputum" },
+        { "label": "乾咳影響睡眠（鎮咳）", "next": "r_dry" },
+        { "label": "流感季：發燒 + 咳嗽 + 肌痛", "next": "r_flu" },
+        { "label": "哮鳴、COPD／氣喘史", "next": "r_wheeze" },
+        { "label": "正在用 ACEI 的乾咳", "next": "r_acei" }
+      ]
+    },
+    "r_cough_redflag": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "咳嗽 + 紅旗：先找肺炎／PE／咳血原因",
+      "summary": "咳血、發燒 + SpO₂↓、呼吸困難、免疫低下：CXR、SpO₂、檢驗、痰培養／AFB、流感／COVID PCR；**咳血者不給任何鎮咳劑**；肺炎依 Ch7。",
+      "steps": [
+        "SpO₂、RR、體溫；O₂ 目標 94–98%（CO₂ 滯留 88–92%）",
+        "CXR；CBC、CRP、Cr；痰培養／AFB（住院 + 發燒）；流感／COVID PCR；疑 PE → D-dimer／CTPA（Ch7）",
+        "發燒 + 浸潤 → 肺炎抗生素（Ch7）；免疫低下發燒 → 通知後線",
+        "咳血：不給鎮咳劑；> 100 mL/hr → 大量咳血流程（Ch7）",
+        "慢性咳嗽 + 體重減輕／上葉空洞／接觸史 → 結核隔離、AFB × 3，勿單用 fluoroquinolone"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "nasal cannula／mask", "freq": "持續", "note": "CO₂ 滯留 88–92%" },
+        { "drug": "N-acetylcysteine", "dose": "600 mg", "route": "PO", "freq": "QD（發泡錠）", "note": "化痰；咳血者不給鎮咳劑" }
+      ],
+      "watch": ["SpO₂、RR、體溫 q4h；咳血量", "CXR／培養結果"],
+      "call": ["咳血 > 少量血絲、咳嗽 + SpO₂ < 92%／RR > 24、發燒 + 浸潤", "懷疑肺栓塞、免疫低下發燒咳嗽"],
+      "refs": [{ "ch": "23", "q": "咳嗽與痰" }, { "ch": "07", "q": "肺炎（抗生素表）" }, { "ch": "07", "q": "大量咳血" }]
+    },
+    "r_sputum": {
+      "type": "result",
+      "urgency": "green",
+      "title": "有痰的咳嗽：化痰 + 拍痰，不鎮咳",
+      "summary": "化痰（NAC／ambroxol／bromhexine）、拍痰／深呼吸／抽痰、多喝水；**止咳藥不給有痰或咳血的病人**；哮鳴加支氣管擴張劑。",
+      "steps": [
+        "痰量／顏色、聽診；發燒／SpO₂↓／> 65 歲／免疫低下 → CXR",
+        "化痰擇一 + 拍痰 q4h／深呼吸訓練／抽痰（臥床、術後、神經肌肉病）；多喝水",
+        "黏稠痰：mesna 或高張食鹽水霧化（氣喘者先 salbutamol）",
+        "有痰、CO₂ 滯留者避免 codeine；咳血不給鎮咳劑"
+      ],
+      "orders": [
+        { "drug": "N-acetylcysteine", "dose": "200 mg TID 或 600 mg QD（發泡錠）", "route": "PO", "freq": "TID／QD", "note": "COPD 可長期" },
+        { "drug": "Ambroxol", "dose": "30 mg", "route": "PO", "freq": "TID", "note": "促清除；或 bromhexine 8–16 mg TID、carbocysteine 250–500 mg TID" },
+        { "drug": "Guaifenesin", "dose": "200–400 mg（糖漿 10–20 mL）", "route": "PO", "freq": "q4–6h，max 2.4 g/d", "note": "排痰；多喝水" },
+        { "drug": "Mesna（Mistabron）", "dose": "300–600 mg", "route": "INH", "freq": "BID–TID", "note": "黏稠痰" },
+        { "drug": "高張 3% 食鹽水", "dose": "3–4 mL", "route": "INH", "freq": "BID–QID", "note": "支氣管擴張症；氣喘者先 salbutamol" },
+        { "drug": "拍痰／深呼吸訓練／抽痰", "dose": "1 次", "route": "—", "freq": "q4h 或 PRN", "note": "臥床、術後、神經肌肉病" }
+      ],
+      "watch": ["痰量／顏色、SpO₂、體溫", "膿痰 + 發燒 → CXR、培養"],
+      "call": ["SpO₂ < 92%、RR > 24、發燒 + 浸潤", "咳血"],
+      "refs": [{ "ch": "23", "q": "咳嗽與痰" }]
+    },
+    "r_dry": {
+      "type": "result",
+      "urgency": "green",
+      "title": "乾咳：鎮咳（無痰、無咳血）",
+      "summary": "Dextromethorphan／dimemorfan／benzonatate 先用；codeine 只給無痰、無 CO₂ 滯留者；**咳血者不給任何鎮咳劑**。",
+      "steps": [
+        "確認無痰、無咳血、無 CO₂ 滯留（COPD）",
+        "找原因：鼻涕倒流、氣喘、GERD、ACEI、感染後",
+        "非鴉片鎮咳先用；夜間影響睡眠才 codeine",
+        "SSRI／MAOI 使用者避免 dextromethorphan（血清素症候群）"
+      ],
+      "orders": [
+        { "drug": "Dextromethorphan", "dose": "15–30 mg（緩釋 60 mg BID）", "route": "PO", "freq": "q6–8h，max 120 mg/d", "note": "MAOI／SSRI 血清素症候群風險" },
+        { "drug": "Dimemorfan", "dose": "10–20 mg", "route": "PO", "freq": "TID", "note": "台灣常用非鴉片鎮咳" },
+        { "drug": "Benzonatate", "dose": "100–200 mg", "route": "PO", "freq": "TID", "note": "周邊性" },
+        { "drug": "Codeine", "dose": "10–20 mg（複方 Brown mixture／Cofsolin 5–10 mL）", "route": "PO", "freq": "q4–6h PRN", "note": "有痰、CO₂ 滯留者避免；咳血不給；便秘、鎮靜" }
+      ],
+      "watch": ["鎮靜、便秘（codeine）", "出現痰／咳血／發燒 → 停鎮咳、重新評估"],
+      "call": ["咳血、SpO₂ < 92%、發燒 + 浸潤"],
+      "refs": [{ "ch": "23", "q": "Dextromethorphan" }, { "ch": "23", "q": "Codeine" }]
+    },
+    "r_wheeze": {
+      "type": "result",
+      "urgency": "green",
+      "title": "咳嗽 + 哮鳴（COPD／氣喘）",
+      "summary": "Ipratropium／salbutamol 霧化 q4–6h PRN；SpO₂↓、RR↑、講不出句子 → 依 Ch7 氣喘／COPD 急性發作處理。",
+      "steps": [
+        "SpO₂、RR、講話完整度；COPD 目標 SpO₂ 88–92%",
+        "霧化支氣管擴張劑；有痰加化痰、拍痰",
+        "無改善或嚴重 → Ch7 氣喘／COPD 急性發作（類固醇、MgSO₄）"
+      ],
+      "orders": [
+        { "drug": "Ipratropium + salbutamol", "dose": "0.5 mg + 2.5–5 mg", "route": "INH（霧化）", "freq": "q4–6h PRN", "note": "CO₂ 滯留者空氣驅動" },
+        { "drug": "N-acetylcysteine", "dose": "600 mg", "route": "PO", "freq": "QD", "note": "有痰時" }
+      ],
+      "watch": ["SpO₂、RR 霧化後 30 min", "1 小時無改善 → 急性發作流程"],
+      "call": ["SpO₂ < 92%（COPD < 88%）、RR > 24、1 小時治療無效"],
+      "refs": [{ "ch": "23", "q": "Ipratropium／salbutamol" }, { "ch": "07", "q": "氣喘急性發作" }, { "ch": "07", "q": "COPD 急性惡化" }]
+    },
+    "r_acei": {
+      "type": "result",
+      "urgency": "green",
+      "title": "ACEI 引起的乾咳",
+      "summary": "停 ACEI 改 ARB（與原團隊討論）；咳嗽可在停藥 1–4 週後緩解；同時排除其他原因。",
+      "steps": [
+        "確認乾咳、無痰、無發燒、CXR 正常（若有其他症狀）",
+        "停 ACEI，改 ARB（交班原團隊）；血壓監測",
+        "1–4 週未緩解 → 找其他原因（鼻涕倒流、氣喘、GERD）"
+      ],
+      "orders": [
+        { "drug": "停 ACEI → 改 ARB", "dose": "依原降壓劑量換算", "route": "PO", "freq": "QD", "note": "與原團隊討論；K、Cr 追蹤" },
+        { "drug": "Dextromethorphan", "dose": "15–30 mg", "route": "PO", "freq": "q6–8h PRN，max 120 mg/d", "note": "過渡期症狀" }
+      ],
+      "watch": ["血壓、K、Cr（換藥後）", "1–4 週咳嗽緩解"],
+      "call": ["咳血、SpO₂ < 92%、發燒 + 浸潤"],
+      "refs": [{ "ch": "23", "q": "停 ACEI" }]
+    },
+    "r_flu": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "流感（發燒 + 咳嗽 + 肌痛；快篩／PCR）",
+      "summary": "**Oseltamivir 75 mg BID × 5 天**（症狀 48 hr 內效果最好；住院、重症、免疫低下者 > 48 hr 仍給）；飛沫隔離；同房高風險接觸者預防 75 mg QD × 7 天。",
+      "steps": [
+        "流感快篩／PCR（陰性但高度懷疑仍可治療）；CXR（SpO₂↓、囉音）",
+        "飛沫隔離；通報依院內",
+        "Oseltamivir（CrCl {round(crcl)}{crcl < 60 ? '：< 60 依仿單減量' : '：不需調整'}）；退燒、補水",
+        "肺炎（發燒 + 浸潤 + SpO₂↓）→ 加抗生素依 Ch7（流感後壞死性肺炎想 MRSA）",
+        "同房高風險接觸者：預防 75 mg QD × 7 天"
+      ],
+      "orders": [
+        { "drug": "Oseltamivir（克流感）", "dose": "{crcl > 60 ? '75 mg' : '30 mg'}", "route": "PO", "freq": "{crcl > 30 ? 'BID' : crcl >= 10 ? 'QD' : '單次（每次 HD 後）'} × 5 天", "note": "CrCl {round(crcl)} 依附錄 A5（30–60：30 mg BID；10–30：30 mg QD）；> 48 hr 住院者仍給" },
+        { "drug": "Oseltamivir（預防）", "dose": "75 mg", "route": "PO", "freq": "QD × 7 天", "note": "同房高風險接觸者；CrCl < 60 依仿單減量" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN 發燒／肌痛", "note": "" }
+      ],
+      "watch": ["SpO₂、RR、體溫 q4h；48–72 hr 未退燒 → CXR（肺炎）", "噁心（oseltamivir 與食物併服）"],
+      "call": ["SpO₂ < 92%、RR > 24、發燒 + 浸潤（肺炎）", "免疫低下、意識改變"],
+      "refs": [{ "ch": "23", "q": "流感" }, { "ch": "07", "q": "流感季" }]
+    },
+    "q_nose": {
+      "type": "choice",
+      "title": "鼻塞／流鼻水：哪一種？",
+      "help": "單側鼻水想異物、腫瘤、腦脊液鼻漏；NG 病人鼻竇炎",
+      "options": [
+        { "label": "清鼻水、癢、打噴嚏、過敏史（過敏性鼻炎）", "next": "r_rhinitis" },
+        { "label": "感冒鼻塞／濃鼻涕／臉部壓痛（病毒性、鼻竇炎）", "next": "r_congestion" },
+        { "label": "單側清澈鼻水 + 頭部外傷／顱底手術後（腦脊液鼻漏？）", "next": "r_csf" }
+      ]
+    },
+    "r_rhinitis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "過敏性鼻炎",
+      "summary": "鼻用類固醇首選（起效 1–3 天）+ 第二代抗組織胺（不嗜睡）；azelastine 鼻噴快；生理食鹽水洗鼻安全。",
+      "steps": [
+        "避免過敏原、乾冷空氣；生理食鹽水洗鼻",
+        "鼻用類固醇 + 第二代抗組織胺",
+        "老人、BPH、青光眼避免第一代抗組織胺（chlorpheniramine）與 pseudoephedrine"
+      ],
+      "orders": [
+        { "drug": "Fluticasone／mometasone／budesonide 鼻噴", "dose": "每側 1–2 噴", "route": "鼻噴", "freq": "QD", "note": "首選；起效 1–3 天" },
+        { "drug": "Cetirizine", "dose": "10 mg", "route": "PO", "freq": "QD", "note": "或 levocetirizine 5 mg、loratadine 10 mg、fexofenadine 60 mg BID／180 mg QD；不嗜睡" },
+        { "drug": "Azelastine 鼻噴", "dose": "每側 1 噴", "route": "鼻噴", "freq": "BID", "note": "快" },
+        { "drug": "生理食鹽水洗鼻", "dose": "250 mL", "route": "鼻", "freq": "BID", "note": "安全" },
+        { "drug": "Chlorpheniramine", "dose": "4 mg", "route": "PO", "freq": "TID–QID", "note": "第一代；鎮靜、抗膽鹼（{age >= 65 ? '⚠ ' + age + ' 歲：老人慎用' : '老人、BPH、青光眼慎'}）" }
+      ],
+      "watch": ["嗜睡（第一代）、鼻出血（鼻噴類固醇）"],
+      "call": ["臉腫／喘鳴／蕁麻疹（過敏性反應 → Ch14）"],
+      "refs": [{ "ch": "23", "q": "鼻炎、鼻塞" }]
+    },
+    "r_congestion": {
+      "type": "result",
+      "urgency": "green",
+      "title": "感冒鼻塞／鼻竇炎",
+      "summary": "解充血劑 **≤ 5 天**（pseudoephedrine；鼻噴 oxymetazoline ≤ 3–5 天，反彈性鼻塞）、生理食鹽水洗鼻；高血壓、心律不整、BPH、青光眼慎用。",
+      "steps": [
+        "鼻水性質、臉部壓痛、發燒；NG 病人鼻竇炎（考慮拔除／換側）",
+        "解充血劑短期；洗鼻；止痛退燒",
+        "藥物性鼻炎（去充血劑 > 5 天、降壓藥、PDE5i）→ 停藥",
+        "細菌性鼻竇炎（> 10 天或雙相惡化、膿鼻涕 + 臉痛 + 發燒）→ 抗生素依院內"
+      ],
+      "orders": [
+        { "drug": "Pseudoephedrine", "dose": "60 mg（複方：loratadine 5 + PSE 120 mg 1 錠 BID；triprolidine 2.5 + PSE 60 mg TID）", "route": "PO", "freq": "q6h，≤ 5 天", "note": "高血壓、心律不整、BPH、青光眼、MAOI 慎" },
+        { "drug": "Oxymetazoline／xylometazoline 鼻噴", "dose": "每側 1–2 噴", "route": "鼻噴", "freq": "BID，≤ 3–5 天", "note": "反彈性鼻塞" },
+        { "drug": "生理食鹽水洗鼻", "dose": "250 mL", "route": "鼻", "freq": "BID", "note": "安全" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN", "note": "" }
+      ],
+      "watch": ["血壓、心悸（pseudoephedrine）", "> 10 天未改善、眼眶周圍腫脹／視力（眼眶蜂窩性組織炎）"],
+      "call": ["眼眶腫脹／視力改變、劇烈頭痛／頸僵硬（顱內併發症）"],
+      "refs": [{ "ch": "23", "q": "Pseudoephedrine" }, { "ch": "23", "q": "鼻炎、鼻塞" }]
+    },
+    "r_csf": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "疑腦脊液鼻漏（頭部外傷／顱底手術後清澈鼻水）",
+      "summary": "不要塞鼻、不要用力擤鼻、不放 NG；收集鼻水送 β2-transferrin（或 glucose）；通知後線／神經外科／ENT；腦膜炎徵候立刻處理。",
+      "steps": [
+        "確認：單側清澈水樣鼻水、低頭增加、鹹味；頭部外傷／顱底手術史",
+        "收集鼻水送 β2-transferrin（glucose 試紙僅篩檢）",
+        "床頭抬高；不擤鼻、不塞鼻、避免 Valsalva；不放 NG／鼻胃管",
+        "通知後線 → 神經外科／ENT；CT 顱底",
+        "發燒、頭痛、頸僵硬 → 腦膜炎流程（Ch17、Ch4）"
+      ],
+      "orders": [
+        { "drug": "床頭抬高、避免擤鼻／Valsalva", "dose": "30°", "route": "—", "freq": "持續", "note": "不放 NG" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN 頭痛", "note": "" }
+      ],
+      "watch": ["體溫、頭痛、頸僵硬、意識 q4h", "鼻水量"],
+      "call": ["腦脊液鼻漏疑似 → 後線 + 神經外科／ENT", "發燒／頸僵硬（腦膜炎）"],
+      "refs": [{ "ch": "23", "q": "腦脊液鼻漏" }]
+    }
+  }
+}

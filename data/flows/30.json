@@ -1,0 +1,673 @@
+{
+  "id": "30",
+  "title": "凝血功能異常與抗凝血劑出血",
+  "chapter": "30",
+  "entries": [
+    { "label": "PT／INR 或 aPTT 延長", "type": "symptom", "start": "q_bleed", "group": "檢驗異常",
+      "keywords": ["INR 高", "PT 延長", "aPTT 延長", "INR 5", "INR 10", "凝血異常", "coagulopathy", "prolonged PT", "prolonged aPTT"] },
+    { "label": "血小板低下", "type": "symptom", "start": "q_plt", "group": "檢驗異常",
+      "keywords": ["血小板低", "thrombocytopenia", "血小板 50000", "血小板 20000", "platelet low", "PLT 低", "血小板掉"] },
+    { "label": "用抗凝血劑的病人出血", "type": "symptom", "start": "q_bleed", "group": "檢驗異常",
+      "keywords": ["抗凝 出血", "warfarin 出血", "NOAC 出血", "DOAC 出血", "heparin 出血", "抗凝血劑 逆轉", "anticoagulant bleeding", "reversal"] },
+    { "label": "Warfarin 重大出血逆轉（4F-PCC + vit K）", "type": "diagnosis", "start": "q_inr",
+      "keywords": ["warfarin", "Coumadin", "4F-PCC", "Kcentra", "Beriplex", "Octaplex", "vitamin K", "INR 逆轉"] },
+    { "label": "Warfarin INR 過高、無出血", "type": "diagnosis", "start": "q_inr_nb",
+      "keywords": ["INR 過高", "supratherapeutic INR", "INR 4.5", "INR > 10", "vit K PO", "warfarin 停藥"] },
+    { "label": "Dabigatran 逆轉（idarucizumab）", "type": "diagnosis", "start": "r_dabi",
+      "keywords": ["dabigatran", "Pradaxa", "idarucizumab", "Praxbind", "dTT", "透析 dabigatran"] },
+    { "label": "Xa 抑制劑逆轉（rivaroxaban／apixaban／edoxaban）", "type": "diagnosis", "start": "r_xa",
+      "keywords": ["rivaroxaban", "Xarelto", "apixaban", "Eliquis", "edoxaban", "Lixiana", "andexanet", "NOAC 逆轉", "DOAC 逆轉"] },
+    { "label": "Heparin／enoxaparin 逆轉（protamine）", "type": "diagnosis", "start": "q_hep_type",
+      "keywords": ["protamine", "heparin 逆轉", "UFH", "enoxaparin", "Clexane", "LMWH 逆轉", "fondaparinux"] },
+    { "label": "抗血小板藥物出血", "type": "diagnosis", "start": "r_antiplt",
+      "keywords": ["aspirin 出血", "clopidogrel 出血", "P2Y12", "ticagrelor", "抗血小板 逆轉", "desmopressin 血小板", "支架 出血"] },
+    { "label": "血栓溶解後出血（alteplase／TNK）", "type": "diagnosis", "start": "r_lytic",
+      "keywords": ["tPA 出血", "alteplase 出血", "TNK", "血栓溶解 出血", "cryoprecipitate", "TXA"] },
+    { "label": "HIT（heparin 引起血小板低下）", "type": "diagnosis", "start": "r_hit",
+      "keywords": ["HIT", "heparin-induced thrombocytopenia", "4T score", "argatroban", "PF4", "bivalirudin"] },
+    { "label": "TTP", "type": "diagnosis", "start": "r_ttp",
+      "keywords": ["TTP", "MAHA", "schistocyte", "血漿置換", "PLASMIC", "caplacizumab"] },
+    { "label": "DIC", "type": "diagnosis", "start": "r_dic",
+      "keywords": ["DIC", "瀰漫性血管內凝血", "fibrinogen 低", "D-dimer 高", "敗血症 凝血"] },
+    { "label": "ITP", "type": "diagnosis", "start": "r_itp",
+      "keywords": ["ITP", "免疫性血小板低下", "IVIG", "dexamethasone 40 mg", "prednisolone 血小板"] },
+    { "label": "尿毒症出血", "type": "diagnosis", "start": "r_uremic",
+      "keywords": ["尿毒症 出血", "uremic bleeding", "desmopressin", "DDAVP", "透析 出血", "conjugated estrogen"] },
+    { "label": "Vit K 缺乏／肝病凝血異常", "type": "diagnosis", "start": "r_vitk_liver",
+      "keywords": ["vit K 缺乏", "肝病 INR", "肝硬化 凝血", "cirrhosis coagulopathy", "廣效抗生素 INR", "營養不良 INR"] },
+    { "label": "侵入處置前門檻與抗凝暫停", "type": "diagnosis", "start": "r_preprocedure",
+      "keywords": ["侵入處置 INR", "CVC 血小板", "LP 血小板", "術前 抗凝", "停 warfarin", "停 NOAC", "橋接", "bridging"] },
+    { "label": "Tranexamic acid（TXA）", "type": "diagnosis", "start": "r_txa",
+      "keywords": ["TXA", "tranexamic acid", "Transamin", "止血劑", "產後出血", "創傷 出血"] }
+  ],
+  "nodes": {
+    "q_bleed": {
+      "type": "choice",
+      "title": "先問：有出血嗎？多嚴重？",
+      "help": "重大 = 血行動力不穩、Hb ↓ ≥ 2 g/dL 或需輸血 ≥ 2 U、關鍵部位（顱內、脊椎、眼、心包、氣道、後腹腔、腔室）、無法局部止血、需手術／介入",
+      "options": [
+        { "label": "重大出血", "next": "q_anticoag_major" },
+        { "label": "輕微出血（鼻血、瘀斑、少量血尿／消化道出血且穩定）", "next": "q_anticoag_minor" },
+        { "label": "沒有出血（只是數值異常）", "next": "q_procedure" }
+      ]
+    },
+    "q_procedure": {
+      "type": "choice",
+      "title": "沒出血：要做侵入處置嗎？在用什麼抗凝血劑？",
+      "help": "沒出血的異常數值多半不用半夜矯正",
+      "options": [
+        { "label": "要做侵入處置／手術", "next": "r_preprocedure" },
+        { "label": "不做處置，在用 warfarin（INR 高）", "next": "q_inr_nb" },
+        { "label": "不做處置，其他抗凝或沒用抗凝", "next": "r_observe" }
+      ]
+    },
+    "q_anticoag_major": {
+      "type": "choice",
+      "title": "重大出血：在用什麼抗凝／抗血小板？",
+      "help": "同時：兩條 IV、輸液、備血、止血、輸血（Ch26）；逆轉前權衡血栓風險（機械瓣膜、VTE < 3 個月、Afib + 中風史）並與後線討論",
+      "options": [
+        { "label": "Warfarin", "next": "q_inr" },
+        { "label": "UFH（heparin 滴注）", "next": "r_ufh" },
+        { "label": "Enoxaparin（LMWH）", "next": "q_enox_hrs" },
+        { "label": "Dabigatran", "next": "r_dabi" },
+        { "label": "Rivaroxaban／apixaban／edoxaban", "next": "r_xa" },
+        { "label": "Fondaparinux", "next": "r_fonda" },
+        { "label": "血栓溶解劑（alteplase／TNK）後", "next": "r_lytic" },
+        { "label": "抗血小板（aspirin、P2Y12）", "next": "r_antiplt" },
+        { "label": "沒用抗凝：血小板低／PT-aPTT 延長／肝病", "next": "q_plt" }
+      ]
+    },
+    "q_anticoag_minor": {
+      "type": "choice",
+      "title": "輕微出血：在用什麼抗凝血劑？",
+      "options": [
+        { "label": "Warfarin", "next": "r_minor", "set": { "ac": "warfarin" } },
+        { "label": "UFH／enoxaparin", "next": "r_minor", "set": { "ac": "heparin" } },
+        { "label": "DOAC（dabigatran／Xa 抑制劑）", "next": "r_minor", "set": { "ac": "doac" } },
+        { "label": "抗血小板", "next": "r_minor", "set": { "ac": "antiplt" } },
+        { "label": "沒用抗凝", "next": "r_minor", "set": { "ac": "none" } }
+      ]
+    },
+    "r_minor": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕微出血：局部止血、暫停 1–2 劑、觀察，通常不需逆轉",
+      "summary": "鼻血、皮下瘀斑、少量血尿／消化道出血且穩定 → 局部止血、暫停 1–2 劑、觀察；warfarin 可 vit K 1–5 mg PO/IV；不用 PCC／FFP。",
+      "steps": [
+        "局部止血（壓迫、鼻填塞、冰敷）；生命徵象、Hb、血小板、PT/INR／aPTT",
+        "暫停 1–2 劑抗凝（不需逆轉）；記錄並交班原團隊決定何時恢復",
+        "重新評估是否其實是重大出血（Hb ↓ ≥ 2、關鍵部位、血行不穩）",
+        "找局部原因；避免 NSAID"
+      ],
+      "orders": [
+        { "drug": "Vitamin K（phytonadione）", "dose": "1–5 mg", "route": "PO／IV slow", "freq": "STAT × 1", "cond": "ac == 'warfarin'", "note": "輕微出血 + warfarin；IV 慢滴（過敏罕見）；SC 不用" },
+        { "drug": "暫停抗凝 1–2 劑", "dose": "1–2 劑", "route": "—", "freq": "觀察後由原團隊決定恢復", "cond": "ac != 'none'", "note": "DOAC 依腎功能 CrCl {round(crcl)} 決定廓清時間" },
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV over 10 min", "freq": "PRN（手術／產後出血）", "cond": "false", "note": "消化道出血無效；血尿慎用" }
+      ],
+      "watch": ["Hb 6–12 小時", "出血是否持續／擴大", "INR／aPTT 隔日"],
+      "call": ["轉為重大出血（Hb ↓ ≥ 2、關鍵部位、不穩）", "高血栓風險病人（機械瓣膜、近期 VTE、支架）需決定是否暫停抗凝"],
+      "refs": [{ "ch": "30", "q": "II. 出血嚴重度分級" }, { "ch": "30", "q": "表 30-1" }],
+      "next": [{ "label": "其實是重大出血 → 逆轉", "next": "q_anticoag_major" }]
+    },
+    "q_inr": {
+      "type": "number",
+      "title": "Warfarin 重大出血：INR？",
+      "help": "INR 決定 4F-PCC 劑量：2–4 → 25 U/kg；4–6 → 35 U/kg；> 6 → 50 U/kg（max 5,000 U）",
+      "var": "inr", "unit": "", "step": 0.1,
+      "quick": [2.5, 3.5, 5.0, 7.0, 10.0],
+      "branches": [
+        { "if": "inr >= 1", "next": "r_warf_major" },
+        { "else": "r_warf_major" }
+      ]
+    },
+    "r_warf_major": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Warfarin 重大出血：4F-PCC + vitamin K 10 mg IV",
+      "summary": "停 warfarin；**4F-PCC 依 INR（25／35／50 U/kg，max 5,000 U）15–30 分鐘內 INR 正常 + vit K 10 mg IV over 20–30 min**（PCC 效果僅 6–12 小時）；無 PCC → FFP 15 mL/kg（4 U）+ vit K。",
+      "steps": [
+        "停 warfarin；IV × 2、輸液、備血、止血、輸血（Ch26）；顱內出血 → CT、神外、血壓控制（Ch18）",
+        "4F-PCC 立即（血庫／藥局）；同時 vit K 10 mg IV 慢滴",
+        "無 PCC → FFP 15 mL/kg + vit K；需緊急手術也是 PCC + vit K",
+        "逆轉後 24 小時內血栓風險↑；INR 30 分鐘後與 6–12 小時後追蹤（PCC 消退、vit K 接手）",
+        "出血控制後盡早（依部位 1–2 週）恢復抗凝，與後線／原團隊決定"
+      ],
+      "orders": [
+        { "drug": "4F-PCC（Kcentra／Beriplex／Octaplex）", "dose": "{min(5000, round(wt*(inr > 6 ? 50 : (inr > 4 ? 35 : 25))))} U（{inr > 6 ? 50 : (inr > 4 ? 35 : 25)} U/kg × {wt} kg）", "route": "IV", "freq": "STAT × 1", "note": "INR {inr}：2–4 → 25 U/kg；4–6 → 35；> 6 → 50；max 5,000 U" },
+        { "drug": "Vitamin K（phytonadione）", "dose": "10 mg", "route": "IV over 20–30 min", "freq": "STAT × 1", "note": "PCC 效果僅 6–12 小時，一定要併給；SC 吸收差不用" },
+        { "drug": "FFP", "dose": "{round(wt*15)} mL（15 mL/kg ≈ 4 U）", "route": "IV", "freq": "STAT（無 4F-PCC 時）", "note": "依 {wt} kg；解凍 30 分鐘；量大注意 TACO" },
+        { "drug": "pRBC", "dose": "依 Hb／血行動力", "route": "IV", "freq": "STAT", "note": "Ch26；大量 1:1:1" }
+      ],
+      "watch": ["INR 30 分鐘後、6–12 小時後（反彈）", "BP、HR、Hb q4–6h", "血栓徵候（逆轉後 24 小時）"],
+      "call": ["抗凝血劑重大出血需逆轉 → 立即後線", "顱內／關鍵部位出血 → 神外／相關科", "高血栓風險（機械瓣膜、近期 VTE）決定何時恢復抗凝"],
+      "refs": [{ "ch": "30", "q": "表 30-1" }, { "ch": "30", "q": "Warfarin" }]
+    },
+    "q_inr_nb": {
+      "type": "number",
+      "title": "Warfarin、無出血：INR？",
+      "var": "inr", "unit": "", "step": 0.1,
+      "quick": [3.5, 4.5, 6.0, 8.0, 10.5],
+      "branches": [
+        { "if": "inr > 10", "next": "r_warf_inr10" },
+        { "if": "inr >= 4.5", "next": "r_warf_nb" },
+        { "else": "r_observe" }
+      ]
+    },
+    "r_warf_nb": {
+      "type": "result",
+      "urgency": "green",
+      "title": "Warfarin INR 4.5–10、無出血：停藥、觀察或 vit K 1–2.5 mg PO",
+      "summary": "不需 PCC／FFP；停 1–2 劑，觀察或 vit K 1–2.5 mg PO；隔日 INR；找原因（抗生素、肝病、飲食、藥物交互作用）。",
+      "steps": [
+        "確認無出血（黑便、血尿、瘀斑、頭痛）；停今晚 warfarin",
+        "找原因：新加抗生素／amiodarone、進食少、肝功能、腹瀉",
+        "出血高風險者（老年、跌倒、既往出血）給 vit K 1–2.5 mg PO",
+        "隔日 INR；交班原團隊調整劑量"
+      ],
+      "orders": [
+        { "drug": "Vitamin K（phytonadione）", "dose": "1–2.5 mg", "route": "PO", "freq": "STAT × 1（可選）", "note": "INR {inr}；出血高風險者才給；過量會使再抗凝困難" },
+        { "drug": "Warfarin", "dose": "0（今晚停）", "route": "PO", "freq": "停 1–2 劑", "note": "隔日 INR 再決定" }
+      ],
+      "watch": ["INR 隔日", "出血徵候"],
+      "call": ["出現出血", "INR > 10"],
+      "refs": [{ "ch": "30", "q": "無出血 INR 4.5–10" }]
+    },
+    "r_warf_inr10": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Warfarin INR > 10、無出血：vit K 2.5–5 mg PO",
+      "summary": "停藥 + vit K 2.5–5 mg PO；密切觀察出血；隔日 INR；通知後線。",
+      "steps": [
+        "確認無出血（含頭痛、神經學）；停 warfarin",
+        "Vit K 2.5–5 mg PO",
+        "INR 隔日（或 12 小時後）；出現出血 → 重大出血流程（PCC）",
+        "通知後線；找原因"
+      ],
+      "orders": [
+        { "drug": "Vitamin K（phytonadione）", "dose": "2.5–5 mg", "route": "PO", "freq": "STAT × 1", "note": "INR {inr}；無出血不用 PCC／FFP" },
+        { "drug": "Warfarin", "dose": "0（停）", "route": "PO", "freq": "停至 INR 回治療範圍", "note": "" }
+      ],
+      "watch": ["INR 12–24 小時", "出血徵候 q4h（頭痛、意識、黑便、血尿）"],
+      "call": ["INR > 10 → 通知後線", "任何出血 → 逆轉"],
+      "refs": [{ "ch": "30", "q": "INR > 10 無出血" }],
+      "next": [{ "label": "出現重大出血 → PCC + vit K", "next": "q_inr" }]
+    },
+    "q_hep_type": {
+      "type": "choice",
+      "title": "哪一種 heparin？",
+      "options": [
+        { "label": "UFH（heparin 滴注／bolus）", "next": "r_ufh" },
+        { "label": "Enoxaparin（LMWH）", "next": "q_enox_hrs" },
+        { "label": "Fondaparinux", "next": "r_fonda" }
+      ]
+    },
+    "r_ufh": {
+      "type": "result",
+      "urgency": "red",
+      "title": "UFH 重大出血：停藥 + protamine",
+      "summary": "停 heparin 常已足夠（半衰期 60–90 min）；重大出血 **protamine 1 mg per 100 U heparin**（算最近 2–3 小時輸入量），max 50 mg，IV slow ≤ 5 mg/min。",
+      "steps": [
+        "立即停 heparin 滴注；aPTT、CBC、type & screen",
+        "算最近 2–3 小時 heparin 輸入量（U）→ protamine 1 mg/100 U，max 50 mg",
+        "IV 慢推（≤ 5 mg/min）；備過敏處置（魚過敏、NPH 胰島素、輸精管結紮者風險高）",
+        "15 分鐘後 aPTT；過量 protamine 反致出血",
+        "止血、輸血（Ch26）；通知後線"
+      ],
+      "orders": [
+        { "drug": "Protamine sulfate", "dose": "1 mg per 100 U heparin（最近 2–3 小時量），max 50 mg", "route": "IV slow（≤ 5 mg/min）", "freq": "STAT × 1", "note": "例：滴注 1,000 U/hr × 2 hr = 2,000 U → 20 mg；低血壓、過敏" },
+        { "drug": "Heparin", "dose": "0（停）", "route": "IV", "freq": "停滴注", "note": "半衰期 60–90 min，停藥常已足夠" }
+      ],
+      "watch": ["aPTT 15 分鐘與 2–4 小時後", "BP（protamine 低血壓）、過敏", "Hb"],
+      "call": ["抗凝血劑重大出血需逆轉 → 後線", "protamine 後低血壓／過敏"],
+      "refs": [{ "ch": "30", "q": "UFH" }, { "ch": "30", "q": "表 30-1" }]
+    },
+    "q_enox_hrs": {
+      "type": "number",
+      "title": "Enoxaparin：距最後一劑幾小時？",
+      "help": "8 小時內：protamine 1 mg per 1 mg enoxaparin；8–12 小時：0.5 mg per 1 mg；> 12 小時通常不需（腎衰竭半衰期延長）",
+      "var": "hrs", "unit": "hr", "step": 1,
+      "quick": [2, 6, 10, 14, 24],
+      "branches": [
+        { "if": "hrs >= 0", "next": "r_enox" },
+        { "else": "r_enox" }
+      ]
+    },
+    "r_enox": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Enoxaparin（LMWH）重大出血：protamine（只能中和 60%）",
+      "summary": "距最後一劑 {hrs} 小時：{hrs <= 8 ? 'protamine 1 mg per 1 mg enoxaparin' : (hrs <= 12 ? 'protamine 0.5 mg per 1 mg enoxaparin' : '> 12 小時通常不需 protamine（腎衰竭者半衰期延長，可考慮）')}；max 50 mg，IV slow ≤ 5 mg/min。",
+      "steps": [
+        "停 enoxaparin；CBC、Cr（CrCl {round(crcl)}：腎衰竭半衰期延長）、anti-Xa（若可）",
+        "確認最後一劑劑量（mg）與時間",
+        "Protamine 依時間計算，IV 慢推；只能中和約 60%",
+        "止血、輸血（Ch26）；通知後線",
+        "腎衰竭者 > 12 小時仍可能有效，與後線討論"
+      ],
+      "orders": [
+        { "drug": "Protamine sulfate", "dose": "{hrs <= 8 ? '1 mg' : (hrs <= 12 ? '0.5 mg' : '通常不需（腎衰竭者考慮 0.5 mg）')} per 1 mg enoxaparin，max 50 mg", "route": "IV slow（≤ 5 mg/min）", "freq": "STAT × 1", "note": "距最後一劑 {hrs} 小時；例：enoxaparin 60 mg → {hrs <= 8 ? 60 : (hrs <= 12 ? 30 : 0)} mg protamine（max 50）" },
+        { "drug": "Enoxaparin", "dose": "0（停）", "route": "SC", "freq": "停", "note": "CrCl {round(crcl)}" }
+      ],
+      "watch": ["Hb q4–6h", "BP、過敏（protamine）", "anti-Xa（若可）"],
+      "call": ["抗凝血劑重大出血需逆轉 → 後線", "腎衰竭者 > 12 小時仍出血"],
+      "refs": [{ "ch": "30", "q": "Enoxaparin (LMWH)" }, { "ch": "30", "q": "表 30-1" }]
+    },
+    "r_fonda": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Fondaparinux 重大出血：無專一解藥",
+      "summary": "半衰期 17–21 hr；無專一解藥；rFVIIa 90 mcg/kg 或 aPCC（依血液科）；支持性止血與輸血。",
+      "steps": [
+        "停藥；anti-Xa、CBC、Cr",
+        "止血、輸血（Ch26）",
+        "聯絡後線與血液科：rFVIIa 90 mcg/kg 或 aPCC",
+        "protamine 無效"
+      ],
+      "orders": [
+        { "drug": "rFVIIa（recombinant factor VIIa）", "dose": "{round(wt*90)} mcg（90 mcg/kg）", "route": "IV", "freq": "STAT × 1（依血液科）", "note": "依 {wt} kg；或 aPCC；血栓風險" },
+        { "drug": "Fondaparinux", "dose": "0（停）", "route": "SC", "freq": "停", "note": "半衰期 17–21 hr" }
+      ],
+      "watch": ["Hb q4–6h", "血栓徵候（rFVIIa 後）"],
+      "call": ["重大出血 → 後線 + 血液科"],
+      "refs": [{ "ch": "30", "q": "Fondaparinux" }]
+    },
+    "r_dabi": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Dabigatran 重大出血：idarucizumab 5 g IV",
+      "summary": "**Idarucizumab（Praxbind）5 g IV（2 × 2.5 g bolus 相隔 ≤ 15 分鐘）**，數分鐘逆轉；無藥 → aPCC 50 U/kg 或 4F-PCC；服藥 2 小時內活性碳；**血液透析可移除**。",
+      "steps": [
+        "停 dabigatran；dTT／TT（正常 = 無藥）、aPTT、Cr（CrCl {round(crcl)}：腎衰竭半衰期延長 12–17 hr →更久）",
+        "Idarucizumab 5 g IV（藥局／血庫）",
+        "無 idarucizumab → aPCC 50 U/kg 或 4F-PCC；服藥 2 小時內活性碳",
+        "腎衰竭／無解藥 → 血液透析可移除（腎臟科）",
+        "止血、輸血（Ch26）；通知後線"
+      ],
+      "orders": [
+        { "drug": "Idarucizumab（Praxbind）", "dose": "5 g（2 × 2.5 g）", "route": "IV bolus × 2，相隔 ≤ 15 分鐘", "freq": "STAT", "note": "數分鐘逆轉；24 小時內可能反彈" },
+        { "drug": "aPCC（FEIBA）", "dose": "{round(wt*50)} U（50 U/kg）", "route": "IV", "freq": "STAT（無 idarucizumab 時）", "note": "依 {wt} kg；或 4F-PCC 25–50 U/kg", "alt": "4F-PCC {round(wt*25)}–{round(wt*50)} U" },
+        { "drug": "Activated charcoal", "dose": "{round(wt)} g（1 g/kg，約 50 g）", "route": "PO／NG", "freq": "STAT × 1（服藥 2 小時內）", "note": "Ch1：氣道有保護才用；依 {wt} kg" },
+        { "drug": "血液透析", "dose": "1 次", "route": "透析導管", "freq": "腎衰竭／無解藥時（腎臟科）", "note": "dabigatran 可透析（Xa 抑制劑不可）" }
+      ],
+      "watch": ["aPTT／dTT 2–4 小時後與 12–24 小時（反彈）", "Hb q4–6h", "血栓徵候"],
+      "call": ["重大出血需逆轉 → 後線", "需透析 → 腎臟科", "顱內出血 → 神外"],
+      "refs": [{ "ch": "30", "q": "Dabigatran" }, { "ch": "30", "q": "表 30-1" }]
+    },
+    "r_xa": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Xa 抑制劑（rivaroxaban／apixaban／edoxaban）重大出血：4F-PCC",
+      "summary": "**4F-PCC 2,000 U（或 25–50 U/kg）**；andexanet alfa 台灣供應有限（低劑量 400 mg → 4 mg/min × 2 hr；高劑量 800 mg → 8 mg/min × 2 hr）；服藥 2 小時內活性碳；**不可透析**（高蛋白結合）。",
+      "steps": [
+        "停藥；anti-Xa（校正）、PT、Cr（半衰期 5–15 hr，CrCl {round(crcl)}）；記錄最後服藥時間與劑量",
+        "4F-PCC 2,000 U（或 25–50 U/kg）",
+        "有 andexanet：rivaroxaban ≤ 10 mg／apixaban ≤ 5 mg 或距最後服藥 ≥ 8 hr → 低劑量；rivaroxaban > 10 mg／apixaban > 5 mg 且 < 8 hr → 高劑量",
+        "服藥 2 小時內活性碳；不可透析",
+        "止血、輸血（Ch26）；通知後線"
+      ],
+      "orders": [
+        { "drug": "4F-PCC", "dose": "2,000 U（或 {round(wt*25)}–{round(wt*50)} U = 25–50 U/kg）", "route": "IV", "freq": "STAT × 1", "note": "依 {wt} kg；血栓風險" },
+        { "drug": "Andexanet alfa 低劑量", "dose": "400 mg bolus（30 mg/min）→ 4 mg/min × 2 hr", "route": "IV", "freq": "STAT（rivaroxaban ≤ 10 mg／apixaban ≤ 5 mg，或任何劑量但 ≥ 8 hr）", "note": "台灣供應有限", "cond": "false" },
+        { "drug": "Andexanet alfa 高劑量", "dose": "800 mg bolus → 8 mg/min × 2 hr", "route": "IV", "freq": "STAT（rivaroxaban > 10 mg／apixaban > 5 mg 且 < 8 hr）", "note": "台灣供應有限", "cond": "false" },
+        { "drug": "Activated charcoal", "dose": "{round(wt)} g（1 g/kg，約 50 g）", "route": "PO／NG", "freq": "STAT × 1（服藥 2 小時內）", "note": "Ch1：氣道有保護才用；依 {wt} kg" }
+      ],
+      "watch": ["Hb q4–6h、BP", "anti-Xa（若可）", "血栓徵候（逆轉後 24 小時）"],
+      "call": ["重大出血需逆轉 → 後線", "顱內／關鍵部位出血", "高血栓風險決定恢復抗凝時機"],
+      "refs": [{ "ch": "30", "q": "Rivaroxaban／apixaban／edoxaban" }, { "ch": "30", "q": "表 30-1" }]
+    },
+    "r_lytic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "血栓溶解劑（alteplase／TNK）後出血",
+      "summary": "停藥；**cryoprecipitate 10 U**（fibrinogen < 150–200）+ **TXA 1 g IV over 10 min**；血小板 < 100,000 輸血小板；顱內出血：停藥、CT、神外。",
+      "steps": [
+        "立即停 alteplase／TNK 與併用 heparin；神經學惡化 → 急 CT",
+        "fibrinogen、CBC、PT/aPTT、type & screen",
+        "Cryoprecipitate 10 U + TXA 1 g IV；血小板 < 100,000 → 輸血小板",
+        "顱內出血 → 神外、血壓控制（Ch18）",
+        "通知後線／中風團隊"
+      ],
+      "orders": [
+        { "drug": "Cryoprecipitate", "dose": "10 U", "route": "IV", "freq": "STAT（fibrinogen < 150–200）", "note": "↑ fibrinogen 50–70 mg/dL；30 分鐘後追蹤" },
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV over 10 min", "freq": "STAT", "note": "血栓溶解後出血；顱內出血依神外" },
+        { "drug": "分離術血小板", "dose": "1 U", "route": "IV", "freq": "血小板 < 100,000 時", "note": "" }
+      ],
+      "watch": ["fibrinogen 30 分鐘後", "GCS、神經學 q15 min（顱內出血）", "Hb"],
+      "call": ["血栓溶解後任何出血 → 立即後線／中風團隊", "顱內出血 → 神外"],
+      "refs": [{ "ch": "30", "q": "血栓溶解劑" }, { "ch": "30", "q": "表 30-1" }]
+    },
+    "r_antiplt": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "抗血小板藥（aspirin、P2Y12）重大出血",
+      "summary": "停藥（效果 7–10 天）；重大出血可輸血小板 1 U（**顱內出血 PATCH 顯示無益甚至有害，不常規**）；desmopressin 0.3 mcg/kg IV；ticagrelor 無有效逆轉；支架病人與心臟科討論。",
+      "steps": [
+        "停抗血小板；CBC、type & screen；止血、輸血（Ch26）",
+        "重大非顱內出血 → 可輸血小板 1 U；顱內出血不常規輸血小板",
+        "Desmopressin 0.3 mcg/kg IV",
+        "近期支架（尤其 < 1 年）→ 停藥前與心臟科討論（支架血栓）",
+        "通知後線"
+      ],
+      "orders": [
+        { "drug": "分離術血小板", "dose": "1 U", "route": "IV", "freq": "重大出血時（顱內出血不常規）", "note": "ticagrelor 無效" },
+        { "drug": "Desmopressin（DDAVP）", "dose": "{round(wt*0.3,1)} mcg（0.3 mcg/kg）", "route": "IV over 30 min", "freq": "STAT × 1", "note": "依 {wt} kg；低血鈉、輸液限制" }
+      ],
+      "watch": ["Hb q4–6h", "Na（desmopressin）", "支架血栓（胸痛、ECG）"],
+      "call": ["重大出血 → 後線", "支架病人停藥 → 心臟科", "顱內出血 → 神外"],
+      "refs": [{ "ch": "30", "q": "抗血小板（aspirin、P2Y12）" }, { "ch": "30", "q": "表 30-1" }]
+    },
+    "r_observe": {
+      "type": "result",
+      "urgency": "green",
+      "title": "無出血、不做處置：判讀原因、追蹤，不半夜矯正",
+      "summary": "沒出血的異常數值多半不用矯正；判讀型態（PT↑／aPTT↑／兩者／血小板↓）找原因；肝病 INR 不預測出血；抗磷脂抗體 aPTT 長但會栓塞。",
+      "steps": [
+        "PT↑ aPTT 正常：warfarin 早期、vit K 缺乏（營養不良、廣效抗生素、膽汁鬱積）、肝病早期、Xa 抑制劑",
+        "aPTT↑ PT 正常：heparin、dabigatran、抗磷脂抗體、血友病／vWD、**檢體從 heparin 管路抽（重抽）**",
+        "PT↑ + aPTT↑：肝病、DIC、vit K 嚴重缺乏、大量輸血稀釋、heparin 過量",
+        "檢驗：CBC、抹片、fibrinogen、D-dimer、肝功能、mixing study、anti-Xa／dTT（DOAC）",
+        "Vit K 缺乏疑慮 → vit K 10 mg IV/PO QD × 3 天；追蹤 INR 隔日",
+        "交班原團隊；避免不必要矯正"
+      ],
+      "orders": [
+        { "drug": "Vitamin K（phytonadione）", "dose": "10 mg", "route": "IV over 20–30 min 或 PO", "freq": "QD × 3 天（疑 vit K 缺乏時）", "note": "營養不良、廣效抗生素、膽汁鬱積" },
+        { "drug": "PT/INR、aPTT 重抽（周邊靜脈）", "dose": "1 管", "route": "抽血", "freq": "STAT（排除 heparin 汙染）", "note": "" }
+      ],
+      "watch": ["INR／aPTT 隔日", "出血徵候"],
+      "call": ["出現出血", "INR > 10", "懷疑 HIT、TTP、DIC"],
+      "refs": [{ "ch": "30", "q": "I. 判讀" }, { "ch": "30", "q": "V. 凝血因子缺乏" }],
+      "next": [
+        { "label": "血小板也低 → 血小板流程", "next": "q_plt" },
+        { "label": "肝病／vit K 缺乏", "next": "r_vitk_liver" }
+      ]
+    },
+    "q_plt": {
+      "type": "number",
+      "title": "血小板（/μL）？",
+      "help": "假性（EDTA 凝集）→ citrate 管重驗；抹片看凝集、schistocyte、大血小板",
+      "var": "plt", "unit": "/μL", "step": 1000,
+      "quick": [8000, 15000, 30000, 45000, 80000, 120000],
+      "branches": [
+        { "if": "plt < 10000", "next": "q_plt_ctx" },
+        { "if": "plt < 150000", "next": "q_plt_ctx" },
+        { "else": "r_observe" }
+      ]
+    },
+    "q_plt_ctx": {
+      "type": "multi",
+      "title": "血小板 {plt}/μL：勾選所有符合",
+      "help": "HIT 與 TTP 不輸血小板（除非危及生命出血）",
+      "options": [
+        { "label": "Heparin 使用中／5–10 天內（含沖管、LMWH），血小板 ↓ > 50% 或 < 100,000、血栓、皮膚壞死", "set": { "hep": true } },
+        { "label": "溶血 + schistocyte（MAHA）± 神經／腎／發燒", "set": { "maha": true } },
+        { "label": "PT/aPTT ↑、fibrinogen ↓、D-dimer ↑（DIC 型態）", "set": { "dicp": true } },
+        { "label": "活動出血", "set": { "pbleed": true } },
+        { "label": "要做侵入處置（CVC、LP、手術、內視鏡切片）", "set": { "proc": true } },
+        { "label": "發燒／敗血症", "set": { "pfever": true } },
+        { "label": "顱內／眼出血或神經外科", "set": { "cns": true } },
+        { "label": "尿毒症（透析病人）出血", "set": { "uremic": true } }
+      ],
+      "branches": [
+        { "if": "hep", "next": "r_hit" },
+        { "if": "maha", "next": "r_ttp" },
+        { "if": "dicp", "next": "r_dic" },
+        { "if": "uremic", "next": "r_uremic" },
+        { "if": "cns && plt < 100000", "next": "r_plt_tx" },
+        { "if": "plt < 50000 && (pbleed || proc)", "next": "r_plt_tx" },
+        { "if": "plt < 20000 && pfever", "next": "r_plt_tx" },
+        { "if": "plt < 10000", "next": "r_plt_tx" },
+        { "else": "q_plt_cause" }
+      ]
+    },
+    "q_plt_cause": {
+      "type": "choice",
+      "title": "未達輸注門檻：最可能的原因？",
+      "help": "生成↓（骨髓抑制、化療、酒精、B12、MDS、敗血症）；破壞↑（ITP、藥物、TTP/HUS、DIC、HELLP）；分佈（脾腫大）；稀釋；假性",
+      "options": [
+        { "label": "藥物（vancomycin、linezolid、TMP-SMX、quinine、valproate、H2 blocker）", "next": "r_drug_plt" },
+        { "label": "ITP（排除其他原因後）", "next": "r_itp" },
+        { "label": "肝病／脾腫大", "next": "r_vitk_liver" },
+        { "label": "骨髓抑制／全血球低下 → Ch29", "next": "r_plt_hold" },
+        { "label": "不確定／可能假性", "next": "r_plt_hold" }
+      ]
+    },
+    "r_plt_tx": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "輸血小板（血小板 {plt}/μL 達門檻）",
+      "summary": "< 10,000 預防；< 20,000 + 發燒／敗血症／DIC；< 50,000 + 出血或侵入處置；< 100,000 + 顱內／眼出血或神經外科；1 U 分離術血小板 ↑ 30,000–60,000，1 小時後追蹤。**先排除 HIT 與 TTP。**",
+      "steps": [
+        "排除 HIT（heparin 5–10 天）與 TTP（schistocyte）——不輸",
+        "同意書、核對；1 U 分離術血小板（台灣 12 U 隨機 = 1 治療量）",
+        "出血 + DIC → 同時 FFP／cryo（見 DIC）；出血 + 抗血小板藥 → 見抗血小板",
+        "輸後 1 小時追蹤；上升 < 5,000–10,000 = refractory → ABO 相合／HLA 相合（血庫）",
+        "找原因、停致病藥；血液科"
+      ],
+      "orders": [
+        { "drug": "分離術血小板（減白）", "dose": "1 U（≈ 12 U 隨機）", "route": "IV（血小板濾器）", "freq": "STAT；1 小時後追蹤血小板", "note": "目前 {plt}/μL；預期 ↑ 30,000–60,000" },
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV over 10 min", "freq": "STAT → 1 g over 8 hr（手術／產後／創傷出血）", "cond": "false", "note": "消化道出血無效；血尿慎用" }
+      ],
+      "watch": ["輸後 1 小時血小板", "出血徵候", "輸血反應（血小板細菌汙染，Ch26）"],
+      "call": ["血小板 < 20,000 或 < 50,000 合併出血 → 後線", "輸注後仍出血或無上升", "懷疑 HIT、TTP、DIC"],
+      "refs": [{ "ch": "30", "q": "1. 輸注門檻" }, { "ch": "26", "q": "血小板" }],
+      "next": [
+        { "label": "其實是 HIT", "next": "r_hit" },
+        { "label": "其實是 TTP", "next": "r_ttp" }
+      ]
+    },
+    "r_plt_hold": {
+      "type": "result",
+      "urgency": "green",
+      "title": "血小板低下、未達輸注門檻：找原因、追蹤",
+      "summary": "重驗（citrate 管排除假性）、抹片；停可疑藥物；避免 IM、NSAID、抗血小板；侵入處置依門檻；血液科。",
+      "steps": [
+        "Citrate 管重驗 + 抹片（凝集、schistocyte、大血小板）",
+        "用藥回顧（heparin → HIT？藥物性）；敗血症、肝病／脾腫大、B12、酒精、化療",
+        "全血球低下 → Ch29（ANC < 500 + 發燒 → Ch17）",
+        "出血預防：避免 IM、NSAID；CBC 每日",
+        "血液科（抹片、骨髓）"
+      ],
+      "orders": [
+        { "drug": "CBC + 抹片（citrate 管）", "dose": "1 管", "route": "抽血", "freq": "STAT 重驗，之後每日", "note": "" },
+        { "drug": "停可疑藥物", "dose": "0", "route": "—", "freq": "—", "note": "vancomycin、linezolid、TMP-SMX、quinine、valproate、H2 blocker；heparin 含沖管" }
+      ],
+      "watch": ["血小板每日", "出血徵候"],
+      "call": ["血小板 < 20,000 或出血", "懷疑 HIT、TTP、DIC"],
+      "refs": [{ "ch": "30", "q": "IV. 血小板低下" }, { "ch": "30", "q": "I. 判讀" }],
+      "next": [{ "label": "達門檻／出血 → 輸血小板", "next": "r_plt_tx" }]
+    },
+    "r_drug_plt": {
+      "type": "result",
+      "urgency": "green",
+      "title": "藥物性血小板低下",
+      "summary": "停藥（vancomycin、linezolid、TMP-SMX、quinine、valproate、H2 blocker）；1–2 週恢復；heparin 相關 → HIT 流程。",
+      "steps": [
+        "確認時間關係（開始用藥後 1–2 週）；停藥並記錄過敏／不良反應",
+        "Heparin 相關 → 4T score，依 HIT 處理",
+        "血小板每日；達門檻或出血才輸",
+        "換替代藥（藥師／感染科）"
+      ],
+      "orders": [
+        { "drug": "停致病藥物", "dose": "0", "route": "—", "freq": "立即", "note": "記錄不良反應；1–2 週恢復" }
+      ],
+      "watch": ["血小板每日至恢復", "出血"],
+      "call": ["血小板 < 20,000 或出血", "懷疑 HIT"],
+      "refs": [{ "ch": "30", "q": "藥物性" }],
+      "next": [{ "label": "Heparin 相關 → HIT", "next": "r_hit" }]
+    },
+    "r_hit": {
+      "type": "result",
+      "urgency": "red",
+      "title": "HIT（heparin 引起血小板低下）",
+      "summary": "**立即停所有 heparin**（含沖管、LMWH、含 heparin 導管）→ 不論有無血栓改非 heparin 抗凝（argatroban 2 mcg/kg/min，肝病 0.5；bivalirudin；fondaparinux；rivaroxaban 15 mg BID）；送 PF4 抗體 ± SRA；**不輸血小板、不給 warfarin 直到血小板 > 150,000**；下肢超音波。",
+      "steps": [
+        "4T score（≥ 4 送 PF4 抗體 ± SRA；≤ 3 NPV 99% 可不送）",
+        "停所有 heparin：滴注、預防性 LMWH、沖管、heparin coated 導管、透析迴路",
+        "開始非 heparin 抗凝（argatroban 首選；腎功能差可用）",
+        "已在用 warfarin → vit K 逆轉（防皮膚壞死）；血小板 > 150,000 才可開始 warfarin",
+        "下肢超音波找 DVT；血液科",
+        "療程：無血栓 ≥ 1（多建議 3）個月、有血栓 3–6 個月"
+      ],
+      "orders": [
+        { "drug": "Argatroban", "dose": "{round(wt*2)} mcg/min（2 mcg/kg/min；肝病 {round(wt*0.5)} mcg/min = 0.5 mcg/kg/min）", "route": "IV drip", "freq": "持續，目標 aPTT 1.5–3×", "note": "依 {wt} kg；肝病減量；不需腎功能調整" },
+        { "drug": "Bivalirudin", "dose": "{round(wt*0.15,1)} mg/hr（0.15 mg/kg/hr）", "route": "IV drip", "freq": "持續，目標 aPTT 1.5–2.5×", "note": "腎功能調整（CrCl {round(crcl)}）", "alt": "argatroban" },
+        { "drug": "Fondaparinux", "dose": "{wt < 50 ? 5 : (wt > 100 ? 10 : 7.5)} mg（依體重：< 50 kg 5 mg；50–100 kg 7.5 mg；> 100 kg 10 mg）", "route": "SC", "freq": "QD", "note": "目前 {wt} kg（Ch6 表）；CrCl < 30 避免", "cond": "crcl >= 30" },
+        { "drug": "Rivaroxaban", "dose": "15 mg", "route": "PO", "freq": "BID", "note": "DOAC 選項；CrCl {round(crcl)}", "cond": "crcl >= 30" },
+        { "drug": "Vitamin K（phytonadione）", "dose": "10 mg", "route": "IV over 20–30 min", "freq": "STAT × 1（已在用 warfarin 時）", "cond": "false", "note": "防 warfarin 皮膚壞死" },
+        { "drug": "血小板", "dose": "0（不輸）", "route": "—", "freq": "—", "note": "除非危及生命出血" },
+        { "drug": "PF4 抗體 ± SRA", "dose": "1 管", "route": "抽血", "freq": "STAT（4T ≥ 4）", "note": "不等結果先停 heparin" }
+      ],
+      "watch": ["血小板每日至 > 150,000", "aPTT q4–6h（argatroban／bivalirudin）", "新血栓（DVT、PE、動脈）、皮膚壞死"],
+      "call": ["懷疑 HIT → 後線 + 血液科", "血栓或出血"],
+      "refs": [{ "ch": "30", "q": "HIT" }, { "ch": "30", "q": "2. 特殊" }]
+    },
+    "r_ttp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "TTP（血小板 ↓ + MAHA）",
+      "summary": "**緊急血漿置換 + 類固醇** ± caplacizumab／rituximab；等待置換可先 FFP 輸注；**不輸血小板**；血液科。",
+      "steps": [
+        "PLASMIC score；抹片 schistocyte、LDH、haptoglobin、DAT（陰性）、Cr、ADAMTS13（送出不等）",
+        "立即聯絡後線、血液科、腎臟科安排緊急血漿置換（透析導管）",
+        "等待期間 FFP 輸注；prednisolone 1 mg/kg",
+        "不輸血小板（除非危及生命出血）；CVC 置放時也不輸",
+        "caplacizumab／rituximab 依血液科"
+      ],
+      "orders": [
+        { "drug": "緊急血漿置換（plasma exchange）", "dose": "1 次/日（量依血液科）", "route": "透析導管", "freq": "每日至血小板恢復", "note": "先聯絡血液科／腎臟科" },
+        { "drug": "FFP", "dose": "{round(wt*10)}–{round(wt*15)} mL（10–15 mL/kg）", "route": "IV", "freq": "等待血漿置換時", "note": "依 {wt} kg" },
+        { "drug": "Prednisolone", "dose": "{round(wt)} mg（1 mg/kg）", "route": "PO", "freq": "QD", "note": "依 {wt} kg；Ch29" },
+        { "drug": "血小板", "dose": "0（不輸）", "route": "—", "freq": "—", "note": "除非危及生命出血" }
+      ],
+      "watch": ["血小板、LDH、Cr 每日", "神經症狀、尿量、出血"],
+      "call": ["懷疑 TTP → 立即後線／血液科／腎臟科"],
+      "refs": [{ "ch": "30", "q": "TTP" }, { "ch": "29", "q": "TTP" }]
+    },
+    "r_dic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "DIC（PT/aPTT ↑、fibrinogen ↓、D-dimer ↑、血小板 ↓、schistocyte）",
+      "summary": "治原因（敗血症、產科、惡性、創傷）；**出血才補**：FFP 15 mL/kg、cryoprecipitate（fibrinogen < 150）、血小板 < 50,000 輸；血栓為主 heparin（血液科）；無出血無血栓不常規補充。",
+      "steps": [
+        "找並治療原因：敗血症（Ch17 抗生素、來源控制）、產科、惡性、創傷",
+        "PT/aPTT、fibrinogen、D-dimer、血小板、抹片 q6–12h",
+        "出血：FFP + cryo（fibrinogen < 150）+ 血小板（< 50,000）",
+        "血栓為主（紫斑、肢端缺血）→ heparin，血液科",
+        "無出血無血栓 → 不常規補充；通知後線"
+      ],
+      "orders": [
+        { "drug": "FFP", "dose": "{round(wt*15)} mL（15 mL/kg）", "route": "IV", "freq": "出血時 STAT", "note": "依 {wt} kg" },
+        { "drug": "Cryoprecipitate", "dose": "10 U（每 10 kg 1–2 U）", "route": "IV", "freq": "出血 + fibrinogen < 150", "note": "↑ fibrinogen 50–70 mg/dL" },
+        { "drug": "分離術血小板", "dose": "1 U", "route": "IV", "freq": "出血 + 血小板 < 50,000", "note": "" },
+        { "drug": "Heparin", "dose": "依血液科", "route": "IV drip", "freq": "血栓為主時", "cond": "false", "note": "劑量依血液科" }
+      ],
+      "watch": ["凝血、fibrinogen、血小板 q6–12h", "出血／血栓徵候", "原發病（乳酸、BP）"],
+      "call": ["懷疑 DIC → 後線 + 血液科", "出血或血栓"],
+      "refs": [{ "ch": "30", "q": "DIC" }, { "ch": "30", "q": "2. 特殊" }]
+    },
+    "r_itp": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "ITP（排除假性、藥物、HIV／HCV、SLE、淋巴增生疾病）",
+      "summary": "血小板 > 50,000 無出血通常不治療；< 30,000 或出血：prednisolone 1 mg/kg（0.5–2）或 dexamethasone 40 mg × 4 天；需 24–48 hr 內快速上升（嚴重出血、手術）：IVIG 1 g/kg × 2 天 ± methylprednisolone 1 g IV QD × 3 天 + 血小板（併 IVIG 才有效）；IVIG／rituximab 前查 HBsAg、anti-HBc。",
+      "steps": [
+        "排除其他原因：抹片、HIV／HCV、SLE、藥物、淋巴增生",
+        "> 50,000 無出血 → 觀察；< 30,000 或出血 → 類固醇",
+        "嚴重出血／手術需快速上升 → IVIG ± 高劑量 methylprednisolone + 血小板（併 IVIG 才有效）",
+        "IVIG／rituximab 前 HBsAg、anti-HBc",
+        "血液科"
+      ],
+      "orders": [
+        { "drug": "Prednisolone", "dose": "{round(wt)} mg（1 mg/kg，0.5–2）", "route": "PO", "freq": "QD", "note": "依 {wt} kg；或 dexamethasone 40 mg PO/IV QD × 4 天" },
+        { "drug": "IVIG", "dose": "{round(wt)} g（1 g/kg）", "route": "IV drip", "freq": "QD × 2 天（需 24–48 hr 快速上升時）", "note": "依 {wt} kg；先查 HBsAg、anti-HBc" },
+        { "drug": "Methylprednisolone", "dose": "1 g", "route": "IV", "freq": "QD × 3 天（嚴重出血時併 IVIG）", "note": "" },
+        { "drug": "分離術血小板", "dose": "1 U", "route": "IV", "freq": "嚴重出血時（併 IVIG 才有效）", "note": "" }
+      ],
+      "watch": ["血小板每日", "出血徵候", "血糖、血壓（類固醇）"],
+      "call": ["血小板 < 20,000 或出血", "顱內出血"],
+      "refs": [{ "ch": "30", "q": "ITP" }]
+    },
+    "r_uremic": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "尿毒症出血（血小板功能異常）",
+      "summary": "透析；**desmopressin 0.3 mcg/kg IV/SC over 30 min**（效果 4–8 小時，可重複 1 次）；cryoprecipitate 10 U；conjugated estrogen 0.6 mg/kg IV QD × 5 天；Hb > 10 改善血小板功能。",
+      "steps": [
+        "局部止血、停抗血小板／NSAID；CBC、BUN/Cr",
+        "Desmopressin IV/SC；安排透析（腎臟科）",
+        "持續出血 → cryoprecipitate 10 U",
+        "Hb < 10 → 輸血改善血小板功能",
+        "長期：conjugated estrogen × 5 天"
+      ],
+      "orders": [
+        { "drug": "Desmopressin（DDAVP）", "dose": "{round(wt*0.3,1)} mcg（0.3 mcg/kg）", "route": "IV／SC over 30 min", "freq": "STAT，4–8 小時後可重複 1 次", "note": "依 {wt} kg；低血鈉；tachyphylaxis" },
+        { "drug": "Cryoprecipitate", "dose": "10 U", "route": "IV", "freq": "持續出血時", "note": "" },
+        { "drug": "Conjugated estrogen", "dose": "{round(wt*0.6)} mg（0.6 mg/kg）", "route": "IV", "freq": "QD × 5 天", "note": "依 {wt} kg；起效慢、持久" },
+        { "drug": "pRBC", "dose": "1 U", "route": "IV", "freq": "Hb < 10 時", "note": "Hb > 10 改善血小板功能" }
+      ],
+      "watch": ["Na（desmopressin）", "Hb、出血"],
+      "call": ["需緊急透析 → 腎臟科", "重大出血"],
+      "refs": [{ "ch": "30", "q": "尿毒症出血" }]
+    },
+    "r_vitk_liver": {
+      "type": "result",
+      "urgency": "green",
+      "title": "Vit K 缺乏／肝病凝血異常",
+      "summary": "Vit K 缺乏：vitamin K 10 mg IV（over 20–30 min）或 PO QD × 3 天，出血 + FFP。肝病出血：治療出血源；fibrinogen < 100–150 給 cryo；血小板 < 50,000 輸；FFP 效果有限且增加門脈壓；**INR 不預測出血**；無出血不常規補充，腹水穿刺前預防性輸注不減少出血。",
+      "steps": [
+        "找原因：營養不良、廣效抗生素、膽汁鬱積 → vit K；肝病 → 治療出血源（Ch9 靜脈曲張）",
+        "肝病出血：fibrinogen < 100–150 → cryo；血小板 < 50,000 → 輸；FFP 少量",
+        "無出血、非 DIC → 不補 FFP／血小板／cryo；腹水穿刺不需預防性輸注",
+        "隔日 INR、fibrinogen"
+      ],
+      "orders": [
+        { "drug": "Vitamin K（phytonadione）", "dose": "10 mg", "route": "IV over 20–30 min 或 PO", "freq": "QD × 3 天", "note": "vit K 缺乏；肝病效果有限" },
+        { "drug": "Cryoprecipitate", "dose": "10 U", "route": "IV", "freq": "出血 + fibrinogen < 100–150", "note": "" },
+        { "drug": "FFP", "dose": "{round(wt*15)} mL（15 mL/kg）", "route": "IV", "freq": "出血時（vit K 缺乏）", "note": "肝病：效果有限、大量增加門脈壓" },
+        { "drug": "分離術血小板", "dose": "1 U", "route": "IV", "freq": "出血 + 血小板 < 50,000", "note": "" }
+      ],
+      "watch": ["INR、fibrinogen 隔日", "出血（靜脈曲張、穿刺部位）"],
+      "call": ["活動出血", "需侵入處置且數值超過門檻"],
+      "refs": [{ "ch": "30", "q": "V. 凝血因子缺乏" }, { "ch": "30", "q": "肝病出血" }]
+    },
+    "r_preprocedure": {
+      "type": "result",
+      "urgency": "green",
+      "title": "侵入處置前的參考門檻與抗凝暫停（各院不同）",
+      "summary": "一般：INR ≤ 1.5–2、血小板 ≥ 50,000（CVC、LP、穿刺可更寬鬆：血小板 > 20,000–50,000、INR < 2.5–3）；神經外科／眼科 INR < 1.4、血小板 > 100,000。暫停：warfarin 5 天、DOAC 依腎功能 24–72 小時、LMWH 治療劑量 24 小時、heparin 4–6 小時、aspirin 多可續用、P2Y12 5–7 天。",
+      "steps": [
+        "確認處置種類與該科門檻；CBC、PT/INR、aPTT",
+        "抗凝暫停：warfarin 5 天（橋接依血栓風險）；DOAC 依 CrCl {round(crcl)} 24–72 小時；LMWH 治療劑量 24 小時；heparin 4–6 小時",
+        "抗血小板：aspirin 多數處置可續用；P2Y12 5–7 天（支架與心臟科討論）",
+        "緊急處置 + warfarin → PCC + vit K；血小板 < 門檻 → 處置前輸血小板（1 小時內）",
+        "肝病：避免不必要矯正；腹水穿刺不需預防性輸注"
+      ],
+      "orders": [
+        { "drug": "分離術血小板", "dose": "1 U", "route": "IV", "freq": "處置前 1 小時內（低於門檻時）", "note": "" },
+        { "drug": "4F-PCC", "dose": "{round(wt*25)}–{round(wt*50)} U（25–50 U/kg）", "route": "IV", "freq": "緊急手術 + warfarin 時", "note": "＋ vit K 10 mg IV；依 {wt} kg" },
+        { "drug": "Vitamin K（phytonadione）", "dose": "10 mg", "route": "IV over 20–30 min", "freq": "緊急手術 + warfarin 時 × 1", "note": "" },
+        { "drug": "Heparin（UFH）", "dose": "0（停）", "route": "IV", "freq": "處置前 4–6 小時停", "note": "" }
+      ],
+      "watch": ["處置後出血", "抗凝恢復時機（與原團隊）"],
+      "call": ["高血栓風險（機械瓣膜、近期 VTE、支架）需決定暫停／橋接", "緊急處置 + 抗凝"],
+      "refs": [{ "ch": "30", "q": "VI. 侵入處置前的參考門檻" }]
+    },
+    "r_txa": {
+      "type": "result",
+      "urgency": "green",
+      "title": "Tranexamic acid（TXA）",
+      "summary": "1 g IV over 10 min（→ 1 g over 8 hr）：創傷 3 小時內、產後出血、手術出血、血栓溶解後出血；**消化道出血無效**；血尿慎用（血塊阻塞）；顱內出血依神外。",
+      "steps": [
+        "確認適應症（創傷 3 小時內、產後、手術、血栓溶解後）；消化道出血不用",
+        "血尿慎用；活動性血栓／DIC 血栓期禁",
+        "1 g IV over 10 min → 1 g over 8 hr"
+      ],
+      "orders": [
+        { "drug": "Tranexamic acid（Transamin）", "dose": "1 g", "route": "IV over 10 min", "freq": "STAT → 1 g IV over 8 hr", "note": "消化道出血無效；血尿慎用" }
+      ],
+      "watch": ["出血", "血栓徵候", "癲癇（高劑量）"],
+      "call": ["重大出血需逆轉抗凝", "顱內出血 → 神外"],
+      "refs": [{ "ch": "30", "q": "Tranexamic acid" }]
+    }
+  }
+}

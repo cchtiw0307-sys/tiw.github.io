@@ -1,0 +1,652 @@
+{
+  "id": "35",
+  "title": "磷離子異常",
+  "chapter": "35",
+  "entries": [
+    {
+      "label": "P 低（護理師報 P < 2.5）",
+      "type": "symptom",
+      "start": "q_p",
+      "group": "檢驗異常",
+      "keywords": [
+        "低血磷",
+        "磷低",
+        "P 1.0",
+        "P 1.5",
+        "hypophosphatemia",
+        "phosphate low",
+        "補磷"
+      ]
+    },
+    {
+      "label": "P 高（> 4.5）",
+      "type": "symptom",
+      "start": "q_p",
+      "group": "檢驗異常",
+      "keywords": [
+        "高血磷",
+        "磷高",
+        "P 7",
+        "hyperphosphatemia",
+        "phosphate high",
+        "磷結合劑"
+      ]
+    },
+    {
+      "label": "營養不良病人要開始灌食／TPN（再餵食風險）",
+      "type": "symptom",
+      "start": "r_refeeding",
+      "group": "檢驗異常",
+      "keywords": [
+        "再餵食",
+        "refeeding",
+        "灌食前",
+        "TPN 開始",
+        "thiamine",
+        "營養不良 電解質",
+        "呼吸器脫離困難 低磷"
+      ]
+    },
+    {
+      "label": "低血磷",
+      "type": "diagnosis",
+      "start": "q_p",
+      "keywords": [
+        "低血磷",
+        "hypophosphatemia",
+        "sodium phosphate",
+        "potassium phosphate",
+        "Phosphate-Sandoz"
+      ]
+    },
+    {
+      "label": "高血磷",
+      "type": "diagnosis",
+      "start": "q_p",
+      "keywords": [
+        "高血磷",
+        "hyperphosphatemia",
+        "sevelamer",
+        "calcium carbonate",
+        "腎衰竭 高血磷"
+      ]
+    },
+    {
+      "label": "再餵食症候群",
+      "type": "diagnosis",
+      "start": "r_refeeding",
+      "keywords": [
+        "再餵食症候群",
+        "refeeding syndrome",
+        "NICE",
+        "thiamine 200",
+        "灌食 低磷 低鉀 低鎂"
+      ]
+    },
+    {
+      "label": "急性高血磷（腫瘤溶解／橫紋肌溶解／Fleet 灌腸）",
+      "type": "diagnosis",
+      "start": "r_hyperp_acute",
+      "keywords": [
+        "急性高血磷",
+        "腫瘤溶解 磷",
+        "橫紋肌溶解 磷",
+        "Fleet 灌腸",
+        "磷酸鹽灌腸 中毒",
+        "acetazolamide"
+      ]
+    },
+    {
+      "label": "CKD 慢性高血磷（結合劑）",
+      "type": "diagnosis",
+      "start": "r_hyperp_chronic",
+      "keywords": [
+        "CKD 高血磷",
+        "磷結合劑",
+        "phosphate binder",
+        "sevelamer",
+        "lanthanum",
+        "低磷飲食"
+      ]
+    }
+  ],
+  "nodes": {
+    "q_p": {
+      "type": "number",
+      "title": "血磷（mg/dL）？",
+      "help": "低血磷常被忽略：再餵食、DKA 治療中、酗酒、呼吸器脫離困難；高血磷幾乎都是腎衰竭或急性細胞釋放（先排除溶血檢體）",
+      "var": "p",
+      "unit": "mg/dL",
+      "step": 0.1,
+      "quick": [
+        0.8,
+        1.0,
+        1.5,
+        2.0,
+        5.5,
+        7.0,
+        10
+      ],
+      "branches": [
+        {
+          "if": "p < 1.0",
+          "next": "r_hypop_severe"
+        },
+        {
+          "if": "p < 2.0",
+          "next": "q_hypop_sx"
+        },
+        {
+          "if": "p < 2.5",
+          "next": "r_hypop_po"
+        },
+        {
+          "if": "p <= 4.5",
+          "next": "r_p_normal"
+        },
+        {
+          "else": "q_hyperp_ctx"
+        }
+      ]
+    },
+    "q_hypop_sx": {
+      "type": "choice",
+      "title": "P 1.0–1.9：有症狀或無法口服嗎？",
+      "help": "症狀：呼吸肌無力／脫離呼吸器失敗、橫紋肌溶解、心衰竭、心律不整、溶血、意識改變、癲癇",
+      "options": [
+        {
+          "label": "有症狀／呼吸衰竭／無法口服（NPO、腸阻塞）",
+          "next": "r_hypop_iv"
+        },
+        {
+          "label": "無症狀、可口服",
+          "next": "r_hypop_po"
+        }
+      ]
+    },
+    "r_hypop_severe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "嚴重低血磷（P < 1.0）：IV 磷酸鹽 0.5 mmol/kg over 6–8 hr",
+      "summary": "**Sodium 或 potassium phosphate 0.5 mmol/kg（max 80 mmol/次）in NS/D5W 250–500 mL over 6–8 hr（≤ 7 mmol/hr）**；K > 4 或腎功能差用 sodium phosphate；每次後 4–6 小時驗 P、Ca、K、Mg；同時找原因（再餵食、DKA、酗酒）。",
+      "steps": [
+        "心電監測（心律不整）；RR／SpO₂（呼吸肌無力）；意識",
+        "抽：P、Ca（游離）、Mg、K、Cr、VBG、CK、PTH、25-OH-D；尿磷／FEPO₄",
+        "IV 磷酸鹽 0.5 mmol/kg over 6–8 hr；K > 4 或腎功能差 → sodium phosphate；**勿與含鈣輸液同管**",
+        "每次滴完 4–6 hr 驗 P、Ca、K、Mg；未達 > 1.5–2.0 可重複",
+        "同時補 K、Mg（常一起低）；再餵食者加 thiamine（見連結）",
+        "找原因：停制酸劑／結合劑、減少過度換氣、調整灌食、DKA 治療中",
+        "可口服後改口服磷 1–2 g/d 分次"
+      ],
+      "orders": [
+        {
+          "drug": "Sodium phosphate 或 potassium phosphate（台灣 K₂HPO₄ 針劑約每 mL 2 mmol P + 4 mEq K，依製劑）",
+          "dose": "{min(80, round(wt*0.5))} mmol P（0.5 mmol/kg，max 80）in NS/D5W 250–500 mL",
+          "route": "IV drip over 6–8 hr（≤ 7 mmol/hr）",
+          "freq": "每次後 4–6 hr 驗 P、Ca、K、Mg；可重複",
+          "note": "依 {wt} kg；K > 4 或腎功能差（CrCl {round(crcl)}）用 sodium phosphate；過快 → 低血鈣、鈣磷沉積、AKI、低血壓；勿與含鈣輸液同管"
+        },
+        {
+          "drug": "KCl",
+          "dose": "20–40 mEq",
+          "route": "PO（或 IV 依 Ch33）",
+          "freq": "q4–6h PRN K < 3.5",
+          "note": "用 potassium phosphate 時已含 K，注意總量"
+        },
+        {
+          "drug": "MgSO₄",
+          "dose": "1–2 g",
+          "route": "IV drip over 1 hr",
+          "freq": "Mg < 1.8 mg/dL 時",
+          "note": "Ch36"
+        },
+        {
+          "drug": "Thiamine",
+          "dose": "200–300 mg",
+          "route": "IV",
+          "freq": "QD × 3–5 天（再餵食風險者）",
+          "note": "餵食前先給"
+        }
+      ],
+      "watch": [
+        "P、Ca、K、Mg 每次滴完 4–6 hr；每日 × 3–5 天",
+        "RR、SpO₂、肌力；心律",
+        "Ca 下降（過快補磷）、AKI、注射部位"
+      ],
+      "call": [
+        "P < 1.0 或低磷合併呼吸衰竭／心衰竭／意識改變 → 通知後線",
+        "再餵食高風險出現電解質崩落",
+        "呼吸器脫離失敗"
+      ],
+      "ddx": [
+        "再餵食症候群",
+        "DKA 治療中細胞內移",
+        "呼吸性鹼中毒",
+        "酗酒／營養不良"
+      ],
+      "refs": [
+        {
+          "ch": "35",
+          "q": "Sodium phosphate"
+        },
+        {
+          "ch": "35",
+          "q": "P < 1.0 或呼吸衰竭"
+        }
+      ],
+      "next": [
+        {
+          "label": "再餵食高風險 → 預防處方",
+          "next": "r_refeeding"
+        }
+      ]
+    },
+    "r_hypop_iv": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低血磷 1.0–1.9 有症狀／無法口服：IV 磷酸鹽 0.25 mmol/kg over 6–8 hr",
+      "summary": "**Sodium 或 potassium phosphate 0.25 mmol/kg in NS/D5W 250–500 mL over 6–8 hr（≤ 7 mmol/hr）**；K > 4 或腎功能差用 sodium phosphate；每次後 4–6 小時驗 P、Ca、K、Mg；能口服後改口服。",
+      "steps": [
+        "抽：P、Ca（游離）、Mg、K、Cr、VBG、CK；RR／肌力評估",
+        "IV 磷酸鹽 0.25 mmol/kg over 6–8 hr；勿與含鈣輸液同管",
+        "滴完 4–6 hr 驗 P、Ca、K、Mg；未達 > 2.0 可重複",
+        "同時補 K、Mg；再餵食風險者 thiamine",
+        "找原因：制酸劑／結合劑、酗酒、利尿劑、DKA、過度換氣、IV 鐵劑",
+        "可口服 → 口服磷 1–2 g/d 分 3–4 次"
+      ],
+      "orders": [
+        {
+          "drug": "Sodium phosphate 或 potassium phosphate",
+          "dose": "{min(80, round(wt*0.25))} mmol P（0.25 mmol/kg）in NS/D5W 250–500 mL",
+          "route": "IV drip over 6–8 hr（≤ 7 mmol/hr）",
+          "freq": "每次後 4–6 hr 驗 P、Ca、K、Mg；可重複",
+          "note": "依 {wt} kg；K > 4 或腎功能差（CrCl {round(crcl)}）用 sodium phosphate；勿與含鈣輸液同管"
+        },
+        {
+          "drug": "口服磷（Phosphate-Sandoz 1 錠 = 16 mmol P）",
+          "dose": "1–2 g 元素磷（32–64 mmol）/day 分 3–4 次",
+          "route": "PO",
+          "freq": "TID–QID（可口服後接續）",
+          "note": "腹瀉；含 Na/K；牛奶 250 mL ≈ 8 mmol"
+        },
+        {
+          "drug": "MgSO₄",
+          "dose": "1–2 g",
+          "route": "IV drip over 1 hr",
+          "freq": "Mg < 1.8 mg/dL 時",
+          "note": "Ch36"
+        }
+      ],
+      "watch": [
+        "P、Ca、K、Mg 滴完 4–6 hr，之後每日",
+        "RR、肌力；Ca 下降"
+      ],
+      "call": [
+        "P < 1.0 或出現呼吸衰竭／心衰竭／意識改變",
+        "再餵食電解質崩落"
+      ],
+      "refs": [
+        {
+          "ch": "35",
+          "q": "Sodium phosphate"
+        },
+        {
+          "ch": "35",
+          "q": "口服磷"
+        }
+      ],
+      "next": [
+        {
+          "label": "再餵食高風險 → 預防處方",
+          "next": "r_refeeding"
+        }
+      ]
+    },
+    "r_hypop_po": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕–中度無症狀低血磷（1.0–2.4）：口服磷 1–2 g/d 分次",
+      "summary": "口服磷（Phosphate-Sandoz 1 錠 = 16 mmol；或牛奶 250 mL ≈ 8 mmol）**1–2 g 元素磷（32–64 mmol）/d 分 3–4 次**；停制酸劑／結合劑；補 K、Mg；隔日驗。",
+      "steps": [
+        "抽 Ca、Mg、K、Cr；再餵食風險評估（BMI < 16–18.5、體重減 > 10–15%、> 5–10 天未進食、酗酒）",
+        "口服磷 TID–QID（腹瀉為主要副作用）；牛奶可補",
+        "停含鋁／鈣制酸劑、磷結合劑；補 vit D；減少過度換氣；調整灌食",
+        "隔日驗 P、K、Mg；出現症狀或 < 1.0 → IV"
+      ],
+      "orders": [
+        {
+          "drug": "口服磷（Phosphate-Sandoz 1 錠 = 16 mmol P / 500 mg；或 K/Na phosphate 溶液）",
+          "dose": "1–2 g 元素磷（32–64 mmol）/day 分 3–4 次（約 1 錠 TID–QID）",
+          "route": "PO",
+          "freq": "TID–QID",
+          "note": "腹瀉；含 Na/K（腎功能差注意）"
+        },
+        {
+          "drug": "牛奶",
+          "dose": "250 mL（≈ 8 mmol P）",
+          "route": "PO",
+          "freq": "TID 隨餐",
+          "note": "可耐受者"
+        },
+        {
+          "drug": "MgO",
+          "dose": "250–500 mg",
+          "route": "PO",
+          "freq": "BID–QID PRN Mg 偏低",
+          "note": "Ch36"
+        }
+      ],
+      "watch": [
+        "P、K、Mg 隔日",
+        "新出現無力、RR 增加 → 重驗、考慮 IV"
+      ],
+      "call": [
+        "P < 1.0 或出現症狀",
+        "再餵食高風險電解質崩落"
+      ],
+      "refs": [
+        {
+          "ch": "35",
+          "q": "口服磷"
+        },
+        {
+          "ch": "35",
+          "q": "治療原因"
+        }
+      ],
+      "next": [
+        {
+          "label": "再餵食高風險 → 預防處方",
+          "next": "r_refeeding"
+        }
+      ]
+    },
+    "r_refeeding": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "再餵食症候群：餵食前先補 P/K/Mg + thiamine，熱量慢慢增加",
+      "summary": "高風險（BMI < 16–18.5、3–6 個月體重減 > 10–15%、> 5–10 天幾乎未進食、酗酒、灌食前 K/P/Mg 已低）→ **開始餵食前先補 P 0.3–0.6 mmol/kg/d + K 2–4 mEq/kg/d + Mg 0.2–0.4 mEq/kg/d + thiamine 200–300 mg IV QD × 3–5 天**，熱量從 10–20 kcal/kg/d 慢慢增加，每日驗 P/K/Mg × 3–5 天。",
+      "steps": [
+        "餵食／TPN 開始前驗 P、K、Mg、Ca、Na、glucose、Cr；ECG（QT）",
+        "已低者先補正再開始；thiamine 餵食前給",
+        "熱量 10–20 kcal/kg/d 起（{round(wt*10)}–{round(wt*20)} kcal/d），3–5 天內逐步增加；營養師",
+        "每日驗 P/K/Mg × 3–5 天（灌食後 2–5 天最易掉）",
+        "P < 1.0 或有症狀 → IV 磷酸鹽 0.5 mmol/kg（見連結）",
+        "注意水腫、心衰竭（Na／水滯留）、低血糖後高血糖"
+      ],
+      "orders": [
+        {
+          "drug": "磷（口服 Phosphate-Sandoz 或 IV sodium/potassium phosphate）",
+          "dose": "{round(wt*0.3)}–{round(wt*0.6)} mmol/day（0.3–0.6 mmol/kg/d）",
+          "route": "PO 分次／IV over 6–8 hr",
+          "freq": "QD × 3–5 天，依每日 P 調",
+          "note": "依 {wt} kg；IV 時 ≤ 7 mmol/hr"
+        },
+        {
+          "drug": "KCl",
+          "dose": "{round(wt*2)}–{round(wt*4)} mEq/day（2–4 mEq/kg/d）",
+          "route": "PO 分次／IV（周邊 ≤ 10 mEq/hr）",
+          "freq": "QD × 3–5 天",
+          "note": "依 {wt} kg；Ch33；用 potassium phosphate 時扣除其 K"
+        },
+        {
+          "drug": "MgSO₄（1 g = 8 mEq）",
+          "dose": "{round(wt*0.2)}–{round(wt*0.4)} mEq/day（0.2–0.4 mEq/kg/d ≈ {round(wt*0.2/8,1)}–{round(wt*0.4/8,1)} g）",
+          "route": "IV drip over 4–12 hr（或 MgO PO）",
+          "freq": "QD × 3–5 天",
+          "note": "依 {wt} kg；Ch36"
+        },
+        {
+          "drug": "Thiamine",
+          "dose": "200–300 mg",
+          "route": "IV",
+          "freq": "QD × 3–5 天，餵食前先給",
+          "note": "依 NICE；酗酒者尤其"
+        },
+        {
+          "drug": "灌食／TPN 熱量",
+          "dose": "{round(wt*10)}–{round(wt*20)} kcal/day（10–20 kcal/kg/d）起",
+          "route": "NG／TPN",
+          "freq": "3–5 天逐步增加至目標",
+          "note": "營養師會診"
+        }
+      ],
+      "watch": [
+        "P、K、Mg 每日 × 3–5 天；glucose、Na",
+        "體重、水腫、心衰竭徵象；RR、肌力",
+        "意識（Wernicke）"
+      ],
+      "call": [
+        "再餵食高風險出現電解質崩落（P < 1.0、K < 2.5、Mg < 1.0）",
+        "呼吸衰竭、心律不整、意識改變"
+      ],
+      "refs": [
+        {
+          "ch": "35",
+          "q": "再餵食高風險"
+        },
+        {
+          "ch": "35",
+          "q": "再餵食預防"
+        }
+      ],
+      "next": [
+        {
+          "label": "P < 1.0／有症狀 → IV 磷酸鹽",
+          "next": "r_hypop_severe"
+        }
+      ]
+    },
+    "q_hyperp_ctx": {
+      "type": "choice",
+      "title": "高血磷（P > 4.5）：情境？",
+      "help": "症狀多來自併發低血鈣（抽搐、QT 延長）與異位鈣化（Ca × P > 55–70）；先排除溶血檢體",
+      "options": [
+        {
+          "label": "急性釋放（腫瘤溶解、橫紋肌溶解、溶血、DKA）或有症狀性低血鈣／AKI",
+          "next": "r_hyperp_acute"
+        },
+        {
+          "label": "磷酸鹽灌腸（Fleet）／瀉劑後（老人、腎功能差）",
+          "next": "r_hyperp_acute"
+        },
+        {
+          "label": "慢性 CKD 4–5／透析病人，無急性症狀",
+          "next": "r_hyperp_chronic"
+        },
+        {
+          "label": "懷疑假性（溶血檢體、高球蛋白）→ 重驗",
+          "next": "r_p_normal"
+        }
+      ]
+    },
+    "r_hyperp_acute": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "急性高血磷（腫瘤溶解／橫紋肌溶解／Fleet 中毒）：輸液、結合劑，症狀性低血鈣才補鈣，透析",
+      "summary": "腎功能正常者 **NS 200–300 mL/hr** 促排磷 ± acetazolamide 500 mg q6h；隨餐結合劑；**症狀性低血鈣才補 calcium gluconate 1–2 g 慢滴（P 高時先降磷）**；嚴重症狀性低血鈣、腎衰竭、腫瘤溶解 P > 10、Fleet 中毒 → 透析。",
+      "steps": [
+        "心電監測、ECG（QT 延長）；抽 Ca（游離）、Cr、K、uric acid、LDH、CK、PTH、VBG",
+        "停磷製劑（Fleet 灌腸、含磷瀉劑、含磷輸液、vit D）",
+        "NS 200–300 mL/hr（腎功能正常、急性釋放）；監測 overload；acetazolamide 增加尿磷",
+        "口服結合劑隨餐（sevelamer 或 aluminum hydroxide 短期；Ca × P > 55 避免含鈣）",
+        "低血鈣**有症狀才**補鈣（抽搐、QT 延長）：calcium gluconate 1–2 g 慢滴（Ch34），避免鈣磷沉積",
+        "腫瘤溶解 → rasburicase／輸液（Ch33／Ch11）；橫紋肌溶解 → NS 大量",
+        "腎衰竭、P > 10、Fleet 中毒、嚴重症狀性低血鈣 → 腎臟科透析"
+      ],
+      "orders": [
+        {
+          "drug": "NS",
+          "dose": "200–300 mL/hr",
+          "route": "IV drip",
+          "freq": "持續（腎功能正常）",
+          "note": "CrCl {round(crcl)}；心腎衰竭者減量、監測 overload"
+        },
+        {
+          "drug": "Acetazolamide",
+          "dose": "500 mg",
+          "route": "PO／IV",
+          "freq": "q6h",
+          "note": "急性、腎功能尚可者；增加尿磷"
+        },
+        {
+          "drug": "Sevelamer",
+          "dose": "800–1,600 mg",
+          "route": "PO 隨餐",
+          "freq": "TID",
+          "note": "非鈣結合劑；Ca × P > 55 避免含鈣結合劑",
+          "alt": "Aluminum hydroxide 300–600 mg TID 短期（< 4 週）"
+        },
+        {
+          "drug": "Calcium gluconate 10%",
+          "dose": "1–2 g in 50–100 mL",
+          "route": "IV drip over 10–20 min（慢滴）",
+          "freq": "PRN 症狀性低血鈣（抽搐、QT 延長）",
+          "note": "P 高時先降磷；勿與磷同管；Ch34"
+        },
+        {
+          "drug": "血液透析",
+          "dose": "依腎臟科",
+          "route": "—",
+          "freq": "嚴重症狀性低血鈣、腎衰竭、腫瘤溶解 P > 10、Fleet 灌腸中毒",
+          "note": "腎臟科"
+        }
+      ],
+      "watch": [
+        "P、Ca、K、Cr q4–6h（腫瘤溶解）；ECG",
+        "尿量、overload",
+        "抽搐、Trousseau／Chvostek"
+      ],
+      "call": [
+        "急性高血磷合併症狀性低血鈣或 AKI → 通知後線 + 腎臟科",
+        "需要透析",
+        "腫瘤溶解 → 血液腫瘤科"
+      ],
+      "refs": [
+        {
+          "ch": "35",
+          "q": "輸液"
+        },
+        {
+          "ch": "35",
+          "q": "透析"
+        },
+        {
+          "ch": "33",
+          "q": "腫瘤溶解"
+        },
+        {
+          "ch": "34",
+          "q": "高血磷合併"
+        }
+      ]
+    },
+    "r_hyperp_chronic": {
+      "type": "result",
+      "urgency": "green",
+      "title": "CKD 慢性高血磷：隨餐磷結合劑 + 低磷飲食",
+      "summary": "隨餐結合劑：Ca 低用 calcium carbonate 500–1,000 mg TID；Ca × P > 55 或 Ca 正常／高用 sevelamer 800–1,600 mg TID 或 lanthanum 500–1,000 mg TID；aluminum hydroxide 只短期；低磷飲食 800–1,000 mg/d；腎臟科調整透析。",
+      "steps": [
+        "Ca、P、PTH、Cr；計算 Ca × P（> 55–70 異位鈣化風險）",
+        "隨餐結合劑：Ca 低 → 含鈣；Ca × P > 55 → 非鈣（sevelamer、lanthanum）",
+        "低磷飲食（乳製品、堅果、加工食品、可樂）；營養師",
+        "停含磷藥物／輸液、vit D 過量",
+        "透析病人 → 腎臟科調整透析處方；症狀性低血鈣 → Ch34"
+      ],
+      "orders": [
+        {
+          "drug": "Calcium carbonate",
+          "dose": "500–1,000 mg",
+          "route": "PO 隨餐",
+          "freq": "TID",
+          "note": "Ca 低時用；Ca × P > 55 避免"
+        },
+        {
+          "drug": "Sevelamer",
+          "dose": "800–1,600 mg",
+          "route": "PO 隨餐",
+          "freq": "TID",
+          "note": "非鈣結合劑，死亡率較含鈣者低"
+        },
+        {
+          "drug": "Lanthanum",
+          "dose": "500–1,000 mg",
+          "route": "PO 隨餐嚼碎",
+          "freq": "TID",
+          "note": "非鈣結合劑"
+        },
+        {
+          "drug": "Aluminum hydroxide",
+          "dose": "300–600 mg",
+          "route": "PO 隨餐",
+          "freq": "TID 短期（< 4 週）",
+          "note": "鋁蓄積；僅短期"
+        },
+        {
+          "drug": "低磷飲食",
+          "dose": "磷 800–1,000 mg/day",
+          "route": "PO",
+          "freq": "持續",
+          "note": "營養師"
+        }
+      ],
+      "watch": [
+        "P、Ca q1–2 週（住院 q2–3 天）",
+        "Ca × P、PTH"
+      ],
+      "call": [
+        "症狀性低血鈣或 AKI",
+        "P > 10 或需透析調整 → 腎臟科"
+      ],
+      "refs": [
+        {
+          "ch": "35",
+          "q": "磷結合劑"
+        },
+        {
+          "ch": "35",
+          "q": "低磷飲食"
+        }
+      ]
+    },
+    "r_p_normal": {
+      "type": "result",
+      "urgency": "green",
+      "title": "P 2.5–4.5：正常範圍（或疑假性高血磷 → 重驗）",
+      "summary": "目前正常；再餵食高風險、DKA 治療中、酗酒者 P 會延遲下降，仍要每日追蹤；懷疑溶血檢體／高球蛋白假性高血磷者重驗。",
+      "steps": [
+        "再餵食風險者：開始灌食後每日 P/K/Mg × 3–5 天（見連結）",
+        "DKA insulin 滴注中：q4–6h P",
+        "疑假性高血磷：重抽（非溶血）",
+        "無症狀 → 不需處置"
+      ],
+      "orders": [
+        {
+          "drug": "（無需特殊處置）",
+          "dose": "0",
+          "route": "—",
+          "freq": "—",
+          "note": "依原疾病"
+        }
+      ],
+      "watch": [
+        "高風險者每日 P × 3–5 天"
+      ],
+      "call": [
+        "P < 1.0 或 > 10 出現"
+      ],
+      "refs": [
+        {
+          "ch": "35",
+          "q": "再餵食高風險"
+        }
+      ],
+      "next": [
+        {
+          "label": "再餵食預防",
+          "next": "r_refeeding"
+        }
+      ]
+    }
+  }
+}

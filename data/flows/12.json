@@ -1,0 +1,264 @@
+{
+  "id": "12",
+  "title": "尿量增加（多尿）",
+  "chapter": "12",
+  "entries": [
+    { "label": "尿量很多（> 200–300 mL/hr／> 3 L/天）", "type": "symptom", "start": "i_phone", "group": "水與尿",
+      "keywords": ["多尿", "polyuria", "尿量多", "尿量增加", "尿量 300", "尿量 500", "尿太多", "diuresis", "一直尿"] },
+    { "label": "一直跑廁所／頻尿（總量正常）", "type": "symptom", "start": "r_frequency", "group": "水與尿",
+      "keywords": ["頻尿", "frequency", "跑廁所", "夜尿", "nocturia", "尿急", "urgency 尿", "解尿次數多"] },
+    { "label": "中樞性尿崩症（DDAVP）", "type": "diagnosis", "start": "r_cdi",
+      "keywords": ["尿崩", "尿崩症", "diabetes insipidus", "DI", "central DI", "desmopressin", "DDAVP", "腦下垂體術後 多尿", "三相反應"] },
+    { "label": "腎性尿崩（鋰鹽／高血鈣／低血鉀）", "type": "diagnosis", "start": "r_ndi",
+      "keywords": ["腎性尿崩", "nephrogenic DI", "lithium", "鋰鹽", "amiloride", "高血鈣 多尿"] },
+    { "label": "解除阻塞後利尿／AKI 恢復期多尿", "type": "diagnosis", "start": "r_postobs",
+      "keywords": ["解除阻塞後利尿", "post-obstructive diuresis", "AKI 恢復期", "ATN 多尿期", "導尿後 尿很多"] },
+    { "label": "滲透性利尿（高血糖／mannitol／尿素）", "type": "diagnosis", "start": "r_osmotic",
+      "keywords": ["滲透性利尿", "osmotic diuresis", "高血糖 多尿", "mannitol", "尿素", "HHS 多尿", "SGLT2"] },
+    { "label": "原發性多飲", "type": "diagnosis", "start": "r_polydipsia",
+      "keywords": ["原發性多飲", "primary polydipsia", "psychogenic polydipsia", "喝太多水", "多飲"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中：問清楚 + 立即醫囑",
+      "body": [
+        "**問**：尿量多少（每小時／每班／24 小時）、怎麼測；**多尿（> 3 L/24 hr）還是頻尿（次數多、總量正常）**",
+        "意識、生命徵象（心搏過速、低血壓）、血糖、口渴；能不能自己喝水",
+        "入院診斷（顱內／腦下垂體手術、頭部外傷、SAH、腦死評估、腎移植、解除阻塞、AKI 恢復期）、輸液種類與速率、mannitol、利尿劑、鋰鹽",
+        "**立即醫囑**：量生命徵象 + 血糖；抽 Na、K、BUN/Cr、血糖、尿滲透壓（UOsm）、尿液常規；不穩者 IV + NS 500 mL bolus",
+        "意識改變／不穩 → 立刻到床邊"
+      ],
+      "next": "m_unstable"
+    },
+    "m_unstable": {
+      "type": "multi",
+      "title": "有沒有下列情況？",
+      "help": "多尿的危險是脫水、高血鈉、低血容性休克——尤其喝不到水的病人",
+      "options": [
+        { "label": "低血壓／姿態性低血壓／心搏過速（低血容）", "set": { "shock": true } },
+        { "label": "意識改變或無法自己喝水", "set": { "altered": true } },
+        { "label": "血糖 > 250", "set": { "hyperglyc": true } }
+      ],
+      "branches": [
+        { "if": "shock", "next": "q_hf" },
+        { "if": "hyperglyc", "next": "r_osmotic" },
+        { "if": "altered", "next": "q_uosm" },
+        { "else": "q_freq" }
+      ]
+    },
+    "q_hf": {
+      "type": "choice",
+      "title": "病人有心衰竭或腎衰竭嗎？",
+      "help": "有 → bolus 250 mL；沒有 → 500 mL",
+      "options": [
+        { "label": "有", "next": "r_shock", "set": { "hf": true } },
+        { "label": "沒有", "next": "r_shock", "set": { "hf": false } }
+      ]
+    },
+    "r_shock": {
+      "type": "result",
+      "urgency": "red",
+      "title": "多尿 + 低血壓／低血容：先補回血容",
+      "summary": "NS/LR {hf ? 250 : 500} mL bolus 重複至血壓／灌流改善；穩定後再依血鈉與 UOsm 選維持液、找原因。",
+      "steps": [
+        "到床邊：IV × 2、心電監測；量 BP／HR／CRT、意識",
+        "抽 Na、K、Ca、BUN/Cr、血糖、血滲透壓；尿 UOsm、尿糖、尿液常規",
+        "晶體液 bolus，每次後評估；血糖 > 250 → 想 DKA／HHS（Ch28）",
+        "穩定後：高血鈉 → D5W／½NS（Na 每日降 ≤ 10，Ch32）；正常 → 依 UOsm 分類",
+        "停利尿劑、mannitol、含 Na 大量輸液；Foley 記每小時尿量"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "{hf ? 250 : 500} mL", "route": "IV drip over 15 min", "freq": "STAT；每次後評估，可重複", "note": "{hf ? '心腎衰竭：250 mL 分次' : '穩定後改依血鈉選維持液'}" }
+      ],
+      "watch": ["BP／HR q15 min 至穩定；尿量每小時", "Na q2–4h（快速變化時）", "意識"],
+      "call": ["多尿 + 低血壓／休克或意識改變（當下）", "Na > 150 或快速上升", "尿量 > 400–500 mL/hr 持續"],
+      "refs": [{ "ch": "12", "q": "III. 床邊初步評估與處置" }, { "ch": "10", "q": "1. 復甦" }],
+      "next": [{ "label": "穩定後 → 依 UOsm 分類", "next": "q_uosm" }]
+    },
+    "q_freq": {
+      "type": "choice",
+      "title": "是多尿還是頻尿？",
+      "help": "多尿 = > 3 L/24 hr（或持續 > 200 mL/hr）；頻尿 = 次數多但總量正常",
+      "options": [
+        { "label": "多尿（> 3 L/24 hr 或 > 200 mL/hr）", "next": "q_uosm" },
+        { "label": "頻尿（總量正常）", "next": "r_frequency" }
+      ]
+    },
+    "q_uosm": {
+      "type": "number",
+      "title": "尿滲透壓 UOsm（mOsm/kg）？",
+      "help": "> 300 = 滲透性利尿（住院多尿絕大多數）；< 300 = 水利尿（尿崩／多飲）。沒驗先送，可用尿比重粗估",
+      "var": "uosm", "unit": "mOsm/kg", "step": 10,
+      "quick": [100, 200, 300, 400, 600],
+      "branches": [
+        { "if": "uosm > 300", "next": "r_osmotic" },
+        { "else": "q_na" }
+      ]
+    },
+    "q_na": {
+      "type": "number",
+      "title": "血鈉（mEq/L）？",
+      "help": "水利尿 + Na > 143 = 尿崩；Na < 136 = 原發性多飲；136–143 看情境",
+      "var": "na", "unit": "mEq/L", "step": 1,
+      "quick": [130, 136, 140, 145, 150, 160],
+      "branches": [
+        { "if": "na > 143", "next": "q_di_type" },
+        { "if": "na < 136", "next": "r_polydipsia" },
+        { "else": "q_context" }
+      ]
+    },
+    "q_di_type": {
+      "type": "choice",
+      "title": "尿崩症：中樞性還是腎性？",
+      "help": "給 desmopressin 後 UOsm ↑ > 50% = 中樞性",
+      "options": [
+        { "label": "腦下垂體／下視丘手術、頭部外傷、SAH、腦死、缺氧性腦病變（中樞性）", "next": "r_cdi" },
+        { "label": "鋰鹽、高血鈣、低血鉀、amphotericin、ATN 恢復、阻塞解除（腎性）", "next": "r_ndi" },
+        { "label": "不確定（先當中樞性試 desmopressin）", "next": "r_cdi" }
+      ]
+    },
+    "q_context": {
+      "type": "choice",
+      "title": "Na 正常的水利尿：情境？",
+      "options": [
+        { "label": "剛解除泌尿道阻塞／AKI（ATN）恢復期", "next": "r_postobs" },
+        { "label": "顱內／腦下垂體手術後（早期尿崩，Na 還沒升）", "next": "r_cdi" },
+        { "label": "其他（輸液過多、利尿劑、能喝水的病人）", "next": "r_general" }
+      ]
+    },
+    "r_cdi": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "中樞性尿崩症：desmopressin + 補水",
+      "summary": "**Desmopressin 1–2 mcg IV/SC**（尿量 > 250 mL/hr × 2 hr 且 UOsm < 200 時給，術後暫時性尿崩用「需要時給」避免低血鈉）；輸液補前一小時尿量 + 基礎需求；**Na q4–6h**。",
+      "steps": [
+        "確認：尿量 > 250 mL/hr × 2 hr、UOsm < 200–300、Na > 143（或上升中）；血糖正常",
+        "能喝的病人依口渴喝水；意識不清／喝不到水者靠 IV 補足",
+        "Desmopressin 依需要給；給後 UOsm ↑ > 50% = 中樞性",
+        "腦下垂體手術後「三相反應」（尿崩 → SIADH → 尿崩）：每天看 Na，避免固定給 DDAVP 造成低血鈉",
+        "高血鈉：D5W／½NS，Na 每日降 ≤ 10 mEq/L（Ch32）",
+        "神經學檢查（視野、其他內分泌不足）；聯絡神經外科／內分泌"
+      ],
+      "orders": [
+        { "drug": "Desmopressin (DDAVP)", "dose": "1–2 mcg", "route": "IV／SC", "freq": "q8–12h 或依尿量（尿量 > 250 mL/hr × 2 hr 且 UOsm < 200 時給）", "note": "術後暫時性尿崩用需要時給；監測 Na q4–6h" },
+        { "drug": "½NS 或 D5W", "dose": "補前一小時尿量 + 基礎需求（{round(wt*25/24)}–{round(wt*30/24)} mL/hr）", "route": "IV drip", "freq": "每小時依尿量調整", "note": "能喝者依口渴；高血鈉者 D5W／½NS，Na 每日降 ≤ 10" },
+        { "drug": "Desmopressin 鼻噴", "dose": "10–20 mcg", "route": "鼻噴", "freq": "q12–24h", "note": "慢性期", "alt": "desmopressin PO 0.1–0.2 mg q8–12h" }
+      ],
+      "watch": ["尿量每小時、UOsm（給藥後）", "Na q4–6h（三相反應、DDAVP 後低血鈉）", "每日體重、I/O；意識"],
+      "call": ["腦下垂體／顱內手術後尿崩（當下告知神經外科／後線）", "Na > 150 或快速上升；多尿 + 意識改變", "尿量 > 400–500 mL/hr 持續"],
+      "refs": [{ "ch": "12", "q": "尿崩症（中樞性）" }, { "ch": "12", "q": "三相反應" }, { "ch": "32", "q": "高血鈉" }]
+    },
+    "r_ndi": {
+      "type": "result",
+      "urgency": "green",
+      "title": "腎性尿崩：處理原因、補水",
+      "summary": "停鋰鹽（無法停者 amiloride）、矯正高血鈣／低血鉀、停 amphotericin 等；補水 ≥ 流失；thiazide ± indomethacin 由腎臟科。",
+      "steps": [
+        "抽 Na、K、Ca、Cr、鋰鹽濃度；UOsm（desmopressin 後 UOsm 不升 = 腎性）",
+        "補水：輸液 + 口服 ≥ 流失；能喝者依口渴；高血鈉 D5W／½NS（Ch32）",
+        "矯正高血鈣（Ch34）、低血鉀（Ch33）；停 amphotericin、foscarnet、demeclocycline 等",
+        "鋰鹽：與精神科討論停用或減量；無法停 → amiloride",
+        "低鹽低蛋白飲食、thiazide ± indomethacin：腎臟科"
+      ],
+      "orders": [
+        { "drug": "Amiloride", "dose": "5–10 mg", "route": "PO", "freq": "BID", "note": "鋰鹽無法停用者；注意高血鉀（CrCl ≈ {round(crcl)}）" },
+        { "drug": "Hydrochlorothiazide (HCTZ)", "dose": "25 mg", "route": "PO", "freq": "BID", "note": "± indomethacin；腎臟科；注意低血鉀" },
+        { "drug": "½NS 或 D5W", "dose": "補前一小時尿量的差額 + 基礎需求（{round(wt*25/24)}–{round(wt*30/24)} mL/hr）", "route": "IV drip", "freq": "每小時依尿量調整", "note": "能喝者依口渴；Na 每日降 ≤ 10" }
+      ],
+      "watch": ["Na q6–12h；K、Ca", "每小時尿量、每日體重、I/O", "鋰鹽濃度"],
+      "call": ["鋰鹽相關腎性尿崩（告知後線／精神科）", "Na > 150 或快速上升", "多尿 + 低血壓或意識改變"],
+      "refs": [{ "ch": "12", "q": "腎性尿崩" }, { "ch": "32", "q": "高血鈉" }]
+    },
+    "r_postobs": {
+      "type": "result",
+      "urgency": "green",
+      "title": "解除阻塞後利尿／AKI 恢復期：生理性，補 50–75%",
+      "summary": "大多為生理性：補充**前一小時尿量的 50–75%（½NS）**，24–48 小時後逐漸減少；監測 Na、K、Mg、P；**不要 1:1 補到底**（會延長利尿）。",
+      "steps": [
+        "每小時記尿量；尿量 > 200 mL/hr 持續 2 小時才啟動補充",
+        "抽 Na、K、Mg、P、Cr q6–12h；姿態性血壓、體重",
+        "能喝的病人依口渴喝水；意識不清者靠 IV",
+        "24–48 小時後遞減補充量；仍持續大量 → 想腎性尿崩（ATN 恢復期 UOsm 低）"
+      ],
+      "orders": [
+        { "drug": "½NS", "dose": "前一小時尿量的 50–75%", "route": "IV drip", "freq": "每小時調整；24–48 小時後遞減", "note": "尿量 > 200 mL/hr × 2 hr 才給；高血鈉改依 Ch32" }
+      ],
+      "watch": ["每小時尿量、每日體重", "Na、K、Mg、P q6–12h", "姿態性低血壓、心搏過速（補不夠）"],
+      "call": ["尿量 > 400–500 mL/hr 持續", "Na > 150 或快速上升", "多尿 + 低血壓或意識改變"],
+      "refs": [{ "ch": "12", "q": "解除阻塞後利尿" }, { "ch": "11", "q": "post-obstructive diuresis" }]
+    },
+    "r_osmotic": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "滲透性利尿（UOsm > 300）：找溶質、補血容",
+      "summary": "住院多尿絕大多數是滲透性：**高血糖**（insulin + 輸液，Ch28）、**mannitol**（停或減量、NS 維持血容）、**尿素**（高蛋白灌食、消化道出血、類固醇、AKI 恢復）、大量 NaCl／NaHCO₃、SGLT2i。",
+      "steps": [
+        "血糖 > 250 → DKA／HHS 評估（Ch28）：VBG、ketone、K；insulin + 輸液",
+        "看輸液單：mannitol、大量 NS／NaHCO₃、高蛋白灌食 → 停或減量",
+        "抽 Na、K、BUN/Cr、血糖、血滲透壓；尿糖、UOsm",
+        "低血壓 → NS/LR 500 mL bolus（心腎衰竭 250 mL）；補水 ≥ 流失",
+        "高血鈉 → D5W／½NS，Na 每日降 ≤ 10（Ch32）",
+        "每日體重、精確 I/O、Na q6–12h"
+      ],
+      "orders": [
+        { "drug": "NS（mannitol／溶質利尿維持血容）", "dose": "補前一小時尿量的差額（{round(wt*25/24)}–{round(wt*30/24)} mL/hr 基礎需求另計）", "route": "IV drip", "freq": "每小時依尿量與血鈉調整", "note": "停或減 mannitol；高血鈉改 D5W／½NS" },
+        { "drug": "NS 或 LR（低血壓時）", "dose": "500 mL（心腎衰竭 250 mL）", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "血糖 > 250 依 Ch28 DKA／HHS 輸液" }
+      ],
+      "watch": ["血糖 q1–2h（高血糖者）、Na q6–12h", "尿量每小時、每日體重", "BP／HR、意識"],
+      "call": ["DKA／HHS", "多尿 + 低血壓／休克或意識改變", "Na > 150 或快速上升；尿量 > 400–500 mL/hr 持續"],
+      "refs": [{ "ch": "12", "q": "4. 滲透性利尿" }, { "ch": "12", "q": "滲透性利尿（UOsm > 300" }, { "ch": "28", "q": "DKA" }]
+    },
+    "r_polydipsia": {
+      "type": "result",
+      "urgency": "green",
+      "title": "原發性多飲（水利尿 + Na < 136）",
+      "summary": "限水、精神科評估；**注意可能已低血鈉**（Ch32）——有症狀（意識改變、抽搐）就是急症。",
+      "steps": [
+        "抽 Na、血滲透壓、UOsm（常 < 100）；排除利尿劑、SIADH、腎上腺／甲狀腺",
+        "Na < 130 或有神經症狀 → 依 Ch32 低血鈉處理，聯絡後線",
+        "限水；記 I/O、每日體重；Na q6–12h",
+        "精神科評估（精神病、下視丘病灶）；檢視抗精神病藥"
+      ],
+      "orders": [],
+      "watch": ["Na q6–12h；意識、抽搐", "I/O、體重"],
+      "call": ["Na 快速下降或有症狀低血鈉（意識改變、抽搐）", "多尿 + 意識改變"],
+      "refs": [{ "ch": "12", "q": "5. 原發性多飲" }, { "ch": "32", "q": "低血鈉" }]
+    },
+    "r_general": {
+      "type": "result",
+      "urgency": "green",
+      "title": "多尿（Na 正常、穩定）：一般處理",
+      "summary": "記每日體重、精確 I/O、Na q6–12h；停或調整利尿劑、mannitol、含 Na 輸液；**輸液 + 口服 ≥ 流失量**，能喝者鼓勵依口渴喝水。",
+      "steps": [
+        "檢視輸液單與藥物：利尿劑、mannitol、大量 NS／NaHCO₃、類固醇、SGLT2i、鋰鹽",
+        "算 24 小時滲透質排出（尿量 × UOsm，6 小時定時收集可估）：> 1,000 mOsm/d 滲透性、< 800 水利尿",
+        "補水原則：輸液 + 口服 ≥ 流失；能喝者依口渴",
+        "Na 上升（> 143）→ 回到尿崩評估；下降（< 136）→ 多飲／低血鈉",
+        "交班：每日體重、I/O、Na 追蹤"
+      ],
+      "orders": [
+        { "drug": "½NS 或 D5-½NS（依血鈉）", "dose": "基礎 {round(wt*25/24)}–{round(wt*30/24)} mL/hr + 流失差額", "route": "IV drip", "freq": "每日重新評估", "note": "能喝者以口服為主；Na > 143 改 D5W／½NS" }
+      ],
+      "watch": ["Na q6–12h（快速變化 q2–4h）", "每日體重、I/O", "姿態性低血壓、心搏過速"],
+      "call": ["Na > 150 或快速上升", "尿量 > 400–500 mL/hr 持續", "多尿 + 低血壓或意識改變"],
+      "refs": [{ "ch": "12", "q": "1. 一般" }, { "ch": "12", "q": "IV. 檢驗" }]
+    },
+    "r_frequency": {
+      "type": "result",
+      "urgency": "green",
+      "title": "頻尿（總量正常）：找感染、滯留、BPH",
+      "summary": "頻尿不是多尿：UTI（Ch17）、BPH／尿滯留溢流（Ch11）、膀胱過動、結石、夜尿（心衰竭、睡眠呼吸中止）；先 bladder scan 排除滯留溢流。",
+      "steps": [
+        "確認 24 小時總量 < 3 L；bladder scan 餘尿（滯留溢流 → Ch11）",
+        "尿液常規／培養；發燒、腰痛、解尿痛 → UTI（Ch17 抗生素）",
+        "男性：前列腺（肛診）；停抗膽鹼藥、利尿劑時間改白天",
+        "膀胱過動、間質性膀胱炎 → 留白天處理"
+      ],
+      "orders": [],
+      "watch": ["體溫、解尿症狀", "餘尿量"],
+      "call": ["發燒 + 阻塞（敗血症）", "尿滯留放不進尿管"],
+      "refs": [{ "ch": "12", "q": "6. 頻尿" }, { "ch": "11", "q": "3. 腎後性" }, { "ch": "17", "q": "泌尿道感染" }]
+    }
+  }
+}

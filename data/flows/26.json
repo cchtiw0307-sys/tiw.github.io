@@ -1,0 +1,519 @@
+{
+  "id": "26",
+  "title": "輸血與輸血反應",
+  "chapter": "26",
+  "entries": [
+    { "label": "輸血中發燒／喘／蕁麻疹／低血壓（輸血反應）", "type": "symptom", "start": "i_stop", "group": "症狀治療",
+      "keywords": ["輸血反應", "transfusion reaction", "輸血 發燒", "輸血 喘", "輸血 蕁麻疹", "輸血 低血壓", "輸血 腰痛", "FNHTR", "TRALI", "TACO", "輸錯血"] },
+    { "label": "護理師問要不要輸血（Hb 低／血小板低）", "type": "symptom", "start": "q_product", "group": "症狀治療",
+      "keywords": ["要不要輸血", "輸血門檻", "Hb 7", "Hb 6", "血小板 低 輸血", "pRBC", "備血", "transfusion threshold"] },
+    { "label": "輸血後 3–14 天 Hb 又掉／黃疸（遲發反應）", "type": "symptom", "start": "r_delayed", "group": "症狀治療",
+      "keywords": ["遲發性溶血", "DHTR", "輸血後紫斑", "PTP", "輸血後 GvHD", "輸血後 Hb 又掉"] },
+    { "label": "pRBC 輸注適應症", "type": "diagnosis", "start": "q_hb",
+      "keywords": ["pRBC", "紅血球", "packed RBC", "Hb < 7", "限制性輸血", "restrictive transfusion"] },
+    { "label": "血小板輸注適應症", "type": "diagnosis", "start": "q_plt",
+      "keywords": ["血小板輸注", "platelet transfusion", "血小板 10000", "血小板 50000", "分離術血小板", "refractory"] },
+    { "label": "FFP／Cryoprecipitate／Albumin", "type": "diagnosis", "start": "r_ffp",
+      "keywords": ["FFP", "新鮮冷凍血漿", "cryoprecipitate", "冷凍沉澱", "fibrinogen 低", "albumin", "白蛋白", "INR 矯正"] },
+    { "label": "大量輸血（MTP）", "type": "diagnosis", "start": "r_mtp",
+      "keywords": ["大量輸血", "massive transfusion", "MTP", "1:1:1", "calcium gluconate 輸血", "急性出血 輸血"] },
+    { "label": "非溶血性發燒反應（FNHTR）", "type": "diagnosis", "start": "r_fnhtr",
+      "keywords": ["FNHTR", "非溶血性發燒", "輸血 發燒 寒顫"] },
+    { "label": "輕微過敏（蕁麻疹）", "type": "diagnosis", "start": "r_allergic",
+      "keywords": ["輸血 蕁麻疹", "輸血 過敏", "urticaria transfusion", "diphenhydramine 輸血"] },
+    { "label": "輸血過敏性休克", "type": "diagnosis", "start": "r_anaphylaxis",
+      "keywords": ["輸血 過敏性休克", "anaphylaxis transfusion", "喉水腫 輸血", "IgA 缺乏", "epinephrine 輸血"] },
+    { "label": "急性溶血性反應（AHTR）／輸錯血", "type": "diagnosis", "start": "r_ahtr",
+      "keywords": ["急性溶血", "AHTR", "ABO 不合", "輸錯血", "血紅素尿", "hemolytic transfusion reaction"] },
+    { "label": "細菌汙染／輸血敗血症", "type": "diagnosis", "start": "r_sepsis",
+      "keywords": ["細菌汙染", "輸血 敗血症", "bacterial contamination", "血小板 高燒", "輸血 休克 高燒"] },
+    { "label": "TACO（循環過負荷）", "type": "diagnosis", "start": "r_taco",
+      "keywords": ["TACO", "循環過負荷", "輸血 肺水腫", "輸血 喘 高血壓", "furosemide 輸血"] },
+    { "label": "TRALI（急性肺損傷）", "type": "diagnosis", "start": "r_trali",
+      "keywords": ["TRALI", "急性肺損傷", "輸血 低氧 低血壓", "輸血 雙側浸潤"] },
+    { "label": "拒絕輸血（宗教等）", "type": "diagnosis", "start": "r_refuse",
+      "keywords": ["拒絕輸血", "耶和華見證人", "Jehovah", "refuse transfusion", "iron sucrose", "erythropoietin"] }
+  ],
+  "nodes": {
+    "i_stop": {
+      "type": "info",
+      "title": "任何輸血反應：先做這五件事",
+      "body": [
+        "**立即停止輸血**，保留血袋與輸血套（送回血庫），換新管路掛 NS 維持 IV",
+        "生命徵象、SpO₂；症狀：發燒、寒顫、喘、胸痛、腰背痛、蕁麻疹、血管性水腫、低血壓、深色尿、出血",
+        "**核對病人與血袋身分**；通知血庫；填輸血反應單",
+        "送檢：病人血（EDTA + 血清）ABO/Rh 重驗、DAT、抗體篩檢、血漿血紅素／haptoglobin、LDH、bilirubin、CBC、BUN/Cr、PT/aPTT/fibrinogen；尿液（血紅素尿）；懷疑細菌汙染加血袋與病人血液培養",
+        "只有輕微蕁麻疹或 FNHTR 排除溶血後可續輸同一袋（減速），其餘不可續輸"
+      ],
+      "next": "q_rxn"
+    },
+    "q_rxn": {
+      "type": "multi",
+      "title": "勾選所有出現的表現",
+      "help": "急性溶血與 TRALI／TACO 會死人，FNHTR 與蕁麻疹不會",
+      "options": [
+        { "label": "腰背痛、胸悶、輸血部位痛、血紅素尿（深色尿）、滲血／DIC", "set": { "hemo": true } },
+        { "label": "喘鳴、喉水腫、血管性水腫", "set": { "anaph": true } },
+        { "label": "低血壓（SBP ↓ ≥ 30）／休克", "set": { "hypo": true } },
+        { "label": "喘、SpO₂ 掉", "set": { "dyspnea": true } },
+        { "label": "發燒（↑ ≥ 1℃ 或 ≥ 38℃）、寒顫", "set": { "fever": true } },
+        { "label": "蕁麻疹、癢", "set": { "urt": true } }
+      ],
+      "branches": [
+        { "if": "hemo", "next": "r_ahtr" },
+        { "if": "anaph || (urt && hypo)", "next": "r_anaphylaxis" },
+        { "if": "dyspnea", "next": "q_dyspnea" },
+        { "if": "fever && hypo", "next": "r_sepsis" },
+        { "if": "fever", "next": "q_temp" },
+        { "if": "hypo", "next": "r_hypotensive" },
+        { "if": "urt", "next": "r_allergic" },
+        { "else": "r_unclear" }
+      ]
+    },
+    "q_temp": {
+      "type": "number",
+      "title": "體溫（℃）？",
+      "help": "> 39℃ 或比輸血前上升 > 2℃ 要想細菌汙染（血小板最常見）",
+      "var": "temp", "unit": "℃", "step": 0.1,
+      "quick": [38.0, 38.5, 39.0, 39.5, 40.0],
+      "branches": [
+        { "if": "temp > 39", "next": "r_sepsis" },
+        { "else": "r_fnhtr" }
+      ]
+    },
+    "q_dyspnea": {
+      "type": "choice",
+      "title": "喘：像過負荷還是肺損傷？",
+      "help": "TACO：高血壓、JVP↑、囉音、端坐呼吸、老年／心腎衰竭／快速大量輸血；TRALI：低血壓、發燒、雙側浸潤、JVP 正常、BNP 不高（FFP／血小板較常）",
+      "options": [
+        { "label": "高血壓、JVP ↑、囉音、端坐呼吸（TACO）", "next": "r_taco" },
+        { "label": "低血壓／正常血壓、發燒、雙側浸潤、無過負荷（TRALI）", "next": "r_trali" },
+        { "label": "合併蕁麻疹／喘鳴／喉水腫（過敏性休克）", "next": "r_anaphylaxis" }
+      ]
+    },
+    "r_fnhtr": {
+      "type": "result",
+      "urgency": "green",
+      "title": "非溶血性發燒反應（FNHTR）",
+      "summary": "輸血中至 4 小時體溫 ↑ ≥ 1℃、寒顫、無其他症狀：停 → 排除溶血／細菌汙染 → acetaminophen；寒顫嚴重 meperidine 25 mg IV；排除後可續輸同一袋（減速）。",
+      "steps": [
+        "已停輸血、核對身分、通知血庫、送溶血檢驗（DAT、血漿血紅素、尿液）",
+        "體溫 > 39℃、上升 > 2℃、低血壓 → 依細菌汙染處理（培養 + 抗生素）",
+        "Acetaminophen；寒顫嚴重 meperidine 25 mg IV",
+        "排除溶血與細菌汙染後可續輸同一袋，速率減慢，床邊觀察",
+        "既往反覆 FNHTR → 之後減白血品、輸前 acetaminophen（不常規）"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "STAT", "note": "肝病 max 2 g/d" },
+        { "drug": "Meperidine (pethidine)", "dose": "25 mg", "route": "IV", "freq": "STAT PRN 嚴重寒顫", "note": "僅此情境；腎衰竭累積" }
+      ],
+      "watch": ["生命徵象 q15 min × 1 hr", "溶血檢驗結果、尿色", "續輸時床邊觀察 15 分鐘"],
+      "call": ["體溫 > 39℃、低血壓、任何溶血徵候", "輸血反應合併生命徵象不穩"],
+      "refs": [{ "ch": "26", "q": "非溶血性發燒（FNHTR）" }, { "ch": "26", "q": "表 26-1" }]
+    },
+    "r_allergic": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕微過敏反應（蕁麻疹、癢，無其他）",
+      "summary": "停 → diphenhydramine 30–50 mg IV → 緩解後可續輸同一袋；出現喘鳴／喉水腫／低血壓就是過敏性休克。",
+      "steps": [
+        "停輸血、保留管路、NS；確認只有皮膚症狀（無喘鳴、喉水腫、低血壓）",
+        "Diphenhydramine IV",
+        "緩解後可續輸同一袋（減速、床邊觀察）",
+        "反覆嚴重過敏 → 之後洗滌血品；IgA 缺乏檢驗"
+      ],
+      "orders": [
+        { "drug": "Diphenhydramine", "dose": "30–50 mg", "route": "IV", "freq": "STAT", "note": "老年抗膽鹼、嗜睡" }
+      ],
+      "watch": ["生命徵象 q15 min；喘鳴、喉水腫、血壓（進展為過敏性休克）"],
+      "call": ["進展為喘鳴／喉水腫／低血壓（過敏性休克）"],
+      "refs": [{ "ch": "26", "q": "過敏（輕）" }, { "ch": "26", "q": "表 26-1" }],
+      "next": [{ "label": "喘鳴／喉水腫／低血壓 → 過敏性休克", "next": "r_anaphylaxis" }]
+    },
+    "r_anaphylaxis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "輸血過敏性休克（蕁麻疹 + 喘鳴／喉水腫／低血壓）",
+      "summary": "停、**不續輸**；**epinephrine 0.5 mg IM** q5–15 min、輸液 1 L、O₂、salbutamol；methylprednisolone；之後洗滌血品、IgA 缺乏檢驗。",
+      "steps": [
+        "停輸血、換 NS、叫人；平躺抬腿（喘則坐起）",
+        "Epinephrine 0.5 mg IM 大腿外側，5–15 分鐘無改善重複",
+        "O₂ 目標 94–98%；喘鳴 salbutamol 吸入；喉水腫準備插管（困難氣道）",
+        "NS 1 L 快速輸注；低血壓持續 → 依 Ch19 升壓",
+        "Methylprednisolone IV；抗組織胺輔助",
+        "送 IgA 與抗 IgA 抗體；之後洗滌血品；通報血庫"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1:1000", "dose": "{wt < 50 ? 0.3 : 0.5} mg", "route": "IM（大腿外側）", "freq": "STAT，q5–15 min 可重複", "note": "首選、不延誤；勿 SC、勿 IV push；< 50 kg 0.3 mg（Ch14）" },
+        { "drug": "NS", "dose": "1,000 mL", "route": "IV 快速輸注", "freq": "STAT，可重複", "note": "心衰竭者減量並觀察" },
+        { "drug": "Salbutamol", "dose": "5 mg", "route": "霧化", "freq": "q20 min PRN 喘鳴", "note": "Ch14 表 14-1" },
+        { "drug": "Methylprednisolone", "dose": "60–125 mg", "route": "IV", "freq": "STAT", "note": "預防雙相反應" },
+        { "drug": "Diphenhydramine", "dose": "30–50 mg", "route": "IV", "freq": "STAT", "note": "輔助" }
+      ],
+      "watch": ["BP、SpO₂、喘鳴 q5 min 至穩定，之後觀察 ≥ 6–24 hr（雙相）", "氣道（聲音改變、吞嚥困難）"],
+      "call": ["過敏性休克當下就通知後線", "需插管、升壓劑"],
+      "refs": [{ "ch": "26", "q": "過敏性休克" }, { "ch": "26", "q": "表 26-1" }]
+    },
+    "r_ahtr": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性溶血性輸血反應（AHTR）／疑輸錯血",
+      "summary": "停、不續輸；**NS 大量輸液目標尿量 > 100 mL/hr × 24 hr**（1–2 mL/kg/hr）± furosemide；低血壓升壓；DIC 處置；**立即通知後線與血庫（另一位病人可能也拿錯血）**。",
+      "steps": [
+        "停輸血、保留血袋與管路、換 NS；核對病人與血袋（多為 ABO 不合的人為錯誤）",
+        "立即通知血庫（找另一位可能拿錯血的病人）與後線",
+        "送檢：ABO/Rh 重驗、DAT、血漿血紅素、haptoglobin、LDH、bilirubin、CBC、Cr、PT/aPTT/fibrinogen、尿液",
+        "NS 大量輸液，Foley 記尿量，目標 > 100 mL/hr × 24 hr；尿量不足 furosemide",
+        "低血壓 → 依 Ch19 升壓；DIC／出血 → Ch30",
+        "監測 K（溶血）、Cr（AKI）；插管病人可能只有低血壓／滲血"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "{round(wt*1)}–{round(wt*2)} mL/hr（1–2 mL/kg/hr）", "route": "IV drip", "freq": "持續 24 hr，目標尿量 > 100 mL/hr", "note": "依 {wt} kg；先 bolus 500 mL（心／腎衰竭 250 mL）" },
+        { "drug": "Furosemide", "dose": "40 mg", "route": "IV", "freq": "PRN 輸液後尿量仍 < 100 mL/hr", "note": "腎功能差劑量需較高" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起始（{round(wt*0.05,1)}–{round(wt*0.1,1)} mcg/min）", "route": "IV drip（CVC；周邊短暫可）", "freq": "持續，每 5–10 min 調（低血壓輸液無效時）", "note": "8 mg/250 mL（32 mcg/mL）：{wt} kg 0.1 mcg/kg/min ≈ {round(wt*0.1*60/32,1)} mL/hr；Ch19 表 19-1" }
+      ],
+      "watch": ["尿量每小時（> 100 mL/hr）、尿色", "BP、HR q15 min", "K、Cr、PT/aPTT/fibrinogen、血小板 q4–6h"],
+      "call": ["懷疑急性溶血當下 = 後線 + 血庫（即使無症狀的輸錯血也要）", "低血壓、少尿、DIC"],
+      "refs": [{ "ch": "26", "q": "急性溶血（AHTR）" }, { "ch": "26", "q": "表 26-1" }]
+    },
+    "r_sepsis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "細菌汙染／輸血相關敗血症（高燒 > 39℃ 或 ↑ > 2℃、寒顫、低血壓）",
+      "summary": "停、不續輸；血袋與病人培養；**立即 vancomycin + piperacillin-tazobactam（或 cefepime）**；休克處置。血小板（室溫保存）最常見。",
+      "steps": [
+        "停輸血、保留血袋（送培養與革蘭氏染色）、換 NS",
+        "病人血液培養 × 2（不同部位）後立即抗生素",
+        "NS bolus 500 mL（心／腎衰竭 250 mL），目標 MAP ≥ 65；無效升壓（Ch19）",
+        "lactate、CBC、Cr、凝血；通知血庫（同捐血者其他血品召回）",
+        "同時送溶血檢驗排除 AHTR"
+      ],
+      "orders": [
+        { "drug": "Vancomycin", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg loading）→ {round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "STAT → {crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}（CrCl {round(crcl)}，附錄 A5）", "note": "Ch17 敗血性休克經驗性；依體重 {wt} kg；loading 不減量；trough 15–20" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "STAT → {crcl >= 10 ? 'q6h' : 'q8–12h'}（CrCl {round(crcl)}，附錄 A5；第一劑不減量）", "note": "或 cefepime 2 g q8h（Ch17；依 A5）", "alt": "cefepime 2 g IV q8h" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，可重複（敗血性休克 30 mL/kg，Ch17）", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["BP、HR、體溫、尿量 q15–30 min", "lactate、培養結果"],
+      "call": ["懷疑細菌汙染當下 = 後線 + 血庫", "休克需升壓劑"],
+      "refs": [{ "ch": "26", "q": "細菌汙染／敗血症" }, { "ch": "17", "q": "敗血症" }]
+    },
+    "r_taco": {
+      "type": "result",
+      "urgency": "red",
+      "title": "TACO（輸血相關循環過負荷）",
+      "summary": "輸血中至 12 小時喘、端坐呼吸、高血壓、JVP↑、囉音：停或減速、坐起、O₂／NIV、**furosemide 40 mg IV**；之後每 U 慢輸 3–4 小時 + 間隔 furosemide。最常見致死原因。",
+      "steps": [
+        "停（或減速）輸血、坐起、O₂ 目標 94–98%（CO₂ 滯留 88–92%）",
+        "SpO₂ < 90% 或呼吸費力 → CPAP／BiPAP；無效考慮插管",
+        "Furosemide IV；Foley 記尿量",
+        "CXR、BNP、ECG、troponin（與 TRALI 區分：TACO 高血壓、JVP↑、BNP↑）",
+        "之後輸血每 U 3–4 小時 + 單位間 furosemide 20 mg IV"
+      ],
+      "orders": [
+        { "drug": "Furosemide", "dose": "40 mg", "route": "IV", "freq": "STAT；1 小時無尿量反應可加倍", "note": "腎功能差（CrCl {round(crcl)}）需較高劑量" },
+        { "drug": "O₂／CPAP", "dose": "CPAP 5–10 cmH₂O", "route": "面罩", "freq": "持續至改善", "note": "意識不清、嘔吐、血行不穩禁 NIV" },
+        { "drug": "Nitroglycerin（NTG）", "dose": "0.6 mg", "route": "SL", "freq": "q5 min × 3（SBP > 110、血壓高時）", "note": "血壓高的肺水腫可加（Ch7、Ch18）" }
+      ],
+      "watch": ["SpO₂、RR、BP q15 min；尿量每小時", "NIV 1 小時無改善 → 插管準備"],
+      "call": ["TACO 需 NIV", "SpO₂ 持續 < 90%、低血壓（改想 TRALI）"],
+      "refs": [{ "ch": "26", "q": "TACO（循環過負荷）" }, { "ch": "07", "q": "急性心衰竭" }]
+    },
+    "r_trali": {
+      "type": "result",
+      "urgency": "red",
+      "title": "TRALI（輸血相關急性肺損傷）",
+      "summary": "輸血中至 6 小時急性低氧、雙側浸潤、發燒、**低血壓**、無過負荷：停、不續輸；O₂／NIV／插管；**輸液維持血壓（不是利尿）**；支持性，48–96 小時多恢復；通報血庫。",
+      "steps": [
+        "停輸血、不續輸；O₂ 目標 94–98%；SpO₂ < 90% → NIV，惡化插管（肺保護通氣）",
+        "CXR（雙側浸潤）、ABG、BNP（不高）、CBC；與 TACO 區分（TRALI 低血壓、JVP 正常）",
+        "低血壓 → NS bolus；不給利尿劑",
+        "通報血庫（捐血者 HLA／HNA 抗體）；之後避免同捐血者血品",
+        "支持性，多 48–96 小時恢復；類固醇無證據"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV bolus", "freq": "STAT PRN 低血壓，可重複", "note": "心／腎衰竭 250 mL；不是利尿" },
+        { "drug": "O₂／NIV", "dose": "IPAP 10／EPAP 5 或 CPAP 5–10 cmH₂O", "route": "面罩", "freq": "持續", "note": "血行不穩、意識差 → 插管" }
+      ],
+      "watch": ["SpO₂、RR、BP q15 min", "ABG；NIV 1 小時無改善 → 插管"],
+      "call": ["懷疑 TRALI 當下 = 後線 + ICU", "需插管、低血壓輸液無效"],
+      "refs": [{ "ch": "26", "q": "TRALI（急性肺損傷）" }, { "ch": "26", "q": "表 26-1" }]
+    },
+    "r_hypotensive": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低血壓性輸血反應（輸血 15 分鐘內 SBP ↓ ≥ 30，無其他症狀）",
+      "summary": "停、輸液；ACEI 使用者較多；同時排除溶血、過敏性休克、細菌汙染（有發燒／皮疹／腰痛就不是這個）。",
+      "steps": [
+        "停輸血、換 NS、平躺",
+        "NS bolus；重新評估有無發燒、蕁麻疹、腰背痛、喘（改依相應流程）",
+        "送溶血檢驗排除 AHTR；核對身分",
+        "不續輸該袋；通知血庫"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV bolus over 15 min", "freq": "STAT，可重複", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["BP q5–15 min 至穩定", "溶血檢驗、尿色、體溫"],
+      "call": ["輸血反應合併生命徵象不穩／輸液無效", "出現溶血、敗血症或過敏徵候"],
+      "refs": [{ "ch": "26", "q": "低血壓性輸血反應" }],
+      "next": [
+        { "label": "出現腰痛／血紅素尿 → 急性溶血", "next": "r_ahtr" },
+        { "label": "出現高燒 → 細菌汙染", "next": "r_sepsis" }
+      ]
+    },
+    "r_unclear": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "症狀不典型／輕微不適的輸血反應",
+      "summary": "維持停輸血、送檢排除溶血，觀察生命徵象；只有輕微蕁麻疹或單純發燒排除溶血後才可續輸同一袋，其餘不續輸。",
+      "steps": [
+        "保持停輸血、NS、核對身分、通知血庫、填反應單",
+        "溶血檢驗（DAT、血漿血紅素、尿液）與生命徵象 q15 min",
+        "症狀進展（發燒、喘、低血壓、腰痛、皮疹）→ 回到症狀勾選",
+        "無溶血且症狀消失 → 與後線討論是否續輸；紀錄"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "KVO（維持 IV）", "route": "IV drip", "freq": "持續", "note": "新管路" }
+      ],
+      "watch": ["生命徵象 q15 min × 1 hr", "尿色、體溫、皮疹"],
+      "call": ["任何生命徵象不穩", "無法判斷反應類型"],
+      "refs": [{ "ch": "26", "q": "通用步驟" }],
+      "next": [{ "label": "重新勾選症狀", "next": "q_rxn" }]
+    },
+    "r_delayed": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "遲發性輸血反應（> 24 小時）",
+      "summary": "遲發性溶血（3–14 天 Hb ↓、微燒、黃疸、DAT +）多支持性並通知血庫更新抗體紀錄；輸血後紫斑（5–12 天血小板 < 10,000）IVIG 1 g/kg × 2 天、避免再輸血小板；輸血相關 GvHD（4–30 天皮疹、發燒、肝炎、全血球低下）致死率 > 90%。",
+      "steps": [
+        "CBC、DAT、LDH、bilirubin、haptoglobin、Cr、血小板；回顧輸血日期與血品",
+        "DHTR：支持性、通知血庫（之後輸抗原陰性血品）；嚴重 hyperhemolysis → 血液科",
+        "PTP：IVIG 1 g/kg × 2 天；避免再輸血小板；血液科／血庫",
+        "GvHD：皮膚切片、血液科；預防靠照射血品（移植、血液惡性腫瘤、近親血）"
+      ],
+      "orders": [
+        { "drug": "IVIG", "dose": "{round(wt)} g（1 g/kg）", "route": "IV drip", "freq": "QD × 2 天", "note": "輸血後紫斑；依 {wt} kg；輸前查 HBsAg／anti-HBc（Ch30）" }
+      ],
+      "watch": ["Hb、血小板每日", "尿色、黃疸、皮疹、發燒"],
+      "call": ["Hb 快速下降或血行不穩", "血小板 < 10,000 或出血", "懷疑輸血相關 GvHD"],
+      "refs": [{ "ch": "26", "q": "III. 遲發性反應" }]
+    },
+    "q_product": {
+      "type": "choice",
+      "title": "要輸什麼？",
+      "options": [
+        { "label": "pRBC（Hb 低）", "next": "q_hb" },
+        { "label": "血小板", "next": "q_plt" },
+        { "label": "FFP／cryoprecipitate／albumin", "next": "r_ffp" },
+        { "label": "急性大量出血（可能需 MTP）", "next": "r_mtp" },
+        { "label": "病人拒絕輸血", "next": "r_refuse" }
+      ]
+    },
+    "q_hb": {
+      "type": "number",
+      "title": "Hb（g/dL）？",
+      "help": "急性出血時 Hb 一開始可能正常——看心率、血壓、出血來源",
+      "var": "hb", "unit": "g/dL", "step": 0.1,
+      "quick": [6.0, 6.5, 7.0, 7.5, 8.0, 9.0],
+      "branches": [
+        { "if": "hb < 7", "next": "q_ctx" },
+        { "if": "hb < 8", "next": "q_ctx" },
+        { "else": "q_ctx" }
+      ]
+    },
+    "q_ctx": {
+      "type": "multi",
+      "title": "勾選所有符合（決定門檻與輸法）",
+      "options": [
+        { "label": "急性出血／血行動力不穩", "set": { "bleed": true } },
+        { "label": "有症狀：胸痛、缺血 ECG、喘、意識改變", "set": { "sx": true } },
+        { "label": "冠心病／ACS／術後心臟手術", "set": { "cad": true } },
+        { "label": "心衰竭／體液過多（慢輸 + furosemide）", "set": { "hf": true } }
+      ],
+      "branches": [
+        { "if": "bleed", "next": "r_mtp" },
+        { "if": "hb < 7", "next": "r_prbc" },
+        { "if": "hb < 8 && cad", "next": "r_prbc" },
+        { "if": "sx", "next": "r_prbc" },
+        { "else": "r_no_prbc" }
+      ]
+    },
+    "r_prbc": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "輸 pRBC：1 U 再評估",
+      "summary": "Hb < 7（CAD／ACS／心臟術後 < 8、症狀性貧血）：1 U pRBC（約 250–300 mL）↑ Hb 1 g/dL，2–4 小時內輸完，**輸 1 U 後再評估**；心衰竭者慢輸 + furosemide 20 mg IV between units。",
+      "steps": [
+        "同意書；type & screen（72 小時內有效）；IV 18–20G；只與 NS 共管",
+        "兩人核對（病人、血袋、單據）；濾器 170–260 μm",
+        "前 15 分鐘慢速 2 mL/min 床邊觀察；輸前／15 分鐘／結束量生命徵象；4 小時內輸完",
+        "輸完後 CBC 再評估；找貧血原因（Ch29）；活動出血 → 止血、停抗凝（Ch30）",
+        "急性 MI 門檻 ≥ 8 vs ≥ 10 證據不一 → 與心臟科討論；預防性 acetaminophen／抗組織胺不常規給",
+        "特殊血品：照射（移植、血液惡性腫瘤、近親血）、洗滌（IgA 缺乏、反覆嚴重過敏）"
+      ],
+      "orders": [
+        { "drug": "pRBC（減白）", "dose": "1 U", "route": "IV（濾器，NS 共管）", "freq": "{hf ? 'over 3–4 hr' : 'over 2–4 hr'}；輸 1 U 後再評估 Hb", "note": "目前 Hb {hb} g/dL；緊急時 O 型（育齡女性 O 陰性若有）；照射／洗滌依適應症" },
+        { "drug": "Furosemide", "dose": "20 mg", "route": "IV", "freq": "between units", "cond": "hf", "note": "心衰竭／體液過多者" }
+      ],
+      "watch": ["生命徵象：輸前、15 分鐘、結束；輸血中發燒／喘／皮疹／腰痛 → 立刻停", "輸後 CBC；心衰竭者喘、SpO₂（TACO）"],
+      "call": ["輸血反應（急性溶血、TRALI、TACO、過敏性休克）", "急性大量出血啟動 MTP", "輸錯血（即使無症狀）"],
+      "refs": [{ "ch": "26", "q": "pRBC" }, { "ch": "26", "q": "輸血前" }],
+      "next": [{ "label": "輸血中出現反應", "next": "i_stop" }]
+    },
+    "r_no_prbc": {
+      "type": "result",
+      "urgency": "green",
+      "title": "暫不輸血：Hb ≥ 7（CAD ≥ 8）且無症狀、無活動出血",
+      "summary": "限制性策略：穩定的慢性貧血不因數字半夜輸血；找原因、追蹤 CBC，交班原團隊。",
+      "steps": [
+        "確認生命徵象穩定、無活動出血（黑便、傷口、引流）",
+        "與之前 Hb 比較：急性下降 ≥ 2 g/dL → 找出血來源（Ch29）",
+        "Type & screen 備用（若趨勢向下）；CBC 追蹤（6–12 小時或明晨）",
+        "貧血原因檢查（網狀球、鐵、B12／葉酸、溶血）交班"
+      ],
+      "orders": [
+        { "drug": "Type & screen", "dose": "1 管", "route": "抽血", "freq": "STAT（備用）", "note": "72 小時內有效" }
+      ],
+      "watch": ["CBC 6–12 小時後", "出血徵候、HR、BP、症狀"],
+      "call": ["Hb 急性下降 ≥ 2 g/dL 或 < 7 合併症狀／不穩", "活動性出血找不到來源"],
+      "refs": [{ "ch": "26", "q": "適應症（限制性策略）" }, { "ch": "29", "q": "2. 輸血" }],
+      "next": [{ "label": "Hb 掉 ≥ 2 或有症狀 → 輸血", "next": "r_prbc" }]
+    },
+    "q_plt": {
+      "type": "number",
+      "title": "血小板（/μL）？",
+      "help": "先排除假性血小板低下（EDTA 凝集 → citrate 管重驗）",
+      "var": "plt", "unit": "/μL", "step": 1000,
+      "quick": [8000, 15000, 30000, 45000, 80000],
+      "branches": [
+        { "if": "plt < 10000", "next": "r_plt_tx" },
+        { "if": "plt < 100000", "next": "q_plt_ctx" },
+        { "else": "r_plt_hold" }
+      ]
+    },
+    "q_plt_ctx": {
+      "type": "multi",
+      "title": "勾選所有符合",
+      "help": "HIT、TTP／HUS、HELLP 不輸血小板（除非危及生命出血）",
+      "options": [
+        { "label": "活動出血", "set": { "pbleed": true } },
+        { "label": "要做侵入處置（LP、CVC、手術、切片）", "set": { "proc": true } },
+        { "label": "發燒／感染／使用抗凝", "set": { "pfever": true } },
+        { "label": "顱內／眼出血或神經外科手術", "set": { "cns": true } },
+        { "label": "抗血小板藥 + 危及生命出血、體外循環後（功能異常）", "set": { "dysfn": true } },
+        { "label": "懷疑 HIT／TTP／HUS／HELLP", "set": { "contra": true } }
+      ],
+      "branches": [
+        { "if": "contra && !(pbleed && cns)", "next": "r_plt_hold" },
+        { "if": "cns || dysfn", "next": "r_plt_tx" },
+        { "if": "plt < 50000 && (pbleed || proc)", "next": "r_plt_tx" },
+        { "if": "plt < 20000 && pfever", "next": "r_plt_tx" },
+        { "else": "r_plt_hold" }
+      ]
+    },
+    "r_plt_tx": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "輸血小板：1 U 分離術血小板（台灣 12 U 隨機 = 1 個治療量）",
+      "summary": "< 10,000 預防；< 20,000 + 發燒／感染／抗凝；< 50,000 + 出血或侵入處置；< 100,000 + 顱內／眼出血、神經外科。1 U 分離術 ↑ 30,000–60,000，**1 小時後追蹤**。",
+      "steps": [
+        "排除 HIT、TTP／HUS、HELLP（不輸，除非危及生命出血）；ITP 效果差（出血時併 IVIG）",
+        "同意書、核對；室溫血品，取回後儘快輸",
+        "輸後 1 小時追蹤血小板",
+        "上升 < 5,000–10,000 = refractory → 消耗（DIC、敗血症、ITP）、脾腫大或同種免疫 → 改 ABO 相合，仍無效查 PRA／HLA 相合血小板（血庫）",
+        "找原因（Ch30）：藥物、DIC、敗血症、骨髓抑制"
+      ],
+      "orders": [
+        { "drug": "分離術血小板（減白）", "dose": "1 U（≈ 12 U 隨機濃厚血小板）", "route": "IV（血小板濾器）", "freq": "STAT；1 小時後追蹤血小板", "note": "目前血小板 {plt}/μL；預期 ↑ 30,000–60,000" }
+      ],
+      "watch": ["輸後 1 小時血小板（refractory 判定）", "出血徵候、輸血反應（血小板細菌汙染最常見）"],
+      "call": ["血小板輸注後仍出血或無上升", "血小板 < 20,000 或 < 50,000 合併出血", "懷疑 HIT、TTP、DIC"],
+      "refs": [{ "ch": "26", "q": "血小板" }, { "ch": "30", "q": "IV. 血小板低下" }]
+    },
+    "r_plt_hold": {
+      "type": "result",
+      "urgency": "green",
+      "title": "暫不輸血小板：未達門檻或有禁忌（HIT／TTP／HUS／HELLP）",
+      "summary": "血小板 ≥ 10,000 無發燒／出血／處置不需預防性輸注；HIT、TTP／HUS、HELLP 輸血小板有害（除非危及生命出血）→ 依 Ch30 處置。",
+      "steps": [
+        "重驗（citrate 管排除假性）；抹片（schistocyte → TTP／DIC；凝集）",
+        "找原因：藥物（heparin 5–10 天 → HIT）、敗血症、DIC、肝病／脾腫大",
+        "出血預防：避免 IM、NSAID、抗血小板；侵入處置延後或依 Ch30 門檻",
+        "追蹤 CBC；交班血液科"
+      ],
+      "orders": [
+        { "drug": "CBC + 抹片（citrate 管）", "dose": "1 管", "route": "抽血", "freq": "STAT 重驗", "note": "排除 EDTA 假性血小板低下" }
+      ],
+      "watch": ["血小板 q12–24h", "出血徵候（黏膜、皮膚、尿、糞便）"],
+      "call": ["血小板 < 20,000 或 < 50,000 合併出血", "懷疑 HIT、TTP、DIC"],
+      "refs": [{ "ch": "26", "q": "血小板" }, { "ch": "30", "q": "2. 特殊" }],
+      "next": [{ "label": "出血／需處置 → 輸血小板", "next": "r_plt_tx" }]
+    },
+    "r_ffp": {
+      "type": "result",
+      "urgency": "green",
+      "title": "FFP／Cryoprecipitate／Albumin 適應症與劑量",
+      "summary": "FFP 只用於**出血或侵入處置前 + INR > 1.5–2**（10–15 mL/kg），不用來「矯正 INR」做小處置、不擴容；cryo 用於 fibrinogen < 100–150；warfarin 重大出血用 4F-PCC（Ch30）。",
+      "steps": [
+        "確認適應症：出血？要做處置？INR／fibrinogen 數值？",
+        "FFP 解凍 30 分鐘；效果短暫（factor VII 半衰期 6 hr）→ 處置前才輸",
+        "Warfarin 重大出血 → 4F-PCC + vit K（Ch30），無 PCC 才 FFP",
+        "Albumin 不用於營養、單純低白蛋白血症"
+      ],
+      "orders": [
+        { "drug": "FFP", "dose": "{round(wt*10)}–{round(wt*15)} mL（10–15 mL/kg ≈ {round(wt*10/250)}–{round(wt*15/250)} U，每 U 250 mL）", "route": "IV", "freq": "處置前／出血時 STAT", "note": "依 {wt} kg；出血 + INR > 1.5–2（肝病、DIC、稀釋性）" },
+        { "drug": "Cryoprecipitate", "dose": "{round(wt/10)}–{round(wt/5)} U（每 10 kg 1–2 U；成人 10 U）", "route": "IV", "freq": "STAT", "note": "fibrinogen < 100–150（DIC、大量輸血、產後出血）；↑ fibrinogen 50–70 mg/dL" },
+        { "drug": "4F-PCC", "dose": "{round(wt*25)}–{round(wt*50)} U（25–50 U/kg）", "route": "IV", "freq": "STAT", "note": "warfarin／Xa 抑制劑重大出血（Ch30）；依 {wt} kg" },
+        { "drug": "Albumin 5%", "dose": "500 mL", "route": "IV drip", "freq": "依適應症", "note": "SBP、大量放腹水、肝腎症候群、敗血症大量晶體後；20%：100 mL" }
+      ],
+      "watch": ["輸後 INR／fibrinogen", "TACO（FFP 量大）、TRALI"],
+      "call": ["抗凝血劑重大出血需逆轉（Ch30）", "大量輸血啟動"],
+      "refs": [{ "ch": "26", "q": "FFP" }, { "ch": "26", "q": "Cryoprecipitate" }, { "ch": "30", "q": "表 30-1" }]
+    },
+    "r_mtp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性大量出血／大量輸血（MTP）",
+      "summary": "1 小時 ≥ 4 U 或 24 小時 ≥ 10 U 或 3 小時換半個血量：啟動 MTP，**pRBC:FFP:血小板 1:1:1**，保溫，每 4 U calcium gluconate 1 g IV，監測 K、Ca、pH、fibrinogen、血小板、體溫；同時止血、停抗凝並逆轉（Ch30）。",
+      "steps": [
+        "兩條大口徑 IV、心電監測；叫人、通知後線與血庫啟動 MTP",
+        "緊急 O 型 pRBC（育齡女性 O 陰性若有）至配合血到；1:1:1",
+        "找來源與止血：內視鏡、CTA、外科（Ch9／Ch19）；停抗凝／抗血小板並逆轉（Ch30）",
+        "保溫（血液加溫器、毯子）；每 4 U calcium gluconate 1 g IV",
+        "每 30–60 分鐘：CBC、PT/aPTT、fibrinogen、K、Ca、ABG、體溫；fibrinogen < 150 → cryo",
+        "創傷 3 小時內 → TXA 1 g IV over 10 min（Ch30）"
+      ],
+      "orders": [
+        { "drug": "pRBC", "dose": "緊急 O 型 2–4 U 起", "route": "IV（加溫）", "freq": "STAT，1:1:1 持續至止血", "note": "血行動力決定，不看 Hb" },
+        { "drug": "FFP", "dose": "與 pRBC 1:1（每 U 250 mL）", "route": "IV", "freq": "STAT 持續", "note": "解凍 30 分鐘，先通知血庫" },
+        { "drug": "分離術血小板", "dose": "1 U（每 6 U pRBC）", "route": "IV", "freq": "1:1:1", "note": "" },
+        { "drug": "Calcium gluconate 10%", "dose": "1 g (10 mL)", "route": "IV slow", "freq": "每 4 U 血品", "note": "枸櫞酸低血鈣；監測 iCa" },
+        { "drug": "Cryoprecipitate", "dose": "10 U", "route": "IV", "freq": "PRN fibrinogen < 150", "note": "↑ fibrinogen 50–70 mg/dL" },
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV over 10 min", "freq": "STAT → 1 g over 8 hr", "note": "創傷 3 小時內、產後／手術出血；消化道出血無效" }
+      ],
+      "watch": ["BP、HR、尿量 q15 min", "K、iCa、pH、體溫、fibrinogen、血小板 q30–60 min", "TACO／TRALI、高血鉀、低體溫"],
+      "call": ["大量輸血啟動 = 後線 + 血庫 + 相關科（內視鏡／外科／IR）", "輸血反應"],
+      "refs": [{ "ch": "26", "q": "大量輸血" }, { "ch": "30", "q": "Tranexamic acid" }, { "ch": "19", "q": "出血性休克" }]
+    },
+    "r_refuse": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "病人拒絕輸血（宗教等）",
+      "summary": "尊重意願並記錄；替代：iron sucrose IV、erythropoietin、TXA、積極止血、減少抽血；Hb < 7 有症狀時與後線／倫理討論。",
+      "steps": [
+        "確認意願（本人／預立文件）、可接受的血品／替代品（albumin？cell saver？）並記錄",
+        "止血優先：停抗凝／抗血小板、局部止血、TXA、內視鏡／IR／外科",
+        "減少醫源性失血：小管採血、集中抽血、減少頻次",
+        "造血：iron sucrose IV、EPO（腎臟科／血液科）、B12／葉酸",
+        "O₂、減少氧耗；Hb < 7 有症狀 → 後線／倫理討論"
+      ],
+      "orders": [
+        { "drug": "Iron sucrose", "dose": "200 mg in NS 100 mL", "route": "IV drip over 15–30 min", "freq": "每週 1–3 次至總量（Ch29）", "note": "" },
+        { "drug": "Erythropoietin（epoetin）", "dose": "{round(wt*50)}–{round(wt*100)} U（50–100 U/kg）", "route": "SC／IV", "freq": "每週 1–3 次", "note": "劑量依 Ch29 CKD；鐵足夠才有效；依 {wt} kg" },
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV over 10 min", "freq": "STAT → 1 g over 8 hr（出血時）", "note": "消化道出血無效；血尿慎用" }
+      ],
+      "watch": ["Hb、生命徵象、症狀", "出血來源"],
+      "call": ["病人拒絕輸血但 Hb < 7 有症狀", "活動性出血"],
+      "refs": [{ "ch": "26", "q": "IV. 拒絕輸血" }, { "ch": "29", "q": "3. 缺鐵" }]
+    }
+  }
+}

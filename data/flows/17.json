@@ -1,0 +1,700 @@
+{
+  "id": "17",
+  "title": "發燒與敗血症",
+  "chapter": "17",
+  "entries": [
+    { "label": "病人發燒（T ≥ 38℃）", "type": "symptom", "start": "i_phone", "group": "生命徵象",
+      "keywords": ["發燒", "fever", "體溫 38", "體溫 39", "發燒 病人", "寒顫", "chills", "rigor", "住院發燒", "術後發燒", "不明熱"] },
+    { "label": "發燒 + 血壓低／意識改變／喘（疑敗血症）", "type": "symptom", "start": "q_unstable", "group": "生命徵象",
+      "keywords": ["敗血症", "sepsis", "septic shock", "敗血性休克", "qSOFA", "乳酸", "lactate", "MAP 65", "低血壓 發燒", "norepinephrine"] },
+    { "label": "體溫過低／老年人意識改變（可能燒不起來）", "type": "symptom", "start": "q_unstable", "group": "生命徵象",
+      "keywords": ["低體溫", "hypothermia", "老年 感染", "燒不起來", "意識改變 感染", "尿毒 感染"] },
+    { "label": "敗血症／敗血性休克（1 小時 bundle）", "type": "diagnosis", "start": "r_shock",
+      "keywords": ["敗血性休克", "septic shock", "sepsis bundle", "SSC 2021", "norepinephrine", "vasopressin", "hydrocortisone", "30 mL/kg"] },
+    { "label": "嗜中性球低下發燒", "type": "diagnosis", "start": "q_anc",
+      "keywords": ["嗜中性球低下發燒", "febrile neutropenia", "ANC 500", "化療 發燒", "cefepime", "typhlitis", "MASCC"] },
+    { "label": "肺炎（社區／院內／吸入性）", "type": "diagnosis", "start": "q_pna",
+      "keywords": ["肺炎", "pneumonia", "CAP", "HAP", "VAP", "吸入性肺炎", "aspiration", "肺膿瘍", "膿胸", "ceftriaxone azithromycin"] },
+    { "label": "泌尿道感染／腎盂腎炎／CAUTI", "type": "diagnosis", "start": "q_uti",
+      "keywords": ["泌尿道感染", "UTI", "腎盂腎炎", "pyelonephritis", "CAUTI", "尿管 發燒", "ESBL", "ertapenem", "urosepsis"] },
+    { "label": "中央靜脈導管感染（CLABSI）／菌血症", "type": "diagnosis", "start": "r_clabsi",
+      "keywords": ["CLABSI", "導管感染", "catheter infection", "菌血症", "bacteremia", "S. aureus bacteremia", "Candida 血症", "candidemia", "拔管"] },
+    { "label": "腦膜炎", "type": "diagnosis", "start": "q_mening",
+      "keywords": ["腦膜炎", "meningitis", "頸僵", "LP", "腰椎穿刺", "dexamethasone", "HSV 腦炎", "encephalitis", "分流感染"] },
+    { "label": "心內膜炎（經驗性）", "type": "diagnosis", "start": "r_endocarditis",
+      "keywords": ["心內膜炎", "endocarditis", "IE", "新雜音", "IVDU 發燒", "人工瓣膜", "TEE", "Roth spots", "Janeway"] },
+    { "label": "腹內感染／膽管炎／SBP", "type": "diagnosis", "start": "r_abd",
+      "keywords": ["腹內感染", "intra-abdominal infection", "膽管炎", "cholangitis", "SBP", "自發性細菌性腹膜炎", "吻合口滲漏", "腹膜炎", "flomoxef"] },
+    { "label": "C. difficile 感染", "type": "diagnosis", "start": "q_cdiff",
+      "keywords": ["C. difficile", "困難梭菌", "CDI", "抗生素 腹瀉", "fidaxomicin", "vancomycin PO", "megacolon", "猛爆性"] },
+    { "label": "皮膚軟組織／手術部位感染", "type": "diagnosis", "start": "r_ssti",
+      "keywords": ["皮膚軟組織感染", "SSTI", "蜂窩性組織炎", "cellulitis", "手術部位感染", "壓瘡感染", "cefazolin"] },
+    { "label": "抗藥菌（ESBL、CRE、MRSA、VRE、Pseudomonas）", "type": "diagnosis", "start": "r_resistant",
+      "keywords": ["ESBL", "CRE", "MRSA", "VRE", "Pseudomonas", "抗藥菌", "carbapenem", "ceftazidime-avibactam", "linezolid", "daptomycin", "colistin"] },
+    { "label": "流感／COVID（住院）", "type": "diagnosis", "start": "r_flu",
+      "keywords": ["流感", "influenza", "oseltamivir", "克流感", "COVID", "RSV", "呼吸道病毒"] },
+    { "label": "抗生素 48–72 小時仍發燒", "type": "diagnosis", "start": "r_persistent",
+      "keywords": ["持續發燒", "抗生素無效", "persistent fever", "換抗生素", "藥物熱", "drug fever", "不明熱"] },
+    { "label": "甲狀腺風暴", "type": "diagnosis", "start": "r_thyroid",
+      "keywords": ["甲狀腺風暴", "thyroid storm", "PTU", "propranolol", "Lugol", "甲狀腺亢進 發燒"] },
+    { "label": "腎上腺危症", "type": "diagnosis", "start": "r_adrenal",
+      "keywords": ["腎上腺危症", "adrenal crisis", "adrenal insufficiency", "hydrocortisone 100", "類固醇 停藥 休克"] },
+    { "label": "惡性高熱／中暑", "type": "diagnosis", "start": "r_hyperthermia",
+      "keywords": ["惡性高熱", "malignant hyperthermia", "dantrolene", "中暑", "heat stroke", "高體溫", "hyperthermia", "40 度"] },
+    { "label": "術後發燒（5W）／藥物熱", "type": "diagnosis", "start": "r_postop",
+      "keywords": ["術後發燒", "postoperative fever", "5W", "藥物熱", "drug fever", "輸血 發燒", "POD 發燒"] },
+    { "label": "退燒與支持（acetaminophen、物理降溫）", "type": "diagnosis", "start": "r_antipyretic",
+      "keywords": ["退燒", "antipyretic", "acetaminophen", "普拿疼", "物理降溫", "冰枕", "寒顫 meperidine", "退燒藥"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中先問、先開",
+      "body": [
+        "體溫（測法）、之前有沒有燒、寒顫？生命徵象：**血壓、心率、呼吸、SpO₂、意識、尿量**",
+        "症狀：咳痰／喘、解尿症狀、腹痛／腹瀉、頭痛／頸僵、皮疹、傷口／管路處紅腫；輸血中？",
+        "入院診斷、手術／處置（幾天前）、管路（CVC、尿管、引流管、NG）、目前抗生素（第幾天）、免疫狀態（化療、類固醇、移植、HIV）",
+        "**低血壓／意識改變／RR ≥ 22 → 立刻到床邊**、IV × 2、NS/LR 500 mL bolus、O₂、監測器",
+        "先開：血液培養 × 2 套（不同部位，含 CVC 每個 lumen）、CBC、CRP、lactate、BUN/Cr、電解質、肝功能；尿液常規／培養、痰培養；CXR",
+        "老年、尿毒、肝硬化、類固醇者可能燒不起來——低體溫、意識改變也要當敗血症想"
+      ],
+      "next": "q_unstable"
+    },
+    "q_unstable": {
+      "type": "multi",
+      "title": "篩敗血症：勾選所有符合",
+      "help": "敗血症 = 感染 + 器官功能障礙；敗血性休克 = 輸液後仍需升壓劑維持 MAP ≥ 65 且乳酸 > 2。qSOFA ≥ 2 高風險但不宜單獨當篩檢",
+      "options": [
+        { "label": "SBP ≤ 100 或 MAP < 65（輸液後仍低）", "set": { "hypo": true } },
+        { "label": "RR ≥ 22 或 SpO₂↓", "set": { "rr": true } },
+        { "label": "意識改變", "set": { "ams": true } },
+        { "label": "乳酸 > 2、尿量少、Cr／膽紅素／血小板惡化（器官功能障礙）", "set": { "organ": true } },
+        { "label": "化療中／血液惡性／移植（可能嗜中性球低下）", "set": { "immuno": true } },
+        { "label": "以上都沒有，生命徵象穩定", "set": { "stable": true } }
+      ],
+      "branches": [
+        { "if": "hypo", "next": "r_shock" },
+        { "if": "rr || ams || organ", "next": "r_sepsis" },
+        { "if": "immuno", "next": "q_anc" },
+        { "else": "q_source" }
+      ]
+    },
+    "q_anc": {
+      "type": "number",
+      "title": "ANC（/μL）？",
+      "help": "嗜中性球低下發燒 = ANC < 500（或預期 < 500）+ T ≥ 38.3 或 ≥ 38.0 持續 1 小時；化療 nadir 7–14 天",
+      "var": "anc", "unit": "/μL", "step": 10,
+      "quick": [100, 300, 500, 1000, 1500],
+      "branches": [
+        { "if": "anc < 500", "next": "r_neutropenic" },
+        { "else": "q_source" }
+      ]
+    },
+    "q_source": {
+      "type": "choice",
+      "title": "最可能的感染源？（打開每一條管路的敷料看）",
+      "help": "口咽、頸僵、肺、心雜音、腹部、肋脊角、傷口、管路插入處、皮膚（壓瘡、瘀點）、關節、肛周（非嗜中性球低下者）、四肢（DVT）",
+      "options": [
+        { "label": "肺：咳痰、囉音、SpO₂↓、CXR 浸潤（臥床／NG／意識差 → 吸入）", "next": "q_pna" },
+        { "label": "泌尿道：尿管、解尿症狀、肋脊角敲痛、混濁尿", "next": "q_uti" },
+        { "label": "中央靜脈導管：插入處紅腫膿、沖管時寒顫、無其他來源", "next": "r_clabsi" },
+        { "label": "皮膚軟組織／手術部位／壓瘡", "next": "r_ssti" },
+        { "label": "腹內：腹痛、術後吻合口、膽道、腹水（SBP）", "next": "r_abd" },
+        { "label": "腹瀉 + 抗生素（C. difficile）", "next": "q_cdiff" },
+        { "label": "頭痛、頸僵、意識改變、神外術後／引流（腦膜炎）", "next": "q_mening" },
+        { "label": "新雜音、栓塞徵候、IVDU、人工瓣膜（心內膜炎）", "next": "r_endocarditis" },
+        { "label": "抗生素已用 48–72 小時仍發燒", "next": "r_persistent" },
+        { "label": "非感染線索：新藥 7–10 天、輸血中、術後 48 小時內、DVT、甲狀腺／腎上腺、麻醉後", "next": "q_noninf" },
+        { "label": "來源不明，穩定", "next": "r_fuo_stable" }
+      ]
+    },
+    "q_pna": {
+      "type": "choice",
+      "title": "肺炎：哪一種？",
+      "help": "疑 TB 避免 quinolone；MRSA／Pseudomonas 只在有風險時加（Ch7）",
+      "options": [
+        { "label": "社區型（入院 < 48 小時）", "next": "r_cap" },
+        { "label": "院內／呼吸器相關（入院 ≥ 48 小時、近 90 天抗生素／住院）", "next": "r_hap" },
+        { "label": "吸入性／肺膿瘍／膿胸", "next": "r_aspiration" }
+      ]
+    },
+    "q_uti": {
+      "type": "choice",
+      "title": "泌尿道感染：風險？",
+      "help": "尿管者換新管後留培養；單獨膿尿不算 CAUTI；無症狀菌尿不治療；男性想前列腺炎",
+      "options": [
+        { "label": "一般（無 ESBL 風險、無休克）", "next": "r_uti", "set": { "esbl": false, "ushock": false } },
+        { "label": "ESBL 風險（既往 ESBL、近 90 天抗生素／住院、長照）", "next": "r_uti", "set": { "esbl": true, "ushock": false } },
+        { "label": "休克／不穩", "next": "r_uti", "set": { "esbl": false, "ushock": true } }
+      ]
+    },
+    "q_cdiff": {
+      "type": "choice",
+      "title": "C. difficile：嚴重度？",
+      "help": "只驗有腹瀉者（PCR 陽性 + toxin 陰性可能只是定植）；嚴重 = WBC > 15,000 或 Cr > 1.5",
+      "options": [
+        { "label": "非嚴重或嚴重（無低血壓、無 ileus）", "next": "r_cdiff" },
+        { "label": "猛爆性：低血壓、ileus、megacolon", "next": "r_cdiff_fulm" }
+      ]
+    },
+    "q_mening": {
+      "type": "choice",
+      "title": "腦膜炎：社區或院內？",
+      "help": "血培養後立刻給藥，不等 CT／LP；飛沫隔離至排除腦膜炎雙球菌",
+      "options": [
+        { "label": "社區型", "next": "r_meningitis", "set": { "nos": false } },
+        { "label": "院內／神外術後／分流／引流", "next": "r_meningitis", "set": { "nos": true } }
+      ]
+    },
+    "q_noninf": {
+      "type": "choice",
+      "title": "非感染性發燒：哪一種？",
+      "options": [
+        { "label": "術後 48 小時內／新藥 7–10 天（藥物熱）／輸血／DVT", "next": "r_postop" },
+        { "label": "甲狀腺亢進病史 + 心搏過速、躁動、高熱（甲狀腺風暴）", "next": "r_thyroid" },
+        { "label": "長期類固醇停用／低血壓 + 低血鈉高血鉀（腎上腺危症）", "next": "r_adrenal" },
+        { "label": "麻醉後肌肉僵硬高熱（惡性高熱）／中暑 > 40℃", "next": "r_hyperthermia" },
+        { "label": "抗精神病藥／血清素藥物 + 肌肉僵硬（NMS／血清素症候群）", "next": "r_postop" }
+      ]
+    },
+    "r_shock": {
+      "type": "result",
+      "urgency": "red",
+      "title": "敗血性休克：1 小時 bundle（SSC 2021）",
+      "summary": "**1 小時內：乳酸、血培養 × 2、廣效抗生素、30 mL/kg 晶體液；MAP < 65 就上 norepinephrine（不等輸液灌完）**；來源控制 6–12 小時內；ICU。",
+      "steps": [
+        "IV × 2、監測器、O₂；乳酸（> 2 → 2–4 小時後再抽）、血液培養 × 2（含 CVC 每個 lumen）、CBC、Cr、電解質、肝功能、凝血、血糖",
+        "**1 小時內廣效抗生素**（來源不明：piperacillin-tazobactam + vancomycin；ESBL 風險改 meropenem；Candida 風險加 micafungin）",
+        "晶體液 30 mL/kg 前 3 小時（LR 優先）；之後依動態評估 250–500 mL bolus；心／腎衰竭每 250 mL 評估",
+        "MAP < 65 → norepinephrine（可周邊短暫）；NE ≥ 0.25–0.5 加 vasopressin；心功能差加 epinephrine／dobutamine",
+        "NE ≥ 0.25 mcg/kg/min ≥ 4 小時仍不穩 → hydrocortisone",
+        "來源控制 6–12 小時：引流膿瘍、拔除可疑管路、清創、解除阻塞",
+        "尿管記尿量（≥ 0.5 mL/kg/hr）、q6h 乳酸／電解質／CBC／Cr、血糖 140–180、DVT／壓瘡預防",
+        "通知後線 + ICU"
+      ],
+      "orders": [
+        { "drug": "NS／LR（LR 優先）", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "前 3 小時內；之後 250–500 mL bolus 依評估", "note": "依 {wt} kg；心／腎衰竭仍要給但每 250 mL 評估；避免 HES" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起，titrate（常用至 0.5–1）；{wt} kg：{round(wt*0.05*60/32,1)}–{round(wt*0.1*60/32,1)} mL/hr", "route": "IV drip（可周邊短暫）", "freq": "持續；MAP < 65 就給", "note": "泡法 8 mg in D5W 250 mL（32 mcg/mL）" },
+        { "drug": "Vasopressin", "dose": "0.03 U/min（固定）", "route": "IV drip", "freq": "持續（NE ≥ 0.25–0.5 mcg/kg/min 時加）", "note": "泡法 20 U in NS 100 mL（0.2 U/mL）= 9 mL/hr" },
+        { "drug": "Epinephrine", "dose": "0.05–0.5 mcg/kg/min", "route": "IV drip", "freq": "持續（第三線或心功能差）", "note": "" },
+        { "drug": "Dobutamine", "dose": "2.5–10 mcg/kg/min", "route": "IV drip", "freq": "持續（心輸出低且灌流不足）", "note": "" },
+        { "drug": "Hydrocortisone", "dose": "50 mg", "route": "IV", "freq": "q6h × 5–7 天（NE ≥ 0.25 mcg/kg/min ≥ 4 小時仍不穩）", "note": "或 200 mg/d 持續；可加 fludrocortisone 50 mcg PO/NG QD" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "來源不明首選；CrCl {round(crcl)} 依附錄 A5，**第一劑不減量**", "alt": "cefepime 2 g q8h；ESBL 風險 meropenem 1 g q8h（皆依 A5）" },
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg；loading 不減量" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度（HD 後 500–1,000 mg）'}", "note": "CrCl {round(crcl)} 依 A5；trough 15–20 mg/L 或 AUC" },
+        { "drug": "Micafungin", "dose": "100 mg", "route": "IV drip", "freq": "QD（免疫低下／Candida 風險：TPN、長期抗生素、腹部手術、定植）", "note": "不需腎調；或 caspofungin 70 → 50 mg" }
+      ],
+      "watch": ["MAP ≥ 65（更高無益）、微血管再充填 ≤ 3 秒 q30min、尿量 ≥ 0.5 mL/kg/hr", "乳酸 2 小時下降 ≥ 20%；q6h 乳酸／電解質／CBC／Cr", "血糖 140–180；升壓劑周邊外滲"],
+      "call": ["發燒 + 低血壓／MAP < 65、乳酸 > 2、意識改變 = 立刻後線 + ICU", "需要升壓劑、拔除 CVC／透析導管、來源控制手術"],
+      "refs": [{ "ch": "17", "q": "表 17-1" }, { "ch": "17", "q": "表 17-3" }, { "ch": "A5", "q": "Piperacillin-tazobactam" }],
+      "next": [{ "label": "確定來源 → 依來源選抗生素", "next": "q_source" }]
+    },
+    "r_sepsis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "敗血症（器官功能障礙，無休克）",
+      "summary": "培養先抽（不延遲抗生素 > 45 分鐘）→ 廣效抗生素（高度可能敗血症 1 小時內；可能但不確定可 3 小時內評估後給）→ 輸液 30 mL/kg → 找來源並移除可疑管路；MAP < 65 就改休克流程。",
+      "steps": [
+        "IV × 2、監測器、O₂（目標 94–98%）；乳酸、血液培養 × 2（含 CVC lumen）、CBC、CRP、Cr、電解質、肝功能、凝血、VBG",
+        "尿液常規／培養（尿管者換新管後留）、痰培養、CXR；依線索加腹部影像、LP",
+        "抗生素：來源明確依來源（下一步）；不明 → piperacillin-tazobactam ± vancomycin",
+        "晶體液 30 mL/kg（心／腎衰竭每 250 mL 評估）；輸液後 MAP < 65 → norepinephrine（休克流程）",
+        "移除／更換可疑管路（尿管、周邊留置針 > 72–96 小時、CVC 若插入處化膿）",
+        "尿量、q6h 乳酸；通知後線"
+      ],
+      "orders": [
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "前 3 小時", "note": "依 {wt} kg；心／腎衰竭每 250 mL 評估" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "來源不明；CrCl {round(crcl)} 依 A5，第一劑不減量", "alt": "cefepime 2 g q8h；ESBL 風險 meropenem 1 g q8h" },
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1（MRSA 風險／管路／皮膚來源）", "note": "依 {wt} kg" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "CrCl {round(crcl)} 依 A5；trough 15–20" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "不必為退燒而退燒；肝病 2 g/d" }
+      ],
+      "watch": ["MAP、HR、RR、SpO₂ q15–30 min 至穩定；尿量每小時", "乳酸 2–4 小時再抽；q6h 電解質／Cr", "意識"],
+      "call": ["輸液後 MAP < 65、乳酸 > 2 上升、意識改變、SpO₂↓ → 後線 + ICU", "需拔 CVC、來源控制"],
+      "refs": [{ "ch": "17", "q": "表 17-1" }, { "ch": "17", "q": "篩敗血症" }],
+      "next": [{ "label": "依來源選抗生素", "next": "q_source" }, { "label": "MAP < 65 → 休克 bundle", "next": "r_shock" }]
+    },
+    "r_neutropenic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "嗜中性球低下發燒（ANC {anc} < 500）",
+      "summary": "**急症：30 分鐘內給 cefepime 2 g q8h**（或 piperacillin-tazobactam／meropenem）；休克、皮膚／管路感染、肺炎、MRSA 定植、黏膜炎重、血培養 Gram 陽性 → 加 vancomycin；≥ 4 天仍發燒 → 加抗黴菌；**不要肛門指診**。",
+      "steps": [
+        "血液培養 × 2（含 CVC 每個 lumen）、CBC/DC、Cr、肝功能、乳酸、CRP；尿液／痰培養、CXR；**30 分鐘內抗生素**",
+        "全身檢查：口腔黏膜炎、管路插入處、皮膚、肛周（視診不指診）、肺；右下腹痛 → typhlitis（CT）",
+        "低血壓 → 敗血性休克 bundle（30 mL/kg、norepinephrine）",
+        "加 vancomycin 的條件：休克、皮膚／管路感染、肺炎、MRSA 定植、黏膜炎重、血培養 Gram 陽性；48 小時無 Gram 陽性菌 → 停",
+        "≥ 4 天仍發燒 → 加抗黴菌（micafungin／voriconazole／liposomal amphotericin B），找肺／鼻竇 CT",
+        "來源不明 → 用到退燒且 ANC > 500；通知後線／血液腫瘤科",
+        "MASCC 低風險可口服 amoxicillin-clavulanate + ciprofloxacin（依血液腫瘤科）"
+      ],
+      "orders": [
+        { "drug": "Cefepime", "dose": "{crcl >= 10 ? '2 g' : '1 g'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "note": "首選；30 分鐘內；CrCl {round(crcl)} 依附錄 A5（腎功能差者神經毒性／癲癇）", "alt": "piperacillin-tazobactam 4.5 g q6h 或 meropenem 1 g q8h（皆依 A5）" },
+        { "drug": "Piperacillin-tazobactam（typhlitis／腹部來源時）", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "或 meropenem；CrCl {round(crcl)} 依 A5" },
+        { "drug": "Vancomycin（loading，符合條件時）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "CrCl {round(crcl)} 依 A5；48 小時血培養無 Gram 陽性 → 停" },
+        { "drug": "Micafungin", "dose": "100 mg", "route": "IV drip", "freq": "QD（≥ 4 天仍發燒）", "note": "不需腎調；或 voriconazole／liposomal amphotericin B（感染科）" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "低血壓時前 3 小時", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "避免 NSAID／PR 給藥（血小板低、黏膜）" }
+      ],
+      "watch": ["生命徵象 q1h 至穩定；MAP、乳酸、尿量", "每日血培養至陰性；ANC 每日", "黏膜炎、腹痛（typhlitis）、皮膚新病灶"],
+      "call": ["嗜中性球低下發燒 = 通知後線／血液腫瘤科", "低血壓、乳酸 > 2、意識改變 → ICU", "≥ 4 天仍發燒、右下腹痛"],
+      "refs": [{ "ch": "17", "q": "嗜中性球低下發燒" }, { "ch": "A5", "q": "Cefepime" }]
+    },
+    "r_cap": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "社區型肺炎（住院）",
+      "summary": "Ceftriaxone 2 g q24h + azithromycin 500 mg QD（或 levofloxacin 750 mg QD）；MRSA／Pseudomonas 只在有風險時加（Ch7）；疑 TB 避免 quinolone；O₂ 目標 94–98%。",
+      "steps": [
+        "SpO₂、RR；O₂ 目標 94–98%（CO₂ 滯留 88–92%）；CXR",
+        "血液培養 × 2、痰培養／Gram stain、CBC、Cr、乳酸；重症加尿液肺炎鏈球菌／退伍軍人菌抗原；流感／COVID PCR（流行季）",
+        "抗生素（CrCl {round(crcl)} 已調整）；MRSA／Pseudomonas 風險（近 90 天 IV 抗生素、定植、氣切）→ 依 Ch7 加藥",
+        "肋膜積液 > 1 cm → 抽液（膿胸引流）",
+        "不穩（RR ≥ 30、SpO₂ < 90%、低血壓、意識改變）→ 敗血症流程 + ICU 評估"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q24h", "note": "不需腎調" },
+        { "drug": "Azithromycin", "dose": "500 mg", "route": "IV／PO", "freq": "QD", "note": "不需腎調；QT" },
+        { "drug": "Levofloxacin（替代 ceftriaxone + azithromycin）", "dose": "750 mg", "route": "IV／PO", "freq": "{crcl >= 50 ? 'q24h' : 'q48h'}", "note": "CrCl {round(crcl)} 依 A5（10–19：750 → 500 mg q48h）；疑 TB 避免" },
+        { "drug": "Oseltamivir（流感陽性或流行季高度懷疑）", "dose": "{crcl > 60 ? '75 mg' : '30 mg'}", "route": "PO", "freq": "{crcl > 30 ? 'BID' : crcl >= 10 ? 'QD' : '單次（每次 HD 後）'} × 5 天", "note": "CrCl {round(crcl)} 依 A5；> 48 小時仍給" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "" }
+      ],
+      "watch": ["SpO₂、RR q1–4h；48–72 小時退燒與 CRP", "培養結果降階；改口服時機"],
+      "call": ["RR ≥ 30、SpO₂ < 90% 用氧仍低、低血壓、意識改變 → 後線／ICU", "膿胸需引流、48–72 小時無改善"],
+      "refs": [{ "ch": "17", "q": "社區肺炎" }, { "ch": "07", "q": "肺炎" }, { "ch": "A5", "q": "Levofloxacin" }]
+    },
+    "r_hap": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "院內／呼吸器相關肺炎",
+      "summary": "Piperacillin-tazobactam 或 cefepime 或 meropenem ± vancomycin／linezolid（MRSA 風險）± amikacin（休克、高抗藥）；依院內 antibiogram；48–72 小時後依培養降階。",
+      "steps": [
+        "SpO₂、RR、O₂；CXR；血液培養 × 2、痰／氣管抽吸培養、CBC、Cr、乳酸",
+        "抗生素（CrCl {round(crcl)} 已調整）；MRSA 風險（定植、近期 IV 抗生素、單位盛行率高）→ 加 vancomycin 或 linezolid",
+        "休克／高抗藥風險 → 加 amikacin（單日劑量 + 濃度）",
+        "不穩 → 敗血症流程；呼吸費力 → ICU 評估",
+        "48–72 小時依培養降階"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "CrCl {round(crcl)} 依附錄 A5；第一劑不減量" },
+        { "drug": "Cefepime（替代）", "dose": "{crcl >= 10 ? '2 g' : '1 g'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依 A5" },
+        { "drug": "Meropenem（ESBL 風險替代）", "dose": "{crcl >= 30 ? '1 g' : '500 mg'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 10 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依 A5" },
+        { "drug": "Vancomycin（MRSA 風險）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg；首劑 loading 25–30 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）", "alt": "linezolid 600 mg IV q12h（不需腎調；血小板）" },
+        { "drug": "Amikacin（休克、高抗藥）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q24h' : crcl >= 30 ? 'q36–48h（依濃度）' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）；單日劑量 + 濃度監測" }
+      ],
+      "watch": ["SpO₂、RR、氧需求趨勢", "Cr（aminoglycoside、vancomycin）、濃度", "培養 48–72 小時降階"],
+      "call": ["需 NIV／插管、低血壓、乳酸 > 2", "48–72 小時無改善（找膿胸、抗藥菌、非感染）"],
+      "refs": [{ "ch": "17", "q": "院內／呼吸器肺炎" }, { "ch": "A5", "q": "Amikacin" }]
+    },
+    "r_aspiration": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "吸入性肺炎／肺膿瘍／膿胸",
+      "summary": "Ceftriaxone 2 g q24h + metronidazole 500 mg q8h 或 ampicillin-sulbactam 3 g q6h；膿胸（肋膜積液 > 1 cm）→ 引流；吸入處置：坐起、NPO 評估吞嚥、抽痰。",
+      "steps": [
+        "坐起 ≥ 30–45°、抽痰、O₂ 94–98%；NPO 至吞嚥評估；NG 減壓（嘔吐）",
+        "CXR（右下葉／依姿勢）、血液培養、痰培養；肋膜積液 → 超音波，> 1 cm 抽液（pH、LDH、glucose、培養）",
+        "抗生素（CrCl {round(crcl)} 已調整）；膿胸引流（胸管）",
+        "剛吸入且無發燒／浸潤（化學性肺炎）可觀察 24–48 小時再決定抗生素",
+        "不穩 → 敗血症流程"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q24h", "note": "不需腎調" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "IV drip", "freq": "{crcl >= 10 ? 'q8h' : 'q8–12h'}", "note": "與 ceftriaxone 併用；肝病減量" },
+        { "drug": "Ampicillin-sulbactam（替代）", "dose": "3 g", "route": "IV drip", "freq": "{crcl > 50 ? 'q6h' : crcl >= 30 ? 'q6–8h' : crcl >= 15 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依附錄 A5" }
+      ],
+      "watch": ["SpO₂、RR、痰量", "肋膜積液進展（膿胸）"],
+      "call": ["需 NIV／插管、膿胸需胸管、低血壓"],
+      "refs": [{ "ch": "17", "q": "吸入性／肺膿瘍／膿胸" }, { "ch": "A5", "q": "Ampicillin-sulbactam" }]
+    },
+    "r_uti": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "複雜性泌尿道感染／腎盂腎炎／CAUTI",
+      "summary": "Ceftriaxone 1–2 g q24h；ESBL 風險 → ertapenem；休克 → piperacillin-tazobactam／meropenem；**尿管者換新管後留培養**（單獨膿尿不算 CAUTI）；退燒 24–48 小時改口服；重症、疑阻塞、48–72 小時無改善 → CT 找阻塞／膿瘍。",
+      "steps": [
+        "尿管：換新管後留尿液常規／培養；血液培養 × 2、CBC、Cr、乳酸",
+        "抗生素（CrCl {round(crcl)} 已調整）；男性想前列腺炎（療程較長）",
+        "不穩 → 敗血症流程；疑阻塞（結石、腎水腫、少尿）→ 腎臟超音波／CT，阻塞性腎盂腎炎需引流（泌尿科）",
+        "退燒 24–48 小時後改口服（cefixime、levofloxacin——抗藥率高地區避免經驗性）",
+        "48–72 小時無改善 → CT 找膿瘍／阻塞"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "1–2 g", "route": "IV drip", "freq": "q24h", "cond": "!esbl && !ushock", "note": "不需腎調" },
+        { "drug": "Ertapenem", "dose": "{crcl >= 30 ? '1 g' : '500 mg'}", "route": "IV drip", "freq": "q24h", "cond": "esbl && !ushock", "note": "ESBL 風險；CrCl {round(crcl)} 依附錄 A5" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "cond": "ushock", "note": "休克；CrCl {round(crcl)} 依 A5，第一劑不減量", "alt": "meropenem 1 g q8h（ESBL + 休克）" },
+        { "drug": "Meropenem", "dose": "{crcl >= 30 ? '1 g' : '500 mg'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 10 ? 'q12h' : 'q24h'}", "cond": "ushock && esbl", "note": "CrCl {round(crcl)} 依 A5" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "前 3 小時", "cond": "ushock", "note": "休克；心／腎衰竭每 250 mL 評估" },
+        { "drug": "Cefixime（退燒後口服）", "dose": "200 mg", "route": "PO", "freq": "BID", "note": "退燒 24–48 小時後、依培養", "alt": "levofloxacin 750 mg QD（依 A5；抗藥率高地區避免經驗性）" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "" }
+      ],
+      "watch": ["體溫、尿量、Cr", "48–72 小時無改善 → 影像"],
+      "call": ["低血壓、乳酸 > 2、疑阻塞性腎盂腎炎（需引流）", "48–72 小時無改善"],
+      "refs": [{ "ch": "17", "q": "泌尿道（複雜性／腎盂腎炎／CAUTI）" }, { "ch": "A5", "q": "Ertapenem" }]
+    },
+    "r_clabsi": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "中央靜脈導管相關血流感染（CLABSI）／菌血症",
+      "summary": "CVC 與周邊各一套血培養（differential time to positivity）→ vancomycin + cefepime（或 piperacillin-tazobactam）；Candida 風險加 micafungin；**拔管**：S. aureus、Pseudomonas／GNR、Enterococcus、Candida、化膿性血栓、休克、持續菌血症；每日血培養至陰性 48 小時。",
+      "steps": [
+        "打開敷料看插入處（紅腫膿 → 拔管並送管尖培養）；CVC 每個 lumen + 周邊各一套血培養",
+        "抗生素（CrCl {round(crcl)} 已調整）；不穩 → 敗血症流程",
+        "拔管條件：插入處化膿、敗血性休克無其他來源、S. aureus、Pseudomonas／GNR、Enterococcus、Candida、化膿性血栓、持續菌血症（CoNS 可保留但復發↑）",
+        "每日血培養至陰性 48 小時；S. aureus → 拔管、TEE（心內膜炎 ~25%）、無併發症 14 天否則 4–6 週、感染科",
+        "**Candida 血培養從不是汙染** → 拔管、echinocandin、眼科 + 心臟超音波，自第一套陰性起 14 天",
+        "持續陽性 → 找心內膜炎、化膿性血栓（超音波）、人工物"
+      ],
+      "orders": [
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg；loading 不減量" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "CrCl {round(crcl)} 依附錄 A5；trough 15–20" },
+        { "drug": "Cefepime", "dose": "{crcl >= 10 ? '2 g' : '1 g'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依 A5", "alt": "piperacillin-tazobactam 4.5 g q6h（依 A5）" },
+        { "drug": "Micafungin（Candida 風險：TPN、長期抗生素、腹部手術、定植）", "dose": "100 mg", "route": "IV drip", "freq": "QD", "note": "不需腎調；Candida 血症自第一套陰性起 14 天" }
+      ],
+      "watch": ["每日血培養至陰性 48 小時", "體溫、MAP、乳酸", "Cr、vancomycin trough"],
+      "call": ["需拔除 CVC／透析導管", "S. aureus／Candida 菌血症（感染科、TEE／眼科）", "休克、持續菌血症 > 72 小時"],
+      "refs": [{ "ch": "17", "q": "中央靜脈導管相關" }, { "ch": "A5", "q": "Cefepime" }]
+    },
+    "r_ssti": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "皮膚軟組織／手術部位／壓瘡感染",
+      "summary": "Cefazolin 1–2 g q8h（MRSA 風險：vancomycin）；膿瘍 I&D；**壞死性（劇痛不成比例、紫黑、捻髮音、水泡）→ piperacillin-tazobactam + vancomycin + clindamycin + 緊急清創**；詳見 Ch15。",
+      "steps": [
+        "打開敷料看：畫線標記範圍、拍照；膿／波動感 → I&D、深部培養",
+        "血液培養（發燒）、CBC、CRP、血糖",
+        "抗生素（CrCl {round(crcl)} 已調整）；MRSA 風險（膿、既往 MRSA、長照）→ vancomycin",
+        "壞死性徵候 → 立即外科 + 三合一抗生素（Ch15）",
+        "壓瘡：減壓、清創、傷口護理師；排除骨髓炎"
+      ],
+      "orders": [
+        { "drug": "Cefazolin", "dose": "{crcl >= 35 ? '1–2 g' : '0.5–1 g'}", "route": "IV drip", "freq": "{crcl >= 35 ? 'q8h' : crcl >= 11 ? 'q12h' : 'q18–24h'}", "note": "CrCl {round(crcl)} 依附錄 A5" },
+        { "drug": "Vancomycin（MRSA 風險）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）" },
+        { "drug": "Piperacillin-tazobactam（壞死性）", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "+ vancomycin + clindamycin 600–900 mg q8h；緊急清創；CrCl {round(crcl)} 依 A5" },
+        { "drug": "Clindamycin（壞死性）", "dose": "600–900 mg", "route": "IV drip", "freq": "q8h", "note": "抑制毒素" }
+      ],
+      "watch": ["範圍 vs 標記線 24–48 小時", "體溫、Cr"],
+      "call": ["壞死性徵候 = 立刻外科", "48 小時無改善、敗血症徵候、植入物感染"],
+      "refs": [{ "ch": "17", "q": "皮膚軟組織" }, { "ch": "15", "q": "壞死性軟組織感染" }, { "ch": "A5", "q": "Cefazolin" }]
+    },
+    "r_abd": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "腹內感染／膽管炎／SBP",
+      "summary": "Ceftriaxone 2 g q24h + metronidazole 500 mg q8h；重症 → piperacillin-tazobactam 或 meropenem ± vancomycin；膽道可用 flomoxef；**來源控制**（膽道引流、膿瘍引流、外科）。",
+      "steps": [
+        "腹部檢查（腹膜炎徵候）、血液培養 × 2、CBC、Cr、肝功能、lipase、乳酸；腹水 → 診斷性抽腹水（PMN ≥ 250 = SBP）",
+        "腹部超音波／CT（膽道擴張、膿瘍、腸穿孔、吻合口滲漏）",
+        "抗生素（CrCl {round(crcl)} 已調整）；不穩 → 敗血症流程",
+        "膽管炎：膽道引流（ERCP／PTCD）→ 消化科；膿瘍 → 引流；腹膜炎 → 外科",
+        "NPO、輸液、止痛"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q24h", "note": "不需腎調" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "IV drip", "freq": "{crcl >= 10 ? 'q8h' : 'q8–12h'}", "note": "與 ceftriaxone 併用；肝病減量" },
+        { "drug": "Piperacillin-tazobactam（重症）", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "CrCl {round(crcl)} 依附錄 A5；第一劑不減量", "alt": "meropenem 1 g q8h ± vancomycin" },
+        { "drug": "Flomoxef（膽道）", "dose": "1 g", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依 A5" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT bolus，之後維持（NPO）", "note": "心／腎衰竭 250 mL；休克 30 mL/kg" }
+      ],
+      "watch": ["腹痛、腹膜炎徵候、乳酸、膽紅素", "體溫、尿量"],
+      "call": ["膽管炎（需引流）、腹膜炎、腹內急症 = 通知後線 + 消化科／外科", "低血壓、乳酸 > 2"],
+      "refs": [{ "ch": "17", "q": "腹內" }, { "ch": "A5", "q": "Flomoxef" }]
+    },
+    "r_cdiff": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "C. difficile 感染（非猛爆性）",
+      "summary": "Fidaxomicin 200 mg PO BID × 10 天（首選，復發少）或 vancomycin 125 mg PO QID × 10 天；**停其他抗生素與止瀉藥**；接觸隔離（肥皂洗手）。",
+      "steps": [
+        "糞便 C. difficile toxin/PCR（只驗有腹瀉者）；CBC（WBC > 15,000 = 嚴重）、Cr（> 1.5 = 嚴重）、albumin、乳酸",
+        "停用非必要抗生素、止瀉藥、PPI 評估",
+        "口服治療 × 10 天（CrCl 不需調整）",
+        "接觸隔離、肥皂水洗手（酒精無效）；補充輸液",
+        "惡化（ileus、WBC↑、乳酸↑、休克）→ CT + 外科（猛爆性流程）"
+      ],
+      "orders": [
+        { "drug": "Fidaxomicin", "dose": "200 mg", "route": "PO", "freq": "BID × 10 天", "note": "首選；不需腎調" },
+        { "drug": "Vancomycin（口服）", "dose": "125 mg", "route": "PO", "freq": "QID × 10 天", "note": "替代；不需腎調" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "脫水時 bolus，之後依 I/O", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["排便次數、腹脹（ileus）、WBC、Cr、乳酸每日", "低血壓、腹膜炎徵候"],
+      "call": ["低血壓、ileus、megacolon、WBC 急升、乳酸↑ → 猛爆性（外科）"],
+      "refs": [{ "ch": "17", "q": "C. difficile" }, { "ch": "24", "q": "C. difficile" }],
+      "next": [{ "label": "惡化 → 猛爆性 C. difficile", "next": "r_cdiff_fulm" }]
+    },
+    "r_cdiff_fulm": {
+      "type": "result",
+      "urgency": "red",
+      "title": "猛爆性 C. difficile（低血壓、ileus、megacolon）",
+      "summary": "Vancomycin 500 mg PO/NG QID + metronidazole 500 mg IV q8h；ileus 加 vancomycin 灌腸 PR q6h；CT + 外科會診；敗血性休克 bundle。",
+      "steps": [
+        "IV × 2、監測器；乳酸、CBC、Cr、電解質、血液培養；腹部 CT（megacolon、穿孔）",
+        "三合一治療（PO/NG + IV ± PR）",
+        "低血壓 → 30 mL/kg 晶體液、norepinephrine（休克流程）",
+        "通知後線 + 外科（結腸切除／迴腸造口評估）；ICU",
+        "停止其他抗生素與止瀉藥；接觸隔離"
+      ],
+      "orders": [
+        { "drug": "Vancomycin（口服／NG）", "dose": "500 mg", "route": "PO／NG", "freq": "QID", "note": "不需腎調" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "IV drip", "freq": "{crcl >= 10 ? 'q8h' : 'q8–12h'}", "note": "肝病減量" },
+        { "drug": "Vancomycin（灌腸，ileus 時加）", "dose": "500 mg in NS 100 mL", "route": "PR", "freq": "q6h", "note": "ileus 時" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "低血壓時前 3 小時", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起（{wt} kg：{round(wt*0.05*60/32,1)}–{round(wt*0.1*60/32,1)} mL/hr）", "route": "IV drip", "freq": "持續，MAP < 65", "note": "8 mg in D5W 250 mL（32 mcg/mL）" }
+      ],
+      "watch": ["MAP、乳酸、尿量", "腹圍／腹脹、腹膜炎徵候、WBC 每 6–12 小時"],
+      "call": ["猛爆性 C. difficile = 立刻後線 + 外科 + ICU"],
+      "refs": [{ "ch": "17", "q": "猛爆性" }, { "ch": "17", "q": "表 17-1" }]
+    },
+    "r_meningitis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腦膜炎（{nos ? '院內／術後／分流' : '社區型'}）",
+      "summary": "**血培養後立刻給藥，不等 CT／LP**：社區型 ceftriaxone 2 g q12h + vancomycin ± ampicillin（> 50 歲、免疫低下）+ dexamethasone 10 mg q6h × 4 天（抗生素前或同時）；疑 HSV 腦炎加 acyclovir；院內／術後／分流：cefepime／meropenem 2 g q8h + vancomycin。飛沫隔離。",
+      "steps": [
+        "ABC、GCS、瞳孔；血液培養 × 2 後**立刻抗生素**（不等 CT／LP）；飛沫隔離至排除腦膜炎雙球菌",
+        "CT 頭部（意識改變、局部神經徵候、癲癇、免疫低下、乳突水腫）→ LP（細胞、蛋白、糖、Gram stain、培養、HSV PCR）",
+        "Dexamethasone 與第一劑抗生素同時或之前給（病原不明就給）",
+        "疑 HSV 腦炎（發燒 + 意識／行為改變、癲癇、顳葉）→ acyclovir",
+        "通知後線、神經科／神外（分流、引流）；ICU 評估；接觸者預防見 Ch14"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q12h", "cond": "!nos", "note": "社區型；不需腎調" },
+        { "drug": "Cefepime", "dose": "{crcl >= 10 ? '2 g' : '1 g'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "cond": "nos", "note": "院內／術後／分流；CrCl {round(crcl)} 依附錄 A5（腎功能差神經毒性）", "alt": "meropenem 2 g q8h（腦膜炎劑量；CrCl 30–50 減量，A5）" },
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "trough 15–20；CrCl {round(crcl)} 依 A5" },
+        { "drug": "Ampicillin", "dose": "2 g", "route": "IV drip", "freq": "{crcl > 50 ? 'q4h' : crcl >= 30 ? 'q6–8h' : crcl >= 10 ? 'q8–12h' : 'q12h'}", "cond": "!nos && age > 50", "note": "> 50 歲（Listeria）；免疫低下亦加；CrCl {round(crcl)} 依 A5" },
+        { "drug": "Ampicillin（免疫低下時加）", "dose": "2 g", "route": "IV drip", "freq": "{crcl > 50 ? 'q4h' : crcl >= 30 ? 'q6–8h' : crcl >= 10 ? 'q8–12h' : 'q12h'}", "cond": "!nos && age <= 50", "note": "年齡 {age}：≤ 50 歲僅免疫低下者加；CrCl {round(crcl)} 依 A5" },
+        { "drug": "Dexamethasone", "dose": "10 mg", "route": "IV push", "freq": "q6h × 4 天（抗生素前或同時）", "cond": "!nos", "note": "病原不明就給" },
+        { "drug": "Acyclovir（疑 HSV 腦炎）", "dose": "{round(wt*10)} mg（10 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）" }
+      ],
+      "watch": ["GCS、瞳孔 q1h；癲癇", "MAP、乳酸；Na（SIADH）", "瘀點進展（腦膜炎雙球菌）"],
+      "call": ["懷疑腦膜炎 = 立刻後線（給藥後再叫也要叫）", "GCS 下降、癲癇、休克 → ICU；分流／引流 → 神外"],
+      "refs": [{ "ch": "17", "q": "腦膜炎" }, { "ch": "04", "q": "腦膜炎" }, { "ch": "A5", "q": "Ampicillin" }]
+    },
+    "r_endocarditis": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "感染性心內膜炎（經驗性）",
+      "summary": "**3 套血培養（不同部位、間隔 ≥ 1 小時）後**給 vancomycin + ceftriaxone 2 g q24h；人工瓣膜術後 < 12 個月 ± gentamicin（腎功能可）；rifampin 與感染科討論；心臟科／感染科；S. aureus、人工瓣膜、新傳導阻滯 → TEE。",
+      "steps": [
+        "3 套血培養（不同部位、間隔 ≥ 1 小時）；穩定者等抽完再給藥",
+        "ECG（新傳導阻滯 = 膿瘍）、心臟超音波（TTE → TEE）；眼底（Roth spots）、皮膚（Janeway、Osler）、尿液（血尿）",
+        "抗生素（CrCl {round(crcl)} 已調整）；心臟科 + 感染科",
+        "心衰竭、瓣膜破壞、大贅生物、栓塞 → 心臟外科評估",
+        "不穩 → 敗血症流程"
+      ],
+      "orders": [
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1（血培養後）", "note": "依 {wt} kg" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "CrCl {round(crcl)} 依附錄 A5；trough 15–20" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q24h", "note": "不需腎調" },
+        { "drug": "Gentamicin（人工瓣膜術後 < 12 個月）", "dose": "{round(wt)} mg（1 mg/kg）", "route": "IV drip", "freq": "q8h", "cond": "crcl >= 50", "note": "腎功能可（CrCl {round(crcl)}）才加；濃度監測；CrCl < 50 不顯示，依感染科" },
+        { "drug": "Rifampin", "dose": "依院內", "route": "PO", "freq": "依感染科（人工瓣膜）", "note": "章節未列劑量；與感染科討論" }
+      ],
+      "watch": ["每日血培養至陰性", "ECG（PR 延長）、心衰竭徵候、栓塞（神經、四肢、皮膚）", "Cr、vancomycin／gentamicin 濃度"],
+      "call": ["懷疑心內膜炎 = 通知後線 + 心臟科／感染科", "心衰竭、新傳導阻滯、栓塞、休克"],
+      "refs": [{ "ch": "17", "q": "心內膜炎（經驗性）" }, { "ch": "A5", "q": "Gentamicin" }]
+    },
+    "r_fuo_stable": {
+      "type": "result",
+      "urgency": "green",
+      "title": "發燒、來源不明、穩定（無器官功能障礙）",
+      "summary": "完成培養與基本檢查、全身找來源（每條管路打開看）、移除不需要的管路；穩定者可在 3 小時內評估後再決定抗生素；不必為退燒而退燒；免疫低下者不適用此路徑。",
+      "steps": [
+        "血液培養 × 2（含 CVC lumen）、CBC/DC、CRP、procalcitonin、乳酸、Cr、肝功能、尿液常規／培養、痰培養、CXR",
+        "全身檢查：口咽、肺、心雜音、腹部、肋脊角、傷口、每條管路插入處、皮膚（壓瘡、瘀點）、關節、四肢（DVT）、肛周",
+        "移除／更換不需要的管路（尿管、周邊留置針 > 72–96 小時）",
+        "非感染想：藥物熱（新藥 7–10 天）、輸血、DVT/PE、血腫、術後 48 小時、痛風、甲狀腺、腎上腺",
+        "流行季：流感／COVID PCR；旅遊：登革熱 NS1、瘧疾快篩 + 抹片 × 3",
+        "退燒只在不適、心肺負荷、神經損傷、> 39.5℃；交班原團隊，白天決定是否經驗性抗生素",
+        "任何惡化（低血壓、RR ≥ 22、意識）→ 立即敗血症流程"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／PR／IV", "freq": "q6h PRN，max 3 g/d", "note": "首選；肝病／酗酒 2 g/d" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "脫水時；隱性流失每 1℃ +10–15%", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["生命徵象 q4h（含 RR、意識、尿量）", "培養結果、CRP 趨勢"],
+      "call": ["出現低血壓、RR ≥ 22、意識改變、乳酸 > 2、少尿", "免疫低下／移植病人發燒", "抗生素 48–72 小時無效"],
+      "refs": [{ "ch": "17", "q": "想原因（感染源依頻率）" }, { "ch": "17", "q": "退燒與支持" }],
+      "next": [{ "label": "找到來源 → 依來源", "next": "q_source" }, { "label": "退燒與支持細節", "next": "r_antipyretic" }]
+    },
+    "r_persistent": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "抗生素 48–72 小時仍發燒",
+      "summary": "不急著換藥，先想四件事：(1) 來源沒控制（膿瘍、管路、阻塞）、(2) 抗藥菌／黴菌、(3) 非感染原因（藥物熱、DVT、C. difficile）、(4) 劑量不足（腎功能、濃度）。",
+      "steps": [
+        "回顧培養與藥敏；重抽血液培養 × 2（含 CVC）；procalcitonin 趨勢",
+        "來源控制：CT／超音波找膿瘍、積液、阻塞；每條管路重新評估（拔除 > 7 天 CVC？尿管？）",
+        "抗藥菌／黴菌：ESBL、MRSA、Candida 風險（TPN、長期抗生素、腹部手術）→ 感染科",
+        "非感染：藥物熱（β-lactam、抗癲癇藥，停藥 48–72 小時退）、DVT（下肢超音波）、C. difficile（腹瀉）、輸血、血腫、痛風",
+        "劑量：CrCl {round(crcl)}、vancomycin trough／AUC、aminoglycoside 濃度、體重",
+        "不穩 → 敗血症流程；穩定 → 感染科會診白天調整"
+      ],
+      "orders": [
+        { "drug": "Vancomycin trough／AUC 檢驗", "dose": "第 4 劑前 30 分鐘", "route": "抽血", "freq": "單次", "note": "目標 trough 15–20 mg/L" },
+        { "drug": "Micafungin（Candida 風險時加）", "dose": "100 mg", "route": "IV drip", "freq": "QD", "note": "不需腎調；感染科" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "" }
+      ],
+      "watch": ["生命徵象、乳酸；培養結果", "Cr、藥物濃度"],
+      "call": ["抗生素 48–72 小時無效且不明原因 = 通知後線／感染科", "低血壓、乳酸 > 2、需拔管或引流"],
+      "refs": [{ "ch": "17", "q": "抗生素已用 48–72 小時仍發燒" }, { "ch": "A5", "q": "Vancomycin" }],
+      "next": [{ "label": "抗藥菌治療", "next": "r_resistant" }, { "label": "腹瀉 → C. difficile", "next": "q_cdiff" }]
+    },
+    "r_resistant": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "抗藥菌（ESBL、CRE、MRSA、VRE、Pseudomonas）",
+      "summary": "ESBL：ertapenem／meropenem；CRE：ceftazidime-avibactam、meropenem-vaborbactam、colistin（依感染科）；MRSA：vancomycin／linezolid／daptomycin（非肺炎）／teicoplanin；VRE：linezolid／daptomycin；Pseudomonas：piperacillin-tazobactam、cefepime、ceftazidime、meropenem、ceftolozane-tazobactam。**會診感染科。**",
+      "steps": [
+        "確認既往培養／定植紀錄與藥敏；接觸隔離",
+        "依菌種選藥（CrCl {round(crcl)} 已調整）；感染科會診",
+        "來源控制（管路、膿瘍）",
+        "濃度監測（vancomycin、aminoglycoside）；linezolid 血小板"
+      ],
+      "orders": [
+        { "drug": "Ertapenem（ESBL）", "dose": "{crcl >= 30 ? '1 g' : '500 mg'}", "route": "IV drip", "freq": "q24h", "note": "CrCl {round(crcl)} 依附錄 A5" },
+        { "drug": "Meropenem（ESBL／Pseudomonas）", "dose": "{crcl >= 30 ? '1 g' : '500 mg'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 10 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依 A5" },
+        { "drug": "Ceftazidime-avibactam（CRE）", "dose": "{crcl > 50 ? '2.5 g' : crcl >= 30 ? '1.25 g' : '0.94 g'}", "route": "IV drip", "freq": "{crcl >= 30 ? 'q8h' : crcl > 15 ? 'q12h' : 'q24–48h'}", "note": "CrCl {round(crcl)} 依 A5；依感染科；替代 meropenem-vaborbactam、colistin" },
+        { "drug": "Vancomycin（MRSA）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg；loading 25–30 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）", "alt": "teicoplanin（依 A5 loading 不減）" },
+        { "drug": "Linezolid（MRSA／VRE）", "dose": "600 mg", "route": "IV／PO", "freq": "q12h", "note": "不需腎調；血小板↓、血清素症候群" },
+        { "drug": "Daptomycin（MRSA 非肺炎／VRE）", "dose": "{round(wt*6)}–{round(wt*10)} mg（6–10 mg/kg）", "route": "IV drip", "freq": "{crcl >= 30 ? 'q24h' : 'q48h'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）；不用於肺炎；CK" },
+        { "drug": "Cefepime（Pseudomonas）", "dose": "{crcl >= 10 ? '2 g' : '1 g'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依 A5", "alt": "ceftazidime 2 g q8h、piperacillin-tazobactam 4.5 g q6h、ceftolozane-tazobactam（皆依 A5／感染科）" }
+      ],
+      "watch": ["Cr、藥物濃度、血小板（linezolid）、CK（daptomycin）", "體溫、培養轉陰"],
+      "call": ["抗藥菌感染 → 感染科會診", "休克、來源未控制"],
+      "refs": [{ "ch": "17", "q": "抗藥菌" }, { "ch": "A5", "q": "Ceftazidime-avibactam" }]
+    },
+    "r_flu": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "住院流感／COVID／RSV",
+      "summary": "流感／COVID／RSV PCR；住院流感 → oseltamivir 75 mg PO BID × 5 天（> 48 小時仍給，依 CrCl 調整）；飛沫隔離；找細菌性次發感染。",
+      "steps": [
+        "飛沫（COVID 依院內空氣）隔離；流感／COVID／RSV PCR",
+        "SpO₂、CXR；血液／痰培養（次發細菌性肺炎 → 加抗生素，肺炎流程）",
+        "Oseltamivir（CrCl {round(crcl)} 已調整）；COVID 抗病毒依院內／感染科",
+        "支持：O₂ 94–98%、輸液、退燒"
+      ],
+      "orders": [
+        { "drug": "Oseltamivir", "dose": "{crcl > 60 ? '75 mg' : '30 mg'}", "route": "PO", "freq": "{crcl > 30 ? 'BID' : crcl >= 10 ? 'QD' : '單次（每次 HD 後）'} × 5 天", "note": "CrCl {round(crcl)} 依附錄 A5（30–60：30 mg BID；10–30：30 mg QD）；> 48 小時仍給" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "" }
+      ],
+      "watch": ["SpO₂、RR、氧需求", "次發細菌感染（再發燒、膿痰）"],
+      "call": ["SpO₂ < 90%、RR ≥ 30、低血壓、意識改變", "免疫低下者"],
+      "refs": [{ "ch": "17", "q": "快速檢驗" }, { "ch": "A5", "q": "Oseltamivir" }],
+      "next": [{ "label": "合併肺炎 → 肺炎流程", "next": "q_pna" }]
+    },
+    "r_thyroid": {
+      "type": "result",
+      "urgency": "red",
+      "title": "甲狀腺風暴",
+      "summary": "順序：propranolol → PTU（或 methimazole）→ **1 小時後** Lugol's → hydrocortisone；降溫用 acetaminophen（勿 aspirin）；找誘因（感染、手術、停藥）；ICU、內分泌科。",
+      "steps": [
+        "監測器、IV；TSH、free T4/T3、CBC、肝功能、血糖、培養（誘因常是感染）",
+        "β-blocker 控制心率（心衰竭者用 esmolol 小心）",
+        "PTU 負荷 → 維持（或 methimazole）；**Lugol's 必須在抗甲狀腺藥後 ≥ 1 小時**",
+        "Hydrocortisone；降溫（acetaminophen、物理降溫，勿 aspirin）；輸液",
+        "找並治療誘因；通知後線 + 內分泌科；ICU"
+      ],
+      "orders": [
+        { "drug": "Propranolol", "dose": "60–80 mg", "route": "PO／NG", "freq": "q4–6h", "note": "心衰竭／氣喘慎；替代 esmolol 滴注" },
+        { "drug": "PTU（propylthiouracil）", "dose": "500–1,000 mg loading → 250 mg", "route": "PO／NG", "freq": "loading STAT → q4h", "note": "或 methimazole 20 mg q4–6h；肝毒性" },
+        { "drug": "Lugol's solution", "dose": "10 滴", "route": "PO", "freq": "q8h（抗甲狀腺藥後 ≥ 1 小時開始）", "note": "太早給會加重" },
+        { "drug": "Hydrocortisone", "dose": "100 mg", "route": "IV", "freq": "q8h", "note": "抑制 T4→T3 轉換、相對腎上腺不足" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "勿 aspirin（增加游離 T4）" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT，之後依體液", "note": "心衰竭 250 mL" }
+      ],
+      "watch": ["HR、BP、體溫 q15–30 min；心律（AF）", "意識、肝功能、血糖"],
+      "call": ["甲狀腺風暴 = 立刻後線 + 內分泌科 + ICU", "心衰竭、AF 快速心室反應、意識改變"],
+      "refs": [{ "ch": "17", "q": "甲狀腺風暴" }]
+    },
+    "r_adrenal": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腎上腺危症",
+      "summary": "**Hydrocortisone 100 mg IV STAT → 50 mg q6h**（或 200 mg/24 hr）、NS 1 L bolus、查血糖並矯正；不要等 cortisol 結果才給；找誘因（感染、停用類固醇）。",
+      "steps": [
+        "IV × 2、監測器；抽 cortisol／ACTH（若可，給藥前）、Na、K、血糖、Cr、培養（誘因）",
+        "Hydrocortisone 立即給；NS 1 L bolus，低血壓持續 → 敗血症休克流程（升壓劑）",
+        "低血糖 → D50W；高血鉀依 Ch33",
+        "找誘因：感染、手術、停用類固醇、出血；通知後線 + 內分泌科"
+      ],
+      "orders": [
+        { "drug": "Hydrocortisone", "dose": "100 mg", "route": "IV push", "freq": "STAT → 50 mg IV q6h（或 200 mg/24 hr 持續）", "note": "不等 cortisol 結果" },
+        { "drug": "NS", "dose": "1,000 mL", "route": "IV drip", "freq": "STAT bolus，之後依血壓", "note": "心衰竭 250–500 mL 分次" },
+        { "drug": "D50W", "dose": "50 mL", "route": "IV push", "freq": "PRN 血糖 < 70", "note": "" }
+      ],
+      "watch": ["BP、HR q15 min；血糖 q1h × 4", "Na、K q6h"],
+      "call": ["腎上腺危症 = 通知後線 + 內分泌科", "輸液後仍低血壓 → ICU"],
+      "refs": [{ "ch": "17", "q": "腎上腺危症" }]
+    },
+    "r_hyperthermia": {
+      "type": "result",
+      "urgency": "red",
+      "title": "惡性高熱（麻醉後）／中暑（> 40℃）",
+      "summary": "惡性高熱：停觸發藥、**dantrolene 2.5 mg/kg IV q5–10 min（可至 10 mg/kg）**、降溫、處理高血鉀；中暑：30 分鐘內核心溫 < 39℃（冷水浸泡／噴霧 + 風扇），輸液，監測 CK／肝／腎／DIC。NMS／血清素症候群見 Ch2。",
+      "steps": [
+        "監測器、核心體溫（肛溫／食道）、IV × 2；ABG、K、CK、Cr、肝功能、凝血、乳酸、血糖",
+        "惡性高熱：停揮發性麻醉劑／succinylcholine、100% O₂、叫麻醉科；dantrolene 立即",
+        "主動降溫：冰敷大血管、冷水噴霧 + 風扇、冷水浸泡；目標 30 分鐘內 < 39℃；寒顫時不冰敷（可 meperidine）",
+        "高血鉀（Ch33）、橫紋肌溶解 → 輸液、尿量 ≥ 1–2 mL/kg/hr",
+        "ICU；找誘因（藥物：抗精神病藥 NMS、血清素症候群 → Ch2）"
+      ],
+      "orders": [
+        { "drug": "Dantrolene", "dose": "{round(wt*2.5)} mg（2.5 mg/kg）", "route": "IV push", "freq": "q5–10 min 至改善（可至 10 mg/kg ＝ {round(wt*10)} mg）", "note": "依 {wt} kg；惡性高熱" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "前 3 小時（中暑／橫紋肌溶解）", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Meperidine", "dose": "25 mg", "route": "IV push", "freq": "PRN 寒顫（降溫時）", "note": "腎衰竭累積；或 buspirone" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "中暑／惡性高熱效果有限，物理降溫為主" }
+      ],
+      "watch": ["核心體溫 q5–10 min 至 < 39℃，之後 q30 min（反彈）", "K、CK、Cr、凝血 q4–6h；尿量、尿色", "心律、意識"],
+      "call": ["惡性高熱 = 立刻麻醉科 + ICU", "體溫 > 40℃、K > 6、DIC、少尿"],
+      "refs": [{ "ch": "17", "q": "惡性高熱" }, { "ch": "17", "q": "中暑" }, { "ch": "02", "q": "血清素症候群" }]
+    },
+    "r_postop": {
+      "type": "result",
+      "urgency": "green",
+      "title": "術後發燒（5W）／藥物熱／非感染性發燒",
+      "summary": "5W：Wind（POD 1–2）、Water（POD 3–5 UTI）、Wound（POD 5–7）、Walking（POD 5+ DVT/PE）、Wonder drugs（藥物熱、輸血）；另想吻合口滲漏、腹內膿瘍、管路、C. difficile、痛風、非結石性膽囊炎。藥物熱停藥後 48–72 小時退。",
+      "steps": [
+        "依 POD 找來源：肺（CXR、SpO₂）、尿（尿管、尿液）、傷口（打開看）、腿（DVT 超音波）、藥物（β-lactam、抗癲癇藥、allopurinol，7–10 天）",
+        "術後 48 小時內單純發燒且穩定：可觀察、不急著抗生素；仍抽血培養、CBC、CXR",
+        "藥物熱：相對心搏過緩、只有 ~20% 有嗜酸性球↑或皮疹 → 停可疑藥（找替代），48–72 小時應退",
+        "輸血反應 → Ch26；NMS／血清素症候群（肌肉僵硬、自律神經不穩）→ Ch2",
+        "腹部手術：吻合口滲漏、腹內膿瘍（CT）；非結石性膽囊炎（超音波）",
+        "惡化 → 敗血症流程"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "不必為退燒而退燒" },
+        { "drug": "（停用可疑藥物）", "dose": "停藥 48–72 小時觀察", "route": "—", "freq": "—", "note": "藥物熱：β-lactam、抗癲癇藥、allopurinol；記錄" }
+      ],
+      "watch": ["體溫曲線、生命徵象 q4h", "停藥後 48–72 小時是否退燒"],
+      "call": ["低血壓、RR ≥ 22、意識改變、乳酸 > 2", "疑吻合口滲漏、腹內膿瘍、PE"],
+      "refs": [{ "ch": "17", "q": "術後發燒（5W）" }, { "ch": "17", "q": "藥物熱" }],
+      "next": [{ "label": "找到感染源 → 依來源", "next": "q_source" }]
+    },
+    "r_antipyretic": {
+      "type": "result",
+      "urgency": "green",
+      "title": "退燒與支持",
+      "summary": "不必為了退燒而退燒（退燒藥不改變預後），除非不適、心肺負荷、神經損傷、> 39.5℃；acetaminophen 首選（max 3 g/d，肝病 2 g/d）；寒顫時不要冰敷；輸液補隱性流失（每 1℃ +10–15%）。",
+      "steps": [
+        "確認已完成培養與來源評估（退燒不是治療）",
+        "Acetaminophen 首選；NSAID 只在腎功能正常、無出血／潰瘍／心衰竭",
+        "物理降溫：溫水拭浴、降低室溫、冰枕；> 40℃ 或中暑／惡性高熱 → 主動降溫",
+        "寒顫時不冰敷（增加耗氧）；可 meperidine 或 buspirone",
+        "輸液：隱性流失每 1℃ +10–15%，依體液狀態"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／PR／IV", "freq": "q6h PRN，max 3 g/d", "note": "肝病／酗酒 2 g/d" },
+        { "drug": "Ibuprofen", "dose": "400 mg", "route": "PO", "freq": "q6–8h PRN", "note": "CrCl {round(crcl)}；腎功能差、出血、潰瘍、心衰竭避免" },
+        { "drug": "Diclofenac", "dose": "50 mg PR 或 75 mg IM", "route": "PR／IM", "freq": "q8–12h PRN", "note": "同上禁忌" },
+        { "drug": "Meperidine", "dose": "25 mg", "route": "IV push", "freq": "PRN 寒顫", "note": "腎衰竭累積；或 buspirone" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "依體液狀態", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["體溫 q4h、生命徵象", "肝功能（長期 acetaminophen）、Cr（NSAID）"],
+      "call": ["發燒 + 低血壓、意識改變、RR ≥ 22、乳酸 > 2", "> 40℃ 物理降溫無效"],
+      "refs": [{ "ch": "17", "q": "退燒與支持" }]
+    }
+  }
+}

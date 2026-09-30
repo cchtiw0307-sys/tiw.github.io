@@ -1,0 +1,293 @@
+{
+  "id": "13",
+  "title": "血尿",
+  "chapter": "13",
+  "entries": [
+    { "label": "尿液有血（血尿）", "type": "symptom", "start": "i_phone", "group": "水與尿",
+      "keywords": ["血尿", "hematuria", "尿有血", "尿液紅", "紅色尿", "gross hematuria", "尿袋紅", "拔尿管後血尿", "放尿管 出血"] },
+    { "label": "尿管血塊阻塞／尿管沒尿又下腹脹", "type": "symptom", "start": "m_danger", "group": "水與尿",
+      "keywords": ["血塊", "clot", "尿管阻塞", "血塊阻塞", "clot retention", "膀胱脹 血尿", "3-way", "CBI", "膀胱沖洗"] },
+    { "label": "血塊阻塞／持續膀胱沖洗（CBI）", "type": "diagnosis", "start": "r_clot",
+      "keywords": ["持續膀胱沖洗", "continuous bladder irrigation", "CBI", "3-way Foley", "血塊滯留", "clot retention"] },
+    { "label": "血尿 + 血行不穩／Hb 下降", "type": "diagnosis", "start": "r_unstable",
+      "keywords": ["大量血尿", "血尿 休克", "Hb 下降 血尿", "massive hematuria", "輸血 血尿"] },
+    { "label": "抗凝血劑血尿／尿毒出血傾向", "type": "diagnosis", "start": "r_anticoag",
+      "keywords": ["抗凝血劑 血尿", "warfarin 血尿", "NOAC 血尿", "DOAC 血尿", "尿毒出血", "desmopressin", "血小板低 血尿", "INR 高 血尿"] },
+    { "label": "感染性血尿（膀胱炎／腎盂腎炎／前列腺炎）", "type": "diagnosis", "start": "r_infection",
+      "keywords": ["出血性膀胱炎 感染", "hemorrhagic cystitis", "腎盂腎炎", "pyelonephritis", "前列腺炎", "prostatitis", "UTI 血尿", "cefuroxime", "ceftriaxone"] },
+    { "label": "出血性膀胱炎（cyclophosphamide／放療）", "type": "diagnosis", "start": "r_hc",
+      "keywords": ["出血性膀胱炎", "cyclophosphamide", "ifosfamide", "mesna", "放射性膀胱炎", "radiation cystitis"] },
+    { "label": "腎絲球腎炎（棕色尿、RBC cast）", "type": "diagnosis", "start": "r_gn",
+      "keywords": ["腎絲球腎炎", "glomerulonephritis", "RBC cast", "可樂色尿", "棕色尿", "IgA 腎病", "蛋白尿 血尿"] },
+    { "label": "結石絞痛止痛", "type": "diagnosis", "start": "r_pain",
+      "keywords": ["結石", "腎絞痛", "renal colic", "ketorolac", "腰痛 血尿", "膀胱痙攣", "oxybutynin"] },
+    { "label": "疑尿道損傷（外傷、尿道口出血）", "type": "diagnosis", "start": "r_urethral",
+      "keywords": ["尿道損傷", "urethral injury", "尿道口出血", "會陰血腫", "骨盆外傷", "放尿管 放不進去"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中：問清楚 + 立即醫囑",
+      "body": [
+        "**問**：尿液外觀（淡紅、鮮紅、暗紅、有無血塊）、持續多久、尿量、有無尿管、最近有沒有放／拔／換尿管",
+        "生命徵象（發燒、心搏過速、低血壓）；下腹脹痛、腰痛、解尿疼痛",
+        "抗凝血劑／抗血小板、cyclophosphamide、放射治療、泌尿道手術／內視鏡、外傷",
+        "**立即醫囑**：量生命徵象、**bladder scan**；不穩者 IV + NS 500 mL bolus；抽 CBC、PT/aPTT、Cr、尿液常規／培養",
+        "懷疑血塊阻塞：備 3-way Foley（22–24 Fr）與沖洗用物；**近期泌尿道手術或懷疑尿道損傷者，任何導尿管操作先問泌尿科**"
+      ],
+      "next": "m_danger"
+    },
+    "m_danger": {
+      "type": "multi",
+      "title": "有沒有下列情況？",
+      "help": "值班血尿的兩大問題：血塊阻塞尿路、大量出血血行不穩",
+      "options": [
+        { "label": "低血壓／心搏過速／Hb 下降 ≥ 2 g/dL", "set": { "unstable": true } },
+        { "label": "外傷、尿道口出血、會陰血腫、前列腺高位", "set": { "urethral": true } },
+        { "label": "下腹脹痛、bladder scan 脹、尿管無尿（血塊阻塞）", "set": { "obstruct": true } },
+        { "label": "近期泌尿道手術／內視鏡（TURP、TURBT、膀胱鏡、腎切片）", "set": { "postop": true } },
+        { "label": "發燒", "set": { "fever": true } }
+      ],
+      "branches": [
+        { "if": "urethral", "next": "r_urethral" },
+        { "if": "unstable", "next": "r_unstable" },
+        { "if": "obstruct && postop", "next": "r_postop" },
+        { "if": "obstruct", "next": "r_clot" },
+        { "if": "postop", "next": "r_postop" },
+        { "if": "fever", "next": "r_infection" },
+        { "else": "q_cause" }
+      ]
+    },
+    "q_cause": {
+      "type": "choice",
+      "title": "穩定、無阻塞：最符合的線索？",
+      "help": "尿液看：鮮紅 + 血塊 = 下泌尿道活動性出血；棕色可樂色 = 腎絲球／肌紅素；開始血尿 = 尿道；終末 = 膀胱頸／前列腺",
+      "options": [
+        { "label": "抗凝血劑／抗血小板、血小板低、CKD／尿毒", "next": "r_anticoag" },
+        { "label": "腰部絞痛（結石）或膀胱痙攣痛", "next": "r_pain" },
+        { "label": "Cyclophosphamide／ifosfamide 或骨盆放療病史", "next": "r_hc" },
+        { "label": "棕色可樂色、RBC cast、蛋白尿、高血壓／AKI", "next": "r_gn" },
+        { "label": "解尿痛、頻尿、恥骨上痛（感染）", "next": "r_infection" },
+        { "label": "淡紅少量（放拔尿管後）、無痛肉眼血尿、其他", "next": "r_mild" }
+      ]
+    },
+    "r_urethral": {
+      "type": "result",
+      "urgency": "red",
+      "title": "疑尿道損傷：勿放尿管，泌尿科",
+      "summary": "尿道口出血、會陰血腫、骨盆外傷、肛診前列腺高位 → **不要放尿管**（會加重損傷），立刻泌尿科（逆行性尿道攝影／恥骨上導尿）。",
+      "steps": [
+        "生命徵象、IV；骨盆外傷依外傷流程（合併其他傷害）",
+        "不放尿管、不沖洗；已放不進去也不要再試",
+        "抽 CBC、PT/aPTT、Cr、type & screen；尿液常規（若能自解）",
+        "泌尿科：逆行性尿道攝影、恥骨上導尿；CT（骨盆／腎臟外傷）",
+        "不穩 → NS 500 mL bolus、備血"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL（心腎衰竭 250 mL）", "route": "IV drip over 15 min", "freq": "低血壓時 STAT，可重複", "note": "同時備血" },
+        { "drug": "Acetaminophen", "dose": "1 g", "route": "IV／PO", "freq": "q6h PRN", "note": "止痛；外傷者避免 NSAID 若有出血傾向" }
+      ],
+      "watch": ["BP／HR q15 min；尿道口出血量", "Hb q4–6h", "膀胱脹（無法排尿）"],
+      "call": ["懷疑尿道損傷（外傷、尿道口出血）→ 立即泌尿科", "血行不穩或 Hb 下降 ≥ 2 g/dL", "骨盆外傷 → 外科／外傷團隊"],
+      "refs": [{ "ch": "13", "q": "尿道損傷" }, { "ch": "13", "q": "創傷／醫源性" }]
+    },
+    "r_unstable": {
+      "type": "result",
+      "urgency": "red",
+      "title": "血尿 + 血行不穩／Hb 下降：復甦、備血、停抗凝",
+      "summary": "大量出血少見但致命：IV × 2、NS bolus、**備血並輸血（Hb < 7–8）**、Hb q4–6h；停／逆轉抗凝血劑（Ch30，與後線討論）；確認尿路通暢（血塊阻塞 → CBI）；泌尿科。",
+      "steps": [
+        "到床邊：ABC、IV × 2、心電監測；量 BP／HR、腹部（膀胱脹）",
+        "抽 CBC、PT/aPTT/INR、Cr、type & cross（備血 2–4 U）；尿液常規／培養",
+        "NS 500 mL bolus（心腎衰竭 250 mL）重複；Hb < 7–8 或不穩 → PRBC（Ch9 表 9-1）",
+        "抗凝血劑：停用 ± 逆轉（warfarin INR > 目標先矯正；Ch30）；血小板 < 50k 先輸血小板",
+        "bladder scan／尿管無尿 → 血塊阻塞：3-way Foley 22–24 Fr + CBI",
+        "泌尿科：膀胱鏡止血／影像（CT urography）；Tranexamic acid 不建議（血塊阻塞），除非危及生命且泌尿科同意"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "500 mL（心腎衰竭 250 mL）", "route": "IV drip over 15 min", "freq": "STAT；每次後評估，可重複至 1–2 L 後改輸血", "note": "備血先送" },
+        { "drug": "PRBC", "dose": "2 U 起（Hb < 7–8 或不穩）", "route": "IV", "freq": "STAT，依 Hb 與血行動力", "note": "依 Ch9 表 9-1" },
+        { "drug": "3-way Foley + NS 持續膀胱沖洗（CBI）", "dose": "22–24 Fr；NS 3 L 袋", "route": "經尿道", "freq": "持續，速率使流出液淡粉紅", "note": "血塊阻塞時；記錄灌入／流出；流出 < 灌入 → 立即停；近期泌尿道手術先問泌尿科" },
+        { "drug": "（停抗凝血劑／抗血小板）", "dose": "全停；逆轉依 Ch30", "route": "—", "freq": "STAT", "note": "warfarin INR > 目標先矯正；與後線討論栓塞風險" }
+      ],
+      "watch": ["BP／HR q15 min；尿量 = 流出 − 灌入", "Hb q4–6h、INR／血小板", "血塊、沖洗阻力"],
+      "call": ["血行不穩或 Hb 下降 ≥ 2 g/dL（當下）", "抗凝血劑使用者大量血尿；需要逆轉／血品", "血塊阻塞放不進尿管／沖洗無法通暢 → 泌尿科"],
+      "refs": [{ "ch": "13", "q": "輸液／輸血" }, { "ch": "13", "q": "Tranexamic acid" }, { "ch": "09", "q": "表 9-1" }, { "ch": "30", "q": "逆轉" }],
+      "next": [{ "label": "血塊阻塞 → CBI 細節", "next": "r_clot" }]
+    },
+    "r_postop": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "近期泌尿道手術後血尿／阻塞：先問泌尿科",
+      "summary": "TURP／TURBT／膀胱鏡／腎切片後出血：**任何導尿管操作（放、換、沖洗）先聯絡泌尿科**；已有 3-way 者可依指示調整 CBI 速率；監測 Hb 與流出量。",
+      "steps": [
+        "生命徵象、bladder scan；看尿管流出液顏色與血塊、灌入／流出量",
+        "抽 CBC、PT/aPTT、Cr；備血（出血多）",
+        "已有 3-way Foley：加快 CBI 至流出液淡粉紅；流出 < 灌入 → 立即停沖洗、聯絡泌尿科",
+        "無 3-way 或沖洗不通：不要自行硬沖或換管，聯絡泌尿科",
+        "不穩 → NS bolus、輸血；停抗凝（與泌尿科／後線討論）"
+      ],
+      "orders": [
+        { "drug": "NS 持續膀胱沖洗（已有 3-way Foley 者）", "dose": "NS 3 L 袋，速率使流出液淡粉紅", "route": "經 3-way Foley", "freq": "持續；24 小時無血塊 → 減速 → 停", "note": "記錄灌入與流出（尿量 = 流出 − 灌入）；流出 < 灌入 → 立即停" },
+        { "drug": "NS（低血壓時）", "dose": "500 mL（心腎衰竭 250 mL）", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "同時備血" },
+        { "drug": "Acetaminophen", "dose": "1 g", "route": "IV／PO", "freq": "q6h PRN", "note": "避免 ketorolac（出血）" }
+      ],
+      "watch": ["流出液顏色、血塊、灌入／流出量每小時", "Hb q4–6h；BP／HR", "膀胱脹痛（阻塞）"],
+      "call": ["近期泌尿道手術後出血或阻塞 → 泌尿科（操作前）", "沖洗無法通暢／灌入 > 流出／沖洗劇痛（穿孔）", "血行不穩或 Hb 下降 ≥ 2 g/dL"],
+      "refs": [{ "ch": "13", "q": "近期泌尿道手術" }, { "ch": "13", "q": "持續膀胱沖洗" }]
+    },
+    "r_clot": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "血塊阻塞：手動沖洗 → 3-way Foley 持續膀胱沖洗",
+      "summary": "50–60 mL 導尿空針 + **NS 30–50 mL 手動沖洗反抽**（無菌）至通暢；仍阻塞或反覆血塊 → 換 **3-way Foley 22–24 Fr + CBI**；**持續阻力、灌不進、劇痛 → 停止，聯絡泌尿科**。",
+      "steps": [
+        "bladder scan／觸診確認膀胱脹；看尿管是否打折、位置",
+        "手動沖洗：NS 30–50 mL 反覆沖洗反抽，洗出血塊；阻力大不要硬推",
+        "仍不通／反覆血塊 → 換 3-way Foley 22–24 Fr，接 NS 3 L 袋 CBI，速率調到流出液淡粉紅、無血塊",
+        "精確記錄灌入量與流出量（尿量 = 流出 − 灌入）；流出 < 灌入 → 立即停沖洗、檢查阻塞",
+        "抽 CBC、PT/aPTT、Cr、尿液常規／培養；Hb q4–6h（出血多時）",
+        "停／調整抗凝（Ch30）；找原因：感染、腫瘤、放拔尿管、放療／化療",
+        "24 小時無血塊 → 減速 → 停 → 觀察；膀胱痙攣可用 oxybutynin／hyoscine（無阻塞時）"
+      ],
+      "orders": [
+        { "drug": "NS 手動沖洗（50–60 mL 導尿空針）", "dose": "30–50 mL", "route": "經尿管沖洗反抽", "freq": "需要時反覆至通暢", "note": "無菌；阻力大不要硬推；近期泌尿道手術先問泌尿科" },
+        { "drug": "3-way Foley + NS 持續膀胱沖洗（CBI）", "dose": "22–24 Fr；NS 3 L 袋（常 100–300 mL/hr 至數百 mL/min）", "route": "經尿道", "freq": "持續至 24 小時無血塊 → 減速 → 停 → 觀察", "note": "記錄灌入／流出；流出 < 灌入 → 立即停、檢查阻塞" },
+        { "drug": "Oxybutynin", "dose": "5 mg", "route": "PO", "freq": "TID PRN 膀胱痙攣", "note": "無阻塞時才用", "alt": "hyoscine 20 mg IV q8h" },
+        { "drug": "Acetaminophen", "dose": "1 g", "route": "IV／PO", "freq": "q6h PRN", "note": "止痛；出血傾向避免 ketorolac" },
+        { "drug": "（停抗凝血劑）", "dose": "大量／阻塞：停 ± 逆轉（Ch30）；輕微：可續用或暫停 1–2 天", "route": "—", "freq": "與後線討論", "note": "warfarin INR > 目標先矯正" }
+      ],
+      "watch": ["灌入／流出量每小時；流出液顏色、血塊", "Hb q4–6h；BP／HR", "沖洗阻力、腹痛（穿孔）、發燒"],
+      "call": ["血塊阻塞放不進尿管／沖洗無法通暢／灌入 > 流出", "沖洗時劇痛或懷疑穿孔", "血行不穩或 Hb 下降 ≥ 2 g/dL；抗凝血劑使用者大量血尿", "發燒 + 阻塞（敗血症）"],
+      "refs": [{ "ch": "13", "q": "持續膀胱沖洗" }, { "ch": "13", "q": "手動沖洗" }, { "ch": "13", "q": "止痛" }],
+      "next": [{ "label": "血行不穩／Hb 下降", "next": "r_unstable" }, { "label": "發燒 → 感染", "next": "r_infection" }]
+    },
+    "r_infection": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "感染性血尿：膀胱炎／腎盂腎炎／前列腺炎",
+      "summary": "**先留培養**（發燒加血液培養；尿管相關感染換管後留），再抗生素；男性 UTI 都要想前列腺炎（肛診）；**發燒 + 阻塞 = 敗血症，緊急減壓**。",
+      "steps": [
+        "生命徵象；bladder scan（阻塞？）；肋脊角敲痛、肛診（男性）",
+        "尿液常規／培養、CBC、Cr；發燒 → 血液培養 × 2 後抗生素（Ch17）",
+        "尿管相關：換新管後留培養",
+        "依部位選抗生素（下列擇一）；腎功能 CrCl ≈ {round(crcl)} 調整",
+        "48–72 小時抗生素仍發燒 → CT 找膿瘍／阻塞；發燒 + 腎水腫 → 泌尿科減壓",
+        "不穩 → NS 500 mL bolus（Ch19 敗血症）"
+      ],
+      "orders": [
+        { "drug": "Cefuroxime（膀胱炎）", "dose": "500 mg", "route": "PO", "freq": "BID × 5–7 天", "note": "先留培養", "alt": "fosfomycin 3 g PO × 1" },
+        { "drug": "Nitrofurantoin（膀胱炎）", "dose": "100 mg", "route": "PO", "freq": "BID × 5 天", "note": "CrCl > 30 才用（現 ≈ {round(crcl)}）；不用於腎盂腎炎", "cond": "crcl > 30" },
+        { "drug": "Ceftriaxone（腎盂腎炎）", "dose": "1–2 g", "route": "IV", "freq": "QD；退燒 24–48 hr 後改口服，總 7–14 天", "note": "發燒先血液培養" },
+        { "drug": "Levofloxacin（腎盂腎炎／前列腺炎）", "dose": "750 mg", "route": "PO／IV", "freq": "QD × 7 天（前列腺炎 2–4 週）", "note": "依腎功能調整（CrCl ≈ {round(crcl)}）；前列腺炎替代 TMP-SMX 2–4 週", "alt": "TMP-SMX 2–4 週（前列腺炎）" },
+        { "drug": "Acetaminophen", "dose": "1 g", "route": "IV／PO", "freq": "q6h PRN 發燒／疼痛", "note": "" },
+        { "drug": "NS（不穩時）", "dose": "500 mL（心腎衰竭 250 mL）", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "敗血症依 Ch19" }
+      ],
+      "watch": ["體溫、BP／HR q4h；尿量", "48–72 小時退燒與否", "血尿是否清、血塊"],
+      "call": ["發燒 + 阻塞（敗血症）→ 泌尿科緊急減壓", "血行不穩", "48–72 小時仍發燒（膿瘍）"],
+      "refs": [{ "ch": "13", "q": "抗生素（感染）" }, { "ch": "17", "q": "泌尿道感染" }, { "ch": "11", "q": "阻塞 + 感染" }]
+    },
+    "r_anticoag": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "抗凝血劑血尿／尿毒出血傾向",
+      "summary": "**抗凝下的血尿仍要找原因（30% 有病灶）**：輕微 → 可續用或暫停 1–2 天；大量／阻塞／不穩 → 停 ± 逆轉（Ch30，與後線討論）；CKD／ESRD 血小板功能異常 → desmopressin；血小板 < 50k 先輸血小板。",
+      "steps": [
+        "抽 CBC（Hb 趨勢、血小板）、PT/INR、aPTT、Cr；尿液常規／培養",
+        "Warfarin INR > 目標 → 先矯正；DOAC 看腎功能（CrCl ≈ {round(crcl)}）與最後服藥時間",
+        "評估出血嚴重度 vs 栓塞風險（機械瓣、近期 PE／stent）再決定停或逆轉",
+        "bladder scan；血塊 → 3-way CBI；感染 → 培養、抗生素",
+        "尿毒：desmopressin，同時處理尿毒（透析）",
+        "白天：超音波 + 泌尿科膀胱鏡（無痛肉眼血尿 = 腫瘤直到證明不是）"
+      ],
+      "orders": [
+        { "drug": "（抗凝血劑）", "dose": "輕微血尿：續用或暫停 1–2 天；大量／阻塞／不穩：停 ± 逆轉", "route": "—", "freq": "與後線討論", "note": "逆轉藥物與劑量依 Ch30；warfarin INR > 目標先矯正" },
+        { "drug": "Desmopressin", "dose": "{round(wt*0.3,1)} mcg（0.3 mcg/kg）", "route": "IV", "freq": "× 1", "note": "CKD／ESRD 尿毒出血傾向；或鼻噴 3 mcg/kg；血小板 < 50k 先輸血小板" },
+        { "drug": "血小板", "dose": "依院內單位（血小板 < 50k 時）", "route": "IV", "freq": "× 1", "note": "活動性出血 + 血小板低" }
+      ],
+      "watch": ["Hb q4–6h（Hb 下降 ≥ 2 → 叫人）、INR／血小板", "尿液顏色、血塊、膀胱脹", "血栓症狀（停藥期間）"],
+      "call": ["抗凝血劑使用者大量血尿；需要逆轉", "血行不穩或 Hb 下降 ≥ 2 g/dL", "血塊阻塞放不進尿管／沖洗無法通暢"],
+      "refs": [{ "ch": "13", "q": "抗凝血劑" }, { "ch": "13", "q": "尿毒出血傾向" }, { "ch": "30", "q": "逆轉" }],
+      "next": [{ "label": "血塊阻塞 → CBI", "next": "r_clot" }, { "label": "血行不穩", "next": "r_unstable" }]
+    },
+    "r_hc": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "出血性膀胱炎（cyclophosphamide／ifosfamide／放療）",
+      "summary": "水化、停藥（cyclophosphamide 給 mesna）、血塊 → CBI；頑固（膀胱內 alum／formalin、高壓氧）→ 泌尿科；同時排除感染（BK 病毒於移植者）。",
+      "steps": [
+        "尿液常規／培養（BK 病毒 PCR：移植者）；CBC、Cr、凝血",
+        "水化：輸液增加尿量沖洗膀胱；停或暫停 cyclophosphamide／ifosfamide（與腫瘤科討論 mesna）",
+        "血塊／阻塞 → 手動沖洗、3-way Foley 22–24 Fr CBI",
+        "Hb 下降 → 輸血；血小板低（化療後）→ 輸血小板",
+        "頑固：膀胱內 alum／formalin、高壓氧（放射性）→ 泌尿科"
+      ],
+      "orders": [
+        { "drug": "NS 或 D5-½NS（水化）", "dose": "{round(wt*30/24)}–{round(wt*30/24*2)} mL/hr", "route": "IV drip", "freq": "持續，依尿量與心肺狀況調整", "note": "目標尿量增加以沖洗膀胱；心腎衰竭減量（章節未列固定速率，依院內）" },
+        { "drug": "Mesna", "dose": "依院內／腫瘤科（cyclophosphamide 相關）", "route": "IV", "freq": "依化療計畫", "note": "劑量由腫瘤科決定" },
+        { "drug": "3-way Foley + NS 持續膀胱沖洗（CBI）", "dose": "22–24 Fr；NS 3 L 袋", "route": "經尿道", "freq": "持續，速率使流出液淡粉紅", "note": "血塊阻塞時；記錄灌入／流出" }
+      ],
+      "watch": ["Hb、血小板 q12–24h；尿液顏色、血塊", "尿量、灌入／流出量", "發燒"],
+      "call": ["頑固出血需膀胱內治療／高壓氧 → 泌尿科", "血行不穩或 Hb 下降 ≥ 2 g/dL", "血塊阻塞沖洗無法通暢"],
+      "refs": [{ "ch": "13", "q": "出血性膀胱炎（化療／放療）" }, { "ch": "13", "q": "持續膀胱沖洗" }]
+    },
+    "r_gn": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "腎絲球腎炎徵候：腎臟科",
+      "summary": "棕色可樂色尿、dysmorphic RBC／RBC cast、蛋白尿、高血壓、AKI → **腎臟科**；值班先控制血壓、追 Cr／K；不是血塊阻塞問題。",
+      "steps": [
+        "尿液鏡檢（RBC 形態、cast）、蛋白尿定量；CBC、Cr、K、補體／ANCA／ANA（白天補）",
+        "血壓控制（Ch18）；水腫 → 利尿（Ch11）",
+        "少尿／AKI → Ch11；高血鉀 → Ch33",
+        "咳血（肺腎症候群）、皮疹、關節痛、發燒 → 通知後線",
+        "假性血尿排除：試紙陽性但 RBC 少 → 溶血／橫紋肌溶解（CK）"
+      ],
+      "orders": [],
+      "watch": ["Cr、K q12–24h；尿量", "血壓；水腫、肺音", "咳血、呼吸"],
+      "call": ["血尿 + 少尿／AKI、高血壓急症", "咳血／肺出血、快速進展型 GN → 緊急腎臟科", "K ≥ 6"],
+      "refs": [{ "ch": "13", "q": "腎絲球腎炎徵候" }, { "ch": "11", "q": "GN／血管炎／TMA" }]
+    },
+    "r_pain": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "結石絞痛／膀胱痙攣止痛",
+      "summary": "絞痛 = 結石（Ch8）：**ketorolac 30 mg IV q6h**（AKI／CKD／出血傾向避免）+ acetaminophen，可併 opioid；膀胱痙攣：oxybutynin／hyoscine（無阻塞時）。",
+      "steps": [
+        "生命徵象、發燒（結石 + 感染 = 緊急減壓）；肋脊角敲痛",
+        "尿液常規／培養、CBC、Cr；非顯影 CT（結石）",
+        "止痛：ketorolac（腎功能正常）+ acetaminophen；不足 → opioid",
+        "阻塞 + 發燒／AKI／單腎 → 泌尿科（double-J／PCN）",
+        "膀胱痙攣（尿管刺激）：oxybutynin 或 hyoscine，先確認無阻塞"
+      ],
+      "orders": [
+        { "drug": "Ketorolac", "dose": "30 mg", "route": "IV", "freq": "q6h PRN", "note": "AKI／CKD（CrCl ≈ {round(crcl)}）、出血傾向避免；可與 opioid 併用", "cond": "crcl >= 30" },
+        { "drug": "Acetaminophen", "dose": "1 g", "route": "IV／PO", "freq": "q6h PRN", "note": "可與 ketorolac 併用" },
+        { "drug": "Oxybutynin", "dose": "5 mg", "route": "PO", "freq": "TID PRN 膀胱痙攣", "note": "無阻塞時", "alt": "hyoscine 20 mg IV q8h" }
+      ],
+      "watch": ["疼痛評分、發燒", "Cr（NSAID 後）、尿量", "血尿程度"],
+      "call": ["結石 + 發燒／阻塞（敗血症）→ 泌尿科緊急減壓", "止痛無效、單腎阻塞、AKI", "血尿 + 少尿"],
+      "refs": [{ "ch": "13", "q": "止痛" }, { "ch": "08", "q": "結石" }]
+    },
+    "r_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕微血尿（穩定、無阻塞）：找原因、白天追蹤",
+      "summary": "淡紅少量、穩定、無血塊：多為尿管操作／感染／輕微出血傾向。確認尿路通暢、送尿液常規／培養、看 Hb 趨勢；**無痛肉眼血尿 = 腫瘤直到證明不是（尤其 > 40 歲）**，白天安排超音波／膀胱鏡。",
+      "steps": [
+        "bladder scan 確認無滯留；看尿管是否需要（可拔就拔）",
+        "尿液常規／培養（假陽性：經血、精液、鹼性尿；血紅素陽性但 RBC 少 → 溶血／橫紋肌溶解）、CBC、Cr、PT/aPTT",
+        "檢視抗凝血劑、抗血小板、cyclophosphamide、放療、劇烈運動、月經",
+        "多喝水／輸液維持尿量；觀察顏色與血塊",
+        "白天：腎臟／膀胱超音波；> 40 歲或危險因子 → 尿液細胞學、泌尿科膀胱鏡（依風險 CT urography）"
+      ],
+      "orders": [
+        { "drug": "D5-½NS 或口服補水", "dose": "{round(wt*25/24)}–{round(wt*30/24)} mL/hr（或鼓勵飲水）", "route": "IV drip／PO", "freq": "至尿色清", "note": "心腎衰竭者減量" },
+        { "drug": "Acetaminophen", "dose": "1 g", "route": "PO", "freq": "q6h PRN", "note": "解尿不適；避免 NSAID 若出血傾向" }
+      ],
+      "watch": ["尿液顏色、血塊、尿量每班", "Hb 隔日（或 q12h 若增加）", "發燒、下腹脹（阻塞）"],
+      "call": ["出現血塊阻塞、血行不穩或 Hb 下降 ≥ 2 g/dL", "發燒 + 阻塞", "血尿 + 少尿／AKI"],
+      "refs": [{ "ch": "13", "q": "V. 檢驗／檢查" }, { "ch": "13", "q": "想原因" }]
+    }
+  }
+}

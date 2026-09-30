@@ -1,0 +1,390 @@
+{
+  "id": "22",
+  "title": "止痛",
+  "chapter": "22",
+  "entries": [
+    { "label": "病人喊痛／要止痛藥", "type": "symptom", "start": "q_redflag", "group": "症狀治療",
+      "keywords": ["疼痛", "止痛", "痛", "pain", "analgesia", "要止痛藥", "NRS", "傷口痛", "術後痛", "頭痛 止痛", "背痛"] },
+    { "label": "鴉片後叫不醒／呼吸變慢", "type": "symptom", "start": "r_opioid_resp", "group": "症狀治療",
+      "keywords": ["呼吸抑制", "叫不醒", "RR 8", "morphine 後嗜睡", "opioid overdose", "naloxone", "鴉片 過量", "POSS"] },
+    { "label": "神經痛（灼熱、電擊、麻）", "type": "symptom", "start": "r_neuropathic", "group": "症狀治療",
+      "keywords": ["神經痛", "neuropathic pain", "灼熱痛", "電擊痛", "帶狀皰疹後神經痛", "糖尿病神經痛", "gabapentin"] },
+    { "label": "輕中度疼痛（acetaminophen／NSAID／弱鴉片）", "type": "diagnosis", "start": "q_type",
+      "keywords": ["輕度疼痛", "中度疼痛", "acetaminophen", "NSAID", "tramadol", "ketorolac", "普拿疼", "止痛階梯"] },
+    { "label": "重度急性疼痛（強鴉片）", "type": "diagnosis", "start": "q_nsaid_sev",
+      "keywords": ["重度疼痛", "severe pain", "morphine", "fentanyl", "強鴉片", "opioid", "NRS 8", "肋骨骨折 止痛"] },
+    { "label": "鴉片副作用（便秘、噁心、癢、過度鎮靜）", "type": "diagnosis", "start": "r_opioid_se",
+      "keywords": ["鴉片副作用", "opioid side effect", "便秘", "噁心", "搔癢", "過度鎮靜", "尿滯留", "sennoside"] },
+    { "label": "疑轉移性脊髓壓迫（癌症背痛 + 無力）", "type": "diagnosis", "start": "r_cord",
+      "keywords": ["脊髓壓迫", "spinal cord compression", "MSCC", "癌症 背痛", "dexamethasone 10 mg", "轉移 無力"] },
+    { "label": "癌症疼痛／長期鴉片使用者", "type": "diagnosis", "start": "r_cancer",
+      "keywords": ["癌症疼痛", "cancer pain", "突發痛", "breakthrough", "長期鴉片", "鴉片耐受", "opioid tolerant", "安寧"] },
+    { "label": "鴉片等效劑量換算（表 22-1）", "type": "diagnosis", "start": "i_equi",
+      "keywords": ["等效劑量", "equianalgesic", "換藥", "換途徑", "morphine 換 fentanyl", "oxycodone 換算", "表 22-1"] },
+    { "label": "腎衰竭／肝硬化的止痛選擇", "type": "diagnosis", "start": "r_organ",
+      "keywords": ["腎衰竭 止痛", "肝硬化 止痛", "CKD pain", "透析 止痛", "cirrhosis analgesia", "eGFR 30 止痛"] },
+    { "label": "肌肉痙攣／平滑肌絞痛", "type": "diagnosis", "start": "r_spasm",
+      "keywords": ["肌肉痙攣", "絞痛", "colic", "muscle spasm", "hyoscine", "Buscopan", "baclofen", "tizanidine", "輸尿管痙攣", "解尿痛"] }
+  ],
+  "nodes": {
+    "q_redflag": {
+      "type": "multi",
+      "title": "先勾紅旗（有就先處理原因，但嚴重疼痛先止痛不影響診斷）",
+      "help": "評估：位置、性質、NRS 0–10、上次止痛藥與效果；病史：肝病、腎病、潰瘍、抗凝、COPD/OSA、鴉片使用史",
+      "options": [
+        { "label": "癌症病人背痛 + 無力／感覺缺損／尿滯留", "set": { "cord": true } },
+        { "label": "鴉片後 RR < 8、SpO₂ 掉、難喚醒", "set": { "resp": true } },
+        { "label": "新發生／突然劇痛／性質改變", "set": { "newpain": true } },
+        { "label": "生命徵象異常、發燒、神經缺損、腹膜炎徵候、肢體缺血徵候", "set": { "vs": true } }
+      ],
+      "branches": [
+        { "if": "cord", "next": "r_cord" },
+        { "if": "resp", "next": "r_opioid_resp" },
+        { "if": "newpain || vs", "next": "i_redflag" },
+        { "else": "q_type" }
+      ]
+    },
+    "i_redflag": {
+      "type": "info",
+      "title": "有紅旗：先找原因，同時止痛",
+      "body": [
+        "到床邊看：生命徵象、局部檢查（腹膜炎？腔室症候群？肢體脈搏？傷口／引流？）",
+        "依部位走相關章節：胸痛 Ch6、腹痛 Ch8、頭痛 Ch16、背痛 + 神經缺損 → 脊髓壓迫",
+        "**嚴重疼痛先止痛再檢查**（止痛不影響診斷）；找不到原因的新發嚴重疼痛要聯絡後線",
+        "接著依疼痛類型選藥"
+      ],
+      "next": "q_type"
+    },
+    "q_type": {
+      "type": "choice",
+      "title": "疼痛類型？",
+      "help": "傷害性：切割、骨折、發炎、絞痛、脹；神經性：灼熱、電擊、麻、觸摸痛",
+      "options": [
+        { "label": "傷害性（體感／內臟：傷口、骨折、發炎、絞痛）", "next": "q_nrs" },
+        { "label": "神經性（灼熱、電擊、麻、觸摸痛）", "next": "r_neuropathic" },
+        { "label": "肌肉痙攣／消化道／泌尿道平滑肌絞痛", "next": "r_spasm" },
+        { "label": "癌症疼痛或已長期使用鴉片（突發痛）", "next": "r_cancer" }
+      ]
+    },
+    "q_nrs": {
+      "type": "number",
+      "title": "疼痛強度 NRS（0–10）？",
+      "var": "nrs", "unit": "分", "step": 1,
+      "quick": [3, 5, 7, 9],
+      "branches": [
+        { "else": "q_nsaid" }
+      ]
+    },
+    "q_nsaid": {
+      "type": "multi",
+      "title": "勾選所有符合（決定能不能用 NSAID、acetaminophen 上限）",
+      "help": "腎功能由病人面板 CrCl {round(crcl)} 自動判斷（CrCl < 30 不給 NSAID）",
+      "options": [
+        { "label": "AKI／心衰竭／肝硬化／活動性潰瘍或消化道出血", "set": { "nsaid_ci": true } },
+        { "label": "正在用抗凝或抗血小板藥", "set": { "nsaid_ci": true } },
+        { "label": "CABG 後 14 天內、懷孕第三期、aspirin 敏感氣喘", "set": { "nsaid_ci": true } },
+        { "label": "肝病／酗酒／營養不良（acetaminophen 上限 2 g/d）", "set": { "liver": true } },
+        { "label": "已長期使用鴉片（避免 nalbuphine）", "set": { "chronic_opioid": true } }
+      ],
+      "branches": [
+        { "if": "nrs >= 7", "next": "q_severe" },
+        { "if": "nrs >= 4", "next": "r_moderate" },
+        { "else": "r_mild" }
+      ]
+    },
+    "q_nsaid_sev": {
+      "type": "multi",
+      "title": "重度疼痛：先勾選所有符合（決定 NSAID／acetaminophen／nalbuphine 能不能用）",
+      "help": "腎功能由病人面板 CrCl {round(crcl)} 自動判斷（CrCl < 30 不給 NSAID、morphine 改 fentanyl）",
+      "options": [
+        { "label": "AKI／心衰竭／肝硬化／活動性潰瘍或消化道出血", "set": { "nsaid_ci": true } },
+        { "label": "正在用抗凝或抗血小板藥", "set": { "nsaid_ci": true } },
+        { "label": "CABG 後 14 天內、懷孕第三期、aspirin 敏感氣喘", "set": { "nsaid_ci": true } },
+        { "label": "肝病／酗酒／營養不良（acetaminophen 上限 2 g/d）", "set": { "liver": true } },
+        { "label": "已長期使用鴉片（避免 nalbuphine）", "set": { "chronic_opioid": true } }
+      ],
+      "branches": [
+        { "else": "q_severe" }
+      ]
+    },
+    "r_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕度疼痛（NRS 1–3）：acetaminophen ± NSAID／外用",
+      "summary": "階梯第一階：規則 acetaminophen 為基礎；肌肉骨骼痛可加外用或口服 NSAID（無禁忌）；不需要鴉片。",
+      "steps": [
+        "確認今天已給的止痛藥與時間，先補規則劑量",
+        "非藥物：冰敷／熱敷、擺位、固定、心理支持",
+        "60 分鐘後（PO）評估效果；無效升階（見中度）",
+        "記錄 NRS 與給藥反應，交班原團隊調整規則用藥"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／PR", "freq": "q6h，max {liver || wt < 50 ? 2 : 3} g/d", "note": "肝病、酗酒、體重 < 50 kg、營養不良 2 g/d；急性肝炎／肝衰竭禁；目前依 {wt} kg" },
+        { "drug": "Diclofenac 1% gel／flurbiprofen 貼片", "dose": "1 片或適量", "route": "局部", "freq": "BID–QID", "note": "局部肌肉骨骼痛，全身副作用少" },
+        { "drug": "Ibuprofen", "dose": "400–600 mg", "route": "PO", "freq": "q6–8h，max 2,400 mg/d", "cond": "!nsaid_ci && crcl >= 30", "note": "胃腸／腎毒性相對低；老年短期最低劑量 + PPI" },
+        { "drug": "Naproxen", "dose": "250–500 mg", "route": "PO", "freq": "BID，max 1,250 mg/d", "cond": "!nsaid_ci && crcl >= 30", "note": "中長效；心血管風險相對低" }
+      ],
+      "watch": ["60 分鐘後 NRS", "NSAID：Cr、消化道症狀"],
+      "call": ["新發生的嚴重疼痛找不到原因", "疼痛合併生命徵象異常或紅旗"],
+      "refs": [{ "ch": "22", "q": "1. Acetaminophen" }, { "ch": "22", "q": "2. NSAID" }],
+      "next": [{ "label": "無效 → 中度疼痛（加 NSAID／弱鴉片）", "next": "r_moderate" }]
+    },
+    "r_moderate": {
+      "type": "result",
+      "urgency": "green",
+      "title": "中度疼痛（NRS 4–6）：acetaminophen 規則 + NSAID／弱鴉片",
+      "summary": "多模式：規則 acetaminophen + NSAID（無禁忌、CrCl ≥ 30）；仍痛加 tramadol 或 nalbuphine；每次給藥後評估，無效升階到強鴉片。",
+      "steps": [
+        "規則 acetaminophen 打底（不是 PRN）",
+        "無禁忌 → 加 NSAID（口服首選；無法口服用 ketorolac IV，合計 ≤ 5 天）",
+        "仍痛 → tramadol（注意 SSRI/SNRI 併用、癲癇）或 nalbuphine IV（長期鴉片者禁）",
+        "IV 藥 15–30 分鐘、PO 60 分鐘後評估 NRS；無效 → 強鴉片（見重度）",
+        "開鴉片類同時開軟便劑與止吐 PRN"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／PR", "freq": "q6h 規則，max {liver || wt < 50 ? 2 : 3} g/d", "note": "PO + IV 合計每日上限相同；無法口服：IV 1,000 mg over 15 min（< 50 kg：15 mg/kg = {round(wt*15)} mg）" },
+        { "drug": "Ibuprofen", "dose": "400–600 mg", "route": "PO", "freq": "q6–8h，max 2,400 mg/d", "cond": "!nsaid_ci && crcl >= 30", "note": "或 naproxen 250–500 mg BID、celecoxib 200 mg QD–BID（消化道風險低）" },
+        { "drug": "Ketorolac", "dose": "{age >= 65 || wt < 50 || crcl < 60 ? 15 : 30} mg", "route": "IV／IM", "freq": "q6h，max {age >= 65 || crcl < 60 ? 60 : 120} mg/d；IV/IM + PO 合計 max 5 天", "cond": "!nsaid_ci && crcl >= 30", "note": "≥ 65 歲、< 50 kg、CrCl 下降用 15 mg；CrCl < 30 避免；目前 CrCl {round(crcl)}" },
+        { "drug": "Tramadol", "dose": "50–100 mg", "route": "PO／IV／IM", "freq": "{crcl < 30 ? 'q12h，max 200 mg/d（CrCl < 30）' : (age >= 75 ? 'q6h，max 300 mg/d（≥ 75 歲）' : 'q6h，max 400 mg/d')}", "note": "噁心、頭暈、癲癇閾值↓；SSRI/SNRI/MAOI 併用血清素症候群；效價約 morphine 1/10" },
+        { "drug": "Tramadol 37.5 mg + acetaminophen 325 mg", "dose": "1–2 錠", "route": "PO", "freq": "q6h，max 8 錠/d", "note": "常用複方；acetaminophen 計入每日上限" },
+        { "drug": "Nalbuphine", "dose": "10 mg（0.1–0.2 mg/kg = {round(wt*0.1)}–{round(wt*0.2)} mg）", "route": "IV／IM／SC", "freq": "q3–6h PRN，max 160 mg/d", "cond": "!chronic_opioid", "note": "有 ceiling、呼吸抑制少；**長期鴉片使用者會誘發戒斷**" },
+        { "drug": "Codeine", "dose": "15–60 mg", "route": "PO", "freq": "q4–6h，max 240 mg/d", "note": "CYP2D6 代謝，效果因人而異；便秘；腎衰竭避免", "cond": "crcl >= 30" },
+        { "drug": "Sennoside", "dose": "12–24 mg", "route": "PO", "freq": "HS（開鴉片類時同時開）", "note": "＋ PEG 17 g QD 預防便秘" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "PO／IV", "freq": "q8h PRN 噁心", "note": "或 ondansetron 4 mg" }
+      ],
+      "watch": ["給藥後 NRS（IV 15–30 分鐘、PO 60 分鐘）", "鎮靜程度、RR、SpO₂（tramadol／nalbuphine 併用鎮靜劑時）", "NSAID：Cr、尿量、消化道出血"],
+      "call": ["一般劑量無法控制（可能需 PCA、神經阻斷、疼痛科）", "新發生的嚴重疼痛找不到原因；疼痛合併紅旗"],
+      "refs": [{ "ch": "22", "q": "2. NSAID" }, { "ch": "22", "q": "3. 弱鴉片類與非典型" }],
+      "next": [{ "label": "無效 → 重度疼痛（強鴉片）", "next": "q_severe" }]
+    },
+    "q_severe": {
+      "type": "choice",
+      "title": "重度疼痛（NRS ≥ 7）：病人狀況？",
+      "help": "腎功能由病人面板提供（CrCl {round(crcl)}）；腎衰竭 morphine 代謝物累積 → 改 fentanyl",
+      "options": [
+        { "label": "一般病人（未用過鴉片）", "next": "r_severe", "set": { "renal": false } },
+        { "label": "血行動力不穩／腎衰竭（CrCl < 30）", "next": "r_severe", "set": { "renal": true } },
+        { "label": "已長期使用鴉片／癌症疼痛", "next": "r_cancer" }
+      ]
+    },
+    "r_severe": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "重度急性疼痛（NRS ≥ 7）：強鴉片滴定 + 多模式",
+      "summary": "Morphine 2–4 mg IV q15–30 min 滴定（老年 1–2 mg）；腎衰竭／血行不穩改 fentanyl 25–50 mcg IV；同時規則 acetaminophen ± NSAID，開軟便劑、止吐，監測鎮靜與呼吸。",
+      "steps": [
+        "床邊評估紅旗（新劇痛找原因：Ch6、8、16）；嚴重疼痛先止痛",
+        "IV、SpO₂ 監測；備 naloxone；併用其他鎮靜劑者減量",
+        "強鴉片小劑量滴定：每次 IV 後 15–30 分鐘評估 NRS、POSS、RR",
+        "同時規則 acetaminophen ± NSAID（無禁忌）；肋骨骨折／術後：多模式 + 神經阻斷（麻醉科），止痛不足會肺塌陷",
+        "緩解後改 q3–4h PRN 或口服；老年／腎肝病劑量減半",
+        "開軟便劑 + 止吐 PRN；記錄總用量交班（可能需 PCA）"
+      ],
+      "orders": [
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV／SC", "freq": "q15–30 min 至緩解，之後 q3–4h PRN", "cond": "!renal && crcl >= 30", "note": "急性痛首選；組織胺釋放（癢、低血壓）；腎衰竭累積 → 改 fentanyl" },
+        { "drug": "Fentanyl", "dose": "25–50 mcg", "route": "IV", "freq": "q5–10 min 至緩解，之後 q1–2h PRN 或 PCA", "note": "腎衰竭／血行不穩首選（CrCl {round(crcl)}）；起效快、短效；快推高劑量胸壁僵硬" },
+        { "drug": "Hydromorphone", "dose": "0.2–0.5 mg", "route": "IV／SC", "freq": "q2–4h PRN", "note": "效價 morphine IV × 5–7；腎衰竭可用（減量）", "cond": "renal || crcl < 30" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／PR／IV", "freq": "q6h 規則，max {liver || wt < 50 ? 2 : 3} g/d", "note": "IV over 15 min；< 50 kg 15 mg/kg = {round(wt*15)} mg；PO + IV 合計上限" },
+        { "drug": "Ketorolac", "dose": "{age >= 65 || wt < 50 || crcl < 60 ? 15 : 30} mg", "route": "IV／IM", "freq": "q6h，max {age >= 65 || crcl < 60 ? 60 : 120} mg/d，合計 ≤ 5 天", "cond": "!nsaid_ci && !renal && crcl >= 30", "note": "無 AKI／心衰竭／肝硬化／潰瘍／抗凝時；CrCl < 30 避免" },
+        { "drug": "Sennoside", "dose": "12–24 mg", "route": "PO", "freq": "HS", "note": "＋ PEG 17 g QD；鴉片必開" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "PO／IV", "freq": "q8h PRN 噁心", "note": "或 ondansetron 4 mg IV PRN" },
+        { "drug": "Naloxone", "dose": "0.04–0.1 mg（0.4 mg 稀釋至 10 mL 取 1–2 mL）", "route": "IV", "freq": "PRN RR < 8／難喚醒，q2–3 min 至 RR ≥ 12", "note": "備床邊；小劑量避免急性戒斷" }
+      ],
+      "watch": ["NRS、POSS 鎮靜分數、RR、SpO₂ 每次給藥後（IV 15–30 分鐘）", "POSS ≥ 3 → 停藥", "尿滯留、便秘、噁心"],
+      "call": ["鴉片後呼吸抑制／過度鎮靜需 naloxone", "一般劑量無法控制（PCA、神經阻斷、疼痛科／安寧）", "懷疑腔室症候群、缺血、穿孔等（見相關章）"],
+      "refs": [{ "ch": "22", "q": "4. 強鴉片類" }, { "ch": "22", "q": "8. 特殊情況" }],
+      "next": [
+        { "label": "叫不醒／RR < 8 → 呼吸抑制處置", "next": "r_opioid_resp" },
+        { "label": "便秘、噁心、癢、過度鎮靜", "next": "r_opioid_se" },
+        { "label": "換藥／換途徑 → 等效劑量表", "next": "i_equi" }
+      ]
+    },
+    "r_cancer": {
+      "type": "result",
+      "urgency": "green",
+      "title": "癌症疼痛／長期鴉片使用者的急性痛",
+      "summary": "**不要停基礎（規則／長效）劑量**，急性痛用短效突發劑量加成（每日總量的 1/6–1/10）；每天 > 3 次突發劑量 → 上調基礎 25–50%；避免 nalbuphine／buprenorphine（誘發戒斷）。",
+      "steps": [
+        "確認目前規則鴉片（種類、劑量、貼片幾天前換）與今天突發劑量次數",
+        "新的背痛 + 無力／尿滯留 → 疑脊髓壓迫（dexamethasone、MRI）",
+        "突發劑量：短效口服（morphine 速效／oxycodone）或 IV，每日總量的 1/6–1/10",
+        "骨轉移痛加 NSAID／dexamethasone；放療、安寧照會（交班）",
+        "換藥／換途徑用表 22-1，因不完全交叉耐受先減 25–50%",
+        "軟便劑、止吐持續；記錄用量交班原團隊調整"
+      ],
+      "orders": [
+        { "drug": "Morphine 速效", "dose": "5–15 mg（或每日總量 1/6–1/10）", "route": "PO", "freq": "q4h PRN 突發痛", "note": "口服：IV = 3:1；長效劑型 q12h 不動" },
+        { "drug": "Morphine", "dose": "每日 IV 總量的 1/6–1/10", "route": "IV／SC", "freq": "q15–30 min 至緩解，之後 q3–4h PRN", "note": "已耐受者不用 opioid-naïve 起始量；腎衰竭改 fentanyl／hydromorphone", "cond": "crcl >= 30" },
+        { "drug": "Oxycodone 速效", "dose": "5–10 mg", "route": "PO", "freq": "q4–6h PRN", "note": "效價 morphine PO × 1.5；長效 q12h" },
+        { "drug": "Fentanyl", "dose": "25–50 mcg", "route": "IV", "freq": "q5–10 min 至緩解，之後 q1–2h PRN", "note": "腎衰竭首選；貼片只用於口服 morphine ≥ 60 mg/d 穩定者，起效 12–24 hr" },
+        { "drug": "Dexamethasone", "dose": "4–8 mg", "route": "PO／IV", "freq": "QD–BID", "note": "骨轉移痛；疑脊髓壓迫改 10 mg IV STAT → 4 mg q6h" },
+        { "drug": "Sennoside", "dose": "12–24 mg", "route": "PO", "freq": "HS", "note": "＋ PEG 17 g QD；頑固：naloxegol 25 mg QD 或 methylnaltrexone 8–12 mg SC" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "PO／IV", "freq": "q8h PRN", "note": "或 ondansetron 4 mg" }
+      ],
+      "watch": ["突發劑量次數／天（> 3 次 → 上調基礎 25–50%）", "POSS、RR、SpO₂", "便秘、譫妄"],
+      "call": ["一般劑量無法控制（PCA、神經阻斷、疼痛科／安寧）", "新背痛 + 神經缺損（脊髓壓迫）", "呼吸抑制需 naloxone"],
+      "refs": [{ "ch": "22", "q": "4. 強鴉片類" }, { "ch": "22", "q": "癌症疼痛" }],
+      "next": [
+        { "label": "換藥／換途徑 → 等效劑量表", "next": "i_equi" },
+        { "label": "背痛 + 無力／尿滯留 → 脊髓壓迫", "next": "r_cord" }
+      ]
+    },
+    "i_equi": {
+      "type": "info",
+      "title": "表 22-1 鴉片等效劑量（近似）；換藥先減 25–50%",
+      "body": [
+        "**Morphine** PO 30 mg = IV/SC 10 mg（口服：IV = 3:1）",
+        "**Oxycodone** PO 20 mg ≈ morphine PO 30 mg（效價 1.5）",
+        "**Hydromorphone** PO 6–7.5 mg／IV 1.5 mg；IV 效價 morphine IV × 5–7",
+        "**Tramadol** PO 300 mg／IV 100 mg（效價 0.1）；**Codeine** PO 200 mg（0.15）",
+        "**Fentanyl** IV 100 mcg ≈ morphine IV 10 mg（× 100）；貼片 25 mcg/hr ≈ morphine PO 60–90 mg/d",
+        "**Nalbuphine** IV 10 mg ≈ morphine IV 10 mg",
+        "換藥／換途徑因不完全交叉耐受先減 25–50%，再以突發劑量滴定"
+      ],
+      "next": "r_cancer"
+    },
+    "r_cord": {
+      "type": "result",
+      "urgency": "red",
+      "title": "疑轉移性脊髓壓迫（癌症病人背痛 + 無力／感覺缺損／尿滯留）",
+      "summary": "**等影像時就先給 dexamethasone 10 mg IV STAT**，緊急全脊椎 MRI，立刻通知後線／放腫／神外；同時止痛。",
+      "steps": [
+        "神經學檢查：肌力、感覺平面、肛門張力、殘尿（bladder scan／導尿）；記錄時間",
+        "Dexamethasone 10 mg IV STAT（不等影像）",
+        "緊急全脊椎 MRI（無法 MRI → CT）；臥床、翻身保護脊椎",
+        "通知後線、放射腫瘤科、神經外科（減壓／放療時效）",
+        "止痛：acetaminophen 規則 + 鴉片滴定（見重度疼痛）"
+      ],
+      "orders": [
+        { "drug": "Dexamethasone", "dose": "10 mg", "route": "IV", "freq": "STAT → 4 mg IV/PO q6h", "note": "疑轉移性脊髓壓迫等影像時就先給" },
+        { "drug": "Morphine", "dose": "{age >= 65 ? '1–2' : '2–4'} mg", "route": "IV", "freq": "q15–30 min 至緩解", "cond": "crcl >= 30", "note": "腎衰竭改 fentanyl 25–50 mcg IV" },
+        { "drug": "Fentanyl", "dose": "25–50 mcg", "route": "IV", "freq": "q5–10 min 至緩解", "cond": "crcl < 30", "note": "腎衰竭（CrCl {round(crcl)}）" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h 規則，max 3 g/d（肝病 2 g/d）", "note": "" }
+      ],
+      "watch": ["肌力／感覺平面 q4h（惡化速度決定緊急度）", "尿滯留、血糖（類固醇）"],
+      "call": ["懷疑當下立即通知後線、放腫、神外（不等 MRI 結果）", "神經功能快速惡化"],
+      "refs": [{ "ch": "22", "q": "疑轉移性脊髓壓迫" }, { "ch": "22", "q": "Dexamethasone" }]
+    },
+    "r_neuropathic": {
+      "type": "result",
+      "urgency": "green",
+      "title": "神經痛（灼熱、電擊、麻、觸摸痛）",
+      "summary": "一線 gabapentinoid（依 CrCl 調整）、SNRI、TCA；二線 tramadol、局部 lidocaine／capsaicin；三叉神經痛 carbamazepine；強鴉片效果差。",
+      "steps": [
+        "確認型態（帶狀皰疹後、糖尿病、化療、壓迫）；癌症病人背痛 + 神經缺損 → 脊髓壓迫流程",
+        "今晚起 gabapentin 或 pregabalin 低劑量 HS（腎功能 CrCl {round(crcl)} 決定上限）；老年注意嗜睡、跌倒",
+        "急性突破可加 tramadol；局部痛加 lidocaine 5% 貼片",
+        "交班原團隊每 1–3 天上調；三叉神經痛用 carbamazepine（HLA-B*1502）"
+      ],
+      "orders": [
+        { "drug": "Gabapentin", "dose": "{crcl < 30 ? '100' : '100–300'} mg", "route": "PO", "freq": "HS 起始，每 1–3 天增 300 mg → TID，目標 900–3,600 mg/d", "note": "CrCl < 30：max 300–600 mg/d（目前 CrCl {round(crcl)}）；嗜睡、頭暈、水腫、老年跌倒" },
+        { "drug": "Pregabalin", "dose": "25–75 mg", "route": "PO", "freq": "BID，max 600 mg/d", "note": "CrCl < 60 減量（目前 {round(crcl)}）", "alt": "gabapentin" },
+        { "drug": "Duloxetine", "dose": "30 mg", "route": "PO", "freq": "QD × 1 週 → 60 mg QD", "cond": "crcl >= 30", "note": "糖尿病神經痛、纖維肌痛；噁心；肝病、eGFR < 30 避免" },
+        { "drug": "Amitriptyline／nortriptyline", "dose": "10–25 mg", "route": "PO", "freq": "HS，漸增 max 75–100 mg", "note": "抗膽鹼、QT；老年慎" },
+        { "drug": "Carbamazepine", "dose": "100–200 mg", "route": "PO", "freq": "BID，max 1,200 mg/d", "note": "三叉神經痛首選；HLA-B*1502（SJS）" },
+        { "drug": "Lidocaine 5% 貼片", "dose": "1–3 片", "route": "局部", "freq": "12 hr on／12 hr off", "note": "帶狀皰疹後神經痛" },
+        { "drug": "Tramadol", "dose": "50–100 mg", "route": "PO", "freq": "{crcl < 30 ? 'q12h，max 200 mg/d' : 'q6h，max 400 mg/d（≥ 75 歲 300）'}", "note": "二線；SSRI/SNRI 併用血清素症候群；癲癇閾值↓" }
+      ],
+      "watch": ["嗜睡、頭暈、跌倒（老年、腎功能差）", "NRS 每日；1–3 天調整劑量"],
+      "call": ["癌症病人背痛 + 無力／尿滯留（脊髓壓迫）", "一般劑量無法控制（疼痛科、神經阻斷）"],
+      "refs": [{ "ch": "22", "q": "6. 神經痛" }],
+      "next": [{ "label": "背痛 + 神經缺損 → 脊髓壓迫", "next": "r_cord" }]
+    },
+    "r_spasm": {
+      "type": "result",
+      "urgency": "green",
+      "title": "肌肉痙攣／平滑肌絞痛（消化道、泌尿道）",
+      "summary": "平滑肌絞痛 hyoscine butylbromide；輸尿管痙攣 pipoxolan；下泌尿道刺激 phenazopyridine；骨骼肌痙攣 tizanidine／baclofen／cyclobenzaprine（老年慎）。絞痛先排除機械性阻塞。",
+      "steps": [
+        "腹痛先排除急腹症／機械性阻塞（Ch8）；解尿痛送 UA（Ch12）",
+        "選對類型的藥（平滑肌 vs 骨骼肌）；合併 acetaminophen ± NSAID",
+        "青光眼、尿滯留、機械性阻塞 → 不給抗膽鹼（hyoscine）",
+        "60 分鐘後評估；無效想別的原因"
+      ],
+      "orders": [
+        { "drug": "Hyoscine butylbromide（Buscopan）", "dose": "10–20 mg", "route": "PO／IV／IM", "freq": "TID–QID PRN，max 100 mg/d", "note": "消化道／泌尿道平滑肌絞痛；青光眼、機械性阻塞、尿滯留禁" },
+        { "drug": "Pipoxolan", "dose": "10 mg", "route": "PO", "freq": "TID", "note": "輸尿管痙攣" },
+        { "drug": "Phenazopyridine", "dose": "100–200 mg", "route": "PO", "freq": "TID × 2 天", "note": "下泌尿道刺激症狀；尿變橘紅；G6PD 缺乏禁" },
+        { "drug": "Tizanidine", "dose": "2–4 mg", "route": "PO", "freq": "TID，max 36 mg/d", "note": "中樞性痙攣；低血壓、嗜睡、肝毒" },
+        { "drug": "Baclofen", "dose": "5–10 mg", "route": "PO", "freq": "TID，max 80 mg/d", "note": "痙攣；腎功能減量（CrCl {round(crcl)}）；突然停 → 戒斷" },
+        { "drug": "Cyclobenzaprine", "dose": "5–10 mg", "route": "PO", "freq": "TID，≤ 2–3 週", "note": "急性肌肉骨骼痛；抗膽鹼、老年慎" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h，max 3 g/d（肝病 2 g/d）", "note": "併用" }
+      ],
+      "watch": ["低血壓、嗜睡（tizanidine、baclofen）", "尿滯留、口乾（抗膽鹼）"],
+      "call": ["絞痛合併腹膜炎徵候、無法排除阻塞／缺血", "止痛無效"],
+      "refs": [{ "ch": "22", "q": "7. 肌肉鬆弛劑與解痙劑" }]
+    },
+    "r_opioid_resp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "鴉片類呼吸抑制（RR < 8、SpO₂ ↓、難喚醒）",
+      "summary": "停鴉片、刺激、給氧、BVM；**naloxone 小劑量 0.04–0.1 mg IV q2–3 min 至 RR ≥ 12**（避免急性戒斷與疼痛反彈）；長效鴉片需持續滴注並延長觀察。",
+      "steps": [
+        "停止所有鴉片（含 PCA、貼片撕掉）與併用鎮靜劑；叫人、到床邊",
+        "刺激、抬下巴、O₂、BVM 輔助通氣（目標 SpO₂ 94–98%，CO₂ 滯留 88–92%）",
+        "Naloxone 0.4 mg 稀釋至 10 mL，每 2–3 分鐘推 1–2 mL 至 RR ≥ 12",
+        "長效鴉片（貼片、長效口服、methadone）→ 持續滴注（有效劑量的 2/3 /hr）並監測 ≥ 數小時",
+        "找其他原因：併用 BZD（flumazenil 見 Ch1）、CO₂ 滯留（ABG）、中風、低血糖",
+        "之後鴉片減量 25–50%、延長間隔；記錄事件"
+      ],
+      "orders": [
+        { "drug": "Naloxone", "dose": "0.04–0.1 mg（0.4 mg 稀釋至 10 mL 取 1–2 mL）", "route": "IV", "freq": "q2–3 min 至 RR ≥ 12", "note": "小劑量避免急性戒斷；無效可增量" },
+        { "drug": "Naloxone 滴注", "dose": "有效 bolus 劑量的 2/3 每小時", "route": "IV drip", "freq": "持續（長效鴉片）", "note": "半衰期比多數鴉片短，會再鎮靜" },
+        { "drug": "O₂", "dose": "依 SpO₂ 目標 94–98%", "route": "面罩／BVM", "freq": "持續", "note": "CO₂ 滯留者 88–92%；考慮 ABG" }
+      ],
+      "watch": ["RR、SpO₂、POSS q15 min × 2 hr，之後 q1h（naloxone 效果 30–90 分鐘會再鎮靜）", "急性戒斷：躁動、嘔吐、疼痛反彈"],
+      "call": ["需要 naloxone 就通知後線", "RR 未改善、需 BVM／插管、GCS 未恢復"],
+      "refs": [{ "ch": "22", "q": "5. 鴉片類副作用處理" }, { "ch": "22", "q": "呼吸抑制" }],
+      "next": [{ "label": "併用 BZD／安眠藥 → 過度鎮靜（Ch25）", "next": "r_opioid_se" }]
+    },
+    "r_opioid_se": {
+      "type": "result",
+      "urgency": "green",
+      "title": "鴉片類副作用：過度鎮靜、便秘、噁心、搔癢、尿滯留、譫妄",
+      "summary": "過度鎮靜（POSS 3 以上）停藥、減量 25–50%；便秘預防性 sennoside + PEG；噁心 metoclopramide／ondansetron（3–5 天耐受）；癢換藥或 nalbuphine 小劑量；譫妄減量並找其他原因。",
+      "steps": [
+        "評估 POSS 與 RR：RR < 8／難喚醒 → 呼吸抑制流程（naloxone）",
+        "過度鎮靜：減量 25–50%、延長間隔、停併用鎮靜劑",
+        "便秘：每個鴉片醫囑都要配軟便劑；頑固用 naloxegol／methylnaltrexone",
+        "噁心：止吐 PRN，通常 3–5 天耐受",
+        "搔癢：換 fentanyl／hydromorphone；尿滯留：導尿 + 減量；譫妄：減量／換藥、找其他原因（Ch2）"
+      ],
+      "orders": [
+        { "drug": "Sennoside", "dose": "12–24 mg", "route": "PO", "freq": "HS 每天", "note": "預防性給；＋ PEG 17 g QD" },
+        { "drug": "PEG（polyethylene glycol）", "dose": "17 g", "route": "PO", "freq": "QD", "note": "" },
+        { "drug": "Naloxegol", "dose": "25 mg", "route": "PO", "freq": "QD", "note": "頑固鴉片便秘；或 methylnaltrexone 8–12 mg SC" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "PO／IV", "freq": "q8h PRN", "note": "或 prochlorperazine 5–10 mg" },
+        { "drug": "Ondansetron", "dose": "4 mg", "route": "PO／IV", "freq": "PRN", "note": "QT" },
+        { "drug": "Nalbuphine", "dose": "2.5–5 mg", "route": "IV", "freq": "PRN 搔癢", "note": "antihistamine 效果有限；長期鴉片者慎（戒斷）" }
+      ],
+      "watch": ["POSS、RR、SpO₂", "排便每日", "尿量／殘尿"],
+      "call": ["過度鎮靜需 naloxone", "譫妄找不到其他原因且持續"],
+      "refs": [{ "ch": "22", "q": "5. 鴉片類副作用處理" }],
+      "next": [{ "label": "RR < 8／叫不醒 → 呼吸抑制", "next": "r_opioid_resp" }]
+    },
+    "r_organ": {
+      "type": "result",
+      "urgency": "green",
+      "title": "腎衰竭／肝硬化的止痛選擇",
+      "summary": "腎衰竭：acetaminophen、fentanyl、hydromorphone（減量）、buprenorphine；**避免 morphine、codeine、meperidine、NSAID**，gabapentin 減量。肝硬化：acetaminophen ≤ 2 g/d 仍是首選，避免 NSAID，鴉片減量延長間隔。",
+      "steps": [
+        "確認 CrCl（目前 {round(crcl)}）與肝病嚴重度；查目前用藥有沒有該避免的（morphine、codeine、NSAID）",
+        "基礎：acetaminophen（肝硬化 ≤ 2 g/d）",
+        "需要鴉片：fentanyl IV 小劑量滴定；口服可 hydromorphone 減量、延長間隔",
+        "神經痛：gabapentin 依 CrCl 減量",
+        "每次給藥後評估鎮靜與呼吸（肝腦病變風險）"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500 mg", "route": "PO", "freq": "q6h，max 2 g/d（肝硬化）；腎衰竭 max 3 g/d", "note": "仍是首選；急性肝炎／肝衰竭禁" },
+        { "drug": "Fentanyl", "dose": "25–50 mcg", "route": "IV", "freq": "q5–10 min 至緩解，之後 q1–2h PRN", "note": "腎衰竭首選；肝硬化減量延長間隔" },
+        { "drug": "Hydromorphone", "dose": "0.2–0.5 mg（腎衰竭減量）", "route": "IV／SC", "freq": "q2–4h PRN", "note": "PO 1–2 mg q4h；效價 morphine × 5–7" },
+        { "drug": "Buprenorphine", "dose": "0.2–0.4 mg", "route": "SL", "freq": "q6–8h", "note": "腎衰竭可用；部分致效，naloxone 難逆轉；長期鴉片者誘發戒斷" },
+        { "drug": "Gabapentin", "dose": "100 mg", "route": "PO", "freq": "HS 起始；CrCl < 30 max 300–600 mg/d", "cond": "crcl < 30", "note": "神經痛時；目前 CrCl {round(crcl)}" },
+        { "drug": "Morphine／codeine／meperidine／NSAID", "dose": "0（避免）", "route": "—", "freq": "—", "note": "腎衰竭：活性代謝物累積、癲癇；肝硬化：NSAID 出血、腎衰竭" }
+      ],
+      "watch": ["POSS、RR、SpO₂", "Cr、意識（肝腦病變）"],
+      "call": ["呼吸抑制／過度鎮靜", "一般劑量無法控制"],
+      "refs": [{ "ch": "22", "q": "8. 特殊情況" }, { "ch": "22", "q": "腎衰竭" }]
+    }
+  }
+}

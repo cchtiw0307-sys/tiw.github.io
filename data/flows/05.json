@@ -1,0 +1,418 @@
+{
+  "id": "05",
+  "title": "頭暈、眩暈、昏厥",
+  "chapter": "05",
+  "entries": [
+    { "label": "病人昏倒／眼前發黑（昏厥、近昏厥）", "type": "symptom", "start": "q_type", "group": "頭部",
+      "keywords": ["昏倒", "昏厥", "syncope", "眼前發黑", "快昏倒", "暈倒", "近昏厥", "presyncope", "失去意識", "LOC", "廁所昏倒"] },
+    { "label": "頭暈／天旋地轉（眩暈）", "type": "symptom", "start": "q_type", "group": "頭部",
+      "keywords": ["頭暈", "眩暈", "vertigo", "dizziness", "天旋地轉", "暈", "眼震", "nystagmus", "頭重腳輕"] },
+    { "label": "站起來頭暈（姿態性低血壓）", "type": "symptom", "start": "q_ortho", "group": "頭部",
+      "keywords": ["站起來頭暈", "姿態性低血壓", "orthostatic hypotension", "postural", "起床頭暈", "站立血壓"] },
+    { "label": "心因性昏厥（高風險）", "type": "diagnosis", "start": "q_hr",
+      "keywords": ["心因性昏厥", "cardiac syncope", "心律不整昏厥", "arrhythmia", "長 QT", "Brugada", "AS 昏厥", "節律器"] },
+    { "label": "反射性（血管迷走）昏厥", "type": "diagnosis", "start": "r_reflex",
+      "keywords": ["血管迷走", "vasovagal", "反射性昏厥", "reflex syncope", "情境性昏厥", "解尿昏厥", "micturition syncope"] },
+    { "label": "姿態性低血壓", "type": "diagnosis", "start": "r_orthostatic",
+      "keywords": ["姿態性低血壓", "orthostatic hypotension", "midodrine", "fludrocortisone", "POTS"] },
+    { "label": "後循環中風／中樞性眩暈", "type": "diagnosis", "start": "r_central",
+      "keywords": ["中樞性眩暈", "central vertigo", "後循環中風", "posterior circulation stroke", "小腦中風", "cerebellar", "HINTS", "5D"] },
+    { "label": "BPPV（良性陣發性姿勢性眩暈）", "type": "diagnosis", "start": "r_bppv",
+      "keywords": ["BPPV", "耳石", "Dix-Hallpike", "Epley", "姿勢性眩暈", "轉頭就暈"] },
+    { "label": "前庭神經炎", "type": "diagnosis", "start": "r_neuritis",
+      "keywords": ["前庭神經炎", "vestibular neuritis", "迷路炎", "labyrinthitis", "持續眩暈數天"] },
+    { "label": "梅尼爾氏症", "type": "diagnosis", "start": "r_meniere",
+      "keywords": ["梅尼爾", "Meniere", "耳鳴 眩暈", "聽力下降", "betahistine"] },
+    { "label": "急性眩暈症狀治療（前庭抑制劑、止吐）", "type": "diagnosis", "start": "r_vertigo_sx",
+      "keywords": ["前庭抑制劑", "dimenhydrinate", "meclizine", "眩暈 止吐", "暈 藥", "Novamin", "diphenhydramine 暈"] }
+  ],
+  "nodes": {
+    "q_type": {
+      "type": "choice",
+      "title": "哪一種「暈」？（電話中先叫：VS 含站立血壓、血糖、SpO₂、12 導程 ECG + 心電監測）",
+      "help": "意識不清或不穩：平躺抬腿、O₂、IV；跌倒者檢查頭部與髖部；舌咬傷、失禁、發作後混亂 → 癲癇（Ch3）",
+      "options": [
+        { "label": "真的失去意識或快昏倒／眼前發黑（昏厥、近昏厥）", "next": "q_synrisk" },
+        { "label": "天旋地轉（眩暈）", "next": "q_vertigo" },
+        { "label": "站起來才暈／頭重腳輕、站不穩", "next": "q_ortho" }
+      ]
+    },
+    "q_synrisk": {
+      "type": "multi",
+      "title": "昏厥：勾選所有高風險徵象",
+      "help": "先看 12 導程 ECG（表 5-1）；躺著或運動中昏厥 = 心因性直到證明不是",
+      "options": [
+        { "label": "ECG 異常（HR < 40、停頓 > 3 秒、Mobitz II／3° AV block、VT、QTc > 460–500、Brugada、δ 波、節律器不 capture）", "set": { "ecg": true } },
+        { "label": "運動中或平躺時發生、無前驅症狀、造成外傷", "set": { "cardiac": true } },
+        { "label": "胸痛／喘／心悸；心雜音；已知冠心病／心衰竭／瓣膜病／節律器／ICD；家族猝死史 < 50 歲", "set": { "heart": true } },
+        { "label": "SBP < 90、Hb < 9、黑便／出血", "set": { "unstable": true } },
+        { "label": "舌咬傷、失禁、抽搐、發作後混亂", "set": { "sz": true } },
+        { "label": "意識未完全恢復、新神經缺損、抗凝血劑者跌倒撞頭", "set": { "neuro": true } }
+      ],
+      "branches": [
+        { "if": "unstable", "next": "r_unstable" },
+        { "if": "neuro", "next": "r_neuro" },
+        { "if": "sz", "next": "r_like_sz" },
+        { "if": "ecg || cardiac || heart", "next": "q_hr" },
+        { "else": "q_prodrome" }
+      ]
+    },
+    "q_hr": {
+      "type": "number",
+      "title": "目前心率（/min）？",
+      "help": "心搏過緩 + 昏厥 → atropine、備 TCP；心搏過速依 Ch20",
+      "var": "hr", "unit": "/min", "step": 1,
+      "quick": [35, 45, 60, 90, 130, 180],
+      "branches": [
+        { "if": "hr < 50", "next": "r_brady" },
+        { "if": "hr > 150", "next": "r_tachy" },
+        { "else": "r_cardiac" }
+      ]
+    },
+    "q_prodrome": {
+      "type": "choice",
+      "title": "無高風險徵象：發生情境？",
+      "options": [
+        { "label": "有前驅（噁心、盜汗、視野變暗）；誘因：疼痛、情緒、站久；或解尿／解便／咳嗽／吞嚥時", "next": "r_reflex" },
+        { "label": "站起來時發生（脫水、出血、利尿劑、降壓藥、長期臥床）", "next": "q_ortho" },
+        { "label": "不確定／老年（> 60）", "next": "r_syncope_workup" }
+      ]
+    },
+    "q_ortho": {
+      "type": "number",
+      "title": "平躺 5 分鐘 → 站立 1 與 3 分鐘：SBP 下降幾 mmHg？",
+      "help": "3 分鐘內 SBP ↓ ≥ 20 或 DBP ↓ ≥ 10（或 SBP < 90）= 姿態性低血壓；站立 HR ↑ ≥ 30 而血壓不降 = POTS；無法安全站立就不測",
+      "var": "dsbp", "unit": "mmHg", "step": 1,
+      "quick": [0, 10, 20, 30, 50],
+      "branches": [
+        { "if": "dsbp >= 20", "next": "r_orthostatic" },
+        { "else": "r_syncope_workup" }
+      ]
+    },
+    "q_vertigo": {
+      "type": "multi",
+      "title": "眩暈：勾選所有中樞徵候",
+      "help": "HINTS 只在持續眩暈且有自發眼震者做；頭衝擊測試正常（無矯正性掃視）、方向改變眼震、垂直斜偏任一 = 中樞",
+      "options": [
+        { "label": "HINTS 中樞型（頭衝擊正常／方向改變眼震／skew）", "set": { "hints": true } },
+        { "label": "5D：複視、構音、吞嚥困難、辨距不良、麻木無力；新聽力喪失；嚴重不平衡無法站立", "set": { "central": true } },
+        { "label": "嚴重頭痛／頸痛；年長 + 血管危險因子（高血壓、糖尿病、AF）", "set": { "risk": true } },
+        { "label": "意識改變、Wernicke 線索（酗酒、眼肌麻痺）", "set": { "ams": true } }
+      ],
+      "branches": [
+        { "if": "hints || central || risk || ams", "next": "r_central" },
+        { "else": "q_periph" }
+      ]
+    },
+    "q_periph": {
+      "type": "choice",
+      "title": "周邊性眩暈：時間長短與誘發？",
+      "options": [
+        { "label": "秒到 1 分鐘、姿勢誘發（翻身、抬頭）、Dix-Hallpike 陽性", "next": "r_bppv" },
+        { "label": "持續數天、單側水平眼震、無聽力症狀", "next": "r_neuritis" },
+        { "label": "數小時、耳鳴／聽力下降／耳脹", "next": "r_meniere" },
+        { "label": "不確定，先症狀治療", "next": "r_vertigo_sx" }
+      ]
+    },
+    "r_unstable": {
+      "type": "result",
+      "urgency": "red",
+      "title": "昏厥 + SBP < 90／Hb < 9／出血",
+      "summary": "低血容或出血造成的昏厥：平躺抬腿、IV × 2、輸液 bolus、找出血（黑便、Hb），依 Ch19／Ch29；同時 ECG 排除心因。",
+      "steps": [
+        "平躺抬腿、O₂、IV × 2、心電監測；12 導程 ECG",
+        "CBC、type & screen、PT/aPTT、電解質、BUN/Cr、血糖、troponin；肛診（黑便）",
+        "NS bolus 後重評；Hb 低／活動性出血 → 輸血（門檻依 Ch29）",
+        "出血源：消化道（Ch12）、手術部位、腹膜後；抗凝血劑 → 逆轉（Ch30）",
+        "SBP 仍 < 90 → Ch19 休克流程、ICU"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "心／腎衰竭 250 mL" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續，目標 SpO₂ 94–98%", "note": "COPD 88–92%" },
+        { "drug": "PRBC", "dose": "單位數與門檻依 Ch29", "route": "IV", "freq": "活動性出血或 Hb 低時", "note": "先 type & screen" }
+      ],
+      "watch": ["BP／HR q5–15 min、尿量", "Hb q4–6h、黑便／血便"],
+      "call": ["SBP < 90、Hb < 9、活動性出血 → 立刻後線", "輸液後仍低血壓、需輸血 > 2 U"],
+      "refs": [{ "ch": "05", "q": "高風險" }, { "ch": "19", "q": "休克" }, { "ch": "29", "q": "輸血" }]
+    },
+    "r_neuro": {
+      "type": "result",
+      "urgency": "red",
+      "title": "昏厥後意識未恢復／新神經缺損／抗凝血劑者撞頭",
+      "summary": "這不是單純昏厥：依 Ch1 意識改變評估，**頭部 CT**（外傷、抗凝、局部缺損）；新局部缺損 → 中風流程。",
+      "steps": [
+        "ABC、GCS、瞳孔、局部神經徵候；血糖、SpO₂",
+        "頭部 CT（頭部外傷、抗凝血劑、新局部缺損、意識未恢復）",
+        "新局部缺損 → 記錄最後正常時間，依 Ch1 中風流程（打藥／取栓）",
+        "ECG、心電監測（仍要排除心因性昏厥）；電解質、Hb",
+        "抗凝血劑 + 顱內出血 → 逆轉（Ch1、Ch30）+ 神外"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "SpO₂ < 94% 時", "note": "目標 94–98%" },
+        { "drug": "Dextrose 50%（D50W）", "dose": "40 mL（20 g）", "route": "IVP", "freq": "血糖 < 70 時 STAT", "note": "Ch1 表 1-1" }
+      ],
+      "watch": ["GCS q1h；下降 ≥ 2 → 急 CT", "神經學、瞳孔"],
+      "call": ["昏厥後意識未恢復或有新神經缺損 → 立刻後線（中風時間窗）", "跌倒後頭部外傷且用抗凝血劑"],
+      "refs": [{ "ch": "05", "q": "頭部影像" }, { "ch": "01", "q": "急性缺血性中風" }]
+    },
+    "r_like_sz": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "短暫意識喪失 + 舌咬傷／失禁／發作後混亂：疑癲癇",
+      "summary": "舌側緣咬傷、失禁、發作後混亂 ≥ 30 min → 想癲癇（Ch3）；昏厥的抽動通常 < 10 秒且無發作後狀態。仍要做 ECG 排除心律不整造成的昏厥性抽搐。",
+      "steps": [
+        "復甦姿勢、SpO₂；神經學 q1h 至恢復基線；檢查舌、肩關節、頭部外傷",
+        "12 導程 ECG（QT 延長、心律不整造成的昏厥性抽搐）、心電監測",
+        "抽血：血糖、Na、Ca、Mg、乳酸（發作後 1 hr 內↑）、CK、AED 濃度",
+        "第一次發作、局部起始、外傷、抗凝 → 頭部 CT；依 Ch3 發作後流程",
+        "再發作 ≥ 5 分鐘 → lorazepam（Ch3）"
+      ],
+      "orders": [
+        { "drug": "Lorazepam（再發作備用）", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "再發作 ≥ 5 min 時 STAT", "note": "依 {wt} kg；Ch3" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "SpO₂ < 94% 時", "note": "目標 94–98%" }
+      ],
+      "watch": ["神經學 q1h；30–60 min 未恢復 → NCSE（Ch3）", "心電監測 ≥ 24 hr（無法排除心因時）"],
+      "call": ["第一次發作、發作後意識未恢復", "ECG 異常（心律不整）"],
+      "refs": [{ "ch": "05", "q": "類昏厥" }, { "ch": "03", "q": "發作後" }]
+    },
+    "r_brady": {
+      "type": "result",
+      "urgency": "red",
+      "title": "昏厥 + 心搏過緩（HR {hr}）",
+      "summary": "心搏過緩 + 昏厥 = 需節律器的高度可能（竇性停頓 > 3 秒、Mobitz II、3° AV block）：atropine 1 mg IV、備經皮節律（TCP），停 β-blocker／CCB／digoxin，聯絡後線 + 心臟科。",
+      "steps": [
+        "心電監測、12 導程 ECG、IV、O₂；平躺抬腿",
+        "有症狀（昏厥、低血壓、意識改變）→ atropine；無效 → TCP（鎮靜）或 dopamine／epinephrine 滴注（Ch21）",
+        "停 β-blocker、CCB、digoxin、抗心律不整藥；抽 K、Mg、troponin、TSH、digoxin 濃度",
+        "下壁心肌梗塞？（ECG、troponin）→ 心臟科",
+        "節律器病人 → 檢查 spike 後 capture／sensing，心臟科程式檢查"
+      ],
+      "orders": [
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "STAT；重複與後續依 Ch21", "note": "Mobitz II／3° AV block 常無效 → 直接 TCP" },
+        { "drug": "經皮節律（TCP）", "dose": "設定依 Ch21", "route": "貼片", "freq": "atropine 無效時 STAT", "note": "備床邊；需鎮痛鎮靜；備經靜脈節律" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "SpO₂ < 94% 時", "note": "目標 94–98%" }
+      ],
+      "watch": ["心電監測持續、BP q5 min", "K、Mg、troponin"],
+      "call": ["昏厥 + 心搏過緩 → 立刻後線 + 心臟科（節律器評估）", "atropine 無效、低血壓、AV block"],
+      "refs": [{ "ch": "05", "q": "心因性昏厥" }, { "ch": "21", "q": "心搏過緩" }]
+    },
+    "r_tachy": {
+      "type": "result",
+      "urgency": "red",
+      "title": "昏厥 + 心搏過速（HR {hr}）",
+      "summary": "昏厥 + 心搏過速 → VT／SVT／AF with RVR／WPW：12 導程 ECG 判讀，不穩定（低血壓、意識改變、胸痛、肺水腫）→ 同步電擊，依 Ch20；聯絡後線 + 心臟科。",
+      "steps": [
+        "心電監測、12 導程 ECG（QRS 寬窄、規則性）、IV、O₂",
+        "不穩定 → 同步電擊（鎮靜）；穩定 → 依 Ch20 藥物",
+        "抽 K、Mg、troponin、TSH；停 QT 延長藥",
+        "VT／pre-excitation／Brugada／長 QT → 心臟科；家族猝死史",
+        "曾需 CPR 或電擊 → 那是心跳停止（SCD），依 Ch38"
+      ],
+      "orders": [
+        { "drug": "同步電擊（不穩定時）", "dose": "能量依 Ch20", "route": "體外", "freq": "STAT，鎮靜後", "note": "不穩定定義：低血壓、意識改變、胸痛、肺水腫" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "SpO₂ < 94% 時", "note": "目標 94–98%" }
+      ],
+      "watch": ["心電監測持續、BP q5 min", "K、Mg、QTc"],
+      "call": ["昏厥 + 心搏過速 → 立刻後線 + 心臟科", "不穩定需電擊、VT、WPW"],
+      "refs": [{ "ch": "05", "q": "表 5-1" }, { "ch": "20", "q": "心搏過速" }]
+    },
+    "r_cardiac": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高風險昏厥（疑心因性）",
+      "summary": "無前驅、運動中／平躺、ECG 異常、心雜音、已知心臟病、家族猝死史 → 心電監測 ≥ 24 hr、troponin、心臟超音波；主動脈剝離／肺栓塞／AMI 依 Ch6；聯絡後線，考慮轉監測床。",
+      "steps": [
+        "心電監測 ≥ 24 hr、IV、O₂；12 導程 ECG 對照舊 ECG（表 5-1）",
+        "抽 CBC、電解質（K、Mg）、BUN/Cr、血糖、troponin、NT-proBNP、PT/aPTT；驗孕",
+        "胸痛／背痛／喘 → 想 ACS、主動脈剝離、肺栓塞（D-dimer／CTA，Ch6）",
+        "心雜音（AS 噴射性、HCM 站立增強）、S3、JVP → 心臟超音波",
+        "停 QT 延長藥（抗精神病藥、macrolide、fluoroquinolone、ondansetron）；矯正 K、Mg",
+        "節律器／ICD 病人 → 心臟科程式檢查；長 QT／Brugada／ARVC → 心臟科",
+        "下床一定有人陪；跌倒防護"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "SpO₂ < 94% 時", "note": "目標 94–98%" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 1–2 hr", "freq": "脫水／低血壓時", "note": "心衰竭 250 mL 或不給" },
+        { "drug": "KCl／MgSO₄", "dose": "依 Ch33／Ch36", "route": "PO／IV", "freq": "矯正 K > 4、Mg > 2", "note": "降低心律不整風險" }
+      ],
+      "watch": ["心電監測 ≥ 24 hr；BP q1h", "troponin 連續、ECG 變化", "再次昏厥"],
+      "call": ["昏厥 + 任一高風險徵象 → 聯絡後線，考慮轉監測床", "心悸／胸痛、ECG 異常、心雜音、家族猝死史、節律器病人"],
+      "refs": [{ "ch": "05", "q": "心因性昏厥" }, { "ch": "05", "q": "表 5-1" }, { "ch": "06", "q": "肺栓塞" }]
+    },
+    "r_syncope_workup": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "昏厥原因不明：基本評估",
+      "summary": "無高風險徵象但原因不確定：ECG、站立血壓、血糖、Hb、電解質；心電監測 24 hr；找藥物（降壓藥、利尿劑、QT 延長藥、insulin）；下床有人陪。",
+      "steps": [
+        "12 導程 ECG（表 5-1）；心電監測 24 hr（老年／不確定者）",
+        "站立血壓（平躺 5 分鐘 → 站 1、3 分鐘）；頸動脈竇按摩（無雜音、無近期中風、需心電監測：停搏 > 3 秒或 SBP ↓ > 50 = 頸動脈竇過敏）",
+        "CBC、電解質、BUN/Cr、血糖；troponin（懷疑心因）；驗孕",
+        "藥物回顧：降壓藥（α-blocker、nitrate、利尿劑）、β-blocker、CCB、QT 延長藥、insulin／磺醯脲類、鎮靜劑",
+        "心雜音／心衰竭 → 心臟超音波；昏厥不常規做頭部 CT（除非外傷／局部缺損）",
+        "跌倒防護、下床有人陪；交班原團隊"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 1–2 hr", "freq": "脫水時", "note": "心／腎衰竭 250 mL" },
+        { "drug": "（停或減）降壓藥／利尿劑", "dose": "原劑量暫停 1 次", "route": "PO", "freq": "至原團隊評估", "note": "睡前降壓藥改白天" }
+      ],
+      "watch": ["心電監測 24 hr、再次昏厥", "站立血壓、Hb"],
+      "call": ["監測發現心律不整、再次昏厥、新出現高風險徵象", "Hb < 9、SBP < 90"],
+      "refs": [{ "ch": "05", "q": "檢驗／檢查" }, { "ch": "05", "q": "姿態性低血壓" }],
+      "next": [{ "label": "出現高風險徵象 → 心因性", "next": "q_hr" }, { "label": "站立 SBP ↓ ≥ 20 → 姿態性", "next": "r_orthostatic" }]
+    },
+    "r_reflex": {
+      "type": "result",
+      "urgency": "green",
+      "title": "反射性（血管迷走／情境性）昏厥",
+      "summary": "有前驅、明確誘因、醒來很快恢復、VS 穩定、ECG 正常：平躺抬腿、補水、教導前驅時蹲下／交叉腿用力；通常不需藥物。",
+      "steps": [
+        "確認 ECG 正常、無高風險徵象、VS 穩定",
+        "平躺抬腿；補水（口服或 IV）",
+        "教導：前驅症狀時蹲下／交叉腿用力（counter-pressure）；避免誘因（久站、疼痛、悶熱）；解尿坐姿",
+        "反覆者門診：增加鹽水攝取、fludrocortisone／midodrine；紀錄到長停搏者心臟科評估節律器",
+        "下床有人陪；跌倒防護"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 1–2 hr", "freq": "脫水或無法口服時", "note": "心／腎衰竭 250 mL；能喝水者口服即可" }
+      ],
+      "watch": ["再次昏厥、站立血壓", "心電監測至 ECG 確認正常"],
+      "call": ["再次昏厥、出現高風險徵象（無前驅、運動中、心悸、ECG 異常）"],
+      "refs": [{ "ch": "05", "q": "反射性昏厥" }]
+    },
+    "r_orthostatic": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "姿態性低血壓",
+      "summary": "站立 3 分鐘內 SBP ↓ ≥ 20 或 DBP ↓ ≥ 10：先找**出血／脫水**，NS 500 mL over 1–2 hr，停或減 α-blocker／利尿劑／nitrate，起身分段、下床有人陪；慢性神經性才用 midodrine。",
+      "steps": [
+        "找原因：出血（Hb、黑便）、脫水（I/O、BUN/Cr）、藥物、自律神經病變（糖尿病、帕金森）、長期臥床、腎上腺功能不足",
+        "輸液 NS 500 mL over 1–2 hr，再依體液狀態調整維持輸液",
+        "調整藥物：停或減 α-blocker、利尿劑、nitrate、TCA、抗精神病藥；睡前降壓藥改白天（可留白天由原團隊調整）",
+        "非藥物：起身分段（坐 3–5 分鐘再站）、彈性襪、床頭抬高 10°、無心衰竭者水 2–3 L/d、鹽 ~10 g/d",
+        "站立 HR ↑ ≥ 30 而血壓不降 = POTS；ECG",
+        "下床一定有人陪；跌倒防護"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IVD over 1–2 hr", "freq": "STAT，之後依體液狀態調整維持", "note": "先找出血／脫水原因；心衰竭 250 mL" },
+        { "drug": "（停或減）α-blocker／利尿劑／nitrate", "dose": "暫停 1 次", "route": "PO", "freq": "至原團隊評估", "note": "睡前降壓藥改白天" },
+        { "drug": "Midodrine", "dose": "2.5–10 mg", "route": "PO", "freq": "TID（最後一劑不晚於 18:00）", "note": "慢性神經性；仰臥高血壓；由原團隊決定" },
+        { "drug": "Fludrocortisone", "dose": "0.1–0.2 mg", "route": "PO", "freq": "QD", "note": "低血鉀、水腫；由原團隊決定" }
+      ],
+      "watch": ["站立血壓每日；I/O、Hb", "跌倒"],
+      "call": ["SBP < 90、Hb < 9、出血", "輸液後仍姿態性低血壓且昏厥"],
+      "refs": [{ "ch": "05", "q": "姿態性低血壓" }, { "ch": "05", "q": "Midodrine" }]
+    },
+    "r_central": {
+      "type": "result",
+      "urgency": "red",
+      "title": "中樞性眩暈：後循環中風／小腦出血直到證明不是",
+      "summary": "HINTS 中樞型、5D、新聽力喪失、無法站立、嚴重頭痛頸痛 → CT（排除出血）+ **MRI DWI**（CT 對後循環敏感度低）；依 Ch1 中風流程（打藥／取栓時間窗同前循環）；小腦梗塞 1–5 天腦水腫，**大面積一律會診神外**。",
+      "steps": [
+        "記錄最後正常時間、NIHSS；立刻聯絡後線／神經科／中風小組",
+        "血糖、ECG（AF）、IV、心電監測；SpO₂ < 94% 才給氧",
+        "CT（排除出血）+ CTA（基底動脈）+ MRI DWI；早期 MRI 也可能陰性，需臨床判斷",
+        "時間窗內 → 依 Ch1 血栓溶解／取栓（基底動脈 ≤ 24 hr 可取栓）",
+        "吞嚥篩檢通過前 NPO；BP ≤ 220/120 不降（不打藥者）",
+        "密切 GCS（小腦水腫高峰 24–72 hr → 腦幹壓迫、阻塞性水腦）；大面積小腦梗塞一律會診神外",
+        "Wernicke 線索（酗酒、眼肌麻痺）→ thiamine 500 mg IV TID（Ch1）"
+      ],
+      "orders": [
+        { "drug": "Aspirin", "dose": "160–300 mg 嚼服 → 100 mg", "route": "PO（吞嚥困難 NG）", "freq": "CT 排除出血且不打藥時 STAT → QD", "note": "打藥者 24 hr 後再給（Ch1）" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM", "freq": "q6–8h PRN 嘔吐", "note": "EPS" },
+        { "drug": "Thiamine（vit B₁）", "dose": "500 mg in NS 100 mL", "route": "IVD over 30 min", "freq": "TID × 2–3 天（疑 Wernicke）", "note": "僅酗酒／營養不良、有 Wernicke 線索（眼肌麻痺、步態失調、意識混亂）者；Ch1" },
+        { "drug": "NS", "dose": "維持輸液", "route": "IVD", "freq": "持續", "note": "避免 D5W" }
+      ],
+      "watch": ["GCS、瞳孔 q1h × 72 hr（小腦水腫）", "BP、血糖 140–180、體溫", "吞嚥、吸入"],
+      "call": ["眩暈合併中樞徵候／HINTS 中樞型／新頭痛頸痛／無法站立 → 立刻後線 + 神經科", "GCS 下降、大面積小腦梗塞（神外）"],
+      "refs": [{ "ch": "05", "q": "中樞性眩暈" }, { "ch": "05", "q": "HINTS" }, { "ch": "01", "q": "急性缺血性中風" }]
+    },
+    "r_bppv": {
+      "type": "result",
+      "urgency": "green",
+      "title": "BPPV（良性陣發性姿勢性眩暈）",
+      "summary": "秒到 1 分鐘、姿勢誘發、Dix-Hallpike 陽性（延遲數秒旋轉性眼震、重複會疲乏）→ **Epley 復位是首選**，藥物幫助小；水平半規管型用 supine roll test／BBQ roll。",
+      "steps": [
+        "Dix-Hallpike 確認患側（後半規管）；陰性 → supine roll test（水平半規管，約 8%）",
+        "Epley 復位（後半規管）或 BBQ roll（水平半規管）；可重複",
+        "嘔吐嚴重才短期前庭抑制劑／止吐（≤ 48–72 hr）",
+        "下床有人陪；跌倒防護；反覆或不典型 → ENT／神經科"
+      ],
+      "orders": [
+        { "drug": "Dimenhydrinate", "dose": "50 mg", "route": "PO／IM／IV", "freq": "q4–6h PRN，max 400 mg/d，≤ 48–72 hr", "note": "台灣常用；復位前後嘔吐嚴重時" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM／PO", "freq": "q6–8h PRN 嘔吐", "note": "EPS" }
+      ],
+      "watch": ["復位後症狀；再誘發測試", "跌倒"],
+      "call": ["出現中樞徵候（5D、無法站立、新頭痛）", "復位無效、不典型眼震（垂直、方向改變）"],
+      "refs": [{ "ch": "05", "q": "BPPV" }]
+    },
+    "r_neuritis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "前庭神經炎",
+      "summary": "持續數天的眩暈、單側水平眼震、HINTS 周邊型（頭衝擊有矯正性掃視）、無聽力症狀：前庭抑制劑 ≤ 48–72 hr、止吐，72 hr 內可給 methylprednisolone；**盡早下床活動與前庭復健比藥物重要**。",
+      "steps": [
+        "確認 HINTS 周邊型、無 5D、可站立；年長／血管危險因子仍考慮 MRI",
+        "急性期 24–48 hr 最嚴重，之後逐漸改善；前庭抑制劑只用 ≤ 48–72 hr",
+        "72 hr 內 methylprednisolone（證據中等）",
+        "盡早下床活動、前庭復健；有人陪、跌倒防護",
+        "合併聽力喪失 → 迷路炎／中樞，ENT／神經科"
+      ],
+      "orders": [
+        { "drug": "Dimenhydrinate", "dose": "50 mg", "route": "PO／IM／IV", "freq": "q4–6h PRN，max 400 mg/d，≤ 48–72 hr", "note": "台灣常用" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM／PO", "freq": "q6–8h PRN 嘔吐", "note": "EPS" },
+        { "drug": "Methylprednisolone", "dose": "100 mg", "route": "PO", "freq": "QD × 3 天後 3 週內漸減", "note": "72 hr 內開始；或 prednisolone 60 mg QD × 5 天再減；糖尿病、潰瘍慎" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO／IV", "freq": "q6–8h PRN 嚴重眩暈／焦慮", "note": "或 diazepam 2–5 mg PO/IV q6–8h；短期" }
+      ],
+      "watch": ["症狀應逐日改善；惡化或新徵候 → 影像", "跌倒"],
+      "call": ["出現中樞徵候、無法站立、新頭痛頸痛", "48–72 hr 未改善"],
+      "refs": [{ "ch": "05", "q": "前庭神經炎" }]
+    },
+    "r_meniere": {
+      "type": "result",
+      "urgency": "green",
+      "title": "梅尼爾氏症急性期",
+      "summary": "數小時的眩暈 + 耳鳴／聽力下降／耳脹：前庭抑制劑 + 止吐（≤ 48–72 hr）、betahistine；低鹽 ± 利尿劑長期由 ENT 決定。",
+      "steps": [
+        "確認單側聽力症狀；排除中樞（HINTS、5D）",
+        "急性期前庭抑制劑 + 止吐，≤ 48–72 hr",
+        "betahistine；低鹽飲食",
+        "耳鼻喉科追蹤（聽力檢查、長期利尿劑）"
+      ],
+      "orders": [
+        { "drug": "Dimenhydrinate", "dose": "50 mg", "route": "PO／IM／IV", "freq": "q4–6h PRN，max 400 mg/d，≤ 48–72 hr", "note": "台灣常用" },
+        { "drug": "Betahistine", "dose": "24 mg（或 8–16 mg TID）", "route": "PO", "freq": "BID", "note": "氣喘／消化性潰瘍慎用" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM／PO", "freq": "q6–8h PRN 嘔吐", "note": "EPS" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO／IV", "freq": "q6–8h PRN 嚴重眩暈", "note": "短期" }
+      ],
+      "watch": ["聽力、耳鳴；症狀時程", "跌倒"],
+      "call": ["出現中樞徵候、突發性聽力喪失（ENT 急會診）"],
+      "refs": [{ "ch": "05", "q": "梅尼爾急性期" }, { "ch": "05", "q": "Betahistine" }]
+    },
+    "r_vertigo_sx": {
+      "type": "result",
+      "urgency": "green",
+      "title": "急性眩暈症狀治療（前庭抑制劑、止吐）",
+      "summary": "**前庭抑制劑只在急性期用，≤ 48–72 小時**（延長會妨礙代償）；dimenhydrinate／diphenhydramine（台灣常用）、meclizine 較不鎮靜；止吐 metoclopramide／ondansetron；老年人減量、跌倒防護。",
+      "steps": [
+        "確認無中樞徵候（HINTS、5D、無法站立）；排除低血糖、貧血、姿態性低血壓、藥物（aminoglycoside）",
+        "前庭抑制劑擇一 + 止吐；≤ 48–72 hr",
+        "補水（嘔吐脫水）；下床有人陪",
+        "找型態（BPPV → 復位；神經炎 → 類固醇 + 復健；梅尼爾 → ENT）"
+      ],
+      "orders": [
+        { "drug": "Dimenhydrinate", "dose": "50 mg", "route": "PO／IM／IV", "freq": "q4–6h PRN，max 400 mg/d", "note": "台灣常用" },
+        { "drug": "Diphenhydramine", "dose": "{age >= 65 ? '25–30' : '25–50'} mg", "route": "PO／IM／IV", "freq": "q6h PRN", "note": "台灣針劑 30 mg/amp；鎮靜、抗膽鹼；老年人減量（年齡 {age}）", "alt": "dimenhydrinate" },
+        { "drug": "Meclizine", "dose": "25 mg", "route": "PO", "freq": "TID PRN（q8h）", "note": "較不鎮靜" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO／IV", "freq": "q6–8h PRN", "note": "嚴重眩暈、焦慮；或 diazepam 2–5 mg PO/IV q6–8h" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV／IM／PO", "freq": "q6–8h PRN", "note": "止吐；EPS" },
+        { "drug": "Prochlorperazine", "dose": "5–10 mg", "route": "IM／PO", "freq": "q6–8h PRN", "note": "止吐 + 前庭抑制；EPS、QT", "alt": "metoclopramide" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV／PO", "freq": "q8h PRN", "note": "止吐；QT 延長" },
+        { "drug": "NS", "dose": "500 mL", "route": "IVD over 1–2 hr", "freq": "嘔吐脫水時", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["鎮靜程度、跌倒（老年人）", "症狀 48–72 hr 應改善；惡化或新徵候 → 影像"],
+      "call": ["出現中樞徵候／HINTS 中樞型／新頭痛頸痛／無法站立", "48–72 hr 未改善"],
+      "refs": [{ "ch": "05", "q": "前庭抑制劑只在急性期用" }, { "ch": "05", "q": "Dimenhydrinate" }]
+    }
+  }
+}

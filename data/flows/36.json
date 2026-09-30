@@ -1,0 +1,618 @@
+{
+  "id": "36",
+  "title": "鎂離子異常",
+  "chapter": "36",
+  "entries": [
+    {
+      "label": "Mg 低（護理師報 Mg < 1.8）",
+      "type": "symptom",
+      "start": "q_mg",
+      "group": "檢驗異常",
+      "keywords": [
+        "低血鎂",
+        "鎂低",
+        "Mg 1.2",
+        "Mg 1.5",
+        "hypomagnesemia",
+        "magnesium low",
+        "補鎂",
+        "MgSO4"
+      ]
+    },
+    {
+      "label": "Mg 高（> 2.5）",
+      "type": "symptom",
+      "start": "q_mg",
+      "group": "檢驗異常",
+      "keywords": [
+        "高血鎂",
+        "鎂高",
+        "Mg 5",
+        "hypermagnesemia",
+        "magnesium high",
+        "反射消失",
+        "MgO 腎衰竭"
+      ]
+    },
+    {
+      "label": "K／Ca 補了都補不起來",
+      "type": "symptom",
+      "start": "r_hypomg_withk",
+      "group": "檢驗異常",
+      "keywords": [
+        "頑固低血鉀",
+        "頑固低血鈣",
+        "refractory hypokalemia",
+        "K 補不起來",
+        "Ca 補不起來",
+        "低鎂 低鉀"
+      ]
+    },
+    {
+      "label": "低血鎂",
+      "type": "diagnosis",
+      "start": "q_mg",
+      "keywords": [
+        "低血鎂",
+        "hypomagnesemia",
+        "MgSO4",
+        "MgO",
+        "PPI 低鎂",
+        "cisplatin 低鎂",
+        "酗酒 低鎂"
+      ]
+    },
+    {
+      "label": "高血鎂",
+      "type": "diagnosis",
+      "start": "q_mg",
+      "keywords": [
+        "高血鎂",
+        "hypermagnesemia",
+        "calcium gluconate 拮抗",
+        "MgO 中毒",
+        "灌腸 高血鎂"
+      ]
+    },
+    {
+      "label": "TdP／心律不整合併低血鎂",
+      "type": "diagnosis",
+      "start": "r_hypomg_severe",
+      "keywords": [
+        "TdP",
+        "torsades",
+        "QT 延長 低鎂",
+        "AF 低鎂",
+        "MgSO4 2 g IV push",
+        "心律不整 鎂"
+      ]
+    },
+    {
+      "label": "MgSO₄ 中毒（子癲前症治療中）",
+      "type": "diagnosis",
+      "start": "r_hypermg_severe",
+      "keywords": [
+        "MgSO4 中毒",
+        "magnesium toxicity",
+        "子癲前症 MgSO4",
+        "preeclampsia magnesium",
+        "反射消失 呼吸抑制",
+        "calcium gluconate 解毒"
+      ]
+    },
+    {
+      "label": "頑固低鉀／低鈣：先補鎂",
+      "type": "diagnosis",
+      "start": "r_hypomg_withk",
+      "keywords": [
+        "頑固低血鉀",
+        "低鎂 低鉀",
+        "低鎂 低鈣",
+        "先補鎂",
+        "MgSO4 q2h"
+      ]
+    }
+  ],
+  "nodes": {
+    "q_mg": {
+      "type": "number",
+      "title": "血鎂（mg/dL）？",
+      "help": "正常 1.8–2.5 mg/dL；血中 Mg 不能完全反映總體（細胞內）缺乏；高值先排除溶血檢體",
+      "var": "mg",
+      "unit": "mg/dL",
+      "step": 0.1,
+      "quick": [
+        0.8,
+        1.0,
+        1.2,
+        1.5,
+        1.8,
+        3.0,
+        5.0,
+        8.0
+      ],
+      "branches": [
+        {
+          "if": "mg < 1.2",
+          "next": "r_hypomg_severe"
+        },
+        {
+          "if": "mg <= 2.5",
+          "next": "q_hypomg_sx"
+        },
+        {
+          "else": "q_hypermg_sx"
+        }
+      ]
+    },
+    "q_hypomg_sx": {
+      "type": "multi",
+      "title": "Mg 1.2–2.5：勾選所有符合",
+      "help": "症狀常在 < 1.2：顫抖、抽搐、Trousseau/Chvostek、眼震、癲癇；ECG QT/PR 延長、TdP、VT、AF；同時驗 K、Ca（游離）、P、Cr、ECG",
+      "options": [
+        {
+          "label": "心律不整（TdP、VT、AF）、QT 延長、digoxin 使用",
+          "set": {
+            "arr": true
+          }
+        },
+        {
+          "label": "神經肌肉症狀（抽搐、顫抖、癲癇、意識改變）",
+          "set": {
+            "neuro": true
+          }
+        },
+        {
+          "label": "合併低血鉀或低血鈣（補不起來）",
+          "set": {
+            "lowk": true
+          }
+        },
+        {
+          "label": "無症狀",
+          "set": {
+            "none": true
+          }
+        }
+      ],
+      "branches": [
+        {
+          "if": "arr || neuro",
+          "next": "r_hypomg_severe"
+        },
+        {
+          "if": "lowk",
+          "next": "r_hypomg_withk"
+        },
+        {
+          "if": "mg < 1.8",
+          "next": "r_hypomg_mild"
+        },
+        {
+          "else": "r_mg_normal"
+        }
+      ]
+    },
+    "r_hypomg_severe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "嚴重低血鎂（Mg < 1.2 或心律不整／抽搐）：MgSO₄ 2 g IV over 10–20 min → 4–8 g/24 hr",
+      "summary": "**MgSO₄ 2 g in NS 50–100 mL over 10–20 min（TdP／心跳停止：2 g over 1–2 min IV push）**，之後 **4–8 g in NS 500–1,000 mL over 12–24 hr**（補太快腎臟會排掉一半）；腎衰竭（CrCl < 30）減半；同時補 K、Ca；常需 3–5 天補足。",
+      "steps": [
+        "心電監測、12 導程 ECG（QT/PR、TdP）；IV",
+        "抽：Mg、K、Ca（游離）、P、Cr；FEMg（> 2–4% 腎流失）",
+        "TdP／心跳停止 → MgSO₄ 2 g IV push over 1–2 min（Ch5／Ch38）；其他嚴重症狀 → 2 g over 10–20 min",
+        "接 4–8 g over 12–24 hr 慢滴（CrCl < 30 減半、密切監測）",
+        "同時補 K（Ch33）、Ca（Ch34）：先補鎂或同時，否則補不起來",
+        "Mg q6–12h；目標症狀者 > 2；常需 3–5 天",
+        "停 PPI／利尿劑（或換保鉀）、cisplatin／aminoglycoside 評估；酒精戒斷處置",
+        "快速給會潮紅、低血壓、深腱反射↓ → 減慢"
+      ],
+      "orders": [
+        {
+          "drug": "MgSO₄（台灣 10% 20 mL = 2 g；50% 2 mL = 1 g）",
+          "dose": "2 g in NS 50–100 mL",
+          "route": "IV drip over 10–20 min",
+          "freq": "STAT；嚴重症狀／心律不整",
+          "note": "TdP／心跳停止：2 g over 1–2 min IV push；1 g = 8 mEq = 4 mmol"
+        },
+        {
+          "drug": "MgSO₄ 維持",
+          "dose": "{crcl < 30 ? '2–4 g' : '4–8 g'} in NS 500–1,000 mL",
+          "route": "IV drip over 12–24 hr",
+          "freq": "持續；依 Mg q6–12h 調，常需 3–5 天",
+          "note": "CrCl {round(crcl)}：< 30 減半並密切監測（反射、呼吸）"
+        },
+        {
+          "drug": "KCl",
+          "dose": "20–40 mEq",
+          "route": "PO（或 IV 依 Ch33）",
+          "freq": "q4–6h PRN K < 3.5（補鎂後或同時）",
+          "note": "低鎂不補 K 補不起來"
+        },
+        {
+          "drug": "Calcium gluconate 10%",
+          "dose": "1–2 g in 50–100 mL",
+          "route": "IV drip over 10–20 min",
+          "freq": "PRN 症狀性低血鈣",
+          "note": "補 Mg 後 Ca 常自行回升（Ch34）"
+        },
+        {
+          "drug": "MgO",
+          "dose": "250–500 mg",
+          "route": "PO",
+          "freq": "BID–QID（IV 後過渡）",
+          "note": "腹瀉限制劑量"
+        }
+      ],
+      "watch": [
+        "心電監測；Mg q6–12h（目標 > 2）；K、Ca、P",
+        "深腱反射、RR、BP（給太快）；腎功能差者更密",
+        "3–5 天補足，之後口服維持"
+      ],
+      "call": [
+        "Mg < 1.0 或低鎂合併心律不整（TdP）、抽搐 → 通知後線",
+        "頑固低鉀／低鈣",
+        "腎衰竭病人需 IV 補鎂"
+      ],
+      "ddx": [
+        "低血鈣、低血鉀共存",
+        "酒精戒斷",
+        "Gitelman/Bartter"
+      ],
+      "refs": [
+        {
+          "ch": "36",
+          "q": "MgSO₄"
+        },
+        {
+          "ch": "36",
+          "q": "嚴重症狀／心律不整"
+        },
+        {
+          "ch": "05",
+          "q": "TdP"
+        }
+      ],
+      "next": [
+        {
+          "label": "頑固低鉀／低鈣 → 補鎂方案",
+          "next": "r_hypomg_withk"
+        }
+      ]
+    },
+    "r_hypomg_withk": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低鎂合併低鉀／低鈣（補不起來）：Mg < 2.4 就補，MgSO₄ 1–2 g IV q2h + MgO",
+      "summary": "合併低血鉀者 **Mg < 2 mEq/L（≈ 2.4 mg/dL）即應補**：MgSO₄ 1–2 g IV q2h + 口服 MgO；**Mg 補充後才補 K（或同時）**；低血鈣者補 Mg 後 Ca 常自行回升。",
+      "steps": [
+        "抽 Mg、K、Ca（游離）、P、Cr；ECG（QT、U 波）",
+        "MgSO₄ 1–2 g IV q2h（依 Mg 補至 > 2）+ MgO 口服；腎衰竭減半",
+        "同時或之後補 K（Ch33）；Ca 有症狀才補（Ch34），多半補 Mg 後回升",
+        "找原因：PPI、loop/thiazide 利尿劑、腹瀉、酗酒、cisplatin、aminoglycoside、cetuximab",
+        "腎流失（利尿劑、cisplatin）長期 → amiloride 5–10 mg QD",
+        "Mg、K q6–12h"
+      ],
+      "orders": [
+        {
+          "drug": "MgSO₄（10% 20 mL = 2 g；50% 2 mL = 1 g）",
+          "dose": "1–2 g in NS 50–100 mL",
+          "route": "IV drip over 1 hr",
+          "freq": "q2h 至 Mg > 2（PM 建議）",
+          "note": "CrCl {round(crcl)} < 30 減半；快速給潮紅、低血壓"
+        },
+        {
+          "drug": "MgO",
+          "dose": "250–500 mg（元素 Mg 約 150–300 mg）",
+          "route": "PO",
+          "freq": "BID–QID",
+          "note": "腹瀉限制劑量；或 magnesium glycinate／citrate 元素 240–480 mg/d（腹瀉少）"
+        },
+        {
+          "drug": "KCl",
+          "dose": "20–40 mEq",
+          "route": "PO（或 IV 依 Ch33）",
+          "freq": "q4–6h，補鎂後或同時",
+          "note": "Ch33 依 K 值決定途徑"
+        },
+        {
+          "drug": "Amiloride",
+          "dose": "5–10 mg",
+          "route": "PO",
+          "freq": "QD",
+          "note": "腎流失（利尿劑、cisplatin）長期減少排 Mg；注意高血鉀"
+        }
+      ],
+      "watch": [
+        "Mg、K q6–12h；Ca",
+        "ECG 若心悸；深腱反射",
+        "腹瀉（口服鎂）"
+      ],
+      "call": [
+        "Mg < 1.0、心律不整、抽搐",
+        "頑固低鉀／低鈣補鎂後仍不升"
+      ],
+      "refs": [
+        {
+          "ch": "36",
+          "q": "Mg 補充後才補 K"
+        },
+        {
+          "ch": "33",
+          "q": "MgSO₄"
+        },
+        {
+          "ch": "34",
+          "q": "MgSO₄"
+        }
+      ]
+    },
+    "r_hypomg_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "無症狀低血鎂（1.2–1.7）：MgSO₄ 2–4 g over 4–12 hr QD 或口服 MgO",
+      "summary": "無症狀 Mg 1.0–1.5：**MgSO₄ 2–4 g in NS 500 mL over 4–12 hr QD** 或口服 MgO 250–500 mg BID–QID；查 K、Ca；停 PPI／利尿劑；目標 > 1.8。",
+      "steps": [
+        "抽 K、Ca、P、Cr；ECG 一次",
+        "IV MgSO₄ 慢滴 QD 或口服 MgO（腹瀉限制）",
+        "找原因：PPI、利尿劑、腹瀉、酗酒、cisplatin、aminoglycoside、cetuximab、高血糖滲透性利尿",
+        "停 PPI／換利尿劑（或加 amiloride）",
+        "Mg 隔日；出現心律不整／抽搐 → 嚴重處置"
+      ],
+      "orders": [
+        {
+          "drug": "MgSO₄",
+          "dose": "2–4 g in NS 500 mL",
+          "route": "IV drip over 4–12 hr",
+          "freq": "QD",
+          "note": "CrCl {round(crcl)} < 30 減半；或改口服"
+        },
+        {
+          "drug": "MgO",
+          "dose": "250–500 mg（元素 Mg 約 150–300 mg）",
+          "route": "PO",
+          "freq": "BID–QID",
+          "note": "慢性、輕度；腹瀉限制劑量",
+          "alt": "Magnesium glycinate／citrate／lactate 元素 240–480 mg/d 分次（腹瀉較少）"
+        },
+        {
+          "drug": "Amiloride",
+          "dose": "5–10 mg",
+          "route": "PO",
+          "freq": "QD",
+          "note": "腎流失長期"
+        }
+      ],
+      "watch": [
+        "Mg、K 隔日；目標 > 1.8",
+        "腹瀉"
+      ],
+      "call": [
+        "Mg < 1.0 或出現心律不整、抽搐",
+        "頑固低鉀／低鈣"
+      ],
+      "refs": [
+        {
+          "ch": "36",
+          "q": "無症狀 Mg 1.0–1.5"
+        },
+        {
+          "ch": "36",
+          "q": "MgO"
+        }
+      ],
+      "next": [
+        {
+          "label": "合併低 K／低 Ca → 積極補鎂",
+          "next": "r_hypomg_withk"
+        }
+      ]
+    },
+    "r_mg_normal": {
+      "type": "result",
+      "urgency": "green",
+      "title": "Mg 1.8–2.5：正常範圍",
+      "summary": "目前正常；血中 Mg 不能完全反映總體缺乏——合併頑固低鉀／低鈣、酗酒、利尿劑者仍可補（合併低血鉀者 < 2.4 即補）。",
+      "steps": [
+        "合併低血鉀／低血鈣補不起來 → 仍補鎂（見連結）",
+        "持續流失（利尿劑、腹瀉、PPI、cisplatin）→ 隔日追蹤",
+        "無症狀 → 不需處置"
+      ],
+      "orders": [
+        {
+          "drug": "MgO",
+          "dose": "250–500 mg",
+          "route": "PO",
+          "freq": "BID PRN 持續流失者",
+          "note": "腹瀉限制"
+        }
+      ],
+      "watch": [
+        "持續流失者 Mg 隔日"
+      ],
+      "call": [
+        "Mg < 1.0 或 > 4 出現"
+      ],
+      "refs": [
+        {
+          "ch": "36",
+          "q": "目標"
+        }
+      ],
+      "next": [
+        {
+          "label": "頑固低鉀／低鈣 → 補鎂方案",
+          "next": "r_hypomg_withk"
+        }
+      ]
+    },
+    "q_hypermg_sx": {
+      "type": "multi",
+      "title": "Mg > 2.5：勾選所有符合",
+      "help": "4–6：噁心、潮紅、嗜睡、深腱反射減弱（最早）；6–10：肌無力、低血壓、心搏過緩、PR/QRS/QT 延長；> 10–12：呼吸麻痺、完全 AV block、心跳停止",
+      "options": [
+        {
+          "label": "深腱反射消失／減弱、嗜睡、肌無力",
+          "set": {
+            "dtr": true
+          }
+        },
+        {
+          "label": "心搏過緩／低血壓／PR-QRS 延長／呼吸抑制（RR < 12）",
+          "set": {
+            "cv": true
+          }
+        },
+        {
+          "label": "腎衰竭（CKD／AKI／透析）",
+          "set": {
+            "rf": true
+          }
+        },
+        {
+          "label": "子癲前症 MgSO₄ 治療中",
+          "set": {
+            "pe": true
+          }
+        },
+        {
+          "label": "無症狀",
+          "set": {
+            "none": true
+          }
+        }
+      ],
+      "branches": [
+        {
+          "if": "dtr || cv || mg > 4",
+          "next": "r_hypermg_severe"
+        },
+        {
+          "if": "rf",
+          "next": "r_hypermg_severe"
+        },
+        {
+          "else": "r_hypermg_mild"
+        }
+      ]
+    },
+    "r_hypermg_severe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "症狀性高血鎂（Mg > 4、反射消失、心搏過緩、低血壓、呼吸抑制）：停藥 + calcium gluconate + 輸液／furosemide ± 透析",
+      "summary": "停 MgO／制酸劑／灌腸／MgSO₄ 滴注；**calcium gluconate 1–2 g IV over 5–10 min** 拮抗（不降 Mg，只暫時保護）；腎功能尚可 → NS 100–200 mL/hr + furosemide 20–40 mg IV；腎衰竭、Mg > 6–8 有症狀、心搏過緩／呼吸抑制 → 透析。",
+      "steps": [
+        "ABC：呼吸抑制 → BVM／插管；心搏過緩 → atropine／節律（Ch21）；低血壓 → 輸液／升壓",
+        "心電監測、ECG；抽 Mg、Ca、K、Cr",
+        "立刻停所有含鎂：MgO、制酸劑、Epsom salt／硫酸鎂灌腸、TPN、MgSO₄ 滴注",
+        "Calcium gluconate 1–2 g over 5–10 min；可重複；嚴重者持續滴注",
+        "腎功能尚可：NS 100–200 mL/hr + furosemide 20–40 mg IV q4–6h",
+        "腎衰竭／Mg > 6–8 有症狀／心搏過緩／呼吸抑制 → 腎臟科透析（最有效）",
+        "子癲前症 → 停 MgSO₄、通知婦產科；每小時反射、RR（> 12）、尿量（> 25–30 mL/hr）",
+        "Mg q4–6h、ECG、反射、呼吸"
+      ],
+      "orders": [
+        {
+          "drug": "（停止來源）",
+          "dose": "MgO／制酸劑／灌腸／MgSO₄ 滴注 0（全停）",
+          "route": "—",
+          "freq": "立刻"
+        },
+        {
+          "drug": "Calcium gluconate 10%",
+          "dose": "1–2 g (10–20 mL)",
+          "route": "IV push over 5–10 min",
+          "freq": "STAT；可重複；嚴重者持續滴注",
+          "note": "拮抗心臟／神經肌肉作用；不降 Mg"
+        },
+        {
+          "drug": "NS",
+          "dose": "100–200 mL/hr",
+          "route": "IV drip",
+          "freq": "持續（腎功能尚可者）",
+          "with": "Furosemide 20–40 mg IV q4–6h",
+          "note": "CrCl {round(crcl)}；腎衰竭者效果差 → 透析"
+        },
+        {
+          "drug": "Atropine",
+          "dose": "1 mg",
+          "route": "IV push",
+          "freq": "q3–5 min PRN 心搏過緩（max 3 mg）",
+          "note": "依 Ch21 心搏過緩；無效 → 經皮節律"
+        },
+        {
+          "drug": "血液透析",
+          "dose": "依腎臟科",
+          "route": "—",
+          "freq": "腎衰竭、Mg > 6–8 有症狀、心搏過緩／呼吸抑制",
+          "note": "最有效"
+        }
+      ],
+      "watch": [
+        "Mg q4–6h；Ca、K、Cr",
+        "深腱反射、RR、SpO₂ 每小時；ECG（PR/QRS/QT）、BP",
+        "尿量（> 25–30 mL/hr）"
+      ],
+      "call": [
+        "Mg > 4 或反射消失、心搏過緩、低血壓、呼吸抑制 → 通知後線",
+        "腎衰竭病人需透析 → 腎臟科",
+        "子癲前症 MgSO₄ 中毒 → 通知婦產科"
+      ],
+      "refs": [
+        {
+          "ch": "36",
+          "q": "Calcium gluconate 10%"
+        },
+        {
+          "ch": "36",
+          "q": "血液透析"
+        },
+        {
+          "ch": "21",
+          "q": "心搏過緩"
+        }
+      ]
+    },
+    "r_hypermg_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕度無症狀高血鎂（2.5–4，腎功能正常）：停藥即可",
+      "summary": "輕度無症狀、腎功能正常者停 MgO／制酸劑／灌腸即可，Mg 隔日；腎功能差者更密集追蹤並小心含鎂製劑。",
+      "steps": [
+        "停 MgO、含鎂制酸劑、硫酸鎂灌腸、TPN 中鎂；確認非溶血檢體",
+        "腎功能（Cr、CrCl）；腎功能差者 q6–12h 追 Mg 並檢查反射",
+        "出現反射減弱、嗜睡、心搏過緩 → 嚴重處置",
+        "便秘改用非鎂軟便劑"
+      ],
+      "orders": [
+        {
+          "drug": "（停止來源）",
+          "dose": "MgO／含鎂制酸劑／灌腸 0（停）",
+          "route": "—",
+          "freq": "—",
+          "note": "CrCl {round(crcl)} 差者日後避免含鎂製劑"
+        }
+      ],
+      "watch": [
+        "Mg 隔日（腎功能差 q6–12h）",
+        "深腱反射、嗜睡"
+      ],
+      "call": [
+        "Mg > 4 或出現反射消失、心搏過緩、低血壓、呼吸抑制"
+      ],
+      "refs": [
+        {
+          "ch": "36",
+          "q": "停止來源"
+        }
+      ],
+      "next": [
+        {
+          "label": "出現症狀 → 嚴重處置",
+          "next": "r_hypermg_severe"
+        }
+      ]
+    }
+  }
+}

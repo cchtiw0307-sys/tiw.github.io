@@ -1,0 +1,583 @@
+{
+  "id": "01",
+  "title": "意識改變",
+  "chapter": "01",
+  "entries": [
+    { "label": "意識改變／叫不醒／嗜睡（護理師通知）", "type": "symptom", "start": "q_abc", "group": "頭部",
+      "keywords": ["意識改變", "叫不醒", "嗜睡", "昏迷", "意識不清", "反應變差", "GCS 下降", "altered mental status", "AMS", "coma", "confusion", "consciousness"] },
+    { "label": "新出現單側無力／口歪／講話不清（疑中風）", "type": "symptom", "start": "q_stroke_time", "group": "頭部",
+      "keywords": ["中風", "單側無力", "口角歪斜", "講話不清", "失語", "stroke", "CVA", "FAST", "偏癱", "hemiparesis"] },
+    { "label": "給鎮靜／止痛藥後叫不醒、呼吸變慢", "type": "symptom", "start": "q_pinpoint", "group": "頭部",
+      "keywords": ["呼吸變慢", "呼吸抑制", "morphine 後叫不醒", "打針後睡死", "respiratory depression", "RR 6", "針尖瞳孔"] },
+    { "label": "低血糖", "type": "diagnosis", "start": "r_hypoglycemia",
+      "keywords": ["低血糖", "hypoglycemia", "血糖 40", "血糖低", "D50W", "glucose 50"] },
+    { "label": "鴉片類過量（naloxone）", "type": "diagnosis", "start": "r_opioid",
+      "keywords": ["鴉片過量", "opioid overdose", "naloxone", "morphine 過量", "fentanyl", "針尖瞳孔", "pinpoint pupil"] },
+    { "label": "BZD／鎮靜劑過量（flumazenil）", "type": "diagnosis", "start": "r_bzd",
+      "keywords": ["BZD 過量", "benzodiazepine overdose", "flumazenil", "鎮靜劑過量", "安眠藥過量", "zolpidem"] },
+    { "label": "酒精戒斷／震顫性譫妄（DT）", "type": "diagnosis", "start": "r_etoh",
+      "keywords": ["酒精戒斷", "alcohol withdrawal", "delirium tremens", "DT", "CIWA", "酗酒", "戒斷"] },
+    { "label": "Wernicke 腦病變", "type": "diagnosis", "start": "r_wernicke",
+      "keywords": ["Wernicke", "thiamine", "維生素 B1", "眼肌麻痺", "步態失調", "營養不良"] },
+    { "label": "急性缺血性中風（rt-PA／取栓）", "type": "diagnosis", "start": "q_stroke_time",
+      "keywords": ["急性缺血性中風", "acute ischemic stroke", "rt-PA", "alteplase", "tenecteplase", "TNK", "取栓", "EVT", "thrombectomy", "NIHSS"] },
+    { "label": "顱內出血／SAH／頭部外傷", "type": "diagnosis", "start": "r_ich",
+      "keywords": ["顱內出血", "ICH", "intracerebral hemorrhage", "蛛網膜下腔出血", "SAH", "頭部外傷", "head injury", "硬腦膜下出血", "SDH", "逆轉抗凝"] },
+    { "label": "顱內壓上升／腦脫疝", "type": "diagnosis", "start": "r_icp",
+      "keywords": ["顱內壓上升", "ICP", "腦脫疝", "herniation", "mannitol", "3% NaCl", "Cushing triad", "瞳孔不對稱", "腦水腫"] },
+    { "label": "肝腦病變", "type": "diagnosis", "start": "r_he",
+      "keywords": ["肝腦病變", "hepatic encephalopathy", "HE", "lactulose", "撲翼性震顫", "asterixis", "NH3", "氨", "肝硬化 意識"] },
+    { "label": "尿毒性腦病變", "type": "diagnosis", "start": "r_uremic",
+      "keywords": ["尿毒性腦病變", "uremic encephalopathy", "尿毒", "BUN 100", "緊急透析"] },
+    { "label": "黏液水腫昏迷", "type": "diagnosis", "start": "r_myxedema",
+      "keywords": ["黏液水腫昏迷", "myxedema coma", "甲狀腺低下", "hypothyroid", "levothyroxine", "低體溫"] },
+    { "label": "腎上腺危症", "type": "diagnosis", "start": "r_adrenal",
+      "keywords": ["腎上腺危症", "adrenal crisis", "hydrocortisone", "類固醇 停用", "腎上腺功能不足"] }
+  ],
+  "nodes": {
+    "q_abc": {
+      "type": "multi",
+      "title": "危險徵象：勾選所有符合（電話中先叫：完整 VS + 指尖血糖、O₂、IV、監測）",
+      "help": "叫喚無反應先確認呼吸與脈搏；不論如何都要到床邊",
+      "options": [
+        { "label": "叫喚無反應且**無呼吸／無脈搏**", "set": { "arrest": true } },
+        { "label": "呼吸 < 8/min、鼾聲、SpO₂ < 90%", "set": { "resp": true } },
+        { "label": "SBP < 90、肢端冰冷、CRT > 2 秒（休克）", "set": { "shock": true } },
+        { "label": "瞳孔不對稱／單側散大、Cushing triad（BP↑ HR↓ 呼吸不規則）", "set": { "hern": true } },
+        { "label": "新局部神經徵候（單側無力、口歪、失語）", "set": { "focal": true } },
+        { "label": "正在抽搐", "set": { "sz": true } }
+      ],
+      "branches": [
+        { "if": "arrest", "next": "r_arrest" },
+        { "if": "resp", "next": "q_pinpoint" },
+        { "if": "hern", "next": "r_icp" },
+        { "if": "shock", "next": "r_shock" },
+        { "if": "sz", "next": "r_seizure" },
+        { "if": "focal", "next": "q_stroke_time" },
+        { "else": "q_glucose" }
+      ]
+    },
+    "q_pinpoint": {
+      "type": "choice",
+      "title": "呼吸慢／SpO₂ 低：瞳孔？",
+      "help": "先抬下巴、擺復甦姿勢、備 ambu bag 與抽痰；SpO₂ < 90% 或呼吸 < 8/min → BVM 給氧",
+      "options": [
+        { "label": "針尖瞳孔 + 呼吸慢（近期有鴉片類）", "next": "r_opioid" },
+        { "label": "剛給 BZD／安眠藥，瞳孔正常", "next": "r_bzd" },
+        { "label": "其他／不明", "next": "r_airway" }
+      ]
+    },
+    "q_glucose": {
+      "type": "number",
+      "title": "指尖血糖（mg/dL）？",
+      "var": "glu", "unit": "mg/dL", "step": 1,
+      "quick": [40, 60, 70, 100, 200, 400],
+      "branches": [
+        { "if": "glu < 70", "next": "r_hypoglycemia" },
+        { "if": "glu > 350", "next": "r_hyper" },
+        { "else": "q_cause" }
+      ]
+    },
+    "q_cause": {
+      "type": "choice",
+      "title": "最像哪一種？（同時：完整 VS、GCS 分項、瞳孔、抽表 V 基本組合、ECG、CXR）",
+      "help": "AEIOU + 腦心肺肝腎；老年人譫妄常是感染唯一表現；膀胱脹＝尿滯留",
+      "options": [
+        { "label": "剛給鎮靜安眠藥（BZD／zolpidem）", "next": "r_bzd" },
+        { "label": "鴉片類止痛後嗜睡、呼吸慢、針尖瞳孔", "next": "r_opioid" },
+        { "label": "酗酒者入院 6–96 hr：顫抖、盜汗、幻覺、心搏過速", "next": "r_etoh" },
+        { "label": "肝硬化、黃疸、撲翼性震顫", "next": "r_he" },
+        { "label": "腎衰竭（BUN > 100、eGFR < 15）、肌陣攣", "next": "r_uremic" },
+        { "label": "發燒／疑感染（肺、尿、管路、腹內）", "next": "r_infection" },
+        { "label": "頭痛嘔吐、抗凝血劑、近期跌倒（疑顱內出血）", "next": "r_ich" },
+        { "label": "低體溫、低血壓、低血鈉、甲狀腺病史", "next": "r_myxedema" },
+        { "label": "長期類固醇剛停／腎上腺功能不足 + 低血壓", "next": "r_adrenal" },
+        { "label": "原因不明", "next": "r_workup" }
+      ]
+    },
+    "q_stroke_time": {
+      "type": "number",
+      "title": "最後一次看起來正常距今幾小時？",
+      "help": "發病時間 = 最後一次看起來正常的時間；立刻聯絡後線與中風小組",
+      "var": "hrs", "unit": "hr", "step": 0.5,
+      "quick": [1, 3, 4.5, 6, 12, 24, 48],
+      "branches": [
+        { "else": "q_stroke_sbp" }
+      ]
+    },
+    "q_stroke_sbp": {
+      "type": "number",
+      "title": "目前 SBP（mmHg）？",
+      "help": "打藥前需 < 185/110；不打藥／不取栓者 ≤ 220/120 可不降",
+      "var": "ssbp", "unit": "mmHg", "step": 1,
+      "quick": [140, 160, 185, 200, 220],
+      "branches": [
+        { "if": "hrs <= 4.5", "next": "r_stroke_tpa" },
+        { "if": "hrs <= 24", "next": "r_stroke_evt" },
+        { "else": "r_stroke_late" }
+      ]
+    },
+    "r_arrest": {
+      "type": "result",
+      "urgency": "red",
+      "title": "無呼吸／無脈搏：啟動 ACLS",
+      "summary": "叫喚無反應 + 無呼吸／無脈搏 = 心跳停止，立刻 CPR、叫急救團隊，依 Ch38 ACLS。",
+      "steps": [
+        "叫人、推急救車、開始 CPR（30:2）、接 monitor／AED 判讀節律",
+        "BVM 100% O₂、建立 IV/IO",
+        "指尖血糖、想可逆原因（H's & T's：低血糖、缺氧、K、藥物過量）",
+        "ROSC 後昏迷：目標體溫管理，避免發燒（核心體溫 ≤ 37.5℃）≥ 72 hr；72 hr 內勿下預後判斷"
+      ],
+      "orders": [
+        { "drug": "BVM 100% O₂", "dose": "≥ 10 次/min", "route": "面罩", "freq": "持續至插管", "note": "ACLS 藥物與電擊依 Ch38" }
+      ],
+      "watch": ["節律 q2 min", "ROSC 後：體溫、血糖、EEG 排除癲癇"],
+      "call": ["立刻通知後線、急救團隊、ICU"],
+      "refs": [{ "ch": "38", "q": "ACLS" }, { "ch": "01", "q": "心跳停止後昏迷" }]
+    },
+    "r_airway": {
+      "type": "result",
+      "urgency": "red",
+      "title": "呼吸抑制／無法保護氣道（非鴉片）",
+      "summary": "SpO₂ < 90% 或呼吸 < 8/min → BVM 給氧並準備插管；GCS ≤ 8、無咳嗽／嘔吐反射、呼吸衰竭 = 插管指標。",
+      "steps": [
+        "移除假牙／異物，抬下巴或推下顎；鼾聲 → 口咽／鼻咽呼吸道",
+        "BVM 給氧（≥ 10 次/min）、抽痰；準備插管（Ch7）",
+        "ABG（看 PaCO₂：CO₂ 麻醉 → NIV／插管）、指尖血糖",
+        "找原因：鎮靜劑／鴉片（解毒劑）、腦幹病灶（CT）、CO₂ 滯留",
+        "SBP > 180/120 合併意識改變 → 想高血壓腦病變、顱內出血"
+      ],
+      "orders": [
+        { "drug": "O₂（BVM 或 NRM）", "dose": "100%（NRM 15 L/min）", "route": "面罩", "freq": "持續，目標 SpO₂ 94–98%（COPD 88–92%）", "note": "呼吸 < 8/min 用 BVM 輔助換氣" },
+        { "drug": "Naloxone", "dose": "0.04–0.4 mg", "route": "IVP", "freq": "q2–3 min PRN，直到 RR ≥ 12", "note": "無法排除鴉片類時可試；呼吸停止 0.4–2 mg", "cond": "false" }
+      ],
+      "watch": ["SpO₂、RR、EtCO₂／ABG", "GCS 分項；下降 ≥ 2 分即有意義"],
+      "call": ["呼吸 < 8/min 或 SpO₂ < 90% 就叫後線", "GCS ≤ 8、需插管 → 後線 + ICU"],
+      "refs": [{ "ch": "01", "q": "氣道與呼吸" }, { "ch": "07", "q": "插管" }],
+      "next": [{ "label": "針尖瞳孔／近期鴉片 → naloxone", "next": "r_opioid" }]
+    },
+    "r_opioid": {
+      "type": "result",
+      "urgency": "red",
+      "title": "鴉片類過量：naloxone",
+      "summary": "意識改變 + 呼吸慢 + 針尖瞳孔 → naloxone，目標「維持呼吸（RR ≥ 12）」不是完全清醒；藥效只有 30–60 min，要觀察並可重複。",
+      "steps": [
+        "停所有鴉片類（含 PCA、貼片撕掉）；BVM 輔助換氣至 naloxone 起效",
+        "心電／SpO₂ 監測、IV；指尖血糖",
+        "呼吸抑制但有呼吸：小劑量起；呼吸停止：大劑量",
+        "總量 10 mg 仍無反應 → 另找原因（CT、ABG、其他藥物）",
+        "長效鴉片（methadone、貼片）需持續滴注並觀察 ≥ 12–24 hr"
+      ],
+      "orders": [
+        { "drug": "Naloxone（呼吸抑制但有呼吸）", "dose": "0.04–0.4 mg", "route": "IVP（alt. IM／SC／IN）", "freq": "q2–3 min，直到 RR ≥ 12/min", "note": "長期使用者從小劑量開始，避免急性戒斷" },
+        { "drug": "Naloxone（呼吸停止）", "dose": "0.4–2 mg（IN 4 mg）", "route": "IVP", "freq": "q2–3 min，總量 10 mg 無效 → 另找原因", "note": "藥效 30–60 min，比多數鴉片短" },
+        { "drug": "Naloxone 持續滴注", "dose": "有效劑量的 2/3 /hr", "route": "IVD", "freq": "持續", "note": "反覆呼吸抑制或長效鴉片時" },
+        { "drug": "O₂", "dose": "2–4 L/min nasal cannula → 6–8 L/min simple mask", "route": "鼻導管／面罩", "freq": "持續，目標 SpO₂ 94–98%", "note": "COPD 88–92%" }
+      ],
+      "watch": ["RR、SpO₂ q15 min × 2 hr（naloxone 失效後再抑制）", "急性戒斷：躁動、嘔吐、心搏過速"],
+      "call": ["呼吸 < 8/min 或 SpO₂ < 90%、需 BVM／插管", "naloxone 10 mg 無效、需持續滴注"],
+      "refs": [{ "ch": "01", "q": "Naloxone" }]
+    },
+    "r_bzd": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "BZD／鎮靜劑過量",
+      "summary": "支持性治療為主（氣道、O₂、監測）；flumazenil 多數住院病人**不建議常規使用**（長期 BZD 使用者、癲癇病史、混合中毒禁用）。",
+      "steps": [
+        "停鎮靜安眠藥；復甦姿勢、抬下巴，備 ambu bag",
+        "SpO₂／心電監測、IV；指尖血糖、ABG（PaCO₂）",
+        "確認只有 BZD（TCA／多重藥物中毒禁 flumazenil）；有無長期 BZD／癲癇病史",
+        "呼吸 < 8/min 或無法保護氣道 → BVM、準備插管，不要靠 flumazenil",
+        "服藥 1–2 hr 內且氣道有保護 → 活性碳"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續，目標 SpO₂ 94–98%", "note": "不夠改 simple mask 6–8 L/min" },
+        { "drug": "Flumazenil", "dose": "0.2 mg", "route": "IVP over 30 s", "freq": "無效每 1 min 加 0.2 mg（max 1 mg／次；max 3 mg/hr）", "note": "藥效 ~1 hr 可重複；禁：長期 BZD、癲癇病史、TCA／多重藥物中毒、ICP↑" },
+        { "drug": "活性碳", "dose": "{round(wt)} g（1 g/kg，一般 50 g）", "route": "PO／NG", "freq": "1 次", "note": "服藥 1–2 hr 內、氣道有保護才用；毒物中心 02-2871-7121" }
+      ],
+      "watch": ["RR、SpO₂、GCS q15–30 min 至清醒", "flumazenil 後 1 hr 再鎮靜；戒斷性癲癇"],
+      "call": ["呼吸 < 8/min、SpO₂ < 90%、GCS ≤ 8", "需要解毒劑或懷疑多重藥物中毒"],
+      "refs": [{ "ch": "01", "q": "Flumazenil" }]
+    },
+    "r_shock": {
+      "type": "result",
+      "urgency": "red",
+      "title": "意識改變 + 休克（SBP < 90、CRT > 2 秒、少尿）",
+      "summary": "低灌流造成意識改變：先輸液、找休克原因（敗血、出血、心因），依 Ch19 處理；同時驗血糖與乳酸。",
+      "steps": [
+        "IV × 2、心電監測、O₂；平躺抬腿",
+        "輸液 bolus 後重評；指尖血糖、ABG／乳酸、CBC、Cr、培養 × 2",
+        "找原因：發燒（敗血 → 1 hr 內抗生素）、出血（Hb、黑便）、胸痛／ECG（心因）、藥物",
+        "尿量、Foley；SBP 仍 < 90 → 升壓劑與 ICU（Ch19）"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "心／腎衰竭 250 mL" },
+        { "drug": "O₂", "dose": "2–4 L/min → 6–8 L/min", "route": "nasal cannula／simple mask", "freq": "持續，目標 SpO₂ 94–98%", "note": "COPD 88–92%" }
+      ],
+      "watch": ["BP／HR q5–15 min、尿量每小時、乳酸", "GCS"],
+      "call": ["休克當下就叫後線；輸液 1 L 後仍 SBP < 90 → ICU／升壓劑"],
+      "refs": [{ "ch": "19", "q": "休克" }, { "ch": "01", "q": "循環" }]
+    },
+    "r_seizure": {
+      "type": "result",
+      "urgency": "red",
+      "title": "正在抽搐（依 Ch3 癲癇流程）",
+      "summary": "側躺、O₂、抽痰、驗血糖；> 5 分鐘 = 癲癇重積，lorazepam 0.1 mg/kg IV（max 4 mg）。",
+      "steps": [
+        "床欄、移開硬物、側躺；勿約束、勿塞口內物；記錄開始時間",
+        "O₂ NRM 15 L/min、SpO₂／心電監測、抽痰",
+        "指尖血糖 < 70 → D50W 40 mL IVP",
+        "> 5 分鐘仍在抽 → BZD；5 分鐘後未停再一次，接第二線（Ch3）"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "STAT；5 min 後未停可再 1 次", "note": "依 {wt} kg；無 IV：midazolam 10 mg IM；備 ambu bag" },
+        { "drug": "Dextrose 50%（D50W）", "dose": "40 mL（20 g）", "route": "IVP slow push", "freq": "血糖 < 70 時 STAT", "note": "酗酒／營養不良先 thiamine 100 mg IV" }
+      ],
+      "watch": ["RR、SpO₂、BP（BZD 後）", "發作後 30–60 min 意識未恢復 → 想 NCSE，EEG"],
+      "call": ["發作 > 5 分鐘或反覆發作、BZD 後仍抽", "第一次發作、發燒 + 發作、呼吸抑制"],
+      "refs": [{ "ch": "03", "q": "癲癇重積症的時間軸" }]
+    },
+    "r_hypoglycemia": {
+      "type": "result",
+      "urgency": "red",
+      "title": "低血糖（< 70 mg/dL）",
+      "summary": "能吞嚥給口服糖，否則 D50W 40 mL IVP；酗酒／營養不良者**先給 thiamine**；磺醯脲類／長效胰島素造成者要觀察 24 hr。",
+      "steps": [
+        "確認能否安全吞嚥；不能 → IV 糖；無 IV → glucagon IM",
+        "15 分鐘後復測，< 70 再給一次",
+        "找原因：insulin／磺醯脲類劑量、NPO 未減藥、腎功能惡化、肝衰竭、敗血症、腎上腺功能不足",
+        "磺醯脲類／長效胰島素 → 接 D10W 滴注、q1–2h 血糖、觀察 24 hr",
+        "意識未隨血糖恢復 → 另找原因（CT、癲癇後）"
+      ],
+      "orders": [
+        { "drug": "葡萄糖（可吞嚥者）", "dose": "15–20 g（糖水、果汁 150 mL、方糖 3–4 顆）", "route": "PO", "freq": "15 min 後復測，< 70 再給", "note": "意識清楚、能安全吞嚥才用" },
+        { "drug": "Dextrose 50%（D50W）", "dose": "40 mL（2 支 20 mL = 20 g）；昏迷／抽搐 60 mL", "route": "IVP slow push", "freq": "STAT；15 min 後復測，< 70 可重複", "note": "外滲會壞死；老年人可先 20 mL；症狀輕可稀釋成 25%" },
+        { "drug": "Dextrose 10%", "dose": "150–200 mL", "route": "IVD over 15 min", "freq": "可重複", "note": "沒有 D50W 或小靜脈時" },
+        { "drug": "Glucagon", "dose": "0.5–1 mg", "route": "IM／SC", "freq": "15 min 後無效可再 1 次", "note": "無 IV 時；肝醣耗竭（酗酒、肝病、飢餓）無效；常嘔吐" },
+        { "drug": "Thiamine（vit B₁）", "dose": "100 mg（酗酒／營養不良 200–500 mg）", "route": "IVP／IM", "freq": "給糖前或同時", "note": "高風險者務必先給，避免 Wernicke 惡化" },
+        { "drug": "D10W 或 D5W", "dose": "50–100 mL/hr", "route": "IVD", "freq": "持續", "note": "磺醯脲類／長效胰島素者需 24 hr 觀察" }
+      ],
+      "watch": ["血糖 15 min 復測，之後 q1–2h × 24 hr（磺醯脲類／長效胰島素）", "意識恢復情形"],
+      "call": ["血糖矯正後意識未恢復", "反覆低血糖、磺醯脲類／insulin 過量需 ICU 監測"],
+      "refs": [{ "ch": "01", "q": "表 1-1" }]
+    },
+    "r_hyper": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "血糖 > 350：懷疑 DKA／HHS（Ch28）",
+      "summary": "意識改變 + 高血糖：抽 VBG、電解質、酮體，先輸液，依 Ch28 DKA／HHS 流程。",
+      "steps": [
+        "VBG（pH、HCO₃）、Na、K、Cr、酮體（血／尿）、滲透壓、CBC、培養（發燒）",
+        "IV × 2、心電監測（K）、Foley 記尿量",
+        "NS bolus 後依 Ch28 輸液與 insulin 滴注",
+        "找誘因：感染、漏 insulin、類固醇、ACS、中風"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15–30 min", "freq": "STAT，可重複", "note": "心／腎衰竭 250 mL；後續依 Ch28" }
+      ],
+      "watch": ["血糖 q1h、K q2h、VBG q2–4h", "GCS、尿量"],
+      "call": ["pH < 7.1、K < 3.3 或 > 6、意識持續不清 → 後線／ICU"],
+      "refs": [{ "ch": "28", "q": "DKA" }, { "ch": "01", "q": "血糖" }]
+    },
+    "r_workup": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "原因不明的意識改變：完整評估",
+      "summary": "一次抽齊基本組合 + ECG + CXR + ABG；有局部徵候、外傷、抗凝、無法解釋 → 非顯影 CT；持續不清且原因不明 → EEG（NCSE）。",
+      "steps": [
+        "完整 VS、GCS 分項、瞳孔、腦幹反射、四肢對稱性、頸部僵硬、撲翼性震顫、肌陣攣",
+        "抽血：CBC、PT/aPTT、Na/K/Ca/Mg/P、BUN/Cr、glucose、肝功能、NH₃、CRP、VBG/ABG、TSH、cortisol；藥物濃度（AED、digoxin、lithium）",
+        "發燒：血液培養 × 2、尿液、痰；ECG、portable CXR",
+        "頭部 CT：局部徵候、頭部外傷、抗凝血劑、無法解釋者；懷疑大血管阻塞加 CTA",
+        "LP：懷疑腦膜炎／腦炎／SAH（CT 正常）；細菌性腦膜炎先給抗生素不等 LP",
+        "藥物回顧：近 48 hr 新加／停用；停鎮靜劑、抗膽鹼藥",
+        "膀胱掃描（尿滯留）、便秘、疼痛、環境（譫妄，Ch2）"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續，目標 SpO₂ 94–98%", "note": "COPD 88–92%" },
+        { "drug": "Thiamine（vit B₁）", "dose": "100 mg", "route": "IVP／IM", "freq": "QD", "note": "酗酒／營養不良者，給含糖輸液前先給" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 30–60 min", "freq": "脫水時 STAT", "note": "避免低張液（D5W）；心／腎衰竭 250 mL" }
+      ],
+      "watch": ["GCS 分項 q1h；下降 ≥ 2 分即有意義", "VS、SpO₂、血糖、尿量"],
+      "call": ["GCS ≤ 8 或下降 ≥ 2、新局部徵候、瞳孔不對稱、癲癇", "原因不明且未改善、懷疑腦膜炎／顱內出血"],
+      "ddx": ["非痙攣型癲癇重積（EEG）", "腦膜炎／腦炎（LP）", "後循環中風（MRI）", "譫妄（Ch2）"],
+      "refs": [{ "ch": "01", "q": "基本組合" }, { "ch": "01", "q": "AEIOU" }]
+    },
+    "r_etoh": {
+      "type": "result",
+      "urgency": "red",
+      "title": "酒精戒斷／震顫性譫妄（DT）",
+      "summary": "最後一次飲酒後 6–96 hr：CIWA-Ar ≥ 10 給 BZD，lorazepam（肝硬化／老年首選）或 diazepam 到適度鎮靜；**thiamine 先於含糖輸液**；DT 需 ICU 等級照護。",
+      "steps": [
+        "排除／同時處理：感染、腦膜腦炎、顱內出血、癲癇、藥物過量、肝衰竭、消化道出血",
+        "CIWA-Ar 評分（≥ 10 給藥）：先給到適度鎮靜（可喚醒），之後 q1–4h 評分至 < 10 持續 24 hr → q4–8h",
+        "心電／SpO₂ 監測、IV；抽 Mg、K、P、血糖、肝功能、CBC",
+        "有癲癇史或既往 DT（即使 CIWA < 8）→ 固定劑量 + PRN",
+        "避免 β-blocker／clonidine 單獨使用；避免 phenytoin 預防戒斷性癲癇",
+        "BZD 抗性（大量仍不鎮靜）→ phenobarbital，聯絡後線／ICU"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "2–4 mg", "route": "IVP", "freq": "q15–20 min 直到 CIWA < 10 或適度鎮靜（可喚醒）", "note": "肝硬化、老年人首選；之後 PO 1–2 mg q6–8h 漸減" },
+        { "drug": "Diazepam", "dose": "5–10 mg（嚴重 10–15 mg）", "route": "IVP", "freq": "q5–15 min 直到適度鎮靜", "note": "長效、較不易反覆戒斷；PO 10–20 mg q6h 漸減；肝功能差者累積", "alt": "lorazepam" },
+        { "drug": "Lorazepam（無 IV）", "dose": "2 mg", "route": "IM", "freq": "q30–60 min", "note": "吸收較不穩定" },
+        { "drug": "Thiamine（vit B₁）", "dose": "100–200 mg", "route": "IVD／IM", "freq": "QD × 3 天", "note": "先給 thiamine 再給含糖輸液；疑 Wernicke 改 500 mg TID" },
+        { "drug": "Folic acid", "dose": "1–5 mg", "route": "PO", "freq": "QD", "with": "Vit B complex 1 amp in 輸液 QD" },
+        { "drug": "D5S 或 D5-½S", "dose": "80–100 mL/hr", "route": "IVD", "freq": "持續，依體液狀態調整", "note": "矯正 K（Ch33）、Mg（Ch36）、P（Ch35）" },
+        { "drug": "Phenobarbital（後線）", "dose": "{round(wt*10)}–{round(wt*15)} mg 分次（130–260 mg q15–30 min）", "route": "IVD", "freq": "直到鎮靜", "note": "BZD 抗性嚴重戒斷／DT，ICU 用，聯絡後線；依 {wt} kg" }
+      ],
+      "watch": ["CIWA-Ar q1–4h；RR、SpO₂、BP（過度鎮靜）", "體溫、HR（自律神經風暴）", "Mg、K、P、血糖"],
+      "call": ["懷疑 DT（意識混亂 + 幻覺 + 自律神經風暴）→ 後線／ICU", "BZD 大量仍無法鎮靜、呼吸抑制、戒斷性癲癇"],
+      "refs": [{ "ch": "01", "q": "酒精戒斷" }, { "ch": "01", "q": "CIWA-Ar" }],
+      "next": [{ "label": "眼肌麻痺／步態失調 → Wernicke", "next": "r_wernicke" }]
+    },
+    "r_wernicke": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Wernicke 腦病變（疑似即治療）",
+      "summary": "眼肌麻痺、步態失調、意識混亂任一 + 酗酒／營養不良 → 高劑量 thiamine 500 mg TID，**先於含糖輸液**。",
+      "steps": [
+        "不等確診：高劑量 thiamine 立即給",
+        "含糖輸液一律在 thiamine 之後",
+        "同時矯正 Mg（thiamine 作用需要 Mg）、K、P；補 folate、B 群",
+        "營養評估；MRI（乳頭體、視丘）非急做"
+      ],
+      "orders": [
+        { "drug": "Thiamine（vit B₁）", "dose": "500 mg in NS 100 mL", "route": "IVD over 30 min", "freq": "TID × 2–3 天 → 250 mg QD × 5 天", "note": "台灣多以 100 mg/amp 或複方 B 群針劑" },
+        { "drug": "Folic acid", "dose": "1–5 mg", "route": "PO", "freq": "QD", "with": "Vit B complex 1 amp in 輸液 QD" }
+      ],
+      "watch": ["眼球運動、步態、意識每日", "Mg、K、P"],
+      "call": ["意識惡化、合併戒斷／DT"],
+      "refs": [{ "ch": "01", "q": "Wernicke" }]
+    },
+    "r_he": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "肝腦病變",
+      "summary": "**找誘因比 NH₃ 數值重要**（出血、感染／SBP、便秘、脫水、低血鉀、鎮靜劑）；lactulose 到每日 2–4 次軟便；Grade III–IV 保護氣道、ICU。",
+      "steps": [
+        "West Haven 分級；Grade III–IV → 考慮插管、ICU",
+        "找誘因：消化道出血、感染（腹水穿刺排除 SBP）、便秘、利尿劑過量／脫水、低血鉀／鹼血症、鎮靜劑、腎衰竭",
+        "停鎮靜劑（zolpidem／BZD 一律停）與利尿劑；維持 K > 4、避免鹼血症",
+        "Lactulose q1–2h 直到解便，之後 TID–QID；無法口服改灌腸",
+        "抽血：NH₃（僅供參考）、電解質、Cr、CBC、PT/INR、培養；腹水常規與培養",
+        "營養：蛋白質不限制（1.2–1.5 g/kg/d）、少量多餐 + 睡前點心"
+      ],
+      "orders": [
+        { "drug": "Lactulose（10 g/15 mL）", "dose": "20–30 g（30–45 mL）", "route": "PO／NG", "freq": "q1–2h 直到解便，之後 TID–QID（目標每日 2–4 次軟便）", "note": "過量會脫水、高血鈉、低血鉀" },
+        { "drug": "Lactulose 灌腸", "dose": "300 mL 加水 700 mL，保留 30–60 min", "route": "PR", "freq": "q4–6h", "note": "Grade III–IV 或無法口服" },
+        { "drug": "Rifaximin", "dose": "550 mg", "route": "PO", "freq": "BID", "note": "加在 lactulose 上（復發預防或反應差）；給付依各院" },
+        { "drug": "L-ornithine L-aspartate", "dose": "10–20 g in 輸液", "route": "IVD over 4 hr", "freq": "QD", "note": "輔助，證據較弱" },
+        { "drug": "KCl", "dose": "依 Ch33", "route": "PO／IV", "freq": "維持 K > 4", "note": "低血鉀會增加腎臟產氨" }
+      ],
+      "watch": ["排便次數（目標 2–4 次/日）、意識分級每班", "K、Na、Cr（lactulose 過量脫水）", "發燒、腹痛（SBP）"],
+      "call": ["Grade III–IV（木僵／昏迷）需保護氣道", "合併消化道出血、SBP、腎衰竭；急性肝衰竭（非肝硬化）→ 重點是 ICP 與轉診"],
+      "refs": [{ "ch": "01", "q": "肝腦病變" }, { "ch": "01", "q": "Lactulose" }]
+    },
+    "r_uremic": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "尿毒性腦病變（緊急透析適應症）",
+      "summary": "BUN > 100、eGFR < 15 + 嗜睡／撲翼性震顫／肌陣攣／癲癇 → 聯絡腎臟科安排緊急透析；同時排除藥物累積與其他原因。",
+      "steps": [
+        "確認 BUN/Cr、K、HCO₃、Ca、血糖；ECG（高血鉀）",
+        "停止腎功能不佳會累積的藥（gabapentin、baclofen、morphine、抗生素）並調整劑量",
+        "排除其他原因：低血糖、低血鈉、感染、顱內出血（尿毒者出血傾向）",
+        "聯絡後線與腎臟科：緊急透析（尿毒性腦病變為適應症）",
+        "癲癇 → 依 Ch3；高血鉀 → Ch33"
+      ],
+      "orders": [
+        { "drug": "緊急血液透析（腎臟科）", "dose": "依腎臟科", "route": "HD", "freq": "STAT", "note": "尿毒性腦病變為緊急透析適應症" }
+      ],
+      "watch": ["GCS、肌陣攣／癲癇", "K、酸鹼、體液狀態"],
+      "call": ["確認尿毒性腦病變即聯絡後線 + 腎臟科", "癲癇、K > 6、肺水腫"],
+      "refs": [{ "ch": "01", "q": "尿毒性腦病變" }, { "ch": "11", "q": "透析" }]
+    },
+    "r_infection": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "感染／敗血症相關腦病變",
+      "summary": "老年人譫妄常是感染唯一表現：找感染源、培養、**1 小時內抗生素**（Ch17）；頭痛／頸僵／瘀點 → 腦膜炎流程（Ch4）。",
+      "steps": [
+        "完整 VS（qSOFA：RR ≥ 22、SBP ≤ 100、意識改變）、SpO₂、血糖",
+        "找感染源：肺（CXR）、尿（尿液常規）、皮膚／壓瘡、管路（CVC、Foley）、腹內",
+        "血液培養 × 2 套、尿液培養、痰培養，之後 1 小時內給抗生素",
+        "CBC、CRP、乳酸、Cr、肝功能；低血壓 → 輸液 bolus，依 Ch19 敗血性休克",
+        "懷疑腦膜炎（發燒 + 頭痛／頸僵／瘀點）→ 不等 LP 先給抗生素（Ch4）"
+      ],
+      "orders": [
+        { "drug": "經驗性抗生素（依感染源，Ch17）", "dose": "依 Ch17 表", "route": "IV", "freq": "STAT（1 小時內）", "note": "腎功能 CrCl {round(crcl)} mL/min 調整劑量" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15–30 min", "freq": "低血壓／乳酸高時 STAT，可重複", "note": "心／腎衰竭 250 mL" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續，目標 SpO₂ 94–98%", "note": "COPD 88–92%" }
+      ],
+      "watch": ["VS、乳酸、尿量", "GCS；抗生素後 24–48 hr 意識應改善，否則另找原因"],
+      "call": ["休克、SpO₂ < 90%、懷疑腦膜炎", "意識改變原因不明且未改善"],
+      "refs": [{ "ch": "01", "q": "感染／敗血症相關腦病變" }, { "ch": "17", "q": "抗生素" }, { "ch": "04", "q": "腦膜炎" }]
+    },
+    "r_ich": {
+      "type": "result",
+      "urgency": "red",
+      "title": "顱內出血（ICH）／SAH／頭部外傷",
+      "summary": "立刻後線 + 神經外科；保護氣道、床頭 30°；ICH SBP 目標 **140（130–150）**、SAH < 160 + nimodipine；**逆轉抗凝血**。",
+      "steps": [
+        "ABC、GCS 分項、瞳孔；床頭 30°；GCS ≤ 8 或無法保護氣道 → 插管",
+        "急 CT（頭部外傷：GCS 下降、瞳孔不對稱、抗凝血劑 → 立即 CT）",
+        "IV、心電監測、動脈導管；CBC（血小板）、PT/INR、aPTT、Cr、type & screen",
+        "降壓：nicardipine 或 labetalol，1 小時內達標，避免 SBP < 130 與 1 小時內降幅 > 90",
+        "逆轉抗凝：warfarin → 4F-PCC + vit K；dabigatran → idarucizumab；Xa 抑制劑 → 4F-PCC；heparin → protamine",
+        "血小板 < 100,000 → 輸血小板；抗血小板藥使用者不常規輸（PATCH）",
+        "SAH：nimodipine 21 天、避免低血容；頭部外傷 3 hr 內 → tranexamic acid（依院內）"
+      ],
+      "orders": [
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min 加 2.5 mg/hr，max 15 mg/hr", "route": "IVD", "freq": "持續", "note": "20 mg in NS total 40 mL（0.5 mg/mL）；ICH 目標 SBP 140；SAH < 160" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IVP over 1–2 min", "freq": "q10–15 min，累計 max 300 mg", "note": "禁：氣喘、HR < 60、≥ 2° AV block、失代償心衰竭", "alt": "nicardipine" },
+        { "drug": "4F-PCC（warfarin）", "dose": "{round(wt*25)}／{round(wt*35)}／{round(wt*50)} U（INR 2–4／4–6／> 6：25／35／50 U/kg）", "route": "IV", "freq": "STAT 單次", "with": "Vitamin K 10 mg IV", "note": "目標 INR < 1.4；無 PCC 才用 FFP；依 {wt} kg" },
+        { "drug": "Idarucizumab（dabigatran）", "dose": "5 g", "route": "IV", "freq": "STAT 單次", "note": "dabigatran 使用者" },
+        { "drug": "4F-PCC（Xa 抑制劑）", "dose": "2,000 U（或 {round(wt*25)}–{round(wt*50)} U）", "route": "IV", "freq": "STAT 單次", "note": "rivaroxaban／apixaban／edoxaban；andexanet 台灣少見" },
+        { "drug": "Nimodipine（SAH）", "dose": "60 mg", "route": "PO／NG", "freq": "q4h × 21 天", "note": "低血壓改 30 mg q2h" },
+        { "drug": "Tranexamic acid（頭部外傷 3 hr 內）", "dose": "1 g", "route": "IV over 10 min", "freq": "STAT → 接 1 g over 8 hr", "note": "CRASH-3，依院內流程" },
+        { "drug": "DDAVP（尿毒症）", "dose": "{round(wt*0.3)} mcg（0.3 mcg/kg）", "route": "IV", "freq": "單次", "note": "尿毒症出血傾向；依 {wt} kg" }
+      ],
+      "watch": ["BP q5 min 至穩定後 q15 min；避免 SBP < 130（ICH）", "GCS q1h；下降 ≥ 2、瞳孔不等大 → 急 CT", "INR／血小板（逆轉後）、Na（3% NaCl 時）"],
+      "call": ["確診出血當下 = 後線 + 神經外科", "GCS ≤ 8 或下降 ≥ 2、瞳孔不對稱、Cushing triad、新癲癇"],
+      "refs": [{ "ch": "01", "q": "顱內出血（ICH）" }, { "ch": "30", "q": "逆轉" }, { "ch": "18", "q": "表 18-1" }],
+      "next": [{ "label": "瞳孔不對稱／Cushing triad → ICP↑ 處置", "next": "r_icp" }]
+    },
+    "r_icp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "顱內壓上升／腦脫疝",
+      "summary": "單側瞳孔散大、Cushing triad、意識快速惡化 → 床頭 30°、mannitol 或 3% NaCl、短暫過度換氣，**立刻聯絡後線與神經外科**。",
+      "steps": [
+        "床頭抬高 30°、頭正中；頸圈勿壓迫頸靜脈；避免發燒、疼痛、躁動",
+        "GCS ≤ 8 → 插管；已插管者短暫過度換氣 PaCO₂ 30–35 當橋接（< 30 min）",
+        "Mannitol 或 3% NaCl（低血壓、腎衰竭者偏好 3% NaCl）",
+        "急 CT；緊急會診神經外科（腦室外引流、去顱骨減壓、血塊清除）",
+        "維持 CPP 60–70（MAP − ICP）；低血壓比高血壓更危險",
+        "類固醇只用於腫瘤／膿瘍的血管源性水腫；中風、外傷、出血禁用"
+      ],
+      "orders": [
+        { "drug": "Mannitol 20%", "dose": "{round(wt*0.5)}–{round(wt)} g（{round(wt*2.5)}–{round(wt*5)} mL）", "route": "IVD over 15–30 min", "freq": "q4–6h 依 ICP／臨床", "note": "0.5–1 g/kg，依 {wt} kg；目標血漿滲透壓 < 320、osmolar gap < 20；低血壓、腎衰竭慎用；利尿後補等量 NS" },
+        { "drug": "3% NaCl", "dose": "150–250 mL", "route": "IVD over 10–20 min", "freq": "可重複；或 {round(wt*0.5)}–{round(wt)} mL/hr 持續", "note": "目標 Na 145–155（勿 > 160）；持續滴注建議 CVC", "alt": "mannitol" },
+        { "drug": "Dexamethasone", "dose": "10 mg → 4 mg", "route": "IVD", "freq": "負荷後 q6h", "note": "**只用於腫瘤／膿瘍相關水腫**；中風、外傷、出血禁用", "cond": "false" },
+        { "drug": "Propofol／fentanyl 鎮靜止痛", "dose": "依 Ch7 表", "route": "IVD", "freq": "持續（已插管）", "note": "減少代謝需求；肌鬆劑僅在難控時" }
+      ],
+      "watch": ["瞳孔、GCS q15–30 min", "Na q4–6h（3% NaCl）、滲透壓（mannitol）、尿量", "BP：維持 CPP 60–70，避免低血壓"],
+      "call": ["瞳孔不對稱、Cushing triad、GCS 下降 ≥ 2 → 立刻後線 + 神經外科", "需插管／ICU"],
+      "refs": [{ "ch": "01", "q": "顱內壓上升／腦脫疝" }, { "ch": "01", "q": "Mannitol" }]
+    },
+    "r_stroke_tpa": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性缺血性中風 ≤ 4.5 hr：血栓溶解 ± 取栓",
+      "summary": "**時間就是腦**：立刻中風小組、非顯影 CT + CTA、NIHSS；無禁忌 → alteplase 0.9 mg/kg 或 tenecteplase 0.25 mg/kg；打藥前 BP < 185/110；大血管阻塞同時安排取栓。",
+      "steps": [
+        "立刻聯絡後線與中風小組；記錄最後正常時間、NIHSS、體重",
+        "血糖（< 50 先矯正）、ECG、非顯影 CT + CTA；血小板、PT/INR、aPTT；抗凝血劑用藥史（48 hr 內 DOAC、24 hr 內治療劑量 LMWH → 禁）",
+        "禁忌節錄：顱內出血、3 個月內中風／重大頭部創傷／顱內手術、活動性出血、血小板 < 100,000、INR > 1.7、BP 降不到 < 185/110、感染性心內膜炎",
+        "BP ≥ 185/110 → labetalol／nicardipine 降到 < 185/110 才能打；打後 24 hr < 180/105",
+        "前循環大血管阻塞（ICA／M1）NIHSS ≥ 6、ASPECTS ≥ 6（3–5 亦可）→ 取栓；可打藥者先打藥再取栓，勿延遲轉送",
+        "輕度非失能（NIHSS 0–5 無失能）不打藥 → DAPT",
+        "打藥後 24 hr 內不給抗血小板／抗凝血劑；吞嚥篩檢通過前 NPO；SpO₂ < 94% 才給氧"
+      ],
+      "orders": [
+        { "drug": "Alteplase（rt-PA）", "dose": "{min(round(wt*0.9,1),90)} mg（0.9 mg/kg，max 90）：{round(min(wt*0.9,90)*0.1,1)} mg IVP over 1 min，其餘 {round(min(wt*0.9,90)*0.9,1)} mg IVD over 60 min", "route": "IV", "freq": "單次", "note": "依 {wt} kg；用前 SBP < 185、DBP < 110；用後 24 hr < 180/105" },
+        { "drug": "Tenecteplase（TNK）", "dose": "{min(round(wt*0.25,1),25)} mg（0.25 mg/kg，max 25）", "route": "IVP over 5–10 秒", "freq": "單次", "note": "alteplase 替代（尤其要轉院取栓者）；適應症／禁忌同 alteplase；依 {wt} kg", "alt": "alteplase" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IVP over 1–2 min", "freq": "q10–15 min，累計 max 300 mg", "note": "BP ≥ 185/110 時；禁：氣喘、HR < 60、≥ 2° AV block、失代償心衰竭", "cond": "ssbp >= 185" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min 加 2.5 mg/hr，max 15 mg/hr", "route": "IVD", "freq": "持續", "note": "20 mg in NS total 40 mL（0.5 mg/mL）；labetalol 無效或禁忌", "cond": "ssbp >= 185" },
+        { "drug": "NS", "dose": "維持輸液", "route": "IVD", "freq": "持續", "note": "避免低張液（D5W）；血糖 140–180" },
+        { "drug": "Aspirin + Clopidogrel（輕度 NIHSS ≤ 3／高風險 TIA，不打藥者）", "dose": "aspirin 160–300 mg 嚼服 + clopidogrel 300 mg loading → 75 mg QD", "route": "PO（吞嚥困難 NG）", "freq": "24 hr 內開始，雙抗 21 天", "note": "打藥者等 24 hr 後影像排除出血再給" }
+      ],
+      "watch": ["打藥後 BP q15 min × 2 hr → q30 min × 6 hr → q1h × 16 hr；目標 < 180/105", "神經學 q15 min；惡化（頭痛、嘔吐、GCS↓）→ 停藥、急 CT", "血糖 140–180；體溫 > 37.5℃ 積極退燒"],
+      "call": ["懷疑中風當下 = 後線 + 中風小組（每分鐘都算）", "BP 兩次降不到 < 185/110、打藥後神經惡化、大面積 MCA／小腦梗塞（會診神外）"],
+      "refs": [{ "ch": "01", "q": "急性缺血性中風" }, { "ch": "01", "q": "Alteplase" }]
+    },
+    "r_stroke_evt": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性缺血性中風 4.5–24 hr：取栓評估",
+      "summary": "超過打藥時間窗但 ≤ 24 hr：CTA 找大血管阻塞，6–24 hr 依灌流影像（DAWN／DEFUSE-3）、基底動脈 ≤ 24 hr 可取栓；BP ≤ 220/120 不降。",
+      "steps": [
+        "立刻聯絡後線與中風小組；NIHSS；非顯影 CT + CTA（± CTP／MRI）",
+        "前循環 ICA／M1 阻塞 ≤ 6 hr（mRS 0–1、NIHSS ≥ 6、ASPECTS ≥ 6，3–5 亦可）→ 取栓；6–24 hr 依灌流影像；基底動脈 ≤ 24 hr",
+        "血糖 140–180、ECG、血小板、PT/INR；吞嚥篩檢通過前 NPO",
+        "BP ≤ 220/120 不降（除非主動脈剝離、心衰竭、AMI）；> 220/120 才小心降",
+        "不打藥者 24–48 hr 內給 aspirin；輕度／TIA 高風險 → DAPT 21 天",
+        "大面積 MCA（年齡 ≤ 60、NIHSS > 15）或小腦梗塞 → 提早會診神外"
+      ],
+      "orders": [
+        { "drug": "Aspirin", "dose": "160–300 mg 嚼服 → 100 mg", "route": "PO（吞嚥困難 NG）", "freq": "STAT → QD", "note": "取栓後依神經科時間給" },
+        { "drug": "Clopidogrel（輕度 NIHSS ≤ 3／高風險 TIA）", "dose": "300 mg loading → 75 mg", "route": "PO", "freq": "QD × 21 天（與 aspirin 雙抗）", "note": "發病 24 hr 內開始" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IVP over 1–2 min", "freq": "q10–15 min，累計 max 300 mg", "note": "僅 BP > 220/120 時；取栓前依中風小組目標", "cond": "ssbp > 220" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min 加 2.5 mg/hr，max 15 mg/hr", "route": "IVD", "freq": "持續", "note": "20 mg in NS total 40 mL", "cond": "ssbp > 220" },
+        { "drug": "NS", "dose": "維持輸液", "route": "IVD", "freq": "持續", "note": "避免 D5W；SpO₂ < 94% 才給氧" }
+      ],
+      "watch": ["神經學 q1h × 24 hr；惡化 → 急 CT（出血／水腫）", "BP、血糖、體溫", "腦水腫高峰 1–5 天"],
+      "call": ["懷疑中風當下 = 後線 + 中風小組", "大血管阻塞可取栓、GCS 下降、小腦梗塞"],
+      "refs": [{ "ch": "01", "q": "血管內取栓" }, { "ch": "01", "q": "抗血小板" }]
+    },
+    "r_stroke_late": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "缺血性中風 > 24 hr／時間不明：一般照護",
+      "summary": "超過再灌流時間窗：CT 排除出血、aspirin、容許性高血壓（≤ 220/120 不降）、NPO 至吞嚥篩檢、血糖 140–180、防 DVT。",
+      "steps": [
+        "非顯影 CT 排除出血；NIHSS；ECG（AF？）、血糖、血小板、PT/INR",
+        "吞嚥篩檢通過前 NPO（藥物改 NG）；頭部平躺或抬 30°",
+        "BP ≤ 220/120 不降（除非主動脈剝離、心衰竭、AMI）；> 220/120 才小心降",
+        "體溫 > 37.5℃ 積極退燒；SpO₂ < 94% 才給氧；DVT 預防（間歇氣壓）",
+        "24–48 hr 內盡早復健；MRI 非急做",
+        "神經學惡化（腦水腫高峰 1–5 天）→ 急 CT、會診神外"
+      ],
+      "orders": [
+        { "drug": "Aspirin", "dose": "160–300 mg 嚼服 → 100 mg", "route": "PO（吞嚥困難 NG）", "freq": "STAT → QD", "note": "CT 排除出血後" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IVP over 1–2 min", "freq": "q10–15 min，累計 max 300 mg", "note": "僅 BP > 220/120", "cond": "ssbp > 220" },
+        { "drug": "NS", "dose": "維持輸液", "route": "IVD", "freq": "持續", "note": "避免 D5W；血糖 140–180" }
+      ],
+      "watch": ["神經學 q4h；GCS 下降 → 急 CT", "BP、血糖、體溫、吞嚥"],
+      "call": ["GCS 下降 ≥ 2、新局部徵候（新中風可能再進時間窗）", "大面積梗塞、小腦梗塞（會診神外）"],
+      "refs": [{ "ch": "01", "q": "一般照護" }, { "ch": "01", "q": "腦水腫" }]
+    },
+    "r_myxedema": {
+      "type": "result",
+      "urgency": "red",
+      "title": "黏液水腫昏迷",
+      "summary": "低體溫 + 低血壓 + 低通氣 + 低血鈉 + 意識改變：**先給 hydrocortisone** 再 levothyroxine IV 負荷；ICU、被動保溫、找誘因（感染、鎮靜劑）。",
+      "steps": [
+        "抽 TSH、free T4、cortisol（給藥前）、Na、血糖、ABG（CO₂ 滯留）、培養",
+        "先 hydrocortisone（排除腎上腺功能不足前）→ 再 levothyroxine",
+        "被動保溫（勿快速加溫，血管擴張 → 休克）；CO₂ 滯留 → NIV／插管",
+        "低血鈉：限水；低血壓：輸液，升壓劑反應差",
+        "找誘因：感染、鎮靜劑、寒冷、停藥；聯絡後線／內分泌科／ICU"
+      ],
+      "orders": [
+        { "drug": "Hydrocortisone", "dose": "100 mg", "route": "IV", "freq": "q8h", "note": "先給類固醇再給甲狀腺素" },
+        { "drug": "Levothyroxine", "dose": "200–400 mcg", "route": "IV", "freq": "負荷 STAT → 50–100 mcg IV QD", "note": "老年／冠心病用低端劑量" },
+        { "drug": "NS", "dose": "250–500 mL", "route": "IV drip over 30 min", "freq": "低血壓時，可重複", "note": "心衰竭 250 mL；避免低張液" }
+      ],
+      "watch": ["體溫、BP、HR、SpO₂／PaCO₂", "Na、血糖；心電監測（心律不整）"],
+      "call": ["懷疑即聯絡後線 + ICU + 內分泌科", "低體溫 < 35℃、CO₂ 滯留、休克"],
+      "refs": [{ "ch": "01", "q": "黏液水腫昏迷" }]
+    },
+    "r_adrenal": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腎上腺危症",
+      "summary": "低血壓對輸液反應差 + 低血鈉／高血鉀／低血糖 + 長期類固醇停用或腎上腺功能不足 → **不等檢驗，hydrocortisone 100 mg IV 立即給**，大量輸液。",
+      "steps": [
+        "抽 cortisol、ACTH（給藥前，但不延誤治療）、Na、K、血糖、培養",
+        "Hydrocortisone 100 mg IVP 立即",
+        "NS 輸液 bolus 並重複至血壓回升；低血糖 → D50W",
+        "找誘因：感染、手術、停類固醇、出血（抗凝血劑者雙側腎上腺出血）",
+        "聯絡後線／內分泌科"
+      ],
+      "orders": [
+        { "drug": "Hydrocortisone", "dose": "100 mg", "route": "IVP", "freq": "STAT → 50 mg q6h（或 200 mg/24 hr 持續）", "note": "不等 cortisol 結果" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15–30 min", "freq": "STAT，可重複", "note": "心／腎衰竭 250 mL" },
+        { "drug": "Dextrose 50%（D50W）", "dose": "40 mL（20 g）", "route": "IVP slow push", "freq": "血糖 < 70 時", "note": "見表 1-1" }
+      ],
+      "watch": ["BP／HR q15 min、尿量", "Na、K、血糖 q4–6h"],
+      "call": ["休克對輸液反應差", "K > 6、意識未改善"],
+      "refs": [{ "ch": "01", "q": "腎上腺危症" }]
+    }
+  }
+}

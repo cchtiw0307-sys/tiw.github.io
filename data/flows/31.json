@@ -1,0 +1,444 @@
+{
+  "id": "31",
+  "title": "酸鹼異常",
+  "chapter": "31",
+  "entries": [
+    { "label": "血氣異常（輸入 ABG／VBG 判讀）", "type": "symptom", "start": "q_ph", "group": "檢驗異常",
+      "keywords": ["血氣", "ABG", "VBG", "blood gas", "酸鹼", "acid-base", "pH 低", "pH 高", "判讀 血氣", "acidosis", "alkalosis"] },
+    { "label": "HCO₃ 低／酸血症", "type": "symptom", "start": "q_ph", "group": "檢驗異常",
+      "keywords": ["HCO3 低", "bicarbonate 低", "酸血症", "acidemia", "代謝性酸中毒", "metabolic acidosis", "anion gap", "AG 高", "pH 7.2"] },
+    { "label": "PaCO₂ 高／CO₂ 滯留", "type": "symptom", "start": "q_ph", "group": "檢驗異常",
+      "keywords": ["PaCO2 高", "CO2 滯留", "CO2 retention", "hypercapnia", "高碳酸血症", "呼吸性酸中毒", "respiratory acidosis", "嗜睡 CO2", "COPD 血氣"] },
+    { "label": "Lactate 高", "type": "symptom", "start": "r_lactic", "group": "檢驗異常",
+      "keywords": ["lactate", "乳酸", "乳酸高", "lactic acidosis", "乳酸酸中毒", "lactate 4"] },
+    { "label": "高 AG 代謝性酸中毒", "type": "diagnosis", "start": "r_hag",
+      "keywords": ["高 AG", "high anion gap", "HAGMA", "GOLDMARK", "MUDPILES", "delta ratio", "滲透壓間隙", "osmolar gap"] },
+    { "label": "乳酸酸中毒", "type": "diagnosis", "start": "r_lactic",
+      "keywords": ["乳酸酸中毒", "lactic acidosis", "type A lactic", "type B lactic", "metformin 乳酸", "MALA"] },
+    { "label": "正常 AG（高氯性）酸中毒／RTA", "type": "diagnosis", "start": "r_nag",
+      "keywords": ["正常 AG", "高氯性酸中毒", "hyperchloremic", "NAGMA", "RTA", "腎小管酸中毒", "腹瀉 酸中毒", "NS 酸中毒", "尿 AG", "HARDASS"] },
+    { "label": "醇類／salicylate 中毒（高 AG）", "type": "diagnosis", "start": "r_tox",
+      "keywords": ["methanol", "甲醇", "ethylene glycol", "乙二醇", "fomepizole", "salicylate", "aspirin 中毒", "水楊酸", "isoniazid 中毒", "毒物 酸中毒"] },
+    { "label": "代謝性鹼中毒", "type": "diagnosis", "start": "q_ucl",
+      "keywords": ["代謝性鹼中毒", "metabolic alkalosis", "鹼血症", "alkalemia", "嘔吐 鹼中毒", "利尿劑 鹼中毒", "HCO3 高", "尿 Cl", "contraction alkalosis"] },
+    { "label": "呼吸性酸中毒（CO₂ 滯留）", "type": "diagnosis", "start": "r_resp_acid",
+      "keywords": ["呼吸性酸中毒", "respiratory acidosis", "CO2 滯留", "hypercapnic", "NIV", "CO2 麻醉", "低通氣"] },
+    { "label": "呼吸性鹼中毒", "type": "diagnosis", "start": "r_resp_alk",
+      "keywords": ["呼吸性鹼中毒", "respiratory alkalosis", "過度換氣", "hyperventilation", "PaCO2 低", "hypocapnia"] },
+    { "label": "NaHCO₃ 劑量計算（缺乏量）", "type": "diagnosis", "start": "q_bicarb_hco3",
+      "keywords": ["NaHCO3", "sodium bicarbonate", "碳酸氫鈉", "Rolikan", "bicarbonate deficit", "HCO3 缺乏量", "鹼化", "BICAR-ICU"] }
+  ],
+  "nodes": {
+    "q_ph": {
+      "type": "number",
+      "title": "pH？",
+      "help": "四步驟：① pH → ② 呼吸（PaCO₂）還是代謝（HCO₃）→ ③ 代償合理？（表 31-1）→ ④ 代謝性酸中毒算 AG 與 delta ratio。VBG pH 比動脈低 0.03–0.04",
+      "var": "ph", "unit": "", "step": 0.01,
+      "quick": [7.1, 7.2, 7.3, 7.4, 7.5, 7.6],
+      "branches": [
+        { "else": "q_pco2" }
+      ]
+    },
+    "q_pco2": {
+      "type": "number",
+      "title": "PaCO₂（mmHg）？",
+      "help": "VBG PCO₂ < 45 可排除高碳酸血症；≥ 45 要抽 ABG 才知道嚴重度",
+      "var": "pco2", "unit": "mmHg", "step": 1,
+      "quick": [25, 30, 35, 40, 50, 60, 80],
+      "branches": [
+        { "else": "q_hco3" }
+      ]
+    },
+    "q_hco3": {
+      "type": "number",
+      "title": "HCO₃（mEq/L）？",
+      "help": "VBG HCO₃ 比動脈高 1–2（可靠）；正常 22–26",
+      "var": "hco3", "unit": "mEq/L", "step": 0.5,
+      "quick": [8, 12, 16, 20, 24, 30, 36],
+      "branches": [
+        { "if": "ph > 7.45 && hco3 > 26", "next": "i_read_met_alk" },
+        { "if": "ph > 7.45", "next": "i_read_resp_alk" },
+        { "if": "ph < 7.35 && pco2 > 45 && hco3 >= 22", "next": "i_read_resp_acid" },
+        { "if": "ph < 7.35", "next": "q_na" },
+        { "if": "pco2 > 45 && hco3 > 26", "next": "r_resp_acid_chronic" },
+        { "else": "q_na" }
+      ]
+    },
+    "q_na": {
+      "type": "number",
+      "title": "血 Na（mEq/L）？",
+      "help": "算 anion gap；高血糖時用測得 Na（不用校正 Na）",
+      "var": "na", "unit": "mEq/L", "step": 1,
+      "quick": [130, 135, 140, 145, 150],
+      "branches": [
+        { "else": "q_cl" }
+      ]
+    },
+    "q_cl": {
+      "type": "number",
+      "title": "血 Cl（mEq/L）？",
+      "help": "AG = Na − (Cl + HCO₃)，正常 8–12（±2）；低白蛋白每降 1 g/dL，AG 正常值降 2.5",
+      "var": "cl", "unit": "mEq/L", "step": 1,
+      "quick": [95, 100, 105, 110, 115, 120],
+      "branches": [
+        { "if": "hco3 < 22 && (na - cl - hco3) > 12", "next": "i_read_hag" },
+        { "if": "hco3 < 22", "next": "i_read_nag" },
+        { "if": "(na - cl - hco3) > 12", "next": "i_read_hidden" },
+        { "else": "r_normal_gas" }
+      ]
+    },
+    "i_read_hag": {
+      "type": "info",
+      "title": "判讀：高 AG 代謝性酸中毒",
+      "body": [
+        "pH **{ph}**、PaCO₂ {pco2}、HCO₃ **{hco3}**、Na {na}、Cl {cl}",
+        "**AG = {na} − ({cl} + {hco3}) = {na - cl - hco3}**（正常 8–12）→ **高 AG 代謝性酸中毒**；低白蛋白時校正 AG = AG + 2.5 × (4 − albumin)",
+        "**Delta ratio** = (AG − 12)/(24 − HCO₃) = {round((na - cl - hco3 - 12)/(24 - hco3), 1)} → {((na - cl - hco3 - 12)/(24 - hco3)) < 1 ? '< 1：**合併正常 AG 酸中毒**（腹瀉、NS 輸液、RTA）' : ((na - cl - hco3 - 12)/(24 - hco3)) > 2 ? '> 2：**合併代謝性鹼中毒**（嘔吐、利尿劑）' : '1–2：單純高 AG 酸（單純乳酸酸中毒常約 1.6）'}",
+        "**Winter's** 預期 PaCO₂ = 1.5 × {hco3} + 8 = {round(1.5*hco3 + 8)} ± 2；實測 {pco2} → {pco2 > 1.5*hco3 + 10 ? '**高於預期：合併呼吸性酸中毒**（通氣不足、呼吸肌疲乏）' : pco2 < 1.5*hco3 + 6 ? '**低於預期：合併呼吸性鹼中毒**（想 salicylate、敗血症、肝衰竭）' : '代償合理（單純代謝性酸中毒）'}",
+        "{ph < 7.2 ? '**pH < 7.2 → 立刻聯絡後線**' : 'pH ≥ 7.2：找原因、追蹤血氣 q2–4h'}；接下來：lactate、β-OHB／血糖、BUN/Cr、滲透壓間隙、藥物史"
+      ],
+      "next": "r_hag"
+    },
+    "i_read_nag": {
+      "type": "info",
+      "title": "判讀：正常 AG（高氯性）代謝性酸中毒",
+      "body": [
+        "pH **{ph}**、PaCO₂ {pco2}、HCO₃ **{hco3}**、Na {na}、Cl {cl}",
+        "**AG = {na - cl - hco3}**（正常 8–12）→ **正常 AG 代謝性酸中毒**（低白蛋白時預期 AG ≈ albumin × 2.5，記得校正）",
+        "**Winter's** 預期 PaCO₂ = {round(1.5*hco3 + 8)} ± 2；實測 {pco2} → {pco2 > 1.5*hco3 + 10 ? '**高於預期：合併呼吸性酸中毒**' : pco2 < 1.5*hco3 + 6 ? '**低於預期：合併呼吸性鹼中毒**' : '代償合理'}",
+        "下一步分腎外／腎性：**尿 AG = UNa + UK − UCl**：負值 = 腎外（腹瀉、NS 輸液）；正值 = 腎性（RTA、腎衰竭）",
+        "{ph < 7.2 ? '**pH < 7.2 → 立刻聯絡後線**' : 'pH ≥ 7.2：處理原因、追蹤'}"
+      ],
+      "next": "r_nag"
+    },
+    "i_read_hidden": {
+      "type": "info",
+      "title": "判讀：pH／HCO₃ 正常但 AG 升高 = 高 AG 酸 + 代謝性鹼",
+      "body": [
+        "pH **{ph}**、PaCO₂ {pco2}、HCO₃ {hco3}、Na {na}、Cl {cl}",
+        "**AG = {na - cl - hco3}**（正常 8–12）升高，但 HCO₃ 沒有降 → **高 AG 代謝性酸中毒 + 代謝性鹼中毒**互相抵消（例：嘔吐 + DKA／乳酸、利尿劑 + 腎衰竭）",
+        "不要因為 pH 正常就放心：找 lactate、β-OHB、BUN/Cr、中毒；同時處理鹼中毒的原因（嘔吐、NG、利尿劑、低血鉀）",
+        "低白蛋白者先校正 AG（+ 2.5 × (4 − albumin)）確認是真的升高"
+      ],
+      "next": "r_hag"
+    },
+    "i_read_resp_acid": {
+      "type": "info",
+      "title": "判讀：呼吸性酸中毒（pH {ph}、PaCO₂ {pco2}）",
+      "body": [
+        "pH **{ph}**、PaCO₂ **{pco2}**、HCO₃ {hco3}：pH 低 + PaCO₂ > 45 → **呼吸性酸中毒**",
+        "預期 HCO₃：急性 = 24 + ({pco2} − 40)/10 × 1 ≈ **{round(24 + (pco2 - 40)/10, 1)}**；慢性 = 每 ↑10 HCO₃ ↑3.5–4 ≈ **{round(24 + (pco2 - 40)*0.35, 1)}–{round(24 + (pco2 - 40)*0.4, 1)}**",
+        "實測 HCO₃ {hco3} → {hco3 > 24 + (pco2 - 40)*0.4 + 2 ? '**高於慢性預期：合併代謝性鹼中毒**（慢性 COPD 用利尿劑常見）' : hco3 >= 24 + (pco2 - 40)*0.35 - 2 ? '符合**慢性**代償（急性加慢性時 pH 仍偏低）' : hco3 >= 24 + (pco2 - 40)/10 - 2 ? '**急性**（或部分代償）呼吸性酸中毒' : '**低於急性預期：合併代謝性酸中毒**（休克、敗血症、腎衰竭）'}",
+        "{pco2 > 50 && ph < 7.3 ? '**PaCO₂ > 50 且 pH < 7.30 → 需 NIV／插管，立刻聯絡後線**' : '追蹤血氣 q1–2h；意識、呼吸型態'}",
+        "PaCO₂ > 70–80 → CO₂ 麻醉；找原因：鴉片／BZD、上呼吸道阻塞、神經肌肉、COPD／氣喘晚期、肺水腫、呼吸肌疲乏"
+      ],
+      "next": "r_resp_acid"
+    },
+    "i_read_met_alk": {
+      "type": "info",
+      "title": "判讀：代謝性鹼中毒（pH {ph}、HCO₃ {hco3}）",
+      "body": [
+        "pH **{ph}**、PaCO₂ {pco2}、HCO₃ **{hco3}**：pH 高 + HCO₃ > 26 → **代謝性鹼中毒**",
+        "預期 PaCO₂ = 0.7 × {hco3} + 21 = **{round(0.7*hco3 + 21)} ± 2**（速算 HCO₃ + 15 = {hco3 + 15}；上限 ~55）",
+        "實測 PaCO₂ {pco2} → {pco2 > 0.7*hco3 + 23 ? '**高於預期：合併呼吸性酸中毒**' : pco2 < 0.7*hco3 + 19 ? '**低於預期：合併呼吸性鹼中毒**（疼痛、缺氧、敗血症、肝衰竭）' : '代償合理（單純代謝性鹼中毒）'}",
+        "{ph > 7.55 ? '**pH > 7.55 → 心律不整、抽搐、意識改變、低通氣風險，立刻聯絡後線**' : '找原因：嘔吐／NG、利尿劑、低血鉀、低血容、礦物皮質素過多、NaHCO₃／大量輸血'}",
+        "下一步看**尿 Cl**（鹼血症時尿 Na 不可靠）：< 25 對鹽水有反應；> 40 無反應；25–40 看體液狀態"
+      ],
+      "next": "q_ucl"
+    },
+    "i_read_resp_alk": {
+      "type": "info",
+      "title": "判讀：呼吸性鹼中毒（pH {ph}、PaCO₂ {pco2}）",
+      "body": [
+        "pH **{ph}**、PaCO₂ **{pco2}**、HCO₃ {hco3}：pH 高 + HCO₃ 未升高 → **呼吸性鹼中毒**",
+        "預期 HCO₃：急性 = 24 − (40 − {pco2})/10 × 2 ≈ **{round(24 - (40 - pco2)*0.2, 1)}**；慢性 = 每 ↓10 HCO₃ ↓4–5 ≈ **{round(24 - (40 - pco2)*0.5, 1)}–{round(24 - (40 - pco2)*0.4, 1)}**",
+        "實測 HCO₃ {hco3} → {hco3 < 24 - (40 - pco2)*0.5 - 2 ? '**低於慢性預期：合併代謝性酸中毒**（salicylate、敗血症、肝衰竭——算 AG）' : hco3 > 26 ? '**合併代謝性鹼中毒**（嘔吐、利尿劑）' : hco3 <= 24 - (40 - pco2)*0.4 + 2 ? '符合慢性代償' : '急性呼吸性鹼中毒'}",
+        "**PE 與敗血症不要漏**；其他：疼痛、焦慮、缺氧（肺炎、肺水腫、貧血）、肝衰竭、salicylate、懷孕、呼吸器設定過度",
+        "「假性呼吸性鹼」：嚴重低血壓／CPR 時 PaCO₂ 低但組織 CO₂ 高——看灌流"
+      ],
+      "next": "r_resp_alk"
+    },
+    "r_hag": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高 AG 代謝性酸中毒：找原因（GOLDMARK）、治原因",
+      "summary": "值班最常見：**乳酸**（休克、敗血症、缺血、metformin）、**酮體**（DKA、SGLT2i、酒精性）、**尿毒**、**中毒**（醇類、salicylate）。**治療原因最重要**；NaHCO₃ 只在 pH < 7.1–7.15（或 < 7.2 合併 AKI），DKA pH ≥ 6.9 不用。",
+      "steps": [
+        "ABC、生命徵象、灌流（CRT、乳酸）；意識、呼吸型態（Kussmaul）",
+        "抽 lactate、血糖、β-OHB（比尿酮準）、BUN/Cr、K、Ca、albumin（校正 AG）、滲透壓、CK；藥物／毒物史",
+        "滲透壓間隙 = 測得 Osm − (2 Na + glucose/18 + BUN/2.8 + ethanol/4.6)；> 10 想醇類中毒",
+        "依原因處理：休克／敗血症 → 灌流、抗生素（Ch19、Ch17）；DKA → Ch28；腎衰竭 → 透析（Ch11）；中毒 → 見下方",
+        "停 Type B 乳酸藥物：metformin、linezolid、NRTI、propofol、salicylate；酒精性酮酸：thiamine + D5 輸液 + K/Mg/P",
+        "NaHCO₃ 前確認能排出 CO₂（通氣不足者會惡化）；副作用：Na／體液負荷、低血鉀、低游離鈣",
+        "血氣、lactate、K q2–4h"
+      ],
+      "orders": [
+        { "drug": "NaHCO₃ 8.4%（1 mEq/mL；台灣 Rolikan 7% 20 mL ≈ 16.7 mEq）", "dose": "{round(wt)}–{round(wt*2)} mEq（1–2 mEq/kg）", "route": "IV push over 5–10 min", "freq": "僅 pH < 7.1–7.15（或 < 7.2 合併 AKI）；依血氣 q2–4h 重評", "note": "{wt} kg；DKA pH ≥ 6.9 不用；乳酸酸中毒證據弱；呼吸性酸中毒不給；缺乏量計算見下方「算 NaHCO₃」" },
+        { "drug": "NaHCO₃ 滴注", "dose": "150 mEq in D5W 1 L", "route": "IV drip 慢滴", "freq": "持續，依血氣 q2–4h", "note": "bolus 替代；注意 Na／體液負荷、低血鉀、低游離鈣", "alt": "NaHCO₃ bolus" },
+        { "drug": "NS 或 LR", "dose": "500 mL（心腎衰竭 250 mL）", "route": "IV drip over 15 min", "freq": "低灌流時 STAT，可重複", "note": "恢復灌流是乳酸酸中毒的治療；大量 NS 會加高氯性酸中毒（LR 較佳）" },
+        { "drug": "Thiamine", "dose": "依院內", "route": "IV", "freq": "STAT（酒精性酮酸中毒／thiamine 缺乏）", "note": "章節未列劑量；給糖前先給" }
+      ],
+      "watch": ["血氣、lactate、K q2–4h（NaHCO₃ 後低血鉀）", "游離鈣、Na、體液（NaHCO₃ 後）", "意識、呼吸（Kussmaul 消失 = 疲乏或改善？看血氣）"],
+      "call": ["pH < 7.2；乳酸 > 4 或持續上升", "高 AG 酸中毒原因不明（中毒）；懷疑醇類／salicylate 中毒", "需要透析或 NaHCO₃ 滴注；DKA／HHS"],
+      "refs": [{ "ch": "31", "q": "1. 高 AG" }, { "ch": "31", "q": "3. 治療" }, { "ch": "31", "q": "滲透壓間隙" }],
+      "next": [
+        { "label": "乳酸酸中毒", "next": "r_lactic" },
+        { "label": "醇類／salicylate 中毒", "next": "r_tox" },
+        { "label": "算 NaHCO₃ 缺乏量", "next": "q_bicarb_hco3" }
+      ]
+    },
+    "r_lactic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "乳酸酸中毒：恢復灌流、停 Type B 藥物",
+      "summary": "**Type A**（缺氧／低灌流：休克、敗血症、腸／肢體缺血、癲癇、CO／氰化物）→ **治原因、恢復灌流**；**Type B**（metformin + 腎衰竭、linezolid、NRTI、propofol、salicylate、肝衰竭、腫瘤、thiamine 缺乏、酒精）→ 停藥；metformin 相關嚴重者透析。",
+      "steps": [
+        "ABC、SpO₂、BP／MAP、CRT；找休克來源（出血、敗血症、心因性）→ Ch19",
+        "抽 lactate、血氣、血糖、BUN/Cr、CBC、肝功能、CK；血液培養（發燒）",
+        "低灌流 → 晶體液 bolus、O₂ 94–98%；MAP < 65 → norepinephrine（Ch19），避免血管收縮劑過量",
+        "腹痛 + 乳酸↑ → 腸缺血（CT angiography）；肢體冰冷 → 肢體缺血 → 外科",
+        "停 metformin、linezolid、NRTI、propofol；thiamine 缺乏（酒精、營養不良）→ 補 thiamine",
+        "metformin 相關嚴重酸中毒（腎衰竭）→ 腎臟科透析；NaHCO₃ 證據弱，只在 pH < 7.1–7.15",
+        "lactate 2 小時複驗（目標降 ≥ 20%）"
+      ],
+      "orders": [
+        { "drug": "LR（或 NS）", "dose": "500 mL（心腎衰竭 250 mL）", "route": "IV drip over 15 min", "freq": "STAT；每次後評估，可重複至 1–2 L", "note": "敗血性休克 30 mL/kg/3 hr ≈ {round(wt*30)} mL（Ch10）" },
+        { "drug": "O₂", "dose": "SpO₂ 94–98%（CO₂ 滯留 88–92%）", "route": "nasal cannula／面罩", "freq": "持續", "note": "缺氧型乳酸酸中毒" },
+        { "drug": "（停 Type B 藥物）", "dose": "metformin、linezolid、NRTI、propofol 全停", "route": "—", "freq": "STAT", "note": "metformin 相關嚴重者聯絡腎臟科透析" },
+        { "drug": "Thiamine", "dose": "依院內", "route": "IV", "freq": "STAT（酒精／營養不良）", "note": "章節未列劑量" },
+        { "drug": "NaHCO₃ 8.4%", "dose": "{round(wt)}–{round(wt*2)} mEq（1–2 mEq/kg）", "route": "IV push over 5–10 min", "freq": "僅 pH < 7.1–7.15（或 < 7.2 合併 AKI）", "note": "乳酸酸中毒證據弱；需確認能排出 CO₂", "cond": "false" }
+      ],
+      "watch": ["lactate q2h（降 ≥ 20%）、血氣 q2–4h", "BP／MAP、尿量、CRT", "腹痛、肢體、意識"],
+      "call": ["乳酸 > 4 或持續上升；pH < 7.2", "需升壓劑／ICU；懷疑腸／肢體缺血", "metformin 相關需透析"],
+      "refs": [{ "ch": "31", "q": "乳酸（L-lactate）" }, { "ch": "19", "q": "休克" }],
+      "next": [{ "label": "算 NaHCO₃ 缺乏量（pH < 7.15）", "next": "q_bicarb_hco3" }]
+    },
+    "r_tox": {
+      "type": "result",
+      "urgency": "red",
+      "title": "醇類／salicylate／isoniazid 中毒（高 AG）",
+      "summary": "**Methanol／ethylene glycol**（滲透壓間隙 > 10、視力／腎、尿草酸鈣結晶）→ **fomepizole** + NaHCO₃ + 透析；**salicylate**（呼吸鹼 + 代謝酸、耳鳴）→ **鹼化尿液、維持呼吸性鹼血（插管後勿讓 PaCO₂ 上升）**、透析；**毒物中心**。",
+      "steps": [
+        "ABC；抽血氣、lactate、滲透壓（間隙 > 10）、Na、K、Cr、血糖、salicylate／ethanol 濃度、尿液（草酸鈣結晶）",
+        "醇類：fomepizole（或 ethanol）；EG 加 thiamine + pyridoxine，methanol 加 folate（劑量依毒物中心）；NaHCO₃ 矯正酸中毒",
+        "醇類透析指標：AKI、生命徵象不穩、視力變化或濃度 > 50 mg/dL → 腎臟科",
+        "Salicylate：NaHCO₃ bolus → 滴注鹼化尿液（尿 pH > 7.5）；避免插管，若插管維持過度換氣；嚴重（意識、肺水腫、腎衰竭、濃度高）→ 透析",
+        "Isoniazid：pyridoxine（劑量依毒物中心）；propylene glycol（高劑量 lorazepam 滴注）→ 停藥",
+        "聯絡毒物中心與後線；注意醇類晚期 OG 可正常而 AG 升高"
+      ],
+      "orders": [
+        { "drug": "Fomepizole", "dose": "{round(wt*15)} mg（15 mg/kg）負荷", "route": "IV", "freq": "STAT → 之後 {round(wt*10)} mg（10 mg/kg）q12h", "note": "{wt} kg；methanol／ethylene glycol；替代 ethanol；透析時劑量調整依毒物中心" },
+        { "drug": "NaHCO₃ 8.4%", "dose": "{round(wt)}–{round(wt*2)} mEq（1–2 mEq/kg）", "route": "IV push over 5–10 min", "freq": "STAT（醇類酸中毒／salicylate）", "note": "salicylate：接續滴注鹼化尿液" },
+        { "drug": "NaHCO₃ 滴注（鹼化尿液）", "dose": "150 mEq in D5W 1 L", "route": "IV drip", "freq": "持續，目標尿 pH > 7.5", "note": "salicylate；同時補 K（低血鉀會妨礙鹼化）；注意 Na／體液負荷" },
+        { "drug": "Pyridoxine", "dose": "依毒物中心", "route": "IV", "freq": "STAT（isoniazid；ethylene glycol 輔助）", "note": "章節未列固定劑量" },
+        { "drug": "Thiamine（EG）／Folate（methanol）", "dose": "依毒物中心", "route": "IV", "freq": "輔助", "note": "章節未列固定劑量" }
+      ],
+      "watch": ["血氣、AG、滲透壓間隙 q2–4h；尿 pH（salicylate）", "視力、意識、Cr、K", "呼吸型態（salicylate 勿讓 PaCO₂ 上升）"],
+      "call": ["懷疑醇類／salicylate 中毒（當下）→ 毒物中心 + 後線", "需要透析（AKI、不穩、視力變化、濃度 > 50 mg/dL）", "pH < 7.2、意識改變"],
+      "refs": [{ "ch": "31", "q": "中毒" }, { "ch": "31", "q": "滲透壓間隙" }, { "ch": "02", "q": "中毒" }],
+      "next": [{ "label": "算 NaHCO₃ 缺乏量", "next": "q_bicarb_hco3" }]
+    },
+    "r_nag": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "正常 AG（高氯性）代謝性酸中毒：腹瀉／NS／RTA",
+      "summary": "腎外（**腹瀉**、腸瘻、**大量 NS 輸液**）或腎性（**RTA**、早期腎衰竭、acetazolamide、腎上腺不足）；**正常 AG／腎因性酸中毒是 NaHCO₃ 的適應症**；把 NS 換成 LR。",
+      "steps": [
+        "尿 AG = UNa + UK − UCl（負值腎外；正值腎性；AKI、UNa < 20、多尿、尿 pH > 6.5 時不可靠）；尿 pH、K",
+        "停 NS 大量輸液 → 改 LR；停 acetazolamide；處理腹瀉／瘻管（補流失，Ch10）",
+        "RTA：type 1（尿 pH > 5.5、低血鉀、結石）→ NaHCO₃ + potassium citrate；type 4（高血鉀、糖尿病腎病／ACEI／spironolactone／TMP-SMX）→ 停藥、處理高血鉀（Ch33）",
+        "腎上腺不足（低血壓、低 Na、高 K）→ Ch29；早期腎衰竭 → Ch11",
+        "急性 pH < 7.1–7.15（或 < 7.2 合併 AKI）→ IV NaHCO₃（算缺乏量）；慢性 → 口服",
+        "血氣、K q2–4h（NaHCO₃ 會降 K）"
+      ],
+      "orders": [
+        { "drug": "NaHCO₃ 8.4%（Rolikan 7% 20 mL ≈ 16.7 mEq）", "dose": "缺乏量 = 0.4–0.5 × {wt} × (目標 HCO₃ − 現 HCO₃)，先給一半", "route": "IV drip", "freq": "依血氣 q2–4h", "note": "急性可 1–2 mEq/kg（{round(wt)}–{round(wt*2)} mEq）bolus over 5–10 min；用下方「算 NaHCO₃」" },
+        { "drug": "NaHCO₃ 錠", "dose": "0.5–1 g", "route": "PO", "freq": "TID", "note": "慢性（CKD、RTA）；目標 HCO₃ 22–24" },
+        { "drug": "Potassium citrate", "dose": "依院內", "route": "PO", "freq": "依院內", "note": "Type 1 RTA（同時補 K 與鹼）" },
+        { "drug": "LR（取代 NS）", "dose": "維持速率 {round(wt*25/24)}–{round(wt*30/24)} mL/hr", "route": "IV drip", "freq": "持續", "note": "大量 NS 造成的高氯性酸中毒；腎衰竭／高血鉀勿用 LR" }
+      ],
+      "watch": ["血氣、K q2–4h（急性）；HCO₃ 每日（慢性）", "Na、體液（NaHCO₃ 負荷）", "尿量、Cr"],
+      "call": ["pH < 7.2", "需要 NaHCO₃ 滴注或透析", "高血鉀（type 4 RTA）≥ 6 或 ECG 變化"],
+      "refs": [{ "ch": "31", "q": "2. 正常 AG" }, { "ch": "31", "q": "尿 AG" }, { "ch": "31", "q": "慢性（CKD、RTA）" }],
+      "next": [{ "label": "算 NaHCO₃ 缺乏量", "next": "q_bicarb_hco3" }]
+    },
+    "q_ucl": {
+      "type": "choice",
+      "title": "代謝性鹼中毒：尿 Cl 多少？",
+      "help": "鹼血症時尿 Na 不可靠（HCO₃ 尿會帶走 Na）；< 25 對鹽水有反應、> 40 無反應、25–40 看體液狀態",
+      "options": [
+        { "label": "尿 Cl < 25（嘔吐／NG、利尿劑停用後、低血容、post-hypercapnic）", "next": "r_alk_saline" },
+        { "label": "尿 Cl > 40（礦物皮質素過多有高血壓；目前用利尿劑、K < 2、Bartter/Gitelman 血壓正常）", "next": "r_alk_resist" },
+        { "label": "25–40 或未驗：看體液狀態（脫水 → 當鹽水反應型）", "next": "r_alk_saline" }
+      ]
+    },
+    "r_alk_saline": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "代謝性鹼中毒（鹽水反應型）：NS + KCl",
+      "summary": "嘔吐／NG 引流、利尿劑、低血容：**NS + KCl**（低血鉀是維持鹼血症的關鍵，一起補）；停利尿劑；NG 引流者加 PPI；心肺疾病無法灌鹽水 → KCl + acetazolamide。**pH > 7.55–7.6 → 心律不整、抽搐、低通氣**。",
+      "steps": [
+        "抽 K、Mg、Cl、游離 Ca、Cr、血氣；ECG（低血鉀／pH > 7.55）",
+        "停 loop／thiazide 利尿劑；停 NaHCO₃、乳鹼；檢視大量輸血（枸櫞酸）",
+        "NS 補回血容（脫水者 bolus 後維持）+ KCl；目標尿 Cl 上升、HCO₃ 下降",
+        "NG 持續引流 → PPI 減少 H⁺ 流失；能拔就拔 NG",
+        "心衰竭／無法灌 NS → KCl + acetazolamide（注意低血鉀）",
+        "嚴重（pH > 7.6）合併腎衰竭 → 透析（腎臟科）"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL bolus（心腎衰竭 250 mL）→ 維持 {round(wt*25/24)}–{round(wt*30/24)} mL/hr", "route": "IV drip", "freq": "脫水者 STAT；之後持續，依體液狀態", "note": "含 KCl（見下）；心肺疾病無法灌鹽水者改 acetazolamide" },
+        { "drug": "KCl", "dose": "20 mEq/L 加入 NS（依血鉀調整，Ch33）", "route": "IV drip", "freq": "持續", "note": "低血鉀不補，鹼血症不會好；速率與濃度依 Ch33 與院內規範；腎衰竭減量（CrCl ≈ {round(crcl)}）" },
+        { "drug": "Acetazolamide", "dose": "250–500 mg", "route": "PO／IV", "freq": "QD–BID", "note": "心肺疾病無法灌鹽水者；注意低血鉀；腎衰竭減量" },
+        { "drug": "PPI（例 pantoprazole）", "dose": "依院內", "route": "IV／PO", "freq": "QD", "note": "NG 持續引流者，減少 H⁺ 流失；章節未列劑量" }
+      ],
+      "watch": ["血氣、K、Cl q4–6h；游離 Ca", "ECG／心律（pH > 7.55）、抽搐、意識、呼吸抑制", "體液狀態（NS 後肺音）"],
+      "call": ["pH > 7.55；心律不整、抽搐、意識改變", "嚴重鹼中毒合併腎衰竭需透析", "K < 2.5 或 ECG 變化"],
+      "refs": [{ "ch": "31", "q": "III. 代謝性鹼中毒" }, { "ch": "33", "q": "低血鉀" }]
+    },
+    "r_alk_resist": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "代謝性鹼中毒（鹽水無反應型，尿 Cl > 40）",
+      "summary": "**有高血壓** → 礦物皮質素過多（Conn、Cushing、甘草）→ spironolactone、治療原因；**血壓正常** → 目前用利尿劑（停）、嚴重低血鉀 K < 2（補 K）、Bartter/Gitelman；灌 NS 沒有用。",
+      "steps": [
+        "量血壓；抽 K、Mg、Cl、游離 Ca、Cr、血氣；ECG",
+        "目前用利尿劑 → 停；補 K、Mg（Ch33）",
+        "高血壓 + 低血鉀 → 礦物皮質素過多：spironolactone、內分泌科白天查（aldosterone/renin、甘草／類固醇史）",
+        "Bartter/Gitelman → KCl、Mg、腎臟科",
+        "pH > 7.55 → 監測心律；嚴重（pH > 7.6）+ 腎衰竭 → 透析"
+      ],
+      "orders": [
+        { "drug": "KCl", "dose": "依血鉀（Ch33）", "route": "IV／PO", "freq": "依 Ch33", "note": "K < 2 為維持鹼血症主因；腎衰竭減量（CrCl ≈ {round(crcl)}）" },
+        { "drug": "Spironolactone", "dose": "依院內", "route": "PO", "freq": "QD", "note": "礦物皮質素過多（有高血壓）；章節未列劑量；注意高血鉀" },
+        { "drug": "（停利尿劑）", "dose": "loop／thiazide 全停", "route": "—", "freq": "STAT", "note": "目前用利尿劑者" }
+      ],
+      "watch": ["血氣、K、Mg q4–6h；ECG／心律", "血壓", "抽搐、意識（pH > 7.55）"],
+      "call": ["pH > 7.55；心律不整、抽搐、意識改變", "K < 2.5 或 ECG 變化", "嚴重鹼中毒合併腎衰竭需透析"],
+      "refs": [{ "ch": "31", "q": "III. 代謝性鹼中毒" }, { "ch": "33", "q": "低血鉀" }]
+    },
+    "r_resp_acid": {
+      "type": "result",
+      "urgency": "red",
+      "title": "呼吸性酸中毒：增加通氣，不給 NaHCO₃",
+      "summary": "**增加通氣**（藥物 → naloxone／flumazenil；NIV；插管）並治療原因；CO₂ 滯留者 **SpO₂ 目標 88–92%**；**不給 NaHCO₃**（加重 CO₂）；慢性 CO₂ 滯留者不要把 PaCO₂ 矯正到正常。**PaCO₂ > 50 且 pH < 7.30 → NIV／插管、聯絡後線。**",
+      "steps": [
+        "到床邊：ABC、意識（GCS）、瞳孔（鴉片）、呼吸型態與頻率、上呼吸道（阻塞？）；心電監測、SpO₂",
+        "找原因：鴉片／BZD → naloxone／flumazenil（Ch2）；上呼吸道阻塞 → 打開氣道；氣胸／連枷胸；神經肌肉（GBS、重症肌無力、低血磷／低血鉀）；COPD／氣喘晚期；肺水腫；呼吸肌疲乏",
+        "抽 ABG（VBG PCO₂ ≥ 45 要 ABG）、K、P、Mg；CXR；ECG",
+        "O₂ 調到 SpO₂ 88–92%（不要過度給氧）",
+        "PaCO₂ > 50 且 pH < 7.30 或意識下降 → NIV（BiPAP）；NIV 禁忌／無效 1 小時／意識不清無法保護氣道 → 插管（Ch15）",
+        "停鎮靜劑；發燒／過度餵食碳水化合物 → CO₂ 產生↑；不給 NaHCO₃",
+        "血氣 q1–2h 至改善"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "SpO₂ 88–92%", "route": "nasal cannula／Venturi", "freq": "持續", "note": "CO₂ 滯留者不要給到 100%" },
+        { "drug": "NIV（BiPAP）", "dose": "依院內起始設定（Ch7／Ch15）", "route": "面罩", "freq": "持續至 PaCO₂／pH 改善", "note": "意識不清、嘔吐、血行不穩、無法保護氣道 → 直接插管" },
+        { "drug": "Naloxone", "dose": "依 Ch2（鴉片過量）", "route": "IV", "freq": "STAT，可重複", "note": "鴉片相關低通氣；章節劑量見 Ch2", "cond": "false" },
+        { "drug": "（停鎮靜／鴉片／NaHCO₃）", "dose": "全停", "route": "—", "freq": "STAT", "note": "呼吸性酸中毒不給 NaHCO₃" }
+      ],
+      "watch": ["血氣 q1–2h；SpO₂、RR、意識（CO₂ 麻醉 PaCO₂ > 70–80）", "NIV 1 小時無改善或 pH ↓ → 插管準備", "慢性者 PaCO₂ 降太快 → 呼吸鹼 + 低血鉀"],
+      "call": ["急性呼吸性酸中毒 PaCO₂ > 50 且 pH < 7.30（需 NIV／插管）→ 立刻後線／ICU", "pH < 7.2；意識下降", "上呼吸道阻塞、神經肌肉無力進展"],
+      "refs": [{ "ch": "31", "q": "IV. 呼吸性酸中毒" }, { "ch": "15", "q": "插管" }, { "ch": "02", "q": "鴉片" }]
+    },
+    "r_resp_acid_chronic": {
+      "type": "result",
+      "urgency": "green",
+      "title": "慢性呼吸性酸中毒（已代償，pH {ph}）± 代謝性鹼",
+      "summary": "pH 正常、PaCO₂ {pco2}、HCO₃ {hco3}：慢性 CO₂ 滯留（COPD、肥胖低通氣、脊柱側彎）已代償{hco3 > 24 + (pco2 - 40)*0.4 + 2 ? '，**且 HCO₃ 高於慢性預期（' + round(24 + (pco2 - 40)*0.4, 1) + '）→ 合併代謝性鹼中毒**（利尿劑、低血鉀、post-hypercapnic）' : '（預期 HCO₃ ≈ ' + round(24 + (pco2 - 40)*0.35, 1) + '–' + round(24 + (pco2 - 40)*0.4, 1) + '）'}。不要把 PaCO₂ 矯正到正常；SpO₂ 目標 88–92%。",
+      "steps": [
+        "確認無急性惡化：意識、RR、呼吸費力、與基準 PaCO₂ 比較；pH 掉 → 依急性處理",
+        "O₂ 調到 SpO₂ 88–92%；過度給氧會加重 CO₂ 滯留",
+        "合併代謝性鹼：檢視利尿劑、補 K／Cl（Ch33）；鹼血症會抑制呼吸驅動",
+        "找可逆因素：鎮靜劑、感染、肺水腫、痰液",
+        "交班：基準血氣、O₂ 目標"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "SpO₂ 88–92%", "route": "nasal cannula／Venturi", "freq": "持續", "note": "CO₂ 滯留者" },
+        { "drug": "KCl", "dose": "依血鉀（Ch33）", "route": "PO／IV", "freq": "依 Ch33", "note": "合併代謝性鹼 + 低血鉀時；腎衰竭減量（CrCl ≈ {round(crcl)}）" }
+      ],
+      "watch": ["意識、RR、SpO₂；pH 下降或 PaCO₂ 較基準上升 → 急性", "K、HCO₃"],
+      "call": ["pH < 7.30 且 PaCO₂ > 50（急性加慢性）", "意識下降、需要 NIV"],
+      "refs": [{ "ch": "31", "q": "慢性呼吸性酸中毒" }, { "ch": "31", "q": "IV. 呼吸性酸中毒" }]
+    },
+    "r_resp_alk": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "呼吸性鹼中毒：找原因（PE、敗血症不要漏）",
+      "summary": "疼痛、焦慮、**缺氧**（肺炎、PE、肺水腫、貧血）、**敗血症早期**、肝衰竭、salicylate、懷孕、發燒、中樞病灶、呼吸器設定過度；治療 = 找並處理原因、止痛、安撫、調呼吸器；**紙袋回吸不建議**。",
+      "steps": [
+        "SpO₂、RR、體溫、BP；缺氧 → 給氧並找原因（CXR、PE 評估 Ch4／Ch6）",
+        "抽血氣（A-a gradient）、CBC、lactate、血液培養（發燒／懷疑敗血症）、salicylate（AG 酸 + 呼吸鹼）",
+        "疼痛 → 止痛（Ch4）；焦慮 → 安撫、排除器質性原因後才給 BZD",
+        "呼吸器病人 → 調整設定（潮氣量／頻率）",
+        "症狀（口周／指尖麻、抽搐 = 游離鈣↓；pH > 7.55 心律不整）→ 監測",
+        "「假性呼吸性鹼」：嚴重低血壓／CPR 時灌流差 → 看 lactate 與灌流"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "SpO₂ 94–98%", "route": "nasal cannula／面罩", "freq": "缺氧時持續", "note": "缺氧是呼吸鹼常見原因" },
+        { "drug": "Acetaminophen", "dose": "依 Ch4 止痛階梯", "route": "PO／IV", "freq": "PRN", "note": "疼痛引起的過度換氣；劑量見 Ch4", "cond": "false" }
+      ],
+      "watch": ["SpO₂、RR、BP、體溫", "游離 Ca、K；抽搐、心律（pH > 7.55）", "PE／敗血症徵候"],
+      "call": ["pH > 7.55", "缺氧原因不明（懷疑 PE）、敗血症", "懷疑 salicylate 中毒"],
+      "refs": [{ "ch": "31", "q": "V. 呼吸性鹼中毒" }, { "ch": "06", "q": "肺栓塞" }]
+    },
+    "r_normal_gas": {
+      "type": "result",
+      "urgency": "green",
+      "title": "pH／PaCO₂／HCO₃／AG 都在正常範圍（或臨界）",
+      "summary": "pH {ph}、PaCO₂ {pco2}、HCO₃ {hco3}、AG {na - cl - hco3}：沒有明顯酸鹼異常；若臨床強烈懷疑（休克、意識改變），臨界值也要追蹤——**pH 正常但 PaCO₂ 與 HCO₃ 都異常才是混合型**。",
+      "steps": [
+        "確認檢體（VBG vs ABG、有無氣泡、延遲送檢）；VBG pH 比動脈低 0.03–0.04、HCO₃ 高 1–2",
+        "低白蛋白者校正 AG = AG + 2.5 × (4 − albumin)，再看是否真的正常",
+        "臨床懷疑仍高 → lactate、血糖、Cr，2–4 小時後複驗",
+        "交班：本次血氣值"
+      ],
+      "orders": [],
+      "watch": ["臨床變化（休克、意識、呼吸）→ 複驗血氣", "lactate（懷疑低灌流）"],
+      "call": ["臨床惡化或複驗出現 pH < 7.2／> 7.55、乳酸 > 4"],
+      "refs": [{ "ch": "31", "q": "I. 判讀" }, { "ch": "31", "q": "VBG" }]
+    },
+    "q_bicarb_hco3": {
+      "type": "number",
+      "title": "現在的 HCO₃（mEq/L）？",
+      "help": "缺乏量 = 0.4–0.5 × 體重 × (目標 HCO₃ − 現 HCO₃)，先給一半；適應症：pH < 7.1–7.15、pH < 7.2 合併 AKI、正常 AG／腎因性酸中毒、高血鉀、三環／salicylate 中毒",
+      "var": "hco3", "unit": "mEq/L", "step": 0.5,
+      "quick": [6, 8, 10, 12, 15, 18],
+      "branches": [
+        { "else": "q_bicarb_target" }
+      ]
+    },
+    "q_bicarb_target": {
+      "type": "number",
+      "title": "目標 HCO₃（mEq/L）？",
+      "help": "急性通常先設 15（不要一次矯正到正常）；慢性 CKD／RTA 目標 22–24",
+      "var": "tgt", "unit": "mEq/L", "step": 1,
+      "quick": [12, 15, 18, 22],
+      "branches": [
+        { "else": "r_bicarb" }
+      ]
+    },
+    "r_bicarb": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "NaHCO₃ 劑量：缺乏量 {round(0.5*wt*max(tgt - hco3, 0))} mEq，先給一半",
+      "summary": "0.5 × {wt} kg × ({tgt} − {hco3}) = **{round(0.5*wt*max(tgt - hco3, 0))} mEq**（0.4 × = {round(0.4*wt*max(tgt - hco3, 0))} mEq）；**先給一半 ≈ {round(0.25*wt*max(tgt - hco3, 0))} mEq** = 8.4% {round(0.25*wt*max(tgt - hco3, 0))} mL ≈ Rolikan 7% 20 mL × {round(0.25*wt*max(tgt - hco3, 0)/16.7, 1)} 支；之後依血氣 q2–4h 再給。",
+      "steps": [
+        "確認適應症：pH < 7.1–7.15、pH < 7.2 合併 AKI（BICAR-ICU）、正常 AG／腎因性酸中毒、高血鉀、三環抗鬱劑／salicylate 中毒",
+        "不用：DKA pH ≥ 6.9、呼吸性酸中毒；乳酸酸中毒證據弱",
+        "**確認能排出 CO₂**（通氣不足者 NaHCO₃ 會產生 CO₂ 惡化酸中毒）",
+        "先給一半缺乏量，血氣 q2–4h 後再決定；急性可 1–2 mEq/kg bolus over 5–10 min，或 150 mEq in D5W 1 L 慢滴",
+        "同時補 K（NaHCO₃ 會降 K）、追游離 Ca、Na、體液",
+        "嚴重酸中毒 + 腎衰竭／中毒／體液過多 → 透析（腎臟科）"
+      ],
+      "orders": [
+        { "drug": "NaHCO₃ 8.4%（1 mEq/mL；Rolikan 7% 20 mL ≈ 16.7 mEq）", "dose": "{round(0.25*wt*max(tgt - hco3, 0))} mEq（缺乏量 {round(0.5*wt*max(tgt - hco3, 0))} mEq 的一半）", "route": "IV drip（可稀釋於 D5W）", "freq": "先給一半，血氣 q2–4h 後再評估剩餘", "note": "{wt} kg，目標 HCO₃ {tgt}；≈ Rolikan 7% 20 mL × {round(0.25*wt*max(tgt - hco3, 0)/16.7, 1)} 支" },
+        { "drug": "NaHCO₃ 8.4%（急性 bolus）", "dose": "{round(wt)}–{round(wt*2)} mEq（1–2 mEq/kg）", "route": "IV push over 5–10 min", "freq": "STAT（pH < 7.1 或高血鉀／中毒緊急時）", "note": "之後接滴注；注意低血鉀、低游離鈣、Na 負荷", "alt": "150 mEq in D5W 1 L 慢滴" },
+        { "drug": "NaHCO₃ 滴注", "dose": "150 mEq in D5W 1 L", "route": "IV drip 慢滴", "freq": "持續，依血氣 q2–4h", "note": "bolus 替代或接續；體液負荷注意" },
+        { "drug": "NaHCO₃ 錠（慢性）", "dose": "0.5–1 g", "route": "PO", "freq": "TID", "note": "CKD、RTA；目標 HCO₃ 22–24", "cond": "tgt >= 22" }
+      ],
+      "watch": ["血氣 q2–4h；K（↓）、游離 Ca（↓）、Na", "PaCO₂ 上升／呼吸（通氣不足）", "體液：肺音、水腫（Na 負荷）"],
+      "call": ["需要 NaHCO₃ 滴注或透析", "pH < 7.2 持續；高血鉀 ≥ 6", "通氣不足（PaCO₂ 上升）需 NIV／插管"],
+      "refs": [{ "ch": "31", "q": "NaHCO₃（8.4%" }, { "ch": "31", "q": "3. 治療" }]
+    }
+  }
+}

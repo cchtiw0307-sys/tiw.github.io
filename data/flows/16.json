@@ -1,0 +1,596 @@
+{
+  "id": "16",
+  "title": "肢體疼痛與腫脹",
+  "chapter": "16",
+  "entries": [
+    { "label": "腿／手痛、腫、變色、變冷", "type": "symptom", "start": "i_phone", "group": "皮膚四肢",
+      "keywords": ["腿痛", "手痛", "肢體疼痛", "肢體腫脹", "leg pain", "limb pain", "腳冰冷", "腳發白", "腳發紫", "腳麻", "石膏太緊"] },
+    { "label": "單側小腿腫（疑 DVT）", "type": "symptom", "start": "q_dvt", "group": "皮膚四肢",
+      "keywords": ["小腿腫", "單側腿腫", "DVT", "深部靜脈栓塞", "deep vein thrombosis", "leg swelling", "Wells", "D-dimer", "壓迫超音波"] },
+    { "label": "關節紅腫熱痛", "type": "symptom", "start": "q_joint", "group": "皮膚四肢",
+      "keywords": ["關節痛", "關節腫", "關節紅腫熱", "joint pain", "arthritis", "膝蓋腫", "痛風", "gout", "感染性關節炎", "septic arthritis", "關節抽液"] },
+    { "label": "背痛／坐骨神經痛（含紅旗）", "type": "symptom", "start": "q_back", "group": "皮膚四肢",
+      "keywords": ["背痛", "腰痛", "back pain", "坐骨神經痛", "sciatica", "馬尾症候群", "cauda equina", "硬脊膜外膿瘍", "epidural abscess", "脊髓壓迫", "cord compression"] },
+    { "label": "急性肢體缺血（6P）", "type": "diagnosis", "start": "r_ali",
+      "keywords": ["急性肢體缺血", "acute limb ischemia", "6P", "動脈栓塞", "arterial embolism", "pulseless", "Rutherford", "heparin"] },
+    { "label": "DVT（深部靜脈栓塞）", "type": "diagnosis", "start": "q_dvt",
+      "keywords": ["DVT", "深部靜脈栓塞", "deep vein thrombosis", "抗凝", "apixaban", "rivaroxaban", "enoxaparin", "股青腫", "phlegmasia", "IVC filter", "導管相關 DVT"] },
+    { "label": "腔室症候群", "type": "diagnosis", "start": "r_compartment",
+      "keywords": ["腔室症候群", "compartment syndrome", "被動牽拉痛", "筋膜切開", "fasciotomy", "腔室壓"] },
+    { "label": "感染性關節炎", "type": "diagnosis", "start": "i_aspirate",
+      "keywords": ["感染性關節炎", "septic arthritis", "化膿性關節炎", "關節液", "synovial fluid", "淋菌關節炎", "gonococcal", "人工關節感染", "PJI", "滑囊炎", "bursitis"] },
+    { "label": "痛風／假性痛風急性發作", "type": "diagnosis", "start": "r_gout",
+      "keywords": ["痛風", "gout", "假性痛風", "pseudogout", "CPPD", "colchicine", "秋水仙素", "尿酸", "uric acid", "大腳趾痛"] },
+    { "label": "蜂窩性組織炎／糖尿病足／骨髓炎", "type": "diagnosis", "start": "q_cell",
+      "keywords": ["蜂窩性組織炎", "cellulitis", "糖尿病足", "diabetic foot", "骨髓炎", "osteomyelitis", "probe-to-bone", "足部潰瘍"] },
+    { "label": "表淺血栓性靜脈炎", "type": "diagnosis", "start": "r_svt",
+      "keywords": ["表淺血栓性靜脈炎", "superficial thrombophlebitis", "靜脈炎", "phlebitis", "fondaparinux", "靜脈曲張 紅腫"] },
+    { "label": "硬脊膜外膿瘍／脊髓壓迫／馬尾症候群", "type": "diagnosis", "start": "q_back",
+      "keywords": ["硬脊膜外膿瘍", "epidural abscess", "脊髓壓迫", "cord compression", "馬尾症候群", "cauda equina", "dexamethasone", "背痛 發燒", "癌症 背痛"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中先問",
+      "body": [
+        "部位、**開始時間**（突然＝血管／創傷；漸進＝感染／關節）、疼痛性質、腫脹、顏色、溫度、感覺／運動變化",
+        "生命徵象（發燒、心搏過速、低血壓、SpO₂——PE？）",
+        "近期：手術／骨折／石膏／繃帶、動脈穿刺／心導管、中央靜脈導管、跌倒、長期臥床；病史：PAD、Afib、糖尿病、痛風、人工關節、癌症、既往 VTE、抗凝",
+        "**懷疑缺血 → 肢體保持水平（不抬高不加熱）、IV、立刻到床邊叫後線；石膏／繃帶太緊 → 剪開至皮膚**；其餘備手持 Doppler"
+      ],
+      "next": "q_limb_danger"
+    },
+    "q_limb_danger": {
+      "type": "multi",
+      "title": "床邊：勾選所有符合",
+      "help": "雙側比較膚色、溫度、CRT、脈搏（摸不到用 Doppler）；移除／剪開所有束縛",
+      "options": [
+        { "label": "突然劇痛 + 蒼白／冰冷／脈搏消失／麻／無力（6P）", "set": { "isch": true } },
+        { "label": "被動牽拉肌肉劇痛、緊繃腫脹、感覺異常（骨折／石膏／再灌流後）", "set": { "comp": true } },
+        { "label": "紅腫熱 + 劇痛不成比例／紫黑／捻髮音／水泡／休克", "set": { "nsti": true } },
+        { "label": "單側小腿腫（周徑差 > 3 cm）、壓痛、發熱、表淺靜脈擴張", "set": { "dvt": true } },
+        { "label": "單一關節急性紅腫熱、不能承重", "set": { "joint": true } },
+        { "label": "紅腫熱、有邊界、淋巴管炎、傷口／足癬入口（蜂窩性組織炎）", "set": { "cell": true } },
+        { "label": "背痛／神經根痛", "set": { "back": true } },
+        { "label": "以上都沒有（肌肉骨骼痛、注射處、血腫、神經痛）", "set": { "none": true } }
+      ],
+      "branches": [
+        { "if": "isch", "next": "r_ali" },
+        { "if": "comp", "next": "r_compartment" },
+        { "if": "nsti", "next": "r_nsti" },
+        { "if": "dvt", "next": "q_dvt" },
+        { "if": "joint", "next": "q_joint" },
+        { "if": "cell", "next": "q_cell" },
+        { "if": "back", "next": "q_back" },
+        { "else": "r_msk" }
+      ]
+    },
+    "q_dvt": {
+      "type": "choice",
+      "title": "疑 DVT：哪一種情況？",
+      "help": "住院病人 Wells／D-dimer 準確度差 → 直接全腿壓迫超音波；血小板 > 50,000 抗凝相對安全",
+      "options": [
+        { "label": "劇痛、腫、發紺（股青腫）或急性廣泛髂股 DVT", "next": "r_phlegmasia", "set": { "ufh": true } },
+        { "label": "抗凝禁忌：活動出血、近期顱內出血、血小板 < 50,000", "next": "r_dvt_contra", "set": { "ufh": false } },
+        { "label": "血流不穩、可能要手術／溶栓、極端體重（需 UFH）", "next": "q_plt", "set": { "ufh": true } },
+        { "label": "一般情況（可口服／皮下抗凝）", "next": "q_plt", "set": { "ufh": false } }
+      ]
+    },
+    "q_plt": {
+      "type": "number",
+      "title": "血小板（×10³/μL）？",
+      "help": "< 50,000 為抗凝禁忌；> 50,000 相對安全",
+      "var": "plt", "unit": "×10³/μL", "step": 1,
+      "quick": [30, 50, 100, 150, 250],
+      "branches": [
+        { "if": "plt < 50", "next": "r_dvt_contra" },
+        { "else": "r_dvt" }
+      ]
+    },
+    "q_joint": {
+      "type": "choice",
+      "title": "關節紅腫熱：哪一種？",
+      "help": "單一關節急性紅腫熱 = 感染直到抽關節液證明不是；沒抽關節液不要當痛風治療",
+      "options": [
+        { "label": "單一關節急性紅腫熱（尚未抽液）", "next": "i_aspirate" },
+        { "label": "人工關節", "next": "r_pji" },
+        { "label": "腫在滑囊（鷹嘴、髕前），關節活動度保留", "next": "r_bursitis" },
+        { "label": "關節液已排除感染／已知痛風且 Gram stain 陰性、結晶陽性", "next": "r_gout" },
+        { "label": "多關節、遷移性、腱鞘炎、膿疱（年輕性活躍）", "next": "r_gc" }
+      ]
+    },
+    "i_aspirate": {
+      "type": "info",
+      "title": "順序：關節抽液 → 血液培養 → 抗生素",
+      "body": [
+        "**不要穿過蜂窩性組織炎處進針**；髖關節／人工關節 → 骨科抽液",
+        "關節液送：cell count（> 50,000/μL 且 PMN > 90% = 感染直到證明不是；可 < 10,000）、**Gram stain、培養**、結晶（看到結晶也不排除感染）、glucose",
+        "血液培養 × 2（> 50% 陽性）、CBC、CRP/ESR、uric acid",
+        "X 光／超音波（積液）；每天引流（反覆抽吸或關節鏡沖洗）"
+      ],
+      "next": "q_septic"
+    },
+    "q_septic": {
+      "type": "choice",
+      "title": "感染性關節炎：病人族群／Gram stain？",
+      "options": [
+        { "label": "一般成人：Gram 陽性球菌或未見菌", "next": "r_septic_gp" },
+        { "label": "Gram 陰性桿菌／免疫低下／老年／IVDU", "next": "r_septic_gnr" },
+        { "label": "淋菌（年輕、性活躍、遷移性關節痛、腱鞘炎、膿疱）", "next": "r_gc" },
+        { "label": "人工關節", "next": "r_pji" }
+      ]
+    },
+    "q_cell": {
+      "type": "choice",
+      "title": "軟組織感染：嚴重度／情境？",
+      "help": "足部痛風可以像蜂窩性組織炎；抗生素劑量表詳見 Ch15",
+      "options": [
+        { "label": "輕度：紅 < 2 cm、無全身症狀", "next": "r_cell_po" },
+        { "label": "中重度／全身症狀／需 IV", "next": "r_cell_iv" },
+        { "label": "糖尿病足潰瘍感染", "next": "r_dmfoot" },
+        { "label": "疑骨髓炎（probe-to-bone、潰瘍 > 2 cm、ESR > 70、X 光／MRI）", "next": "r_osteo" },
+        { "label": "劇痛不成比例、紫黑、捻髮音、水泡、休克", "next": "r_nsti" }
+      ]
+    },
+    "q_back": {
+      "type": "multi",
+      "title": "背痛：勾選所有紅旗",
+      "help": "馬尾：尿滯留／失禁／鞍狀麻木；感染：發燒 + 脊椎敲痛（IVDU、糖尿病、菌血症、脊椎手術後）；癌症：夜間痛 + 神經缺損",
+      "options": [
+        { "label": "尿滯留／失禁、鞍狀麻木、進行性下肢無力", "set": { "cauda": true } },
+        { "label": "發燒 + 脊椎敲痛（IVDU、糖尿病、菌血症、脊椎手術後）", "set": { "epid": true } },
+        { "label": "癌症病史 + 新神經缺損（無力、感覺平面）", "set": { "cord": true } },
+        { "label": "外傷／跌倒後（疑骨折）", "set": { "fx": true } },
+        { "label": "以上都沒有", "set": { "none": true } }
+      ],
+      "branches": [
+        { "if": "cauda", "next": "r_cauda" },
+        { "if": "cord", "next": "r_cord_comp" },
+        { "if": "epid", "next": "r_epidural" },
+        { "if": "fx", "next": "r_cauda" },
+        { "else": "r_msk" }
+      ]
+    },
+    "r_ali": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性肢體缺血（6P）",
+      "summary": "**黃金 6 小時：立刻聯絡後線 + 心血管外科／介入放射科**；heparin 80 U/kg IVP → 18 U/kg/hr、止痛、輸液、肢體水平、不加熱不加壓；IIb → 緊急血管重建，III → 截肢評估。",
+      "steps": [
+        "立刻通知後線 + 心血管外科／介入放射科；記錄發作時間",
+        "分級（Rutherford）：I 無感覺運動缺損、動靜脈 Doppler 皆有；IIa 輕微感覺缺損；**IIb 休息痛、感覺運動缺損、動脈 Doppler 無 → 緊急重建**；III 麻痺僵硬、動靜脈皆無 → 不可逆",
+        "IV × 2、監測器、ECG（Afib？）；CBC、Cr、電解質、PT/aPTT、CK、乳酸、type & screen",
+        "Heparin bolus + 滴注（無禁忌）",
+        "止痛 morphine；輸液；肢體保持水平、保暖但不加熱、不加壓、保護足跟",
+        "CTA／動脈 Doppler 依外科（不可延誤手術）",
+        "再灌流後注意腔室症候群、高血鉀、肌紅素尿"
+      ],
+      "orders": [
+        { "drug": "Heparin（UFH）bolus", "dose": "{round(wt*80)} U（80 U/kg）", "route": "IV push", "freq": "STAT × 1", "note": "依 {wt} kg；無出血禁忌" },
+        { "drug": "Heparin（UFH）滴注", "dose": "{round(wt*18)} U/hr（18 U/kg/hr）＝ {round(wt*18/100,1)} mL/hr", "route": "IV drip", "freq": "持續，aPTT 1.5–2.5 × q6h 調整", "note": "泡法 25,000 U in NS 250 mL（100 U/mL）；依 {wt} kg" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN", "note": "腎衰竭累積" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT，之後維持", "note": "心／腎衰竭 250 mL；再灌流後肌紅素尿需輸液" }
+      ],
+      "watch": ["神經血管 q30–60 min：感覺、運動、Doppler、CRT", "aPTT q6h；出血", "再灌流後：腔室緊繃、K、CK、尿色"],
+      "call": ["6P 任一項 = 立刻後線 + 血管外科／介入放射科", "感覺運動缺損進展（IIb）、再灌流後腔室症候群"],
+      "ddx": ["腔室症候群", "股青腫（靜脈）", "神經壓迫"],
+      "refs": [{ "ch": "16", "q": "急性肢體缺血" }, { "ch": "16", "q": "Rutherford" }]
+    },
+    "r_compartment": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腔室症候群",
+      "summary": "臨床診斷即刻叫骨科／整形外科（**緊急筋膜切開，不要等脈搏消失**）；移除束縛、肢體與心臟同高（不抬高）、止痛、輸液；腔室壓 > 30 mmHg 或 ΔP < 30 支持診斷。",
+      "steps": [
+        "剪開石膏／繃帶至皮膚；肢體與心臟同高（不抬高）",
+        "立刻通知骨科／整形外科 + 後線；測腔室壓（> 30 mmHg 或 ΔP = DBP − 腔室壓 < 30）",
+        "IV、止痛；CK、Cr、K、尿液（肌紅素）、凝血",
+        "輸液（橫紋肌溶解）；NPO 準備筋膜切開",
+        "神經血管 q30 min 記錄（被動牽拉痛、感覺、運動、脈搏）"
+      ],
+      "orders": [
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN", "note": "止痛需求大是警訊" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT，之後維持（橫紋肌溶解時加量）", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["被動牽拉痛、緊繃、感覺 q30 min", "CK、K、Cr、尿色／尿量"],
+      "call": ["腔室症候群徵候 = 立刻骨科／整形外科（筋膜切開）", "CK 急升、少尿、高血鉀"],
+      "refs": [{ "ch": "16", "q": "腔室症候群" }]
+    },
+    "r_nsti": {
+      "type": "result",
+      "urgency": "red",
+      "title": "疑壞死性筋膜炎",
+      "summary": "劇痛不成比例、紫黑、捻髮音、水泡、休克：**緊急外科清創（不等影像）**；piperacillin-tazobactam + vancomycin + clindamycin；輸液／升壓；ICU。詳見 Ch15。",
+      "steps": [
+        "立刻通知後線 + 外科；畫線標記、拍照",
+        "IV × 2；血液培養 × 2、CBC、Cr、乳酸、CK、AST、CRP、凝血",
+        "抗生素 1 小時內（CrCl {round(crcl)} 已調整）",
+        "輸液 30 mL/kg，MAP < 65 → norepinephrine（Ch17）",
+        "海水暴露 + 肝硬化 → 加 doxycycline（Vibrio，Ch15）"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "CrCl {round(crcl)} 依附錄 A5；第一劑不減量" },
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "CrCl {round(crcl)} 依 A5；trough 15–20" },
+        { "drug": "Clindamycin", "dose": "600–900 mg", "route": "IV drip", "freq": "q8h", "note": "抑制毒素" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "前 3 小時", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起（{wt} kg：{round(wt*0.05*60/32,1)}–{round(wt*0.1*60/32,1)} mL/hr）", "route": "IV drip", "freq": "持續，MAP < 65", "note": "8 mg in D5W 250 mL（32 mcg/mL）" }
+      ],
+      "watch": ["範圍 vs 標記線每 30–60 分鐘", "MAP、乳酸、尿量、CK"],
+      "call": ["懷疑當下 = 後線 + 外科 + ICU"],
+      "refs": [{ "ch": "15", "q": "壞死性軟組織感染" }, { "ch": "A5", "q": "Piperacillin-tazobactam" }]
+    },
+    "r_phlegmasia": {
+      "type": "result",
+      "urgency": "red",
+      "title": "股青腫／急性廣泛髂股 DVT",
+      "summary": "劇痛、腫、發紺 = 肢體威脅：**緊急血管外科（導管溶栓／取栓）**；先 UFH（可能要溶栓／手術）；肢體水平、輸液；聯絡後線。",
+      "steps": [
+        "立即通知後線 + 血管外科／介入放射科",
+        "UFH bolus + 滴注（無禁忌；溶栓／手術前可停）",
+        "IV、止痛、輸液；肢體水平；監測遠端脈搏（動脈受壓）",
+        "CBC、Cr、PT/aPTT、type & screen；緊急超音波／CT venography 依外科",
+        "SpO₂↓、喘、心搏過速 → 想 PE（Ch8）"
+      ],
+      "orders": [
+        { "drug": "Heparin（UFH）bolus", "dose": "{round(wt*80)} U（80 U/kg）", "route": "IV push", "freq": "STAT × 1", "note": "依 {wt} kg" },
+        { "drug": "Heparin（UFH）滴注", "dose": "{round(wt*18)} U/hr（18 U/kg/hr）＝ {round(wt*18/100,1)} mL/hr", "route": "IV drip", "freq": "持續，aPTT 1.5–2.5 ×", "note": "25,000 U in NS 250 mL（100 U/mL）" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN", "note": "" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["遠端脈搏、CRT、感覺 q30–60 min（動脈受壓→缺血）", "aPTT q6h、出血", "SpO₂／呼吸（PE）"],
+      "call": ["股青腫 = 立刻血管外科 + 後線", "脈搏消失、SpO₂↓、低血壓"],
+      "refs": [{ "ch": "16", "q": "股青腫" }, { "ch": "16", "q": "Heparin (UFH)" }]
+    },
+    "r_dvt_contra": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "DVT 合併抗凝禁忌（活動出血、近期顱內出血、血小板 < 50,000）",
+      "summary": "**不抗凝 → IVC filter，聯絡後線**（介入放射科／血管外科）；血小板低下依 Ch30；每日重新評估禁忌是否解除。",
+      "steps": [
+        "確認 DVT（壓迫超音波）與禁忌（出血部位、血小板、近期 ICH）",
+        "通知後線；安排 IVC filter（介入放射科）",
+        "血小板 < 50,000 → 找原因（HIT？停 heparin）、Ch30",
+        "肢體抬高、止痛；SpO₂／呼吸監測（PE）",
+        "每日評估禁忌解除後開始抗凝、移除 filter 計畫"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "避免 NSAID（出血）" }
+      ],
+      "watch": ["SpO₂、RR、HR（PE）", "血小板、Hb 每日", "出血狀況"],
+      "call": ["DVT 合併抗凝禁忌 = 通知後線", "PE 症狀（喘、SpO₂↓、低血壓）", "疑 HIT"],
+      "refs": [{ "ch": "16", "q": "IVC filter" }, { "ch": "30", "q": "血小板" }]
+    },
+    "r_dvt": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "DVT 抗凝治療",
+      "summary": "一線 apixaban 或 rivaroxaban（不需先注射）；癌症、懷孕、無法口服 → enoxaparin；血流不穩／可能手術溶栓／CrCl < 15–30 → UFH。**高度懷疑但超音波 ≥ 4 小時內做不到、無出血禁忌 → 先給抗凝再等檢查。**",
+      "steps": [
+        "全腿壓迫超音波（住院病人不靠 Wells／D-dimer）；≥ 4 小時做不到 → 先 enoxaparin",
+        "抽血：CBC（血小板 {plt}）、Cr（CrCl {round(crcl)}）、PT/aPTT、肝功能",
+        "選藥：DOAC 一線；癌症／懷孕／無法口服 → enoxaparin；UFH 情境見下",
+        "遠端（小腿）DVT：有症狀或延伸風險 → 抗凝，否則 2 週後追蹤超音波",
+        "上肢導管相關 DVT：抗凝，導管仍需要且功能正常可保留",
+        "SpO₂↓、喘、胸痛 → 想 PE（Ch8）；找誘因（癌症、制動）"
+      ],
+      "orders": [
+        { "drug": "Apixaban", "dose": "10 mg", "route": "PO", "freq": "BID × 7 天 → 5 mg BID", "cond": "!ufh", "note": "一線；不需先注射；CrCl {round(crcl)}（< 15–30 多改 UFH／依院內，A5）" },
+        { "drug": "Rivaroxaban", "dose": "15 mg", "route": "PO 隨餐", "freq": "BID × 21 天 → 20 mg QD", "cond": "!ufh", "note": "一線；CrCl < 15 避免" },
+        { "drug": "Enoxaparin", "dose": "{round(wt)} mg（1 mg/kg）", "route": "SC", "freq": "{crcl < 30 ? 'q24h' : 'q12h'}", "cond": "!ufh", "note": "癌症、懷孕、無法口服；依 {wt} kg；CrCl {round(crcl)}：15–30 減為 1 mg/kg q24h、< 15 改 UFH（A5）；或 1.5 mg/kg QD" },
+        { "drug": "Heparin（UFH）bolus", "dose": "{round(wt*80)} U（80 U/kg）", "route": "IV push", "freq": "STAT × 1", "cond": "ufh || crcl < 30", "note": "血流不穩、可能手術／溶栓、極端體重、CrCl < 15–30" },
+        { "drug": "Heparin（UFH）滴注", "dose": "{round(wt*18)} U/hr（18 U/kg/hr）＝ {round(wt*18/100,1)} mL/hr", "route": "IV drip", "freq": "持續，aPTT 1.5–2.5 × q6h", "cond": "ufh || crcl < 30", "note": "25,000 U in NS 250 mL（100 U/mL）" },
+        { "drug": "Warfarin", "dose": "5 mg", "route": "PO", "freq": "QD 起始，與 LMWH 重疊 ≥ 5 天且 INR ≥ 2 × 24 小時", "cond": "!ufh", "note": "抗磷脂症候群、機械瓣膜、嚴重腎衰竭" },
+        { "drug": "Edoxaban", "dose": "{wt <= 60 || crcl <= 50 ? '30 mg' : '60 mg'}", "route": "PO", "freq": "QD（LMWH 5 天後）", "cond": "!ufh", "note": "≤ 60 kg 或 CrCl 30–50：30 mg；替代 dabigatran 150 mg BID（LMWH 5 天後）" }
+      ],
+      "watch": ["出血、Hb、血小板（heparin 5–10 天 HIT）", "aPTT q6h（UFH）", "SpO₂、呼吸（PE）；腿腫疼痛進展（股青腫）"],
+      "call": ["懷疑 DVT 合併 PE 症狀或抗凝禁忌", "股青腫（劇痛、腫、發紺）", "出血"],
+      "refs": [{ "ch": "16", "q": "2. DVT" }, { "ch": "16", "q": "表 16-1" }, { "ch": "A5", "q": "Enoxaparin" }],
+      "next": [{ "label": "劇痛、腫、發紺 → 股青腫", "next": "r_phlegmasia" }]
+    },
+    "r_svt": {
+      "type": "result",
+      "urgency": "green",
+      "title": "表淺血栓性靜脈炎",
+      "summary": "≥ 5 cm 或距深靜脈／隱股交界 ≤ 3–5 cm → fondaparinux 2.5 mg SC QD × 45 天（或預防劑量 LMWH）；否則 NSAID、熱敷、抬高。",
+      "steps": [
+        "超音波確認長度與距隱股交界距離、排除 DVT",
+        "移除相關周邊靜脈留置針；熱敷、抬高",
+        "≥ 5 cm 或近交界 → 抗凝 45 天；否則 NSAID",
+        "化膿性（發燒、膿）→ 抗生素 + 外科"
+      ],
+      "orders": [
+        { "drug": "Fondaparinux", "dose": "2.5 mg", "route": "SC", "freq": "QD × 45 天", "note": "≥ 5 cm 或距隱股交界 ≤ 3–5 cm；CrCl {round(crcl)} < 30 避免（依院內）", "alt": "預防劑量 LMWH（enoxaparin 40 mg SC QD）" },
+        { "drug": "Naproxen", "dose": "500 mg", "route": "PO", "freq": "BID PRN × 5–7 天", "note": "CKD、潰瘍、心衰竭、抗凝者避免" }
+      ],
+      "watch": ["延伸至深靜脈（複查超音波）", "發燒、膿（化膿性）"],
+      "call": ["延伸至深靜脈／DVT、化膿性靜脈炎"],
+      "refs": [{ "ch": "16", "q": "表淺血栓性靜脈炎" }]
+    },
+    "r_septic_gp": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "感染性關節炎：一般成人（Gram 陽性球菌或未見菌）",
+      "summary": "抽液送檢 + 血培養後：vancomycin（MRSA 風險）或 cefazolin 2 g q8h（MSSA）；每天引流（反覆抽吸／關節鏡）；2–4 週；骨科會診。",
+      "steps": [
+        "確認已抽關節液（cell count、Gram stain、培養、結晶）與血液培養 × 2",
+        "IV 抗生素（CrCl {round(crcl)} 已調整）",
+        "每天引流：反覆抽吸或關節鏡沖洗；髖關節需手術 → 骨科",
+        "止痛、關節休息但避免長期固定",
+        "培養結果後降階；療程 2–4 週；感染科"
+      ],
+      "orders": [
+        { "drug": "Vancomycin", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "MRSA 風險；依 {wt} kg、CrCl {round(crcl)}（附錄 A5）；trough 15–20" },
+        { "drug": "Cefazolin", "dose": "{crcl >= 35 ? '2 g' : '0.5–1 g'}", "route": "IV drip", "freq": "{crcl >= 35 ? 'q8h' : crcl >= 11 ? 'q12h' : 'q18–24h'}", "note": "MSSA；CrCl {round(crcl)} 依 A5" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "" }
+      ],
+      "watch": ["每日關節液量與 cell count 趨勢、體溫、CRP", "Cr（vancomycin）"],
+      "call": ["單一關節急性紅腫熱（需抽液）= 通知後線／骨科", "髖關節、需關節鏡沖洗、敗血症徵候"],
+      "refs": [{ "ch": "16", "q": "感染性關節炎" }, { "ch": "A5", "q": "Vancomycin" }]
+    },
+    "r_septic_gnr": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "感染性關節炎：Gram 陰性桿菌／免疫低下／老年／IVDU",
+      "summary": "Ceftriaxone 2 g q24h + vancomycin；Pseudomonas 風險（IVDU、免疫低下）→ cefepime／ceftazidime 2 g q8h；每天引流；骨科 + 感染科。",
+      "steps": [
+        "確認關節液與血液培養已送",
+        "IV 抗生素（CrCl {round(crcl)} 已調整）",
+        "每天引流；髖關節手術 → 骨科",
+        "IVDU：找心內膜炎（心雜音、血培養）、多關節",
+        "培養後降階；感染科"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q24h", "note": "不需腎調" },
+        { "drug": "Cefepime（Pseudomonas 風險時取代 ceftriaxone）", "dose": "{crcl >= 10 ? '2 g' : '1 g'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依 A5（腎功能差者神經毒性）", "alt": "ceftazidime 2 g q8h（同樣依 A5）" },
+        { "drug": "Vancomycin", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）" }
+      ],
+      "watch": ["關節液趨勢、體溫、CRP", "Cr"],
+      "call": ["需手術引流、敗血症徵候、疑心內膜炎"],
+      "refs": [{ "ch": "16", "q": "Gram 陰性桿菌／免疫低下" }, { "ch": "A5", "q": "Cefepime" }]
+    },
+    "r_gc": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "淋菌性關節炎（年輕、性活躍、遷移性關節痛、腱鞘炎、膿疱）",
+      "summary": "Ceftriaxone 1 g IV q24h × 7–14 天 + doxycycline 100 mg BID × 7 天（披衣菌）；加送尿／咽／直腸 NAAT；性伴侶通知。",
+      "steps": [
+        "關節液、血液培養；尿／咽／直腸 NAAT（淋菌、披衣菌）",
+        "IV ceftriaxone + doxycycline",
+        "引流大關節積液；性伴侶治療與通報"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "1 g", "route": "IV drip", "freq": "q24h × 7–14 天", "note": "不需腎調" },
+        { "drug": "Doxycycline", "dose": "100 mg", "route": "PO", "freq": "BID × 7 天", "note": "披衣菌；不需腎調" }
+      ],
+      "watch": ["關節症狀 48–72 小時改善", "皮膚膿疱、腱鞘炎"],
+      "call": ["多關節惡化、敗血症徵候、疑心內膜炎"],
+      "refs": [{ "ch": "16", "q": "淋菌" }]
+    },
+    "r_pji": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "人工關節感染",
+      "summary": "**先由骨科抽液再給藥**；經驗性 vancomycin + ceftriaxone 2 g q24h；骨科 + 感染科；需手術。",
+      "steps": [
+        "立即通知骨科（抽液、手術）+ 後線；穩定者抗生素等抽液後再給",
+        "血液培養 × 2、CBC、CRP/ESR、X 光",
+        "抽液後經驗性 vancomycin + ceftriaxone（CrCl {round(crcl)} 已調整）",
+        "感染科會診；療程與手術（清創／置換）依骨科"
+      ],
+      "orders": [
+        { "drug": "Vancomycin", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "抽液後給；依 {wt} kg、CrCl {round(crcl)}（A5）" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q24h", "note": "不需腎調" }
+      ],
+      "watch": ["體溫、CRP、關節引流", "Cr"],
+      "call": ["人工關節感染 = 通知骨科 + 後線 + 感染科"],
+      "refs": [{ "ch": "16", "q": "人工關節感染" }]
+    },
+    "r_bursitis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "化膿性滑囊炎（鷹嘴、髕前；S. aureus 80%）",
+      "summary": "腫在滑囊、關節活動度保留；抽吸送檢；輕症 PO cephalexin 500 mg q6h，病容 → vancomycin IV。",
+      "steps": [
+        "滑囊抽吸送 cell count、Gram stain、培養、結晶（痛風也可）",
+        "輕症口服；發燒／病容 → IV vancomycin",
+        "抬高、避免壓迫；反覆抽吸",
+        "痛風性滑囊炎依痛風處理"
+      ],
+      "orders": [
+        { "drug": "Cephalexin", "dose": "500 mg", "route": "PO", "freq": "q6h", "note": "輕症；腎功能差依院內" },
+        { "drug": "Vancomycin", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "病容時；依 {wt} kg、CrCl {round(crcl)}（A5）" }
+      ],
+      "watch": ["48 小時紅腫、體溫", "關節活動度變差 → 想關節感染"],
+      "call": ["關節活動受限（關節感染？）、敗血症徵候"],
+      "refs": [{ "ch": "16", "q": "滑囊炎" }]
+    },
+    "r_gout": {
+      "type": "result",
+      "urgency": "green",
+      "title": "痛風／假性痛風急性發作",
+      "summary": "24 小時內開始治療；**沒抽關節液不要當痛風治療**（足部痛風可以像蜂窩性組織炎，急性期尿酸 25% 正常）；NSAID／colchicine／類固醇擇一（依腎功能與禁忌）；**已在服的降尿酸藥繼續，不新加也不停**。",
+      "steps": [
+        "確認已排除感染（關節液 Gram stain／培養；結晶陽性也要送培養）",
+        "選藥：腎功能正常無禁忌 → NSAID 或 colchicine（發作 36 小時內效果好）；腎功能差／抗凝／NSAID 禁忌 → prednisolone；無法口服 → methylprednisolone IV；單一關節排除感染後 → 關節內 triamcinolone",
+        "降尿酸藥（allopurinol／febuxostat）繼續原劑量，AKI 也不停；不新加",
+        "假性痛風（CPPD）同法；< 50 歲或嚴重者查 Ca、PTH、Mg、鐵",
+        "多關節／頑固：併用兩類（NSAID + colchicine 或類固醇 + colchicine）；風濕科"
+      ],
+      "orders": [
+        { "drug": "Naproxen", "dose": "500 mg", "route": "PO", "freq": "BID × 5–7 天（或至緩解後 2 天）", "note": "CrCl {round(crcl)}；CKD、潰瘍、心衰竭、抗凝者避免", "alt": "etoricoxib 120 mg QD、ibuprofen 800 mg TID、indomethacin 50 mg TID、diclofenac 50 mg BID–TID" },
+        { "drug": "Colchicine", "dose": "1.0 mg → 1 小時後 0.5 mg", "route": "PO", "freq": "STAT；隔日起 0.5 mg QD–BID 至緩解", "note": "台灣 0.5 mg 錠；CrCl {round(crcl)} < 30 減量；與 clarithromycin／cyclosporine／statin 交互作用；腹瀉、肌病變" },
+        { "drug": "Prednisolone", "dose": "{round(clamp(wt*0.5,30,40))} mg（0.5 mg/kg，30–40 mg）", "route": "PO", "freq": "QD × 5 天（或漸減 7–10 天）", "note": "腎功能差、抗凝、NSAID 禁忌者首選；監測血糖；依 {wt} kg" },
+        { "drug": "Methylprednisolone", "dose": "40 mg", "route": "IV", "freq": "QD", "note": "無法口服" },
+        { "drug": "Triamcinolone", "dose": "大關節 40 mg、小關節 10–20 mg", "route": "關節內注射", "freq": "單次", "note": "單一關節、排除感染後" }
+      ],
+      "watch": ["24–48 小時疼痛改善；無改善 → 重新想感染", "血糖（類固醇）、Cr（NSAID）、腹瀉（colchicine）"],
+      "call": ["未抽液的單一關節急性紅腫熱", "發燒、全身症狀、治療無效"],
+      "ddx": ["感染性關節炎", "蜂窩性組織炎", "化膿性滑囊炎"],
+      "refs": [{ "ch": "16", "q": "痛風／假性痛風急性發作" }]
+    },
+    "r_cell_po": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕度蜂窩性組織炎（紅 < 2 cm、無全身症狀）",
+      "summary": "口服 cephalexin 500 mg q6h 或 amoxicillin-clavulanate；標記範圍、抬高、48 小時評估；足部要想痛風與足癬入口。",
+      "steps": [
+        "畫線標記、拍照；抬高；找入口（足癬、傷口）並處理",
+        "口服抗生素 5–7 天；抗生素後 24–48 小時略擴大不等於失敗",
+        "糖尿病：血糖、ABI、免負重、排除骨髓炎",
+        "48 小時評估；全身症狀 → IV"
+      ],
+      "orders": [
+        { "drug": "Cephalexin", "dose": "500 mg", "route": "PO", "freq": "q6h × 5–7 天", "note": "腎功能差（CrCl {round(crcl)}）依院內" },
+        { "drug": "Amoxicillin-clavulanate", "dose": "{crcl >= 30 ? '875/125 mg' : '500/125 mg'}", "route": "PO", "freq": "{crcl >= 10 ? 'q12h' : 'q24h'}", "note": "糖尿病足輕度；CrCl {round(crcl)} 依 A5" }
+      ],
+      "watch": ["48 小時範圍 vs 標記線、體溫"],
+      "call": ["48 小時無改善或快速擴散、發燒、糖尿病足深部感染"],
+      "refs": [{ "ch": "16", "q": "糖尿病足" }, { "ch": "15", "q": "表淺蜂窩性組織炎" }]
+    },
+    "r_cell_iv": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "中重度蜂窩性組織炎（全身症狀／需 IV）",
+      "summary": "Cefazolin IV（MRSA 風險加 vancomycin）；血液培養（發燒）；膿瘍 I&D；標記範圍；劑量表詳見 Ch15。",
+      "steps": [
+        "畫線標記、拍照；CBC、CRP、血糖、Cr、血液培養",
+        "IV cefazolin（CrCl {round(crcl)} 已調整）；膿／既往 MRSA／長照 → 加 vancomycin",
+        "膿瘍 → I&D；超音波（積液）、X 光（氣體、異物）",
+        "再確認沒有壞死性徵候、腔室症候群、DVT",
+        "48 小時評估"
+      ],
+      "orders": [
+        { "drug": "Cefazolin", "dose": "{crcl >= 35 ? '1–2 g' : '0.5–1 g'}", "route": "IV drip", "freq": "{crcl >= 35 ? 'q8h' : crcl >= 11 ? 'q12h' : 'q18–24h'}", "note": "CrCl {round(crcl)} 依附錄 A5", "alt": "oxacillin 2 g IV q4–6h" },
+        { "drug": "Vancomycin（MRSA 風險時加）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "" }
+      ],
+      "watch": ["24–48 小時範圍、體溫、疼痛", "Cr"],
+      "call": ["48 小時無改善、敗血症徵候、壞死性徵候、人工植入物周圍感染"],
+      "refs": [{ "ch": "15", "q": "cefazolin 1–2 g q8h" }, { "ch": "A5", "q": "Cefazolin" }],
+      "next": [{ "label": "糖尿病足 → 專屬處置", "next": "r_dmfoot" }]
+    },
+    "r_dmfoot": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "糖尿病足感染",
+      "summary": "清創、深部培養、ABI、血糖、免負重；輕度 PO；中重度 IV amoxicillin-clavulanate 或 ceftriaxone + metronidazole ± vancomycin；傷口浸潤／泡水 → 加 Pseudomonas 涵蓋（piperacillin-tazobactam）；**一定要排除骨髓炎**。",
+      "steps": [
+        "探查傷口深度（probe-to-bone？）、清創、深部培養；X 光（氣體、骨破壞）",
+        "ABI／足背脈搏（缺血 → 血管評估）、血糖控制、免負重",
+        "IV 抗生素（CrCl {round(crcl)} 已調整）；泡水／浸潤傷口加 Pseudomonas 涵蓋",
+        "疑骨髓炎（probe-to-bone、潰瘍 > 2 cm、ESR > 70）→ MRI、骨科／整形外科",
+        "壞疽、深部膿瘍、壞死性徵候 → 外科"
+      ],
+      "orders": [
+        { "drug": "Amoxicillin-clavulanate", "dose": "{crcl >= 10 ? '1.2 g' : '600 mg'}", "route": "IV drip", "freq": "{crcl >= 30 ? 'q8h' : crcl >= 10 ? 'q12h' : 'q24h'}", "note": "中重度；CrCl {round(crcl)} 依 A5", "alt": "ceftriaxone 2 g QD + metronidazole 500 mg q8h" },
+        { "drug": "Vancomycin（MRSA 風險時加）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）" },
+        { "drug": "Piperacillin-tazobactam（傷口浸潤／泡水，Pseudomonas）", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "取代上述 β-lactam；CrCl {round(crcl)} 依 A5" },
+        { "drug": "Cephalexin（輕度：紅 < 2 cm、無全身症狀）", "dose": "500 mg", "route": "PO", "freq": "q6h", "note": "或 amoxicillin-clavulanate 875/125 mg PO q12h" }
+      ],
+      "watch": ["範圍、壞疽進展、體溫、血糖", "Cr、培養結果降階"],
+      "call": ["糖尿病足深部感染／壞疽、疑骨髓炎、缺血（ABI 低）= 通知後線／外科", "敗血症徵候"],
+      "refs": [{ "ch": "16", "q": "糖尿病足" }, { "ch": "A5", "q": "Amoxicillin-clavulanate" }],
+      "next": [{ "label": "疑骨髓炎", "next": "r_osteo" }]
+    },
+    "r_osteo": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "骨髓炎",
+      "summary": "血培養 × 2；**穩定者先不給抗生素，等骨切片／深部培養**（拭子不可靠）；MRI 首選；不穩者經驗性 vancomycin + ceftriaxone（Pseudomonas：cefepime／ceftazidime）；4–6 週；感染科。",
+      "steps": [
+        "線索：probe-to-bone、潰瘍 > 2 cm、ESR > 70、X 光骨破壞；MRI 首選",
+        "血液培養 × 2、CBC、ESR/CRP",
+        "穩定 → 暫不給抗生素，安排骨切片／深部培養（骨科／放射科）",
+        "敗血症徵候或不穩 → 經驗性抗生素（CrCl {round(crcl)} 已調整）",
+        "脊椎骨髓炎 6 週；壓瘡合併骨髓炎無清創／皮瓣計畫時不宜單靠長期抗生素；感染科"
+      ],
+      "orders": [
+        { "drug": "Vancomycin（不穩者）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "QD", "note": "不需腎調" },
+        { "drug": "Cefepime（Pseudomonas 風險取代 ceftriaxone）", "dose": "{crcl >= 10 ? '2 g' : '1 g'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依 A5", "alt": "ceftazidime 2 g q8h" }
+      ],
+      "watch": ["體溫、CRP/ESR 趨勢", "Cr、vancomycin trough"],
+      "call": ["敗血症徵候、脊椎骨髓炎合併神經缺損、需清創"],
+      "refs": [{ "ch": "16", "q": "骨髓炎" }, { "ch": "A5", "q": "Cefepime" }]
+    },
+    "r_cauda": {
+      "type": "result",
+      "urgency": "red",
+      "title": "馬尾症候群／疑不穩定脊椎骨折",
+      "summary": "尿滯留／失禁／鞍狀麻木／進行性無力 = **緊急 MRI + 神經外科／骨科**；跌倒後髖／脊椎疼痛 → X 光／CT、臥床固定。",
+      "steps": [
+        "神經學檢查記錄：下肢肌力、感覺平面、鞍狀感覺、肛門張力；膀胱掃描（殘尿）",
+        "立即通知後線 + 神經外科／骨科；緊急 MRI（全脊椎）",
+        "尿滯留 → 導尿；止痛；外傷者臥床、脊椎保護",
+        "跌倒後疑骨折：髖／脊椎 X 光，必要時 CT"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN 劇痛", "note": "腎衰竭累積" }
+      ],
+      "watch": ["神經學 q1–2h（進展）", "尿量／殘尿"],
+      "call": ["馬尾症候群 = 立刻神經外科／骨科", "跌倒後疑髖／脊椎骨折"],
+      "refs": [{ "ch": "16", "q": "馬尾症候群" }]
+    },
+    "r_epidural": {
+      "type": "result",
+      "urgency": "red",
+      "title": "硬脊膜外膿瘍（背痛 + 脊椎敲痛 + 發燒）",
+      "summary": "緊急含顯影劑 MRI、血培養，vancomycin + ceftriaxone 2 g q24h；壓迫徵候 → 緊急減壓（神經外科）。",
+      "steps": [
+        "血液培養 × 2、CBC、CRP/ESR；神經學檢查記錄基準",
+        "緊急含顯影劑全脊椎 MRI；通知後線 + 神經外科",
+        "抗生素（血培養後即給，CrCl {round(crcl)} 已調整）",
+        "神經缺損／壓迫徵候 → 緊急手術減壓；IVDU 找心內膜炎"
+      ],
+      "orders": [
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "CrCl {round(crcl)} 依 A5；trough 15–20" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q24h", "note": "不需腎調" }
+      ],
+      "watch": ["神經學 q1–2h", "體溫、血培養結果"],
+      "call": ["疑硬脊膜外膿瘍 = 通知後線 + 神經外科", "新神經缺損（緊急減壓）"],
+      "refs": [{ "ch": "16", "q": "硬脊膜外膿瘍" }, { "ch": "A5", "q": "Vancomycin" }]
+    },
+    "r_cord_comp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "癌症背痛 + 神經缺損：轉移性脊髓壓迫",
+      "summary": "**Dexamethasone 10 mg IV STAT → 4 mg q6h**，緊急全脊椎 MRI，通知後線 + 神經外科／放射腫瘤科。",
+      "steps": [
+        "神經學檢查記錄（肌力、感覺平面、括約肌）",
+        "Dexamethasone 立即給",
+        "緊急全脊椎 MRI；通知後線、神經外科、放射腫瘤科",
+        "臥床、脊椎保護；導尿（尿滯留）；止痛"
+      ],
+      "orders": [
+        { "drug": "Dexamethasone", "dose": "10 mg", "route": "IV push", "freq": "STAT → 4 mg IV q6h", "note": "血糖監測" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN", "note": "" }
+      ],
+      "watch": ["神經學 q1–2h", "血糖"],
+      "call": ["癌症背痛 + 神經缺損 = 立刻後線 + 神經外科／放射腫瘤科"],
+      "refs": [{ "ch": "16", "q": "脊髓壓迫" }]
+    },
+    "r_msk": {
+      "type": "result",
+      "urgency": "green",
+      "title": "肌肉骨骼痛／神經根痛／注射處反應（無紅旗）",
+      "summary": "Acetaminophen、NSAID（腎功能／抗凝允許）、肌肉鬆弛劑短期（Ch22）、活動；查藥物（statin 肌痛、fluoroquinolone 肌腱炎、利尿劑痛風）；CK（橫紋肌溶解）。",
+      "steps": [
+        "再確認沒有 6P、腔室、壞死性、DVT、關節感染、紅旗",
+        "找原因：跌倒／外傷（X 光）、姿勢、藥物（statin、fluoroquinolone、利尿劑）、帶狀皰疹前驅痛",
+        "CK（肌炎／橫紋肌溶解）、Cr、電解質視情況",
+        "止痛階梯；活動；交班原團隊"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "肝病 2 g/d" },
+        { "drug": "Naproxen", "dose": "500 mg", "route": "PO", "freq": "BID PRN（短期）", "note": "CrCl {round(crcl)}；CKD、潰瘍、心衰竭、抗凝者避免" }
+      ],
+      "watch": ["疼痛進展、新神經症狀、腫脹／顏色變化"],
+      "call": ["出現 6P、腔室徵候、紅旗、發燒 + 關節紅腫"],
+      "refs": [{ "ch": "16", "q": "神經根／背痛、肌肉骨骼痛" }, { "ch": "22", "q": "肌肉鬆弛劑" }]
+    }
+  }
+}

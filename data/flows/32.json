@@ -1,0 +1,1044 @@
+{
+  "id": "32",
+  "title": "鈉離子異常",
+  "chapter": "32",
+  "entries": [
+    {
+      "label": "Na 低（護理師報 Na < 135）",
+      "type": "symptom",
+      "start": "q_na",
+      "group": "檢驗異常",
+      "keywords": [
+        "低血鈉",
+        "鈉低",
+        "Na 120",
+        "Na 125",
+        "hyponatremia",
+        "sodium low",
+        "3% NaCl"
+      ]
+    },
+    {
+      "label": "Na 高（> 145）",
+      "type": "symptom",
+      "start": "q_na",
+      "group": "檢驗異常",
+      "keywords": [
+        "高血鈉",
+        "鈉高",
+        "Na 160",
+        "hypernatremia",
+        "sodium high",
+        "自由水",
+        "free water"
+      ]
+    },
+    {
+      "label": "低血鈉病人抽搐／意識變差",
+      "type": "symptom",
+      "start": "r_hypo_severe",
+      "group": "檢驗異常",
+      "keywords": [
+        "低血鈉 抽搐",
+        "低血鈉 昏迷",
+        "hyponatremia seizure",
+        "3% saline",
+        "高張食鹽水"
+      ]
+    },
+    {
+      "label": "症狀性低血鈉（3% NaCl）",
+      "type": "diagnosis",
+      "start": "r_hypo_severe",
+      "keywords": [
+        "症狀性低血鈉",
+        "嚴重低血鈉",
+        "3% NaCl",
+        "hypertonic saline",
+        "ODS",
+        "滲透性脫髓鞘"
+      ]
+    },
+    {
+      "label": "SIADH",
+      "type": "diagnosis",
+      "start": "r_siadh",
+      "keywords": [
+        "SIADH",
+        "抗利尿激素",
+        "限水",
+        "fluid restriction",
+        "urea",
+        "tolvaptan",
+        "NaCl 錠"
+      ]
+    },
+    {
+      "label": "低血容性低血鈉（嘔吐／腹瀉／thiazide）",
+      "type": "diagnosis",
+      "start": "r_hypo_hypovol",
+      "keywords": [
+        "低血容低血鈉",
+        "hypovolemic hyponatremia",
+        "thiazide 低血鈉",
+        "腹瀉 低血鈉"
+      ]
+    },
+    {
+      "label": "高血容性低血鈉（心衰竭／肝硬化／腎病）",
+      "type": "diagnosis",
+      "start": "r_hypo_hypervol",
+      "keywords": [
+        "高血容低血鈉",
+        "hypervolemic hyponatremia",
+        "心衰竭 低血鈉",
+        "肝硬化 低血鈉",
+        "水腫 低血鈉"
+      ]
+    },
+    {
+      "label": "腎上腺不足／黏液水腫昏迷的低血鈉",
+      "type": "diagnosis",
+      "start": "r_endocrine",
+      "keywords": [
+        "腎上腺不足",
+        "adrenal insufficiency",
+        "黏液水腫",
+        "myxedema",
+        "hydrocortisone",
+        "甲狀腺低下 低血鈉"
+      ]
+    },
+    {
+      "label": "低血鈉矯正過快（過度矯正）",
+      "type": "diagnosis",
+      "start": "r_overcorrect",
+      "keywords": [
+        "過度矯正",
+        "overcorrection",
+        "Na 升太快",
+        "desmopressin",
+        "D5W 回降",
+        "ODS"
+      ]
+    },
+    {
+      "label": "高血鈉",
+      "type": "diagnosis",
+      "start": "q_na",
+      "keywords": [
+        "高血鈉",
+        "hypernatremia",
+        "自由水缺乏",
+        "free water deficit",
+        "D5W"
+      ]
+    },
+    {
+      "label": "尿崩症（DI）",
+      "type": "diagnosis",
+      "start": "r_di",
+      "keywords": [
+        "尿崩",
+        "diabetes insipidus",
+        "DI",
+        "desmopressin",
+        "DDAVP",
+        "多尿 高血鈉"
+      ]
+    }
+  ],
+  "nodes": {
+    "q_na": {
+      "type": "number",
+      "title": "血鈉（mEq/L）？",
+      "help": "先排除假性／高滲透性：血糖每 100 mg/dL ↑ → Na ↓ 1.6–2.4（先矯正再算）、高血脂／高蛋白、mannitol、顯影劑",
+      "var": "na",
+      "unit": "mEq/L",
+      "step": 1,
+      "quick": [
+        115,
+        120,
+        125,
+        130,
+        150,
+        155,
+        160
+      ],
+      "branches": [
+        {
+          "if": "na < 135",
+          "next": "q_hypo_sx"
+        },
+        {
+          "if": "na > 145",
+          "next": "q_hyper_shock"
+        },
+        {
+          "else": "r_na_normal"
+        }
+      ]
+    },
+    "q_hypo_sx": {
+      "type": "choice",
+      "title": "低血鈉：有嚴重症狀嗎？",
+      "help": "嚴重 = 抽搐、昏迷、GCS ↓、嚴重意識混亂、嘔吐、心肺窘迫；急性（< 48 hr：術後、多飲、MDMA、marathon）vs 慢性（不知道就當慢性）",
+      "options": [
+        {
+          "label": "有嚴重症狀（抽搐、昏迷、GCS ↓、嘔吐）",
+          "next": "r_hypo_severe"
+        },
+        {
+          "label": "輕微或無症狀",
+          "next": "q_hypo_vol"
+        }
+      ]
+    },
+    "q_hypo_vol": {
+      "type": "choice",
+      "title": "體液狀態與尿液檢查？",
+      "help": "抽：血 Osm、尿 Osm（< 100 = 多飲／低溶質；> 100 = ADH 作用）、尿 Na（< 20 = 低血容／水腫；> 30 = SIADH／利尿劑／腎上腺）、K、Cr、glucose、TSH、cortisol、uric acid",
+      "options": [
+        {
+          "label": "低血容（嘔吐／腹瀉／利尿劑／thiazide；皮膚乾、姿態性低血壓）",
+          "next": "r_hypo_hypovol"
+        },
+        {
+          "label": "正常血容、尿 Osm > 100（SIADH：肺／中樞／藥物／疼痛／術後）",
+          "next": "r_siadh"
+        },
+        {
+          "label": "正常血容、尿 Osm < 100（原發性多飲／低溶質攝取）",
+          "next": "r_polydipsia"
+        },
+        {
+          "label": "高血容（水腫、心衰竭、肝硬化、腎病症候群）",
+          "next": "r_hypo_hypervol"
+        },
+        {
+          "label": "懷疑腎上腺不足／黏液水腫昏迷（低血壓、低血糖、低體溫、嗜睡）",
+          "next": "r_endocrine"
+        }
+      ]
+    },
+    "r_hypo_severe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "症狀性低血鈉：3% NaCl 150 mL over 20 min",
+      "summary": "抽搐、昏迷、嚴重意識混亂、嘔吐 → **3% NaCl 150 mL IV over 20 min（周邊可）**，每次後測 Na，可重複 2–3 次至症狀改善或 1 小時內 ↑ 4–6；**24 小時總上升 ≤ 8（高 ODS 風險 ≤ 6）**。",
+      "steps": [
+        "ABC、側躺防誤吸、IV、心電監測；抽搐依 Ch3 給 lorazepam 同時矯正 Na",
+        "3% NaCl 150 mL over 20 min → 20 min 後測 Na；未改善可重複（最多 2–3 次）",
+        "抽：血 Osm、尿 Osm、尿 Na、K、Cr、glucose、TSH、cortisol；先排除高血糖／假性",
+        "使用 3% NaCl 期間至少 q2h 測 Na，穩定後 q4–6h；24 hr ≤ 8 mEq/L",
+        "ODS 高風險（Na < 105、低血鉀、酗酒、營養不良、肝病）→ 24 hr ≤ 6",
+        "症狀改善後依原因處理（限水／NS／停藥）；過度矯正 → D5W ± desmopressin（見連結）",
+        "立刻聯絡後線"
+      ],
+      "orders": [
+        {
+          "drug": "3% NaCl",
+          "dose": "150 mL（或 2 mL/kg = {round(wt*2)} mL）",
+          "route": "IV drip over 20 min（周邊可）",
+          "freq": "STAT；可重複 2–3 次，每次後測 Na，目標 1 hr 內 ↑ 4–6 或症狀改善",
+          "note": "台灣 3% NaCl 500 mL 袋（513 mEq/L）；60 kg 男每 150 mL 預期升約 1.6，故常需 2–3 次",
+          "alt": "無 3%：NaHCO₃ 8.4% 50 mL（Na 50 mEq）或 NS 500 mL + NaCl 針劑自配"
+        },
+        {
+          "drug": "Lorazepam",
+          "dose": "{round(min(wt*0.1, 4), 1)} mg（0.1 mg/kg，max 4 mg）",
+          "route": "IV push（2 mg/min）",
+          "freq": "STAT 抽搐時，5 min 可重複一次",
+          "note": "依 Ch3 癲癇處置；Na 矯正才是根本"
+        },
+        {
+          "drug": "D5W",
+          "dose": "{round(wt*3)} mL（3 mL/kg）",
+          "route": "IV drip over 1 hr",
+          "freq": "PRN 過度矯正（24 hr > 8–10），可重複",
+          "note": "回降 Na"
+        },
+        {
+          "drug": "Desmopressin",
+          "dose": "2 mcg",
+          "route": "IV／SC",
+          "freq": "q6–8h PRN 過度矯正",
+          "note": "尤其低血容者輸液後 ADH 突然消失大量利尿時"
+        }
+      ],
+      "watch": [
+        "Na 每次 3% 後、之後至少 q2h；穩定後 q4–6h；24 hr ≤ 8（高風險 ≤ 6）",
+        "尿量突然增加（> 100 mL/hr）= 自發性快速矯正的警訊",
+        "GCS、抽搐、呼吸"
+      ],
+      "call": [
+        "需要 3% NaCl、任何嚴重症狀一律通知後線",
+        "Na < 120",
+        "24 hr 內 Na 變化 > 8–10",
+        "疑 SIADH 合併顱內病灶、腎上腺不足"
+      ],
+      "ddx": [
+        "高血糖假性低血鈉",
+        "顱內病灶（CT）",
+        "低血糖／癲癇其他原因"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "嚴重症狀"
+        },
+        {
+          "ch": "32",
+          "q": "3% NaCl"
+        },
+        {
+          "ch": "03",
+          "q": "癲癇"
+        }
+      ],
+      "next": [
+        {
+          "label": "矯正過快 → 回降",
+          "next": "r_overcorrect"
+        },
+        {
+          "label": "症狀改善 → 依原因處理",
+          "next": "q_hypo_vol"
+        }
+      ]
+    },
+    "r_hypo_hypovol": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低血容性低血鈉：NS 補血容、停 thiazide、補 K",
+      "summary": "NS 500 mL bolus → 50–100 mL/hr；停 thiazide、補 K；**血容恢復後 ADH 關閉會大量排水 → Na 可能快速上升**，q4–6h 測，過快用 D5W／desmopressin；懷疑腎上腺不足先給 hydrocortisone。",
+      "steps": [
+        "確認低血容（姿態性低血壓、皮膚乾、尿 Na < 20 腎外 或 > 20 腎性／利尿劑）",
+        "NS 500 mL bolus → 50–100 mL/hr；停 thiazide、瀉劑；治療嘔吐／腹瀉",
+        "補 K（低血鉀本身也是 ODS 危險因子）",
+        "q4–6h 測 Na；尿量突增 → 立刻測 Na，過快 → D5W ± desmopressin",
+        "懷疑腎上腺不足（低血壓、低血糖、高血鉀、嗜酸球高）：先抽 cortisol／ACTH 就給 hydrocortisone，不必等結果",
+        "每日上升 ≤ 6–8 mEq/L"
+      ],
+      "orders": [
+        {
+          "drug": "NS",
+          "dose": "500 mL",
+          "route": "IV drip over 30–60 min",
+          "freq": "STAT bolus → 之後 50–100 mL/hr 持續",
+          "note": "心衰竭者 250 mL；血容恢復後小心自發快速矯正"
+        },
+        {
+          "drug": "KCl",
+          "dose": "20–40 mEq",
+          "route": "PO（或 IV 依 Ch33）",
+          "freq": "q4–6h PRN 低血鉀",
+          "note": "低血鉀增加 ODS 風險"
+        },
+        {
+          "drug": "Hydrocortisone",
+          "dose": "100 mg",
+          "route": "IV push",
+          "freq": "STAT → 50 mg IV q6h",
+          "note": "僅懷疑腎上腺不足時；先抽 cortisol／ACTH 再給，不必等報告"
+        },
+        {
+          "drug": "D5W",
+          "dose": "{round(wt*3)} mL（3 mL/kg）",
+          "route": "IV drip over 1 hr",
+          "freq": "PRN 24 hr 上升 > 8–10",
+          "note": "可重複；± desmopressin 2 mcg IV/SC q6–8h"
+        }
+      ],
+      "watch": [
+        "Na q4–6h（bolus 後 2 hr 加測）；24 hr ≤ 8",
+        "尿量每小時（> 100 mL/hr 警訊）、BP、姿態性",
+        "K、Cr"
+      ],
+      "call": [
+        "Na < 120 或出現嚴重症狀",
+        "24 hr 內 Na 變化 > 8–10",
+        "懷疑腎上腺不足"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "無嚴重症狀"
+        },
+        {
+          "ch": "32",
+          "q": "低血容"
+        },
+        {
+          "ch": "17",
+          "q": "腎上腺"
+        }
+      ],
+      "next": [
+        {
+          "label": "出現嚴重症狀 → 3% NaCl",
+          "next": "r_hypo_severe"
+        },
+        {
+          "label": "矯正過快 → 回降",
+          "next": "r_overcorrect"
+        }
+      ]
+    },
+    "r_siadh": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "SIADH：治原因、停藥、限水；無效加 NaCl 錠／urea",
+      "summary": "限水 < 800–1,000 mL/d（含所有口服液體）；限水無效（尿 Osm > 500、尿 Na + 尿 K > 血 Na）→ NaCl 錠 1–2 g TID 或 urea 0.25–0.5 g/kg/d；**NS 對 SIADH 常無效甚至惡化**；每日 ↑ ≤ 6–8。",
+      "steps": [
+        "找並治療原因：肺（肺炎、結核、腫瘤）、中樞（中風、外傷、SAH、感染）、藥物（SSRI／TCA、carbamazepine、抗精神病藥、鴉片類、cyclophosphamide、NSAID、PPI）、疼痛、噁心、術後",
+        "停可疑藥物；止痛、止吐",
+        "限水 < 800–1,000 mL/d（含湯、藥水、輸液）；避免 NS（尿 Osm > 300 會惡化）",
+        "限水無效或預期無效（尿 Osm > 500、UNa + UK > 血 Na）→ NaCl 錠或 urea，或 furosemide + NaCl",
+        "中度症狀且限水無效 → 3% NaCl 間歇 2 mL/kg q6h（至少 q2h 測 Na）",
+        "tolvaptan：住院起始、監測 q6h、不與限水併用、肝毒性、自費",
+        "Na q4–6h（q6h 若用 tolvaptan／3%）；每日 ↑ ≤ 6–8"
+      ],
+      "orders": [
+        {
+          "drug": "限水",
+          "dose": "< 800–1,000 mL/day",
+          "route": "PO（含所有液體）",
+          "freq": "持續",
+          "note": "第一線；停 IV 維持輸液"
+        },
+        {
+          "drug": "NaCl 錠",
+          "dose": "1–2 g",
+          "route": "PO",
+          "freq": "TID",
+          "note": "限水無效、無心衰竭者"
+        },
+        {
+          "drug": "Urea",
+          "dose": "{round(wt*0.25)}–{round(wt*0.5)} g/day（0.25–0.5 g/kg/d；一般 15–30 g/d）",
+          "route": "PO（溶於水／果汁）",
+          "freq": "QD 分次",
+          "note": "依 {wt} kg；口感差"
+        },
+        {
+          "drug": "Furosemide",
+          "dose": "20 mg",
+          "route": "PO",
+          "freq": "BID",
+          "with": "NaCl 錠 1–2 g TID",
+          "note": "尿 Osm 很高時降低尿濃縮"
+        },
+        {
+          "drug": "3% NaCl",
+          "dose": "{round(wt*2)} mL（2 mL/kg）",
+          "route": "IV drip",
+          "freq": "q6h 間歇（或 0.5 mL/kg/hr = {round(wt*0.5)} mL/hr 持續）",
+          "note": "中度症狀且限水無效；至少 q2h 測 Na"
+        },
+        {
+          "drug": "Tolvaptan",
+          "dose": "7.5–15 mg",
+          "route": "PO",
+          "freq": "QD（住院起始）",
+          "note": "Na q6h、不限水、肝毒性、停藥復發、自費；後線同意後"
+        }
+      ],
+      "watch": [
+        "Na q4–6h；每日 ↑ ≤ 6–8（高 ODS 風險 ≤ 6）",
+        "I/O、體重；尿量突增 = 快速矯正",
+        "尿 Osm、尿 Na（判斷限水是否會有效）"
+      ],
+      "call": [
+        "Na < 120 或出現嚴重症狀（→ 3% NaCl）",
+        "限水無效需 tolvaptan／urea",
+        "SIADH 合併顱內病灶",
+        "24 hr 內 Na 變化 > 8–10"
+      ],
+      "ddx": [
+        "腎上腺不足（cortisol）",
+        "甲狀腺低下（TSH）",
+        "利尿劑（thiazide）",
+        "低溶質攝取"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "SIADH"
+        },
+        {
+          "ch": "32",
+          "q": "Adrogué"
+        }
+      ],
+      "next": [
+        {
+          "label": "出現嚴重症狀 → 3% NaCl",
+          "next": "r_hypo_severe"
+        },
+        {
+          "label": "矯正過快 → 回降",
+          "next": "r_overcorrect"
+        }
+      ]
+    },
+    "r_hypo_hypervol": {
+      "type": "result",
+      "urgency": "green",
+      "title": "高血容性低血鈉（心衰竭／肝硬化／腎病）：限水、限鈉、loop 利尿劑",
+      "summary": "限水 1–1.5 L/d、限鈉、furosemide、治原發病；避免 thiazide；tolvaptan 於心衰竭可考慮（無死亡率益處），**肝硬化相對禁忌**。",
+      "steps": [
+        "確認水腫、腹水、JVP；尿 Na < 20（腎衰竭除外）",
+        "限水 1–1.5 L/d、限鈉；停 thiazide、NSAID",
+        "loop 利尿劑（furosemide）；追 K、Mg、Cr",
+        "治原發病（心衰竭 Ch7、肝硬化 Ch10、腎病 Ch11）",
+        "Na q12–24h；無症狀慢性者不需快速矯正；嚴重症狀 → 3% NaCl（心衰竭者小心體液）"
+      ],
+      "orders": [
+        {
+          "drug": "限水",
+          "dose": "1–1.5 L/day",
+          "route": "PO",
+          "freq": "持續",
+          "note": "同時限鈉"
+        },
+        {
+          "drug": "Furosemide",
+          "dose": "依院內／原劑量調整（本章未指定劑量）",
+          "route": "IV／PO",
+          "freq": "QD–BID",
+          "note": "loop 利尿劑；心衰竭急性肺水腫劑量見 Ch7；避免 thiazide"
+        },
+        {
+          "drug": "Tolvaptan",
+          "dose": "7.5–15 mg",
+          "route": "PO",
+          "freq": "QD（住院起始，後線同意）",
+          "note": "心衰竭可考慮；肝硬化相對禁忌；Na q6h、過度矯正風險高、自費"
+        }
+      ],
+      "watch": [
+        "Na q12–24h（用 tolvaptan q6h）",
+        "體重、I/O、K、Mg、Cr",
+        "嚴重症狀出現 → 3% NaCl"
+      ],
+      "call": [
+        "Na < 120 或嚴重症狀",
+        "需 tolvaptan",
+        "腎衰竭利尿無效需透析"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "高血容"
+        },
+        {
+          "ch": "07",
+          "q": "急性心衰竭"
+        }
+      ],
+      "next": [
+        {
+          "label": "出現嚴重症狀 → 3% NaCl",
+          "next": "r_hypo_severe"
+        }
+      ]
+    },
+    "r_polydipsia": {
+      "type": "result",
+      "urgency": "green",
+      "title": "原發性多飲／低溶質攝取（尿 Osm < 100）",
+      "summary": "限水、增加溶質（蛋白質、鹽）；**小心多飲者停止喝水後自發性快速矯正**（大量排稀尿），需頻繁測 Na、必要時 D5W／desmopressin。",
+      "steps": [
+        "確認尿 Osm < 100（腎臟正常排水，只是喝太多／溶質太少：beer potomania、tea-and-toast）",
+        "限水；補充溶質（蛋白質、鹽、正常飲食）；精神科病人注意藥物（SSRI、抗精神病藥可合併 SIADH）",
+        "尿量每小時；尿量大 → q2–4h 測 Na（自發性矯正常 > 8/24 hr）",
+        "矯正過快 → D5W 3 mL/kg ± desmopressin"
+      ],
+      "orders": [
+        {
+          "drug": "限水 + 溶質",
+          "dose": "限水 < 1,000 mL/day；正常鹽與蛋白質飲食",
+          "route": "PO",
+          "freq": "持續",
+          "note": "營養師評估"
+        },
+        {
+          "drug": "D5W",
+          "dose": "{round(wt*3)} mL（3 mL/kg）",
+          "route": "IV drip over 1 hr",
+          "freq": "PRN 24 hr 上升 > 8–10",
+          "note": "± desmopressin 2 mcg IV/SC q6–8h"
+        }
+      ],
+      "watch": [
+        "Na q4–6h（尿量多時 q2–4h）",
+        "尿量每小時"
+      ],
+      "call": [
+        "Na < 120 或嚴重症狀",
+        "24 hr 內上升 > 8–10"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "多飲／低溶質"
+        }
+      ],
+      "next": [
+        {
+          "label": "矯正過快 → 回降",
+          "next": "r_overcorrect"
+        }
+      ]
+    },
+    "r_endocrine": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腎上腺不足／黏液水腫昏迷合併低血鈉：先 hydrocortisone",
+      "summary": "腎上腺危症：**hydrocortisone 100 mg IV → 50 mg q6h + NS**（先抽 cortisol／ACTH，不必等報告）；黏液水腫昏迷：**先 hydrocortisone 100 mg IV q8h**，再 levothyroxine 200–400 mcg IV load → 50–100 mcg IV QD。",
+      "steps": [
+        "抽 cortisol、ACTH、TSH、free T4、glucose、K；ECG",
+        "腎上腺危症（低血壓、低血糖、高血鉀、嗜酸球高）：hydrocortisone + NS 復甦（Ch17）",
+        "黏液水腫昏迷（低體溫、嗜睡、心搏過緩、低通氣）：先 hydrocortisone 再 levothyroxine（Ch21）；被動保溫、通氣支持",
+        "低血鈉多為正常血容（皮質醇缺乏 → ADH ↑）：荷爾蒙補充後自行改善；限水；嚴重症狀 → 3% NaCl",
+        "Na q4–6h；每日 ↑ ≤ 6–8（皮質醇補充後可能快速矯正）",
+        "聯絡後線 + 內分泌科；ICU"
+      ],
+      "orders": [
+        {
+          "drug": "Hydrocortisone（腎上腺危症）",
+          "dose": "100 mg",
+          "route": "IV push",
+          "freq": "STAT → 50 mg IV q6h",
+          "note": "先抽 cortisol／ACTH 再給，不必等結果"
+        },
+        {
+          "drug": "NS",
+          "dose": "500 mL",
+          "route": "IV drip over 30 min",
+          "freq": "STAT bolus，重複至血行穩定（腎上腺危症）",
+          "note": "心衰竭 250 mL；低血糖加 D50W"
+        },
+        {
+          "drug": "Hydrocortisone（黏液水腫昏迷）",
+          "dose": "100 mg",
+          "route": "IV push",
+          "freq": "q8h",
+          "note": "一定先於 levothyroxine（排除合併腎上腺不足）"
+        },
+        {
+          "drug": "Levothyroxine",
+          "dose": "200–400 mcg load → 50–100 mcg",
+          "route": "IV",
+          "freq": "load STAT → QD",
+          "note": "黏液水腫昏迷；老年／心臟病用低劑量；Ch21"
+        },
+        {
+          "drug": "D5W",
+          "dose": "{round(wt*3)} mL（3 mL/kg）",
+          "route": "IV drip over 1 hr",
+          "freq": "PRN 24 hr 上升 > 8–10",
+          "note": "± desmopressin 2 mcg IV/SC q6–8h"
+        }
+      ],
+      "watch": [
+        "Na q4–6h；BP、血糖、K、體溫",
+        "意識、呼吸（黏液水腫低通氣）"
+      ],
+      "call": [
+        "懷疑腎上腺不足／黏液水腫昏迷一律通知後線 + 內分泌科／ICU",
+        "Na < 120、嚴重症狀"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "甲狀腺／腎上腺"
+        },
+        {
+          "ch": "17",
+          "q": "腎上腺"
+        },
+        {
+          "ch": "21",
+          "q": "黏液水腫"
+        }
+      ],
+      "next": [
+        {
+          "label": "出現嚴重症狀 → 3% NaCl",
+          "next": "r_hypo_severe"
+        }
+      ]
+    },
+    "r_overcorrect": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低血鈉矯正過快（24 hr > 8–10）：D5W ± desmopressin 回降",
+      "summary": "**D5W 3 mL/kg over 1 hr（可重複）± desmopressin 2 mcg IV/SC q6–8h**，把 Na 拉回目標（24 hr ≤ 8，高風險 ≤ 6）；停 3% NaCl／NaCl 錠；q2h 測 Na。",
+      "steps": [
+        "立刻停 3% NaCl、NaCl 錠、urea、tolvaptan；停 NS（低血容者若已補足）",
+        "D5W 3 mL/kg over 1 hr，q2h 測 Na，可重複至回到目標軌道",
+        "尿量大（ADH 關閉、大量排稀尿）→ 加 desmopressin 2 mcg IV/SC q6–8h，同時 D5W 補等量尿量",
+        "ODS 高風險（Na < 105、低血鉀、酗酒、營養不良、肝病）目標更嚴（≤ 6）",
+        "通知後線；ODS 症狀（數天後構音障礙、吞嚥困難、四肢癱、意識）→ 神經科"
+      ],
+      "orders": [
+        {
+          "drug": "D5W",
+          "dose": "{round(wt*3)} mL（3 mL/kg）",
+          "route": "IV drip over 1 hr",
+          "freq": "STAT，可重複；q2h 測 Na",
+          "note": "依 {wt} kg；目標回到 24 hr ≤ 8（高風險 ≤ 6）"
+        },
+        {
+          "drug": "Desmopressin",
+          "dose": "2 mcg",
+          "route": "IV／SC",
+          "freq": "q6–8h",
+          "note": "尿量大時用（DDAVP clamp）；併用 D5W 補等量尿量"
+        }
+      ],
+      "watch": [
+        "Na q2h 至穩定，之後 q4–6h",
+        "尿量每小時、I/O",
+        "神經學（ODS 延遲 2–6 天出現）"
+      ],
+      "call": [
+        "24 hr 內 Na 變化 > 8–10 一律通知後線",
+        "出現新神經症狀（ODS）"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "過度矯正"
+        },
+        {
+          "ch": "32",
+          "q": "ODS"
+        }
+      ]
+    },
+    "q_hyper_shock": {
+      "type": "choice",
+      "title": "高血鈉：有休克／嚴重低血容嗎？",
+      "help": "復甦優先於矯正 Na；多數是「喝不到水」的人（意識差、插管、老年）",
+      "options": [
+        {
+          "label": "休克／嚴重低血容（低血壓、頻脈、少尿）",
+          "next": "r_hyper_shock"
+        },
+        {
+          "label": "血行穩定",
+          "next": "q_hyper_cause"
+        }
+      ]
+    },
+    "q_hyper_cause": {
+      "type": "choice",
+      "title": "高血鈉最可能的機轉？",
+      "help": "尿 Osm > 600–800 = 腎外流失／Na 過量；< 300 = 尿崩；300–600 = 滲透性利尿／部分尿崩；查血糖、BUN、Ca、K",
+      "options": [
+        {
+          "label": "自由水攝取不足 + 流失（發燒、腹瀉、灌食、高血糖、乳果糖）",
+          "next": "r_hyper_water"
+        },
+        {
+          "label": "多尿且尿 Osm < 300（尿崩：中樞／腎性）",
+          "next": "r_di"
+        },
+        {
+          "label": "Na 過多（NaHCO₃、高張輸液、大量 NS、高鈉灌食）",
+          "next": "r_hyper_naexcess"
+        }
+      ]
+    },
+    "r_hyper_shock": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血鈉 + 休克／嚴重低血容：先 NS/LR 復甦",
+      "summary": "**先 NS 或 LR 500 mL bolus 至血行穩定，再補自由水**；復甦優先於矯正 Na；穩定後依自由水缺乏量算 D5W。",
+      "steps": [
+        "IV × 2、心電監測、Foley 記尿量；BP、HR、乳酸",
+        "NS 或 LR 500 mL bolus（心衰竭 250 mL），重複至血行穩定",
+        "穩定後改自由水補充（D5W／½NS／口服）並算缺乏量（見連結）",
+        "找原因：敗血症、腹瀉、滲透性利尿（高血糖）、腎上腺不足",
+        "Na q2–4h（急性期）；聯絡後線"
+      ],
+      "orders": [
+        {
+          "drug": "NS 或 LR",
+          "dose": "500 mL",
+          "route": "IV drip over 15–30 min",
+          "freq": "STAT，重複至血行穩定",
+          "note": "心／腎衰竭者 250 mL；穩定後改 D5W／½NS"
+        },
+        {
+          "drug": "D5W",
+          "dose": "依自由水缺乏量（血行穩定後）",
+          "route": "IV drip",
+          "freq": "持續，q4–6h 測 Na",
+          "note": "見「自由水不足」流程計算速率"
+        }
+      ],
+      "watch": [
+        "BP、HR、尿量每小時",
+        "Na q2–4h；每日 ↓ ≤ 10",
+        "血糖（D5W 大量→高血糖）"
+      ],
+      "call": [
+        "休克一律通知後線",
+        "Na > 160、意識改變、癲癇"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "休克／嚴重低血容"
+        },
+        {
+          "ch": "19",
+          "q": "休克"
+        }
+      ],
+      "next": [
+        {
+          "label": "穩定後 → 自由水補充計算",
+          "next": "q_na_fw"
+        }
+      ]
+    },
+    "q_na_fw": {
+      "type": "number",
+      "title": "目前血鈉（mEq/L）？（用於計算自由水缺乏量）",
+      "var": "na",
+      "unit": "mEq/L",
+      "step": 1,
+      "quick": [
+        150,
+        155,
+        160,
+        165,
+        170
+      ],
+      "branches": [
+        {
+          "else": "r_hyper_water"
+        }
+      ]
+    },
+    "r_hyper_water": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "高血鈉：補自由水（D5W／口服），每日 ↓ ≤ 10 mEq/L",
+      "summary": "自由水缺乏 = TBW × (Na/140 − 1)，加上持續流失（不感性 ~1 L/d、尿、腹瀉），慢性者 48–72 小時補完；口服／灌食水最生理；D5W 大量會高血糖；q4–6h 測 Na。",
+      "steps": [
+        "確認能否口服／NG 給水（最生理）；意識差者靠 NG 或 IV",
+        "算自由水缺乏（已依體重、性別、年齡算在醫囑）+ 持續流失 ~1.5 L/d → 48 hr 分配",
+        "慢性（> 48 hr 或不明）：每日 ↓ ≤ 10–12；急性（< 48 hr，如大量 NaHCO₃）可 1 mEq/L/hr",
+        "血糖高者改 ½NS 或 ¼NS（每 L 含自由水 500／750 mL）；高血糖時 Na 先矯正再算",
+        "治療流失：退燒、止瀉、調整灌食（加 free water flush）、停乳果糖／利尿劑",
+        "Na q4–6h（急性期 q2–4h）；I/O、體重、血糖、K"
+      ],
+      "orders": [
+        {
+          "drug": "D5W",
+          "dose": "{round(min(max(0, wt*(sex=='M' ? (age>=65 ? 0.5 : 0.6) : (age>=65 ? 0.45 : 0.5))*(na/140-1))/48, 10*(wt*(sex=='M' ? (age>=65 ? 0.5 : 0.6) : (age>=65 ? 0.45 : 0.5))+1)/na/24)*1000 + 1500/48)} mL/hr",
+          "route": "IV drip",
+          "freq": "持續（缺乏量 48 hr 補完；大缺乏者受每日 ↓ ≤ 10 限制而延長），q4–6h 測 Na 調整",
+          "note": "自由水缺乏 {round(max(0, wt*(sex=='M' ? (age>=65 ? 0.5 : 0.6) : (age>=65 ? 0.45 : 0.5))*(na/140-1)),1)} L（TBW {round(wt*(sex=='M' ? (age>=65 ? 0.5 : 0.6) : (age>=65 ? 0.45 : 0.5)),1)} L × (Na {na}/140 − 1)）+ 流失 1.5 L/48 hr；每 L D5W 預期降 Na {round(na/(wt*(sex=='M' ? (age>=65 ? 0.5 : 0.6) : (age>=65 ? 0.45 : 0.5))+1),1)} → 每日 ↓ ≤ 10 的上限 ≈ {round(10*(wt*(sex=='M' ? (age>=65 ? 0.5 : 0.6) : (age>=65 ? 0.45 : 0.5))+1)/na,1)} L/d + 流失量（速率已取兩者較低）"
+        },
+        {
+          "drug": "開水（口服／灌食 free water flush）",
+          "dose": "200–250 mL",
+          "route": "PO／NG",
+          "freq": "q4–6h",
+          "note": "能吃者優先；可取代部分 D5W"
+        },
+        {
+          "drug": "½NS（或 ¼NS）",
+          "dose": "同 D5W 速率換算（每 L 含自由水 500 mL，需 2 倍量）",
+          "route": "IV drip",
+          "freq": "持續",
+          "note": "血糖高或需兼補血容時取代 D5W"
+        }
+      ],
+      "watch": [
+        "Na q4–6h（急性期 q2–4h）；每日 ↓ ≤ 10（矯正太快 → 腦水腫）",
+        "I/O、體重、尿量",
+        "血糖（D5W → 高血糖 → 滲透性利尿）、K"
+      ],
+      "call": [
+        "Na > 160、意識改變、癲癇",
+        "24 hr 內 Na 變化 > 10",
+        "腎衰竭合併高血鈉需透析",
+        "懷疑尿崩"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "自由水缺乏量"
+        },
+        {
+          "ch": "32",
+          "q": "D5W"
+        }
+      ],
+      "next": [
+        {
+          "label": "多尿、尿 Osm < 300 → 尿崩",
+          "next": "r_di"
+        },
+        {
+          "label": "Na 過多（NaHCO₃／高張輸液）",
+          "next": "r_hyper_naexcess"
+        }
+      ]
+    },
+    "r_di": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "尿崩症（多尿 + 尿 Osm < 300）：desmopressin + 補自由水",
+      "summary": "中樞性尿崩（術後、外傷、腫瘤）→ **desmopressin 1–2 mcg IV/SC q8–12h**；同時補自由水（D5W／口服）補足缺乏與尿量；腎性尿崩（lithium、高血鈣、低血鉀）以補水與治因為主。",
+      "steps": [
+        "尿量每小時（> 200–300 mL/hr）、尿 Osm、血 Osm；Ca、K、血糖、lithium 濃度",
+        "中樞性：desmopressin，給藥後 1–2 hr 看尿量／尿 Osm 反應；腎性：補水、治因（Ch12）",
+        "自由水補充：口服／NG 優先；D5W 補尿量 + 缺乏量",
+        "Na q4–6h（急性 q2–4h）；每日 ↓ ≤ 10",
+        "聯絡後線／內分泌科（術後、垂體病灶 → 神經外科）"
+      ],
+      "orders": [
+        {
+          "drug": "Desmopressin（DDAVP）",
+          "dose": "1–2 mcg",
+          "route": "IV／SC",
+          "freq": "q8–12h（依尿量／尿 Osm 調）",
+          "note": "中樞性尿崩；給藥後尿量下降、尿 Osm 上升表示有效；注意低血鈉"
+        },
+        {
+          "drug": "D5W",
+          "dose": "依尿量 + 自由水缺乏量",
+          "route": "IV drip",
+          "freq": "持續，q4–6h 測 Na",
+          "note": "見「自由水不足」流程計算；口服能給就給"
+        },
+        {
+          "drug": "開水",
+          "dose": "200–250 mL",
+          "route": "PO／NG",
+          "freq": "q4–6h 或依渴感",
+          "note": "能喝者"
+        }
+      ],
+      "watch": [
+        "尿量每小時、尿 Osm",
+        "Na q4–6h；desmopressin 後低血鈉",
+        "I/O、體重"
+      ],
+      "call": [
+        "懷疑尿崩一律通知後線／內分泌科",
+        "Na > 160、意識改變"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "尿崩"
+        },
+        {
+          "ch": "12",
+          "q": "尿崩"
+        }
+      ],
+      "next": [
+        {
+          "label": "自由水缺乏量計算",
+          "next": "q_na_fw"
+        }
+      ]
+    },
+    "r_hyper_naexcess": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "高血鈉：Na 過多（NaHCO₃、高張輸液、高鈉灌食）",
+      "summary": "停含 Na 輸液／藥物；**furosemide 20–40 mg IV + D5W 補等量**；腎衰竭 → 透析；超急性（數小時內大量 NaHCO₃）合併癲癇／顱內出血 → 快速 D5W ± 緊急透析。",
+      "steps": [
+        "停所有含 Na 輸液、NaHCO₃、高鈉灌食配方、NS 維持輸液",
+        "furosemide IV 排 Na，同時 D5W 補等量尿量（避免低血容）",
+        "腎衰竭無法排 → 腎臟科透析",
+        "超急性（< 數小時）+ 癲癇／意識改變／顱內出血 → 快速 D5W（可 1 mEq/L/hr）± 緊急透析，聯絡後線",
+        "Na q2–4h（急性）→ q4–6h；K、血糖、I/O"
+      ],
+      "orders": [
+        {
+          "drug": "Furosemide",
+          "dose": "20–40 mg",
+          "route": "IV push",
+          "freq": "STAT，可 q6–12h 重複",
+          "with": "D5W 補等量尿量",
+          "note": "腎衰竭者效果差 → 透析"
+        },
+        {
+          "drug": "D5W",
+          "dose": "等同尿量（或依自由水缺乏計算）",
+          "route": "IV drip",
+          "freq": "持續",
+          "note": "超急性有症狀可較快（1 mEq/L/hr）；慢性每日 ≤ 10"
+        }
+      ],
+      "watch": [
+        "Na q2–4h（急性）→ q4–6h",
+        "尿量、BP（利尿後低血容）、K",
+        "意識、癲癇"
+      ],
+      "call": [
+        "Na > 160、癲癇、意識改變、顱內出血",
+        "腎衰竭需透析",
+        "24 hr Na 變化 > 10"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "Na 過多"
+        }
+      ],
+      "next": [
+        {
+          "label": "自由水缺乏量計算",
+          "next": "q_na_fw"
+        }
+      ]
+    },
+    "r_na_normal": {
+      "type": "result",
+      "urgency": "green",
+      "title": "Na 135–145：正常範圍",
+      "summary": "目前 Na 在正常範圍；若正在矯正低／高血鈉，仍要注意速率（每日 ≤ 8 上升／≤ 10 下降）；有症狀想其他原因。",
+      "steps": [
+        "確認檢體無誤（高血糖／高血脂會假性影響）",
+        "矯正中者：依原計畫追蹤 Na（q4–6h）；停 3% NaCl 或大量 D5W",
+        "意識改變／抽搐 → 找其他原因（血糖、Ca、藥物、顱內）Ch1／Ch3"
+      ],
+      "orders": [
+        {
+          "drug": "（無需特殊處置）",
+          "dose": "0",
+          "route": "—",
+          "freq": "—",
+          "note": "依原疾病處理"
+        }
+      ],
+      "watch": [
+        "矯正中者 Na q4–6h"
+      ],
+      "call": [
+        "矯正中 24 hr 變化 > 8–10",
+        "新出現神經症狀"
+      ],
+      "refs": [
+        {
+          "ch": "32",
+          "q": "低血鈉"
+        }
+      ]
+    }
+  }
+}

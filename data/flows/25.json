@@ -1,0 +1,248 @@
+{
+  "id": "25",
+  "title": "鎮靜安眠藥與失眠",
+  "chapter": "25",
+  "entries": [
+    { "label": "病人睡不著、要安眠藥", "type": "symptom", "start": "q_cause", "group": "症狀治療",
+      "keywords": ["失眠", "睡不著", "安眠藥", "insomnia", "sleeping pill", "要 stilnox", "zolpidem", "半夜醒", "日夜顛倒"] },
+    { "label": "安眠藥後叫不醒／SpO₂ 掉", "type": "symptom", "start": "r_oversedation", "group": "症狀治療",
+      "keywords": ["過度鎮靜", "叫不醒", "oversedation", "BZD 過量", "flumazenil", "RR 10", "呼吸抑制 安眠藥"] },
+    { "label": "半夜躁動、日夜顛倒（譫妄合併失眠）", "type": "symptom", "start": "r_delirium", "group": "症狀治療",
+      "keywords": ["躁動", "譫妄", "delirium", "日夜顛倒", "sundowning", "夜間混亂", "quetiapine", "haloperidol"] },
+    { "label": "一般成人短期失眠", "type": "diagnosis", "start": "q_profile",
+      "keywords": ["短期失眠", "acute insomnia", "zolpidem", "zopiclone", "lorazepam 失眠", "trazodone"] },
+    { "label": "老年失眠（≥ 65 歲）", "type": "diagnosis", "start": "r_elderly",
+      "keywords": ["老年失眠", "elderly insomnia", "melatonin", "Beers", "老人 安眠藥", "trazodone 25"] },
+    { "label": "譫妄合併失眠", "type": "diagnosis", "start": "r_delirium",
+      "keywords": ["譫妄", "delirium", "quetiapine 12.5", "haloperidol 0.5", "避免 BZD"] },
+    { "label": "酒精戒斷（不是失眠）", "type": "diagnosis", "start": "r_etoh",
+      "keywords": ["酒精戒斷", "alcohol withdrawal", "CIWA", "手抖", "DT", "delirium tremens", "thiamine"] },
+    { "label": "長期使用安眠藥／BZD 者住院", "type": "diagnosis", "start": "r_chronic",
+      "keywords": ["長期 BZD", "BZD 戒斷", "benzodiazepine withdrawal", "續用安眠藥", "減藥", "taper"] },
+    { "label": "呼吸／肝功能差的失眠", "type": "diagnosis", "start": "r_resp_liver",
+      "keywords": ["COPD 失眠", "OSA 安眠藥", "肝硬化 失眠", "CO2 滯留", "肝腦病變 安眠藥", "呼吸衰竭 鎮靜"] },
+    { "label": "懷孕失眠", "type": "diagnosis", "start": "r_pregnancy",
+      "keywords": ["懷孕 失眠", "pregnancy insomnia", "diphenhydramine 懷孕", "孕婦 安眠藥"] },
+    { "label": "鎮靜劑過度鎮靜／呼吸抑制", "type": "diagnosis", "start": "r_oversedation",
+      "keywords": ["flumazenil", "naloxone", "過度鎮靜", "oversedation", "BZD overdose"] }
+  ],
+  "nodes": {
+    "q_cause": {
+      "type": "multi",
+      "title": "電話中先問：為什麼睡不著？勾選所有符合",
+      "help": "今晚才這樣還是長期？平常有沒有吃安眠藥（種類、劑量、最後一次）？生命徵象與 SpO₂",
+      "options": [
+        { "label": "酒精戒斷徵象（最後一杯後 6–48 hr：焦慮、手抖、盜汗、心跳快）", "set": { "etoh": true } },
+        { "label": "譫妄／意識改變／日夜顛倒／躁動", "set": { "delirium": true } },
+        { "label": "平常長期吃安眠藥或 BZD", "set": { "chronic": true } },
+        { "label": "呼吸衰竭／CO₂ 滯留／OSA／重症肌無力／肝衰竭", "set": { "resp": true } },
+        { "label": "懷孕", "set": { "preg": true } },
+        { "label": "有可逆原因：疼痛、喘、頻尿／尿管、癢、噁心、焦慮、噪音、類固醇／利尿劑晚上給", "set": { "reversible": true } }
+      ],
+      "branches": [
+        { "if": "etoh", "next": "r_etoh" },
+        { "if": "delirium", "next": "r_delirium" },
+        { "if": "resp", "next": "r_resp_liver" },
+        { "if": "preg", "next": "r_pregnancy" },
+        { "if": "chronic", "next": "r_chronic" },
+        { "else": "i_nonpharm" }
+      ]
+    },
+    "i_nonpharm": {
+      "type": "info",
+      "title": "先做非藥物（處理原因比給藥重要）",
+      "body": [
+        "止痛、給氧、導尿／處理尿管不適、止癢、止吐",
+        "晚間減少打擾：集中護理、關燈、降噪、耳塞眼罩",
+        "利尿劑與類固醇改早上給；晚餐後不喝咖啡因",
+        "白天開窗、活動、限制午睡；固定作息",
+        "仍需要藥物 → 依年齡與合併症選藥，**短期 ≤ 2 週**，記錄原因與預計停藥時間"
+      ],
+      "next": "q_profile"
+    },
+    "q_profile": {
+      "type": "choice",
+      "title": "病人屬於哪一類？",
+      "help": "目前病人面板年齡 {age} 歲；≥ 65 歲請選老年（避免 BZD、diphenhydramine）",
+      "options": [
+        { "label": "一般成人，單純入睡困難", "next": "r_adult", "set": { "anx": false, "dep": false } },
+        { "label": "一般成人，合併焦慮", "next": "r_adult", "set": { "anx": true, "dep": false } },
+        { "label": "一般成人，合併憂鬱／食慾差／癌症病人", "next": "r_adult", "set": { "anx": false, "dep": true } },
+        { "label": "老年（≥ 65 歲）或跌倒高風險", "next": "r_elderly" },
+        { "label": "譫妄／意識改變", "next": "r_delirium" },
+        { "label": "呼吸功能差／OSA／肝衰竭", "next": "r_resp_liver" }
+      ]
+    },
+    "r_adult": {
+      "type": "result",
+      "urgency": "green",
+      "title": "一般成人短期失眠",
+      "summary": "非藥物優先；入睡困難 zolpidem 5–10 mg 或 zopiclone 7.5 mg；有焦慮 lorazepam 0.5–1 mg；有憂鬱 trazodone／mirtazapine；短期 ≤ 2 週。",
+      "steps": [
+        "確認可逆原因已處理（疼痛、喘、頻尿、癢、噪音）",
+        "確認未併用鴉片／其他鎮靜劑；SpO₂ 正常",
+        "擇一給藥（不要多種鎮靜劑併用）；睡前給，距起床 ≥ 4 hr",
+        "記錄開立原因與預計停藥時間；交班原團隊，出院不常規帶安眠藥"
+      ],
+      "orders": [
+        { "drug": "Zolpidem（Stilnox）", "dose": "{age >= 65 ? 5 : 10} mg", "route": "PO", "freq": "HS PRN", "cond": "!anx && !dep", "note": "入睡困難首選；半衰期 2–3 hr；夢遊、跌倒；肝病減量" },
+        { "drug": "Zopiclone", "dose": "{age >= 65 ? 3.75 : 7.5} mg", "route": "PO", "freq": "HS PRN", "cond": "!anx && !dep", "note": "入睡 + 維持；半衰期 5 hr；金屬味", "alt": "zolpidem" },
+        { "drug": "Zaleplon", "dose": "{age >= 65 ? 5 : 10} mg", "route": "PO", "freq": "HS 或半夜醒 PRN（距起床 ≥ 4 hr）", "cond": "!anx && !dep", "note": "極短效 1 hr" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "PO", "freq": "HS PRN", "cond": "anx", "note": "焦慮合併失眠；中效 10–20 hr；肝病可用；不要多種 BZD 併用" },
+        { "drug": "Trazodone", "dose": "25–100 mg", "route": "PO", "freq": "HS", "cond": "dep", "note": "合併憂鬱、焦慮；姿態性低血壓、QT" },
+        { "drug": "Mirtazapine", "dose": "7.5–15 mg", "route": "PO", "freq": "HS", "cond": "dep", "note": "憂鬱、食慾差、癌症病人；半衰期 20–40 hr" },
+        { "drug": "Melatonin", "dose": "2–5 mg（緩釋 2 mg）", "route": "PO", "freq": "睡前 1–2 hr", "note": "安全；替代選項" }
+      ],
+      "watch": ["給藥後 SpO₂、RR（可能加重低通氣）", "隔日嗜睡、跌倒", "≤ 2 週；每次開立記錄原因"],
+      "call": ["給藥後 SpO₂ 下降、RR < 10 或難喚醒", "病人要求超過建議劑量或多種鎮靜劑併用", "失眠伴隨譫妄／躁動且一線藥無效"],
+      "refs": [{ "ch": "25", "q": "選擇原則" }, { "ch": "25", "q": "III. 藥物" }],
+      "next": [{ "label": "給藥後叫不醒／SpO₂ 掉", "next": "r_oversedation" }]
+    },
+    "r_elderly": {
+      "type": "result",
+      "urgency": "green",
+      "title": "老年失眠（≥ 65 歲）",
+      "summary": "非藥物 → melatonin／trazodone 25–50 mg → zolpidem 5 mg；**避免 BZD 與 diphenhydramine（Beers）**；先排除譫妄（日夜顛倒是譫妄徵象）。",
+      "steps": [
+        "先排除譫妄（注意力、意識波動）→ 是譫妄走譫妄流程，不給 BZD",
+        "處理可逆原因：疼痛、尿滯留／尿管、便秘、癢、噪音；利尿劑改早上",
+        "非藥物：白天活動與光線、限制午睡、夜間集中護理",
+        "需要藥物：最低劑量、單一藥物、短期；跌倒預防（床欄、夜燈、叫鈴）"
+      ],
+      "orders": [
+        { "drug": "Melatonin", "dose": "2–5 mg（緩釋 2 mg）", "route": "PO", "freq": "睡前 1–2 hr", "note": "首選之一；安全" },
+        { "drug": "Trazodone", "dose": "25–50 mg", "route": "PO", "freq": "HS", "note": "老年常用；姿態性低血壓、QT" },
+        { "drug": "Zolpidem（Stilnox）", "dose": "5 mg", "route": "PO", "freq": "HS PRN", "note": "老年劑量；夢遊、跌倒；肝病減量" },
+        { "drug": "Zopiclone", "dose": "3.75 mg", "route": "PO", "freq": "HS PRN", "note": "老年劑量", "alt": "zolpidem" },
+        { "drug": "BZD／diphenhydramine", "dose": "0（避免）", "route": "—", "freq": "—", "note": "Beers：譫妄、跌倒、尿滯留；長期使用者例外（續原藥）" }
+      ],
+      "watch": ["夜間跌倒、意識狀態（隔日譫妄？）", "SpO₂、RR"],
+      "call": ["失眠伴隨譫妄／躁動且非藥物與一線藥無效", "給藥後 SpO₂ 下降、RR < 10 或難喚醒"],
+      "refs": [{ "ch": "25", "q": "老年（≥ 65）" }],
+      "next": [{ "label": "其實是譫妄 → 譫妄流程", "next": "r_delirium" }]
+    },
+    "r_delirium": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "譫妄合併失眠／夜間躁動",
+      "summary": "**不用 BZD**（惡化；例外只有酒精／BZD 戒斷與癲癇）；處理誘因、白天光線活動、夜間減少打擾、melatonin；為安全必要時 quetiapine 12.5–25 mg 或 haloperidol 0.5 mg（不縮短病程）。",
+      "steps": [
+        "到床邊：生命徵象、SpO₂、血糖；找誘因（感染、缺氧、疼痛、尿滯留、便秘、藥物、戒斷）→ Ch2",
+        "停或減可能致譫妄藥物（BZD、抗膽鹼、鴉片過量）",
+        "非藥物：家屬陪伴、眼鏡助聽器、定向、夜間降噪關燈、白天活動",
+        "有危及安全的躁動才用抗精神病藥；先 ECG 看 QT",
+        "酒精／BZD 戒斷例外 → lorazepam／diazepam（見酒精戒斷）"
+      ],
+      "orders": [
+        { "drug": "Melatonin", "dose": "2–5 mg", "route": "PO", "freq": "睡前 1–2 hr", "note": "譫妄預防證據弱但安全" },
+        { "drug": "Quetiapine", "dose": "12.5–25 mg", "route": "PO", "freq": "HS PRN 躁動", "note": "譫妄／精神病合併失眠才用；QT、低血壓" },
+        { "drug": "Haloperidol", "dose": "0.5 mg", "route": "PO／IM", "freq": "PRN 躁動", "note": "Ch2；QT、錐體外症狀；帕金森禁" },
+        { "drug": "BZD", "dose": "0（避免）", "route": "—", "freq": "—", "note": "惡化譫妄；例外：酒精／BZD 戒斷、癲癇" }
+      ],
+      "watch": ["意識、RR、SpO₂ q1–2h", "QTc（抗精神病藥）", "跌倒、拔管風險"],
+      "call": ["失眠伴隨譫妄／躁動且非藥物與一線藥無效", "懷疑戒斷（酒精／BZD）", "生命徵象不穩、新神經學徵候"],
+      "refs": [{ "ch": "25", "q": "譫妄：不用 BZD" }, { "ch": "02", "q": "譫妄" }],
+      "next": [{ "label": "其實是酒精戒斷", "next": "r_etoh" }]
+    },
+    "r_etoh": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "酒精戒斷（不是「失眠」）",
+      "summary": "最後一杯後 6–48 hr 焦慮、手抖、盜汗、心跳快；癲癇多在 48 hr 內、DT 48–96 hr。**依 CIWA-Ar 給 lorazepam／diazepam + thiamine（Ch1），不要只開安眠藥。**",
+      "steps": [
+        "確認飲酒史（量、最後一杯時間）；生命徵象、血糖、電解質（K、Mg）",
+        "CIWA-Ar 評分並依分數給 BZD（Ch1 流程與劑量）",
+        "Thiamine 先於葡萄糖給",
+        "監測 q1–4h CIWA；癲癇、DT → 通知後線",
+        "不給 zolpidem／trazodone 取代 BZD"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "依 CIWA-Ar（Ch1）", "route": "PO／IV", "freq": "依 CIWA 評分重複", "note": "劑量表見 Ch1 酒精戒斷；肝病首選 lorazepam" },
+        { "drug": "Diazepam", "dose": "依 CIWA-Ar（Ch1）", "route": "PO／IV", "freq": "依 CIWA 評分重複", "note": "長效；肝病避免", "alt": "lorazepam" },
+        { "drug": "Thiamine", "dose": "依院內（Ch1）", "route": "IV", "freq": "QD", "note": "先於葡萄糖" }
+      ],
+      "watch": ["CIWA-Ar q1–4h", "RR、SpO₂、意識（BZD 過量）", "癲癇、幻覺、自主神經不穩（DT）"],
+      "call": ["懷疑戒斷（酒精／BZD）", "癲癇、DT、生命徵象不穩"],
+      "refs": [{ "ch": "25", "q": "酒精戒斷" }, { "ch": "01", "q": "酒精戒斷" }]
+    },
+    "r_chronic": {
+      "type": "result",
+      "urgency": "green",
+      "title": "長期使用安眠藥／BZD 者住院",
+      "summary": "**住院續用原藥原劑量，不要突然停**（戒斷、癲癇）；例外：意識改變／呼吸抑制。需停藥時每 1–2 週減 10–25%。",
+      "steps": [
+        "確認原用藥種類、劑量、最後一次服用時間（家屬／藥歷）",
+        "無意識改變、無呼吸抑制 → 續用原藥原劑量（依院內品項換算）",
+        "已漏藥出現戒斷（焦慮、手抖、心跳快、癲癇）→ 補回原藥或 lorazepam／diazepam，通知後線",
+        "不要在值班時增加劑量或加第二種鎮靜劑；減藥交由原團隊（每 1–2 週減 10–25%）"
+      ],
+      "orders": [
+        { "drug": "（原用安眠藥／BZD）", "dose": "原劑量", "route": "PO", "freq": "HS 依原醫囑", "note": "院內無同品項時以等效 BZD 替代（lorazepam／diazepam）" },
+        { "drug": "Diazepam", "dose": "2–5 mg", "route": "PO", "freq": "HS（院內無原品項時的戒斷替代）", "note": "長效；累積；肝病改 lorazepam 0.5–1 mg" }
+      ],
+      "watch": ["戒斷徵象（焦慮、手抖、盜汗、心跳快、癲癇）", "RR、SpO₂、意識"],
+      "call": ["懷疑戒斷（酒精／BZD）", "病人要求超過建議劑量或多種鎮靜劑併用", "給藥後 SpO₂ 下降、RR < 10 或難喚醒"],
+      "refs": [{ "ch": "25", "q": "長期使用者" }]
+    },
+    "r_resp_liver": {
+      "type": "result",
+      "urgency": "green",
+      "title": "呼吸功能差／OSA／肝衰竭的失眠",
+      "summary": "**避免 BZD／Z-drug**（低通氣、肝腦病變）；melatonin 或 trazodone 小劑量；給藥後監測 SpO₂。",
+      "steps": [
+        "先處理喘、咳、給氧、擺位；肝病病人先排除肝腦病變（撲翼、意識）",
+        "非藥物優先",
+        "需要藥物：melatonin 或 trazodone 小劑量；肝病若一定需 BZD 用 lorazepam 0.5 mg（不經氧化代謝）",
+        "給藥後 SpO₂ 監測；懷疑 CO₂ 滯留抽 ABG"
+      ],
+      "orders": [
+        { "drug": "Melatonin", "dose": "2–5 mg", "route": "PO", "freq": "睡前 1–2 hr", "note": "首選" },
+        { "drug": "Trazodone", "dose": "25–50 mg", "route": "PO", "freq": "HS", "note": "小劑量；姿態性低血壓、QT" },
+        { "drug": "BZD／Z-drug", "dose": "0（避免）", "route": "—", "freq": "—", "note": "呼吸衰竭、CO₂ 滯留、OSA、肝衰竭" }
+      ],
+      "watch": ["SpO₂、RR 給藥後 1–2 hr", "意識（肝腦病變）"],
+      "call": ["給藥後 SpO₂ 下降、RR < 10 或難喚醒", "懷疑 CO₂ 滯留需 NIV"],
+      "refs": [{ "ch": "25", "q": "呼吸／肝功能差" }]
+    },
+    "r_pregnancy": {
+      "type": "result",
+      "urgency": "green",
+      "title": "懷孕失眠",
+      "summary": "非藥物優先；必要時 diphenhydramine 25–50 mg；避免 BZD／Z-drug。",
+      "steps": [
+        "處理可逆原因（頻尿、背痛、胃食道逆流、焦慮）",
+        "非藥物：作息、環境、左側臥擺位",
+        "必要時 diphenhydramine；避免 BZD／Z-drug"
+      ],
+      "orders": [
+        { "drug": "Diphenhydramine", "dose": "25–50 mg", "route": "PO", "freq": "HS PRN", "note": "懷孕可用；抗膽鹼" },
+        { "drug": "BZD／Z-drug", "dose": "0（避免）", "route": "—", "freq": "—", "note": "懷孕避免" }
+      ],
+      "watch": ["隔日嗜睡", "SpO₂"],
+      "call": ["病人要求超過建議劑量", "合併子癲前症症狀（頭痛、血壓高）→ Ch18"],
+      "refs": [{ "ch": "25", "q": "懷孕：非藥物" }]
+    },
+    "r_oversedation": {
+      "type": "result",
+      "urgency": "red",
+      "title": "鎮靜安眠藥後過度鎮靜／呼吸抑制",
+      "summary": "停藥、刺激、給氧、監測；BZD → flumazenil 0.2 mg IV **僅在無長期使用且無癲癇史**；併用鴉片 → naloxone；懷疑 CO₂ 滯留抽 ABG，考慮 NIV。",
+      "steps": [
+        "到床邊：GCS、RR、SpO₂、血糖、瞳孔；停所有鎮靜劑與鴉片",
+        "刺激、抬下巴、O₂（目標 94–98%，CO₂ 滯留 88–92%）、BVM 備用",
+        "併用鴉片（針點瞳孔、RR < 8）→ naloxone 小劑量（Ch22）",
+        "純 BZD 且無長期使用、無癲癇史 → flumazenil 0.2 mg IV（Ch1）",
+        "懷疑 CO₂ 滯留 → ABG，考慮 NIV；找其他原因（中風、低血糖、肝腦病變）",
+        "記錄事件，之後不再給該藥"
+      ],
+      "orders": [
+        { "drug": "Flumazenil", "dose": "0.2 mg", "route": "IV", "freq": "STAT（可重複依 Ch1）", "note": "僅無長期 BZD 使用且無癲癇史；會誘發戒斷癲癇" },
+        { "drug": "Naloxone", "dose": "0.04–0.1 mg（0.4 mg 稀釋至 10 mL 取 1–2 mL）", "route": "IV", "freq": "q2–3 min 至 RR ≥ 12", "note": "併用鴉片時（Ch22）" },
+        { "drug": "O₂", "dose": "依 SpO₂ 目標 94–98%", "route": "面罩／BVM", "freq": "持續", "note": "CO₂ 滯留者 88–92%" }
+      ],
+      "watch": ["RR、SpO₂、GCS q15 min 至穩定（flumazenil／naloxone 效果短，會再鎮靜）", "ABG（CO₂）"],
+      "call": ["給藥後 SpO₂ 下降、RR < 10 或難喚醒就通知後線", "需 NIV／插管、GCS 未恢復"],
+      "refs": [{ "ch": "25", "q": "IV. 過度鎮靜／呼吸抑制" }, { "ch": "01", "q": "flumazenil" }]
+    }
+  }
+}

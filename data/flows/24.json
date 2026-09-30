@@ -1,0 +1,475 @@
+{
+  "id": "24",
+  "title": "消化道症狀",
+  "chapter": "24",
+  "entries": [
+    { "label": "噁心／嘔吐", "type": "symptom", "start": "q_vomit", "group": "症狀治療",
+      "keywords": ["噁心", "嘔吐", "nausea", "vomiting", "吐", "止吐", "antiemetic", "PONV", "吐膽汁", "metoclopramide", "Primperan"] },
+    { "label": "腹瀉", "type": "symptom", "start": "q_diarrhea", "group": "症狀治療",
+      "keywords": ["腹瀉", "diarrhea", "拉肚子", "水便", "止瀉", "loperamide", "灌食腹瀉", "抗生素腹瀉"] },
+    { "label": "便秘／沒解便", "type": "symptom", "start": "q_constipation", "group": "症狀治療",
+      "keywords": ["便秘", "constipation", "沒解便", "三天沒大便", "軟便劑", "瀉劑", "laxative", "灌腸", "enema", "糞便嵌塞"] },
+    { "label": "打嗝不停（> 48 小時）", "type": "symptom", "start": "r_hiccup", "group": "症狀治療",
+      "keywords": ["打嗝", "hiccup", "hiccough", "singultus", "chlorpromazine", "baclofen"] },
+    { "label": "C. difficile 腸炎", "type": "diagnosis", "start": "q_cdiff",
+      "keywords": ["C. difficile", "CDI", "困難梭菌", "Clostridioides", "fidaxomicin", "vancomycin PO", "偽膜性腸炎", "toxin 陽性"] },
+    { "label": "侵襲性細菌性腸炎（發燒、血便）", "type": "diagnosis", "start": "r_invasive",
+      "keywords": ["感染性腸炎", "細菌性腸炎", "血便腹瀉", "dysentery", "Salmonella", "Shigella", "Campylobacter", "azithromycin 腹瀉", "旅行者腹瀉"] },
+    { "label": "糞便嵌塞", "type": "diagnosis", "start": "r_impaction",
+      "keywords": ["糞便嵌塞", "fecal impaction", "指挖", "disimpaction", "溢流性腹瀉", "overflow"] },
+    { "label": "術後腸麻痺", "type": "diagnosis", "start": "r_postop_ileus",
+      "keywords": ["術後腸麻痺", "postoperative ileus", "ileus", "術後腹脹", "沒排氣"] },
+    { "label": "化療／放療噁心嘔吐（CINV）", "type": "diagnosis", "start": "r_cinv",
+      "keywords": ["化療嘔吐", "CINV", "chemotherapy nausea", "ondansetron", "aprepitant", "olanzapine", "突破性嘔吐"] },
+    { "label": "鴉片引起的便秘", "type": "diagnosis", "start": "q_constipation",
+      "keywords": ["鴉片便秘", "opioid constipation", "OIC", "morphine 便秘", "naloxegol", "sennoside"] }
+  ],
+  "nodes": {
+    "q_vomit": {
+      "type": "multi",
+      "title": "噁心嘔吐：先排除這些（勾選所有符合）",
+      "help": "膽汁 = 阻塞在 Vater 以下；糞臭 = 遠端阻塞；咖啡渣／鮮血 = 出血；未消化食物 = 胃出口阻塞／胃輕癱",
+      "options": [
+        { "label": "膽汁性／糞臭性嘔吐、腹脹、無排氣排便（機械性腸阻塞）", "set": { "obstruct": true } },
+        { "label": "腹膜炎徵候（不敢動、反彈痛、板狀腹）", "set": { "perit": true } },
+        { "label": "吐血／咖啡渣", "set": { "blood": true } },
+        { "label": "頭痛、意識改變、局部神經症狀（ICP↑）", "set": { "icp": true } },
+        { "label": "胸痛／上腹痛 + 心血管危險因子（下壁 MI）", "set": { "cardiac": true } },
+        { "label": "血糖高、糖尿病（DKA）", "set": { "dka": true } }
+      ],
+      "branches": [
+        { "if": "obstruct || perit", "next": "r_vomit_obstruct" },
+        { "if": "blood || icp || cardiac || dka", "next": "r_vomit_redflag" },
+        { "else": "q_vomit_cause" }
+      ]
+    },
+    "q_vomit_cause": {
+      "type": "choice",
+      "title": "無紅旗：最可能的機轉？",
+      "help": "併用止吐藥時注意 QT 與 EPS；台灣健保 ondansetron 限化療／放療／術後",
+      "options": [
+        { "label": "術後、胃輕癱、胃排空差、藥物性、不明原因", "next": "r_vomit_general" },
+        { "label": "化療／放療", "next": "r_cinv" },
+        { "label": "眩暈、前庭性、暈動", "next": "r_vestibular" },
+        { "label": "頑固、安寧、腫瘤相關", "next": "r_refractory" }
+      ]
+    },
+    "r_vomit_obstruct": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "嘔吐 + 疑腸阻塞／腹膜炎",
+      "summary": "**NPO、NG 減壓、輸液（NS + KCl）、KUB／CT；促動力藥（metoclopramide）禁用**；腹膜炎徵候 → 立刻後線／外科（Ch8）。",
+      "steps": [
+        "NPO；NG 減壓（記量）；IV 輸液補流失；意識差者側躺防吸入",
+        "電解質（K、Cl、HCO₃）、BUN/Cr、血糖、lipase、肝功能、CBC、lactate；hCG（育齡）",
+        "KUB（氣液面、擴張）→ CT 腹骨盆（轉折點、絞扼）",
+        "止吐用 ondansetron（避免促動力）；止痛（Ch8）",
+        "腹膜炎徵候／lactate↑／發燒 → 立刻後線 + 外科"
+      ],
+      "orders": [
+        { "drug": "NS + KCl", "dose": "NS 500 mL bolus → 維持（依血鉀加 KCl）", "route": "IV", "freq": "STAT → 持續", "note": "心衰竭 250 mL；嘔吐 → 低氯低鉀鹼血症" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV", "freq": "q8h", "note": "阻塞時避免 metoclopramide；QT" },
+        { "drug": "NG 減壓", "dose": "16–18 Fr", "route": "NG 接引流袋／低壓抽吸", "freq": "持續", "note": "記引流量" }
+      ],
+      "watch": ["腹部理學檢查、生命徵象 q4h；NG 量、尿量", "K、Mg；lactate"],
+      "call": ["腹膜炎徵候、腸阻塞影像、膽汁性／糞臭性嘔吐 → 後線／外科", "休克、lactate↑"],
+      "refs": [{ "ch": "24", "q": "噁心、嘔吐" }, { "ch": "08", "q": "腸阻塞" }]
+    },
+    "r_vomit_redflag": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "嘔吐 + 紅旗：出血／ICP↑／心肌梗塞／DKA",
+      "summary": "先處理原因：吐血 → Ch9；頭痛／意識改變 → 頭部 CT（Ch1）；胸痛／危險因子 → ECG、troponin（Ch6）；血糖高 → VBG、酮體（Ch28）；止吐用中樞性藥物。",
+      "steps": [
+        "吐血／咖啡渣 → IV × 2、CBC、備血、PPI，依 Ch9",
+        "頭痛／意識改變／神經症狀 → 頭部 CT、GCS、血糖，依 Ch1；ICP↑ 可用 dexamethasone（腫瘤）",
+        "上腹痛／胸痛 + 危險因子 → 12 導程 ECG、troponin，依 Ch6",
+        "血糖高 → VBG、酮體、電解質，依 Ch28",
+        "電解質、BUN/Cr、Ca、lipase、肝功能、CBC；輸液 NS + KCl；側躺防吸入"
+      ],
+      "orders": [
+        { "drug": "Prochlorperazine", "dose": "5–10 mg", "route": "IM／PO（PR 25 mg）", "freq": "q6–8h，max 40 mg/d", "note": "中樞性；EPS、鎮靜、低血壓" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV", "freq": "q8h", "note": "QT；健保限化療／放療／術後" },
+        { "drug": "Dexamethasone", "dose": "4–8 mg", "route": "IV", "freq": "QD–BID", "note": "ICP↑／腫瘤相關；血糖" },
+        { "drug": "NS + KCl", "dose": "500 mL bolus → 維持", "route": "IV", "freq": "STAT → 持續", "note": "心衰竭 250 mL" }
+      ],
+      "watch": ["生命徵象、意識 q1–4h；出血量", "電解質、血糖"],
+      "call": ["吐血、嘔吐合併意識改變或頭痛（ICP↑）", "ECG 變化、DKA"],
+      "refs": [{ "ch": "24", "q": "噁心、嘔吐" }, { "ch": "09", "q": "立即口頭醫囑" }, { "ch": "01", "q": "顱內壓" }]
+    },
+    "r_vomit_general": {
+      "type": "result",
+      "urgency": "green",
+      "title": "噁心嘔吐：胃排空差／術後／藥物性／不明（依 CrCl {round(crcl)}）",
+      "summary": "找原因（藥物：鴉片、化療、抗生素、digoxin；代謝；感染）、輸液補流失；**metoclopramide 首選**（CrCl < 40 減半，≤ 5 天），或 domperidone／prochlorperazine；併用注意 QT 與 EPS。",
+      "steps": [
+        "確認無阻塞（排氣、腹脹、KUB）；NG 通暢",
+        "電解質（K、Cl、HCO₃）、BUN/Cr、血糖、Ca、肝功能、lipase；hCG（育齡）；ECG（若 QT 藥物併用）",
+        "NPO 或清流質；輸液 NS + KCl 補流失",
+        "停或換可疑藥物（鴉片、digoxin、theophylline、鐵劑、NSAID）",
+        "止吐：metoclopramide；老人／年輕女性 EPS 風險 → domperidone；無效 → prochlorperazine"
+      ],
+      "orders": [
+        { "drug": "Metoclopramide", "dose": "{crcl < 40 ? 5 : 10} mg", "route": "IV over 2–3 min／IM／PO", "freq": "q6–8h，max {crcl < 40 ? '15–20' : '30–40'} mg/d；≤ 5 天", "note": "CrCl {round(crcl)}{crcl < 40 ? '：< 40 減半' : ''}；機械性阻塞禁；EPS（老人、年輕女性）、QT" },
+        { "drug": "Domperidone", "dose": "10 mg", "route": "PO", "freq": "TID ac，max 30 mg/d", "note": "不過 BBB（EPS 少）；QT（{age > 60 ? '⚠ ' + age + ' 歲 > 60' : '> 60 歲'}、心臟病、CYP3A4 抑制劑慎）" },
+        { "drug": "Prochlorperazine", "dose": "5–10 mg", "route": "IM／PO（PR 25 mg）", "freq": "q6–8h，max 40 mg/d", "note": "中樞性；EPS、鎮靜、低血壓" },
+        { "drug": "Dexamethasone", "dose": "4–8 mg", "route": "IV／PO", "freq": "QD–BID", "note": "術後、腫瘤相關；血糖" },
+        { "drug": "NS + KCl", "dose": "500 mL bolus → 維持", "route": "IV", "freq": "STAT → 持續", "note": "心衰竭 250 mL；依血鉀加 KCl" }
+      ],
+      "watch": ["嘔吐次數、進食、I/O；K、Cl、HCO₃ 24 hr", "EPS（急性肌張力異常）、QT"],
+      "call": ["嘔吐 + 腹膜炎徵候／腸阻塞影像／膽汁性或糞臭性嘔吐", "吐血、意識改變或頭痛"],
+      "refs": [{ "ch": "24", "q": "止吐藥" }, { "ch": "24", "q": "Metoclopramide" }]
+    },
+    "r_cinv": {
+      "type": "result",
+      "urgency": "green",
+      "title": "化療／放療噁心嘔吐（CINV）",
+      "summary": "**Ondansetron + dexamethasone** 首選；高致吐化療加 aprepitant（NK1）；突破性 olanzapine；預期性 lorazepam。",
+      "steps": [
+        "確認化療方案致吐性、上次反應；排除其他原因（阻塞、ICP↑、電解質）",
+        "5-HT3 + dexamethasone；高致吐加 aprepitant",
+        "突破性嘔吐：olanzapine HS 或換不同機轉（prochlorperazine）",
+        "併用注意 QT（ondansetron + 其他）與血糖（dexamethasone）；輸液補流失"
+      ],
+      "orders": [
+        { "drug": "Ondansetron", "dose": "8 mg", "route": "IV／PO／ODT", "freq": "q12h（化療）；一般 4–8 mg q8h", "note": "QT；便秘、頭痛" },
+        { "drug": "Dexamethasone", "dose": "4–8 mg", "route": "IV／PO", "freq": "QD–BID", "note": "血糖" },
+        { "drug": "Aprepitant", "dose": "125 mg D1 → 80 mg D2–3", "route": "PO", "freq": "依化療日", "note": "高致吐化療（NK1）" },
+        { "drug": "Olanzapine", "dose": "2.5–5 mg", "route": "PO", "freq": "HS", "note": "突破性嘔吐；鎮靜" },
+        { "drug": "Granisetron", "dose": "1 mg IV／2 mg PO", "route": "IV／PO", "freq": "QD", "note": "ondansetron 替代；palonosetron 0.25 mg IV 單次" },
+        { "drug": "Lorazepam", "dose": "0.5–1 mg", "route": "IV／PO", "freq": "q6h PRN", "note": "預期性嘔吐" },
+        { "drug": "Prochlorperazine", "dose": "5–10 mg", "route": "IM／PO", "freq": "q6–8h PRN，max 40 mg/d", "note": "突破性；EPS" }
+      ],
+      "watch": ["嘔吐次數、進食、I/O、K；QT（多藥併用）", "血糖（dexamethasone）"],
+      "call": ["無法進食 > 24 hr、脫水／AKI、電解質異常", "嘔吐合併腹痛／腹脹（阻塞）"],
+      "refs": [{ "ch": "24", "q": "Ondansetron" }, { "ch": "24", "q": "Aprepitant" }]
+    },
+    "r_vestibular": {
+      "type": "result",
+      "urgency": "green",
+      "title": "前庭性／眩暈／暈動的噁心嘔吐",
+      "summary": "Prochlorperazine 或 dimenhydrinate／diphenhydramine；新發眩暈 + 神經症狀（複視、構音、步態）→ 想後循環中風（Ch1）。",
+      "steps": [
+        "眩暈性質：旋轉、與姿勢相關（BPPV）、耳鳴／聽力（梅尼爾）；神經學檢查（HINTS、步態、小腦）",
+        "新發 + 神經症狀／血管危險因子 → 頭部影像，依 Ch1",
+        "止吐 + 補水；避免 metoclopramide（前庭效果差）"
+      ],
+      "orders": [
+        { "drug": "Prochlorperazine", "dose": "5–10 mg", "route": "IM／PO（PR 25 mg）", "freq": "q6–8h，max 40 mg/d", "note": "EPS、鎮靜、低血壓" },
+        { "drug": "Dimenhydrinate", "dose": "50 mg", "route": "IV／IM／PO", "freq": "q6h", "note": "或 diphenhydramine 30–50 mg；嗜睡、抗膽鹼（老人慎）" },
+        { "drug": "Hyoscine 貼片", "dose": "1 片", "route": "經皮", "freq": "q72h", "note": "暈動；抗膽鹼" }
+      ],
+      "watch": ["神經學變化（新局部症狀）", "嗜睡、跌倒"],
+      "call": ["眩暈 + 複視／構音障礙／步態不穩／局部無力（後循環中風）", "嘔吐合併意識改變或頭痛"],
+      "refs": [{ "ch": "24", "q": "Prochlorperazine" }, { "ch": "24", "q": "Dimenhydrinate" }]
+    },
+    "r_refractory": {
+      "type": "result",
+      "urgency": "green",
+      "title": "頑固／安寧／腫瘤相關噁心嘔吐",
+      "summary": "Haloperidol 低劑量、olanzapine HS、chlorpromazine；腫瘤／ICP 相關加 dexamethasone；安寧分泌物 hyoscine 貼片；併用注意 QT。",
+      "steps": [
+        "找可逆原因：便秘／嵌塞、高血鈣、鴉片、阻塞（惡性腸阻塞）、ICP↑",
+        "換機轉：haloperidol／olanzapine；腫瘤相關加 dexamethasone",
+        "惡性腸阻塞：NG／octreotide 依安寧團隊；避免促動力",
+        "ECG 追蹤 QT（多藥併用）"
+      ],
+      "orders": [
+        { "drug": "Haloperidol", "dose": "0.5–1 mg", "route": "IV／SC／PO", "freq": "q6–8h", "note": "QT、EPS" },
+        { "drug": "Olanzapine", "dose": "2.5–5 mg", "route": "PO", "freq": "HS", "note": "鎮靜；老人減量" },
+        { "drug": "Chlorpromazine", "dose": "12.5–25 mg", "route": "IM／PO", "freq": "q6–8h", "note": "頑固嘔吐、打嗝；低血壓" },
+        { "drug": "Dexamethasone", "dose": "4–8 mg", "route": "IV／PO", "freq": "QD–BID", "note": "腫瘤、ICP↑" },
+        { "drug": "Hyoscine 貼片", "dose": "1 片", "route": "經皮", "freq": "q72h", "note": "安寧分泌物" }
+      ],
+      "watch": ["QT、EPS、鎮靜、跌倒", "Ca、K、便秘"],
+      "call": ["嘔吐合併腹膜炎徵候／阻塞影像", "意識改變、頭痛（ICP↑）"],
+      "refs": [{ "ch": "24", "q": "Haloperidol" }, { "ch": "24", "q": "Olanzapine" }]
+    },
+    "r_hiccup": {
+      "type": "result",
+      "urgency": "green",
+      "title": "頑固性打嗝（> 48 小時或影響進食睡眠）",
+      "summary": "先找原因（胃脹 → NG 減壓；橫膈刺激；中樞；尿毒／低血鈉；dexamethasone／BZD）→ 非藥物 → **chlorpromazine 25 mg TID**（唯一適應症）或 baclofen 5–10 mg TID（腎功能調整）。",
+      "steps": [
+        "找原因：胃脹（NG 減壓、抽痰刺激）、橫膈刺激（膿瘍、肝腫大）、中樞（中風、腫瘤）、代謝（BUN、Na）、藥物（dexamethasone、BZD）",
+        "非藥物：閉氣、吞冰水、Valsalva、刺激咽後壁（棉棒）、壓眼球",
+        "藥物擇一；逆流者加 PPI",
+        "持續 + 神經症狀 → 頭部影像"
+      ],
+      "orders": [
+        { "drug": "Chlorpromazine", "dose": "25 mg", "route": "PO／IM", "freq": "TID", "note": "唯一有適應症；低血壓、鎮靜" },
+        { "drug": "Baclofen", "dose": "5–10 mg", "route": "PO", "freq": "TID", "note": "CrCl {round(crcl)}{crcl < 60 ? '：腎功能差減量' : '；腎功能調整'}；嗜睡" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "PO／IV", "freq": "TID", "note": "胃脹相關；CrCl < 40 減半" },
+        { "drug": "Gabapentin", "dose": "300 mg", "route": "PO", "freq": "TID", "note": "腎功能調整；嗜睡" },
+        { "drug": "Haloperidol", "dose": "1–2 mg", "route": "PO／IV", "freq": "單次／QD", "note": "QT" },
+        { "drug": "Pantoprazole", "dose": "40 mg", "route": "PO", "freq": "QD", "note": "若逆流（劑量依 Ch8）" }
+      ],
+      "watch": ["血壓、鎮靜（chlorpromazine）", "Na、BUN"],
+      "call": ["打嗝 + 神經症狀／意識改變", "疑膈下膿瘍（發燒、腹痛）"],
+      "refs": [{ "ch": "24", "q": "打嗝" }]
+    },
+    "q_diarrhea": {
+      "type": "multi",
+      "title": "腹瀉：先問抗生素與血便／發燒（勾選所有符合）",
+      "help": "住院腹瀉最常見是藥物與灌食；C. difficile 用肥皂洗手（酒精無效）、接觸隔離",
+      "options": [
+        { "label": "休克／低血壓／嚴重脫水", "set": { "shock": true } },
+        { "label": "腹脹、腸阻塞、巨結腸（KUB ≥ 6 cm）、腹膜炎徵候", "set": { "megacolon": true } },
+        { "label": "近 8–10 週抗生素或住院 + ≥ 3 次未成形便/24 hr（C. difficile？）", "set": { "abx": true } },
+        { "label": "發燒 + 血便、> 6 次/天、免疫低下、> 70 歲、旅遊／群聚（侵襲性）", "set": { "invasive": true } },
+        { "label": "灌食中（速率、滲透壓）、瀉劑／Mg 制酸劑／促動力藥／sorbitol", "set": { "feeding": true } }
+      ],
+      "branches": [
+        { "if": "shock || megacolon", "next": "r_diarrhea_severe" },
+        { "if": "abx", "next": "q_cdiff" },
+        { "if": "invasive", "next": "r_invasive" },
+        { "else": "r_diarrhea_general" }
+      ]
+    },
+    "q_cdiff": {
+      "type": "choice",
+      "title": "C. difficile：檢驗結果與嚴重度？",
+      "help": "只送水便、只在有症狀時送；PCR 陽性但 toxin 陰性可能只是帶菌，依臨床決定；重度 = WBC > 15,000、Cr > 1.5 或 > 10 次/天（處方相同）；猛爆性 = 低血壓／休克、腸阻塞、巨結腸 ≥ 6 cm",
+      "options": [
+        { "label": "Toxin／PCR 陽性（或高度懷疑），非猛爆性（含重度）", "next": "r_cdiff", "set": { "recur": false } },
+        { "label": "猛爆性：低血壓／休克、腸阻塞、巨結腸 ≥ 6 cm", "next": "r_cdiff_fulminant" },
+        { "label": "復發（治療完成後 8 週內再發）", "next": "r_cdiff", "set": { "recur": true } },
+        { "label": "檢驗陰性／尚未送：先送檢、支持治療", "next": "r_diarrhea_general", "set": { "abx": true } }
+      ]
+    },
+    "r_diarrhea_severe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腹瀉 + 休克／腸阻塞／巨結腸／腹膜炎",
+      "summary": "輸液復甦、腹部 CT、糞便 C. difficile toxin／PCR + 培養、血液培養；疑猛爆性 C. difficile → **vancomycin 500 mg PO/NG QID + metronidazole IV**；惡化 → 緊急外科、ICU。",
+      "steps": [
+        "叫後線；IV × 2、LR/NS 500 mL bolus 重複（心衰竭 250 mL）；Foley",
+        "CBC、電解質（K、HCO₃）、BUN/Cr、lactate、CRP；血液培養、糞便 C. difficile toxin／GDH／PCR、培養",
+        "KUB／腹部 CT（巨結腸、腸阻塞、穿孔）；NPO",
+        "停瀉劑、止瀉藥、促動力藥、Mg、PPI（若可）、不必要抗生素；接觸隔離（肥皂洗手）",
+        "疑 C. difficile 猛爆性 → 經驗性治療不等報告；腸阻塞加 vancomycin 灌腸",
+        "惡化（腸阻塞、WBC↑、lactate↑、休克、腹膜炎）→ 緊急外科（結腸次全切除／迴腸造口灌洗）、ICU"
+      ],
+      "orders": [
+        { "drug": "LR／NS", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，重複至灌流改善", "note": "心衰竭 250 mL；補 KCl" },
+        { "drug": "Vancomycin", "dose": "500 mg", "route": "PO／NG", "freq": "QID", "note": "猛爆性 C. difficile" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "IV", "freq": "q8h", "note": "與口服 vancomycin 併用（猛爆性）" },
+        { "drug": "Vancomycin 灌腸", "dose": "500 mg in 100 mL NS", "route": "PR 保留灌腸", "freq": "QID", "note": "腸阻塞時加" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "疑穿孔／腹膜炎／敗血症（非 C. difficile 來源）；CrCl {round(crcl)} 依附錄 A5，第一劑不減量" }
+      ],
+      "watch": ["BP、HR、尿量 q15–30 min；lactate q2–4h", "WBC、K、Cr 每日；腹圍／KUB q12–24h", "腹膜炎徵候"],
+      "call": ["腹瀉 + 休克／中毒性巨結腸／猛爆性 C. difficile → 後線 + 外科 + ICU", "lactate↑、WBC 持續上升、腸阻塞"],
+      "refs": [{ "ch": "24", "q": "C. difficile 猛爆性" }, { "ch": "24", "q": "腹瀉" }]
+    },
+    "r_cdiff": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "C. difficile 腸炎（{recur ? '復發' : '初發，非猛爆性'}）",
+      "summary": "{recur ? '第一次復發：fidaxomicin（或 vancomycin 漸減）；反覆復發 + bezlotoxumab、糞菌移植，會診感染科。' : '**Fidaxomicin 200 mg BID × 10 天**（替代 vancomycin 125 mg QID × 10 天；重度處方相同）；停不必要抗生素、PPI、止瀉劑。'}",
+      "steps": [
+        "接觸隔離、肥皂洗手（酒精無效）；不做治癒後複檢",
+        "停不必要抗生素、PPI、止瀉劑（loperamide 禁）、cholestyramine（結合口服 vancomycin）",
+        "仍需其他抗生素 → C. difficile 治療延至停抗生素後 ≥ 7 天",
+        "輸液 + KCl；電解質、CBC、Cr 每日（重度：WBC > 15,000、Cr > 1.5）",
+        "惡化（低血壓、腸阻塞、巨結腸、WBC↑）→ 猛爆性處置",
+        "復發：fidaxomicin 或 vancomycin 漸減；反覆 → 感染科（bezlotoxumab、糞菌移植）"
+      ],
+      "orders": [
+        { "drug": "Fidaxomicin", "dose": "200 mg", "route": "PO", "freq": "BID × 10 天", "note": "首選；復發亦首選" },
+        { "drug": "Vancomycin", "dose": "125 mg", "route": "PO", "freq": "QID × 10 天", "alt": "fidaxomicin 替代；復發可用漸減方案", "note": "重度處方相同" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "PO", "freq": "TID × 10 天", "note": "僅前兩者無法取得時" },
+        { "drug": "LR／NS + KCl", "dose": "依脫水程度（口服補液優先）", "route": "PO／IV", "freq": "持續", "note": "K、HCO₃" }
+      ],
+      "watch": ["排便次數、腹脹、體溫每日；WBC、Cr、K", "腸阻塞／巨結腸徵候 → KUB"],
+      "call": ["低血壓／休克、腸阻塞、巨結腸 ≥ 6 cm、WBC↑／lactate↑（猛爆性）", "反覆復發 → 感染科"],
+      "refs": [{ "ch": "24", "q": "C. difficile（初發" }, { "ch": "24", "q": "C. difficile 復發" }],
+      "next": [{ "label": "惡化 → 猛爆性處置", "next": "r_cdiff_fulminant" }]
+    },
+    "r_cdiff_fulminant": {
+      "type": "result",
+      "urgency": "red",
+      "title": "猛爆性 C. difficile（低血壓／休克、腸阻塞、巨結腸 ≥ 6 cm）",
+      "summary": "**Vancomycin 500 mg PO/NG QID + metronidazole 500 mg IV q8h**；腸阻塞加 vancomycin 灌腸；腹部 CT；惡化 → 緊急外科（結腸次全切除／迴腸造口灌洗）、ICU。",
+      "steps": [
+        "叫後線 + 外科 + ICU；IV × 2、輸液 bolus 重複；Foley",
+        "腹部 CT（巨結腸、穿孔）；CBC、lactate、K、Cr、albumin；血液培養",
+        "口服／NG vancomycin + IV metronidazole；腸阻塞加灌腸",
+        "停所有不必要抗生素、PPI、止瀉、促動力藥；接觸隔離",
+        "惡化（腸阻塞、WBC↑、lactate↑、休克、腹膜炎）→ 緊急外科"
+      ],
+      "orders": [
+        { "drug": "Vancomycin", "dose": "500 mg", "route": "PO／NG", "freq": "QID", "note": "" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "IV", "freq": "q8h", "note": "與口服 vancomycin 併用" },
+        { "drug": "Vancomycin 灌腸", "dose": "500 mg in 100 mL NS", "route": "PR 保留灌腸", "freq": "QID", "note": "腸阻塞時加" },
+        { "drug": "LR／NS", "dose": "500 mL", "route": "IV bolus", "freq": "STAT，重複至灌流改善", "note": "心衰竭 250 mL；補 KCl" }
+      ],
+      "watch": ["BP、HR、尿量 q15–30 min；lactate q2–4h", "WBC、K、Cr 每日；腹圍／KUB q12–24h；腹膜炎徵候"],
+      "call": ["確認猛爆性當下 = 後線 + 外科 + ICU", "腸阻塞、WBC↑、lactate↑、休克、腹膜炎 → 緊急手術"],
+      "refs": [{ "ch": "24", "q": "C. difficile 猛爆性" }]
+    },
+    "r_invasive": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "侵襲性細菌性腸炎（發燒、血便、> 6 次/天、免疫低下、> 70 歲）",
+      "summary": "**先留糞便培養／血液培養**；azithromycin 首選（亞洲 fluoroquinolone 抗藥性高）；**疑 EHEC（O157：生牛肉、大量血便、無高燒）不給抗生素（HUS）**；Salmonella 非重症不給；止瀉藥禁。",
+      "steps": [
+        "糞便培養／鏡檢／norovirus、C. difficile（若近期抗生素）、血液培養（發燒）；CBC、電解質、Cr、CRP",
+        "輸液（口服補液或 IV LR/NS + KCl）；接觸隔離",
+        "疑 EHEC（生牛肉、大量血便、無高燒）→ 不給抗生素、不給止瀉；監測 Cr、血小板（HUS）",
+        "抗生素：azithromycin（發燒／血便首選）；替代 ciprofloxacin 或 ceftriaxone（無法口服）",
+        "阿米巴／Giardia（旅遊史）：metronidazole",
+        "老人、血便 + 腹痛 → 缺血性結腸炎（Ch9）；免疫低下 → 通知後線"
+      ],
+      "orders": [
+        { "drug": "Azithromycin", "dose": "500 mg", "route": "PO", "freq": "QD × 3 天（或 1 g 單劑）", "note": "發燒／血便首選；QT" },
+        { "drug": "Ciprofloxacin", "dose": "500 mg", "route": "PO", "freq": "BID × 3–5 天", "note": "替代；亞洲抗藥性高；CrCl {round(crcl)} 依仿單調整" },
+        { "drug": "Ceftriaxone", "dose": "1–2 g", "route": "IV", "freq": "QD", "note": "無法口服／重症" },
+        { "drug": "Metronidazole", "dose": "500–750 mg", "route": "PO", "freq": "TID × 7–10 天", "note": "阿米巴、Giardia（旅遊史）" },
+        { "drug": "LR／NS + KCl", "dose": "500 mL bolus → 維持（口服補液優先）", "route": "IV／PO", "freq": "STAT → 持續", "note": "心衰竭 250 mL" }
+      ],
+      "watch": ["排便次數、血便、體溫、BP q4h；K、Cr 每日", "疑 EHEC：Cr、血小板、Hb（HUS）"],
+      "call": ["休克、血便 + 發燒惡化、腹膜炎徵候、中毒性巨結腸", "免疫低下、疑 HUS（Cr↑、血小板↓）"],
+      "refs": [{ "ch": "24", "q": "侵襲性細菌性腸炎" }]
+    },
+    "r_diarrhea_general": {
+      "type": "result",
+      "urgency": "green",
+      "title": "腹瀉：非感染性／灌食／藥物（{abx ? '已送 C. difficile 檢驗' : '無抗生素史'}）",
+      "summary": "住院腹瀉最常見是藥物與灌食：調整灌食（減速、稀釋、換配方、加纖維）、停瀉劑／Mg／促動力／sorbitol；補液 + KCl；**loperamide 只給非感染性、無發燒血便、C. difficile 已排除者**。",
+      "steps": [
+        "電解質（K、HCO₃）、BUN/Cr、CBC、CRP；有抗生素史 → 糞便 C. difficile toxin／GDH／PCR（只送水便）",
+        "灌食：減速、稀釋、換配方、加纖維；停瀉劑、含 Mg 制酸劑、促動力藥、sorbitol 糖漿；檢視 PPI",
+        "補液（口服補液或 IV LR/NS + KCl）；皮膚護理",
+        "溢流性腹瀉 → 直腸指診排除糞便嵌塞",
+        "止瀉藥：C. difficile、侵襲性腸炎禁；C. difficile 待報告期間不給",
+        "膽酸性（膽囊／迴腸切除）→ cholestyramine；化療／類癌／高輸出造口 → octreotide"
+      ],
+      "orders": [
+        { "drug": "Loperamide", "dose": "4 mg → 每次解便後 2 mg", "route": "PO", "freq": "max 16 mg/d", "cond": "!abx", "note": "非感染性、無發燒血便；C. difficile、侵襲性腸炎禁" },
+        { "drug": "Racecadotril（Hidrasec）", "dose": "100 mg", "route": "PO", "freq": "TID，≤ 7 天", "note": "分泌性腹瀉" },
+        { "drug": "Dioctahedral smectite", "dose": "3 g", "route": "PO", "freq": "TID", "note": "吸附；與其他藥隔開" },
+        { "drug": "Probiotics", "dose": "依製劑 1 包／粒", "route": "PO", "freq": "QD–BID", "note": "抗生素相關腹瀉預防證據中等" },
+        { "drug": "Cholestyramine", "dose": "4 g", "route": "PO", "freq": "QD–TID", "note": "膽酸性腹瀉；結合其他口服藥（隔 4 hr）" },
+        { "drug": "Octreotide", "dose": "50–100 mcg", "route": "SC", "freq": "TID", "note": "化療／類癌／高輸出造口" },
+        { "drug": "LR／NS + KCl", "dose": "500 mL bolus → 維持（口服補液優先）", "route": "IV／PO", "freq": "依脫水", "note": "心衰竭 250 mL" }
+      ],
+      "watch": ["排便次數／性狀、I/O、體重；K、HCO₃、Cr 24 hr", "出現發燒／血便／腹脹 → 停止瀉、重新評估"],
+      "call": ["腹瀉 + 休克／血便 + 發燒／中毒性巨結腸", "C. difficile 陽性且惡化"],
+      "refs": [{ "ch": "24", "q": "止瀉與抗生素" }, { "ch": "24", "q": "Loperamide" }],
+      "next": [{ "label": "C. difficile 報告陽性", "next": "q_cdiff" }]
+    },
+    "q_constipation": {
+      "type": "multi",
+      "title": "便秘：先排除阻塞與嵌塞（勾選所有符合）",
+      "help": "直腸指診（嵌塞、腫塊、括約肌）+ KUB（糞便量、阻塞、巨結腸）；懷疑機械性阻塞、穿孔、腹膜炎、術後早期吻合、嚴重 IBD、嗜中性球低下 → 不給瀉劑／灌腸",
+      "options": [
+        { "label": "腹脹 + 嘔吐／無排氣、KUB 擴張／氣液面（阻塞？）", "set": { "obstruct": true } },
+        { "label": "術後早期／腸吻合（術後腸麻痺；灌腸禁）", "set": { "postop": true } },
+        { "label": "直腸指診硬糞便嵌塞／溢流性腹瀉", "set": { "impaction": true } },
+        { "label": "嗜中性球低下（避免直腸操作）", "set": { "neutropenia": true } },
+        { "label": "正在用鴉片類", "set": { "opioid": true } }
+      ],
+      "branches": [
+        { "if": "obstruct", "next": "r_constip_obstruct" },
+        { "if": "postop", "next": "r_postop_ileus" },
+        { "if": "impaction", "next": "r_impaction" },
+        { "else": "r_constipation" }
+      ]
+    },
+    "r_constip_obstruct": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "便秘 + 腹脹嘔吐／KUB 擴張：先排除機械性阻塞",
+      "summary": "**不給瀉劑／灌腸**；NPO、NG、KUB／CT；盲腸 > 10–12 cm → Ogilvie（Ch8）；機械性阻塞 → 外科（Ch8）。",
+      "steps": [
+        "NPO；NG 減壓（嘔吐）；IV 輸液 + KCl",
+        "直腸指診（嵌塞、腫塊）；KUB → CT 腹骨盆（轉折點、腫瘤、疝氣、盲腸直徑）",
+        "電解質（K、Mg、Ca）、Cr、CBC、lactate；停鴉片、抗膽鹼藥",
+        "機械性阻塞 → 外科；Ogilvie（盲腸 > 10–12 cm）→ neostigmine／大腸鏡減壓（Ch8）",
+        "排除阻塞後才依便秘階梯給藥"
+      ],
+      "orders": [
+        { "drug": "NS + KCl", "dose": "500 mL bolus → 維持", "route": "IV", "freq": "STAT → 持續", "note": "心衰竭 250 mL" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV", "freq": "q8h PRN", "note": "避免 metoclopramide（阻塞）" }
+      ],
+      "watch": ["腹脹、腹痛、嘔吐、排氣 q4h；KUB 盲腸直徑", "K、Mg；腹膜炎徵候"],
+      "call": ["便秘合併腹脹嘔吐（阻塞）或盲腸 > 10–12 cm", "腹膜炎徵候、lactate↑"],
+      "refs": [{ "ch": "24", "q": "便秘" }, { "ch": "08", "q": "腸阻塞" }, { "ch": "08", "q": "Ogilvie" }]
+    },
+    "r_postop_ileus": {
+      "type": "result",
+      "urgency": "green",
+      "title": "術後腸麻痺",
+      "summary": "鴉片減量、活動、嚼口香糖、矯正 K/Mg、**避免瀉劑（灌腸禁）**；> 3–5 天或嘔吐 → NG、KUB/CT 排除機械性阻塞；alvimopan 依外科。",
+      "steps": [
+        "電解質（K、Mg）矯正；鴉片減量（多模式止痛：acetaminophen）",
+        "下床活動、嚼口香糖；少量清流質（若無嘔吐）",
+        "嘔吐／腹脹 → NG 減壓；避免瀉劑與灌腸（吻合口）",
+        "> 3–5 天或嘔吐 → KUB／CT 排除機械性阻塞、吻合口滲漏（Ch8）",
+        "alvimopan 依外科"
+      ],
+      "orders": [
+        { "drug": "KCl", "dose": "依血鉀（Ch33）", "route": "IV／PO", "freq": "依 Ch33", "note": "低血鉀加重腸麻痺" },
+        { "drug": "Acetaminophen", "dose": "{wt < 50 ? round(wt*15) : 1000} mg", "route": "IV／PO", "freq": "q6h，max 3 g/d", "note": "減少鴉片" },
+        { "drug": "嚼口香糖", "dose": "1 片", "route": "PO", "freq": "TID", "note": "促進腸蠕動" },
+        { "drug": "Ondansetron", "dose": "4–8 mg", "route": "IV", "freq": "q8h PRN", "note": "嘔吐時；metoclopramide 需確認無機械阻塞" }
+      ],
+      "watch": ["排氣、腹脹、嘔吐每日；K、Mg", "發燒 + 腹痛 → 吻合口滲漏（Ch8）"],
+      "call": ["> 3–5 天未改善、嘔吐、腹脹加劇（機械性阻塞？）", "發燒 + 腹痛、腹膜炎徵候"],
+      "refs": [{ "ch": "24", "q": "術後腸麻痺" }, { "ch": "08", "q": "麻痺性腸阻塞" }]
+    },
+    "r_impaction": {
+      "type": "result",
+      "urgency": "green",
+      "title": "糞便嵌塞",
+      "summary": "先 glycerin／mineral oil 灌腸軟化 → 手指挖便（潤滑、分次；注意迷走反應）→ 之後 PEG 高劑量 + 維持；**嗜中性球低下避免直腸操作**；灌腸後劇烈腹痛想穿孔。",
+      "steps": [
+        "直腸指診確認硬糞便；KUB（糞便量、近端阻塞）",
+        "軟化：glycerin 栓劑／mineral oil 灌腸 → 手指挖便（潤滑、分次取出；心搏過緩注意）",
+        "之後 PEG 34 g BID–TID 至清除，再維持 PEG 17 g QD",
+        "找原因：鴉片、抗膽鹼、臥床、脫水；預防性維持",
+        "灌腸後劇烈腹痛 → 穿孔（立刻通知後線）"
+      ],
+      "orders": [
+        { "drug": "Glycerin 栓劑／球", "dose": "1–2 個", "route": "PR", "freq": "QD（15–30 分鐘作用）", "note": "直腸糞便" },
+        { "drug": "Mineral oil 灌腸", "dose": "120 mL", "route": "PR", "freq": "單次", "note": "硬便嵌塞軟化" },
+        { "drug": "手指挖便", "dose": "分次取出", "route": "PR（潤滑）", "freq": "軟化後", "note": "迷走反應（心搏過緩）注意" },
+        { "drug": "PEG（macrogol）", "dose": "34 g in 240 mL", "route": "PO", "freq": "BID–TID 至清除 → 17 g QD 維持", "note": "首選；安全" },
+        { "drug": "Bisacodyl", "dose": "10 mg", "route": "PR", "freq": "QD", "note": "PR 15–60 分鐘作用" },
+        { "drug": "肥皂水／溫水灌腸", "dose": "500–1,000 mL", "route": "PR", "freq": "單次", "note": "大量糞便；小心穿孔" }
+      ],
+      "watch": ["排便、腹脹、腹痛（灌腸後劇痛 = 穿孔）", "心搏過緩（挖便）"],
+      "call": ["灌腸後劇烈腹痛（穿孔）", "嵌塞 + 腹脹嘔吐（阻塞）"],
+      "refs": [{ "ch": "24", "q": "手指挖便" }, { "ch": "24", "q": "Glycerin 栓劑" }]
+    },
+    "r_constipation": {
+      "type": "result",
+      "urgency": "green",
+      "title": "便秘：階梯治療（滲透性 ± 刺激性 → 栓劑 → 灌腸 → 指挖）",
+      "summary": "PEG 首選（安全、無電解質問題）；鴉片便秘 sennoside／bisacodyl 首選之一，頑固加 naloxegol；**MgO 腎功能差禁、Fleet 腎衰竭／心衰竭／老年禁**；嗜中性球低下避免直腸操作。",
+      "steps": [
+        "已排除阻塞與嵌塞（指診、KUB）；找原因：鴉片、抗膽鹼、鐵劑、CCB、利尿劑、臥床、脫水、低血鉀、高血鈣、甲狀腺低下",
+        "第 1 階：滲透性（PEG／lactulose）± 刺激性（sennoside／bisacodyl HS）",
+        "第 2 階：栓劑（glycerin／bisacodyl PR）→ 灌腸（Fleet 禁忌多；肥皂水／溫水）",
+        "鴉片便秘：sennoside 首選之一；無效 → naloxegol／methylnaltrexone（PAMORA）",
+        "補水、活動；纖維只給行動可、能喝水者（臥床／阻塞風險避免）"
+      ],
+      "orders": [
+        { "drug": "PEG（macrogol）", "dose": "17 g in 240 mL", "route": "PO", "freq": "QD–BID", "note": "首選；安全、無電解質問題" },
+        { "drug": "Lactulose", "dose": "15–30 mL", "route": "PO", "freq": "QD–BID", "note": "腹脹、脹氣；肝腦病變另有劑量" },
+        { "drug": "MgO", "dose": "250–500 mg", "route": "PO", "freq": "TID", "cond": "crcl >= 30", "note": "CrCl {round(crcl)}；腎功能差禁（高血鎂）—CrCl < 30 不顯示" },
+        { "drug": "Sennoside", "dose": "12–24 mg（2–4 錠）", "route": "PO", "freq": "HS", "note": "刺激性；鴉片便秘首選之一；絞痛" },
+        { "drug": "Bisacodyl", "dose": "5–10 mg", "route": "PO", "freq": "HS", "note": "刺激性" },
+        { "drug": "Bisacodyl 栓劑", "dose": "10 mg", "route": "PR", "freq": "QD", "cond": "!neutropenia", "note": "PR 15–60 分鐘作用" },
+        { "drug": "Glycerin 栓劑／球", "dose": "1–2 個", "route": "PR", "freq": "QD", "cond": "!neutropenia", "note": "直腸糞便，15–30 分鐘" },
+        { "drug": "Naloxegol", "dose": "25 mg", "route": "PO", "freq": "QD", "cond": "opioid", "note": "鴉片便秘（PAMORA）；或 methylnaltrexone 8–12 mg SC QOD" },
+        { "drug": "Fleet（sodium phosphate）灌腸", "dose": "1 瓶（118 mL）", "route": "PR", "freq": "單次", "cond": "!neutropenia && crcl >= 30", "note": "腎衰竭、心衰竭、老年、電解質異常禁（高磷、低鈣）；目前 CrCl {round(crcl)}、{age} 歲（CrCl < 30 不顯示）" },
+        { "drug": "Docusate", "dose": "100 mg", "route": "PO", "freq": "BID", "note": "軟便，單用效果弱" }
+      ],
+      "watch": ["排便 24–48 hr；腹脹、嘔吐 → 阻塞", "K、Mg（MgO）、電解質（灌腸）"],
+      "call": ["便秘合併腹脹嘔吐（阻塞）或盲腸 > 10–12 cm", "灌腸後劇烈腹痛（穿孔）"],
+      "refs": [{ "ch": "24", "q": "藥物（階梯" }, { "ch": "24", "q": "PEG（macrogol）" }],
+      "next": [{ "label": "指診有硬糞便 → 嵌塞處置", "next": "r_impaction" }]
+    }
+  }
+}

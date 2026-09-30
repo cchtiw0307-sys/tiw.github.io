@@ -1,0 +1,357 @@
+{
+  "id": "21",
+  "title": "心搏過緩",
+  "chapter": "21",
+  "entries": [
+    { "label": "心跳慢（HR < 50／監視器警報）", "type": "symptom", "start": "i_phone", "group": "生命徵象",
+      "keywords": ["心搏過緩", "心跳慢", "bradycardia", "HR 40", "心率 35", "心跳 45", "brady", "脈搏慢"] },
+    { "label": "心跳慢 + 血壓低／昏厥", "type": "symptom", "start": "r_unstable", "group": "生命徵象",
+      "keywords": ["心跳慢 血壓低", "bradycardia hypotension", "昏厥 心跳慢", "syncope bradycardia", "atropine"] },
+    { "label": "有症狀／不穩定心搏過緩（AHA 2025）", "type": "diagnosis", "start": "r_unstable",
+      "keywords": ["有症狀心搏過緩", "symptomatic bradycardia", "unstable bradycardia", "atropine", "TCP", "經皮節律", "dopamine", "epinephrine"] },
+    { "label": "經皮節律（TCP）設定", "type": "diagnosis", "start": "r_tcp",
+      "keywords": ["TCP", "經皮節律", "transcutaneous pacing", "pacing", "capture", "節律器模式", "臨時節律"] },
+    { "label": "高風險傳導阻滯（Mobitz II、3° AV block、停頓 > 3 秒）", "type": "diagnosis", "start": "r_highrisk",
+      "keywords": ["AV block", "Mobitz II", "3 度 AV block", "complete heart block", "完全房室阻滯", "高度 AV block", "竇性停頓", "sinus pause", "交替性束支阻滯"] },
+    { "label": "穩定低風險心搏過緩（竇性、1°、Mobitz I）", "type": "diagnosis", "start": "r_lowrisk",
+      "keywords": ["竇性心搏過緩", "sinus bradycardia", "1 度 AV block", "Mobitz I", "Wenckebach", "Afib 慢心室反應", "slow AF", "藥物性心搏過緩"] },
+    { "label": "β-blocker／CCB 過量", "type": "diagnosis", "start": "r_bb_ccb",
+      "keywords": ["β-blocker 過量", "CCB 過量", "beta blocker overdose", "calcium channel blocker", "glucagon", "高劑量 insulin", "calcium chloride"] },
+    { "label": "Digoxin 中毒", "type": "diagnosis", "start": "q_dig_level",
+      "keywords": ["digoxin 中毒", "digoxin toxicity", "DigiFab", "digoxin Fab", "毛地黃", "digoxin 濃度"] },
+    { "label": "高血鉀相關心搏過緩", "type": "diagnosis", "start": "r_hyperk",
+      "keywords": ["高血鉀", "hyperkalemia", "K 6", "K 高 心跳慢", "尖 T 波", "寬 QRS 心搏過緩"] },
+    { "label": "黏液水腫昏迷（甲狀腺低下）", "type": "diagnosis", "start": "r_myxedema",
+      "keywords": ["黏液水腫", "myxedema coma", "甲狀腺低下", "hypothyroidism", "levothyroxine", "低體溫 心跳慢"] },
+    { "label": "低體溫心搏過緩", "type": "diagnosis", "start": "r_hypothermia",
+      "keywords": ["低體溫", "hypothermia", "復溫", "rewarming", "體溫 32"] },
+    { "label": "節律器病人心搏過緩", "type": "diagnosis", "start": "r_pacer",
+      "keywords": ["節律器故障", "pacemaker failure", "節律器", "pacemaker", "failure to capture", "磁鐵測試", "loss of capture"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中立即口頭醫囑",
+      "body": [
+        "**12 導程 ECG STAT**、監測器、IV、O₂（SpO₂ < 94%）、完整生命徵象（血壓、意識、胸痛、喘、暈厥、體溫）",
+        "問：心率多少？規則嗎？平常心率（運動員、長期 β-blocker）？今天給的 β-blocker／CCB／digoxin／amiodarone／clonidine／鎮靜劑（dexmedetomidine、propofol）？K？透析病人？節律器？",
+        "入院診斷：下壁 MI、SAH／ICP↑、脊髓損傷、術後迷走反射、心臟手術後",
+        "**不穩 → 推急救車、備 atropine 與 TCP（電擊器的 pacing 模式）、叫後線、立刻到床邊**",
+        "到床邊前：舊 ECG、K/Mg/Ca、TSH、digoxin 濃度、troponin；藥物清單；節律器型號"
+      ],
+      "next": "q_sbp"
+    },
+    "q_sbp": {
+      "type": "number",
+      "title": "收縮壓（SBP）？",
+      "help": "同時看脈搏、意識、灌流；ECG 確認節律與 QRS 寬度；高血鉀徵候（尖 T、寬 QRS）",
+      "var": "sbp", "unit": "mmHg", "step": 1,
+      "quick": [70, 80, 90, 100, 120, 140],
+      "branches": [
+        { "if": "sbp < 90", "next": "r_unstable" },
+        { "else": "q_unstable" }
+      ]
+    },
+    "q_unstable": {
+      "type": "multi",
+      "title": "SBP ≥ 90：有其他不穩定徵候嗎？（心搏過緩造成）",
+      "help": "有症狀或不穩定才需要急處置",
+      "options": [
+        { "label": "意識改變／昏厥、近期昏厥", "set": { "altered": true } },
+        { "label": "休克徵候（花斑、CRT > 3 秒、少尿、乳酸↑）", "set": { "shock": true } },
+        { "label": "缺血性胸痛", "set": { "ischemia": true } },
+        { "label": "急性心衰竭／肺水腫", "set": { "hf": true } }
+      ],
+      "branches": [
+        { "if": "altered || shock || ischemia || hf", "next": "r_unstable" },
+        { "else": "q_rhythm" }
+      ]
+    },
+    "q_rhythm": {
+      "type": "choice",
+      "title": "穩定：ECG 是哪種節律？",
+      "help": "Mobitz II 與 3° AV block 即使穩定也要通知（隨時會變）；2:1 block QRS 寬當高風險",
+      "options": [
+        { "label": "竇性心搏過緩、1° AV block（PR > 200 ms 每個 P 都傳）、Mobitz I（PR 逐漸延長後脫落）、2:1 且 QRS 窄", "next": "q_cause" },
+        { "label": "Afib 慢心室反應（不規則、無 P、< 60）", "next": "q_cause" },
+        { "label": "Mobitz II（PR 固定、突然脫落）、2:1 且 QRS 寬、高度 AV block（連續 ≥ 2 P 未傳）", "next": "r_highrisk" },
+        { "label": "3°（完全）AV block（P 與 QRS 無關；逃脫窄 40–60 或寬 20–40）", "next": "r_highrisk" },
+        { "label": "竇性停頓／竇房阻滯 > 3 秒、寬 QRS 逃脫節律、新 BBB + AV block、交替性 LBBB／RBBB", "next": "r_highrisk" },
+        { "label": "急性 MI（尤其下壁）合併任何 block", "next": "r_highrisk" },
+        { "label": "節律器病人（pacing spike 異常／無 capture）", "next": "r_pacer" }
+      ]
+    },
+    "q_cause": {
+      "type": "choice",
+      "title": "穩定低風險節律：最可能的原因？",
+      "help": "藥物最常見（含眼藥水 timolol、donepezil、lithium）；代謝（高血鉀、低體溫、甲狀腺低下）；迷走反射；ICP↑；OSA 夜間",
+      "options": [
+        { "label": "高血鉀（K ≥ 5.5、尖 T、寬 QRS、透析病人）", "next": "r_hyperk" },
+        { "label": "β-blocker／CCB 過量（大劑量、低血壓、atropine 無效）", "next": "r_bb_ccb" },
+        { "label": "Digoxin 中毒（濃度高、噁心、視覺異常、心律不整、腎功能差）", "next": "q_dig_level" },
+        { "label": "甲狀腺低下／黏液水腫（低體溫、意識差、水腫）", "next": "r_myxedema" },
+        { "label": "低體溫 < 35℃", "next": "r_hypothermia" },
+        { "label": "一般劑量藥物（β-blocker、CCB、digoxin、amiodarone、clonidine、鎮靜劑、鴉片）、迷走反射（疼痛、嘔吐、抽痰、導尿）、生理性（運動員、睡眠、OSA）", "next": "r_lowrisk" },
+        { "label": "ICP↑（Cushing：高血壓 + 心搏過緩 + 呼吸異常）、SAH", "next": "r_highrisk" }
+      ]
+    },
+    "q_dig_level": {
+      "type": "number",
+      "title": "Digoxin 血中濃度（ng/mL）？不明填 0",
+      "help": "服藥 < 6 hr 的濃度不準（分布期）；慢性中毒濃度可只略高；同時看 K（急性中毒高血鉀 = 嚴重）",
+      "var": "diglvl", "unit": "ng/mL", "step": 0.1,
+      "quick": [0, 2, 3, 4, 6, 10],
+      "branches": [
+        { "if": "diglvl > 0", "next": "r_dig" },
+        { "else": "r_dig" }
+      ]
+    },
+    "r_unstable": {
+      "type": "result",
+      "urgency": "red",
+      "title": "有症狀／不穩定心搏過緩（AHA 2025，表 21-1）",
+      "summary": "**Atropine 1 mg IV q3–5 min（max 3 mg）→ 無效：經皮節律（TCP）或 dopamine／epinephrine 滴注 → 經靜脈臨時節律**；同時找可逆原因（停藥、高血鉀、缺氧、保溫、迷走刺激）。Mobitz II／3° 寬 QRS atropine 效果差（可能惡化）→ 直接 TCP。",
+      "steps": [
+        "叫後線；推急救車、電擊器 pacing 模式貼片備妥（前後位）；IV × 2、O₂、監測、12 導程 ECG",
+        "Atropine 1 mg IV push，q3–5 min 至 max 3 mg（Mobitz II／3° 寬 QRS、心臟移植者效果差 → 不要等，直接 TCP）",
+        "無效 → TCP（rate 60–80、output 從低往上至 capture 後 +10%；鎮靜 midazolam ± fentanyl）或 dopamine／epinephrine 滴注",
+        "TCP 無效／需長時間 → 經靜脈臨時節律（心臟科／ICU）",
+        "同時找可逆原因：停 β-blocker／CCB／digoxin／clonidine／鎮靜劑；K（高血鉀 → calcium）；缺氧；低體溫；迷走刺激；下壁 MI（→ 心導管）",
+        "抽血：K、Mg、Ca、TSH、digoxin 濃度、troponin、ABG；體溫",
+        "下壁 MI 的 AV block：可加 epinephrine；atropine 無效可試 aminophylline（與心臟科討論）"
+      ],
+      "orders": [
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg", "note": "一線；Mobitz II／3° 寬 QRS 效果差（可能惡化），心臟移植者無效；青光眼／尿滯留仍可急用" },
+        { "drug": "經皮節律（TCP）", "dose": "rate 60–80，output 從低往上調至 capture（通常 50–100 mA）再 +10%", "route": "電擊器貼片前後位，pacing 模式", "freq": "持續至臨時節律", "note": "capture = pacing spike 後寬 QRS + T 且**摸到股動脈脈搏**；需鎮靜／止痛" },
+        { "drug": "Midazolam", "dose": "1–2 mg", "route": "IV push", "freq": "TCP 前，可重複", "with": "Fentanyl 25–50 mcg IV push", "note": "備 BVM；低血壓者減量" },
+        { "drug": "Dopamine", "dose": "5–20 mcg/kg/min", "route": "IV drip", "freq": "持續（低血壓者）", "note": "400 mg in 250 mL（1,600 mcg/mL）：{wt} kg 5 mcg/kg/min ≈ {round(wt*5*60/1600, 1)} mL/hr" },
+        { "drug": "Epinephrine", "dose": "2–10 mcg/min", "route": "IV drip", "freq": "持續", "note": "1 mg in NS 100 mL（10 mcg/mL）：2 mcg/min = 12 mL/hr、10 mcg/min = 60 mL/hr" },
+        { "drug": "Isoproterenol", "dose": "2–10 mcg/min", "route": "IV drip", "freq": "持續（3° block、TdP 心率慢）", "note": "台灣不一定有" },
+        { "drug": "Aminophylline", "dose": "250 mg", "route": "IV drip over 2.5 min", "freq": "單次（下壁 MI AV block、atropine 無效）", "note": "與心臟科討論" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "SpO₂ < 94% 才給" }
+      ],
+      "watch": ["HR／BP q3–5 min（每劑 atropine 後）、意識、灌流", "TCP：電性 + 機械性 capture（股動脈脈搏）、皮膚灼傷、疼痛", "K/Mg、體溫、ECG 節律變化（→ 3°）"],
+      "call": ["心搏過緩 + 任何不穩定徵候 = 當下叫後線 + 心臟科／ICU", "需 TCP／升壓劑／臨時節律；HR < 40；藥物過量；下壁 MI 合併 block"],
+      "refs": [{ "ch": "21", "q": "表 21-1" }, { "ch": "21", "q": "不穩定" }],
+      "next": [
+        { "label": "TCP 詳細設定", "next": "r_tcp" },
+        { "label": "β-blocker／CCB 過量", "next": "r_bb_ccb" },
+        { "label": "Digoxin 中毒", "next": "q_dig_level" },
+        { "label": "高血鉀", "next": "r_hyperk" },
+        { "label": "黏液水腫／低體溫", "next": "r_myxedema" }
+      ]
+    },
+    "r_tcp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "經皮節律（TCP）設定",
+      "summary": "電擊器 pacing 模式、貼片前後位：**rate 60–80，output 從低往上調至 capture（通常 50–100 mA）再 +10%**；capture = spike 後寬 QRS + T 且**摸到股動脈脈搏**；先鎮靜／止痛；是 atropine 無效的橋接，之後經靜脈臨時節律。",
+      "steps": [
+        "貼片前後位（或胸骨右上–心尖）；接監測導線；電擊器切到 pacing（demand）模式",
+        "鎮靜／止痛：midazolam 1–2 mg ± fentanyl 25–50 mcg；備 BVM",
+        "rate 60–80；output 從低往上調，看到 pacing spike 後寬 QRS + T 波 = 電性 capture",
+        "**摸股動脈脈搏**（不要摸頸動脈：肌肉抽動會誤判）確認機械性 capture；output 再 +10%",
+        "無法 capture：換貼片位置、壓緊、增加 output、矯正高血鉀／缺氧／酸中毒",
+        "聯絡心臟科／ICU 經靜脈臨時節律（TCP 無效或需長時間）"
+      ],
+      "orders": [
+        { "drug": "經皮節律（TCP）", "dose": "rate 60–80；output 至 capture（通常 50–100 mA）+10%", "route": "貼片前後位，pacing 模式", "freq": "持續", "note": "確認股動脈脈搏" },
+        { "drug": "Midazolam", "dose": "1–2 mg", "route": "IV push", "freq": "可重複", "with": "Fentanyl 25–50 mcg IV push", "note": "低血壓者減量；備 BVM" },
+        { "drug": "Dopamine", "dose": "5–20 mcg/kg/min", "route": "IV drip", "freq": "持續（capture 不良、低血壓時併用）", "note": "400 mg in 250 mL：{wt} kg 5 mcg/kg/min ≈ {round(wt*5*60/1600, 1)} mL/hr" }
+      ],
+      "watch": ["每 15 分鐘確認 capture（股動脈脈搏、BP）", "皮膚灼傷、疼痛、鎮靜深度／SpO₂", "電池／貼片接觸"],
+      "call": ["需 TCP = 後線 + 心臟科／ICU（經靜脈臨時節律）", "無法 capture、持續低血壓"],
+      "refs": [{ "ch": "21", "q": "經皮節律（TCP）" }],
+      "next": [{ "label": "回到不穩定心搏過緩處置", "next": "r_unstable" }]
+    },
+    "r_highrisk": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "穩定但高風險：Mobitz II、3° AV block、停頓 > 3 秒、寬 QRS 逃脫、急性 MI + block",
+      "summary": "**即使穩定也要通知後線／心臟科**（隨時會變）：監測床、TCP 貼片 standby、atropine 備床邊；3°、新 BBB + Mobitz II、交替性束支阻滯 → 經靜脈臨時節律；停致病藥、矯正 K；下壁 MI 的 block 常 1–2 週內恢復。",
+      "steps": [
+        "聯絡後線／心臟科；轉監測床；TCP 貼片預貼（standby）、atropine 備床邊、IV",
+        "12 導程 ECG 留存；K、Mg、Ca、TSH、troponin、digoxin 濃度；停 β-blocker／CCB／digoxin／amiodarone",
+        "3° AV block、新 BBB + Mobitz II、交替性 LBBB／RBBB → 心臟科經靜脈臨時節律",
+        "急性 MI 合併 block → 心臟科（下壁 MI block 多在 72 hr 內出現、可突然變高度，常 1–2 週內恢復；前壁 MI + block 預後差）",
+        "ICP↑（Cushing）→ 神經外科；SAH 見 Ch1",
+        "變不穩（低血壓、意識改變、昏厥）→ atropine → TCP",
+        "永久節律器適應症（心臟科）：有症狀病竇、Mobitz II、3°、交替性束支阻滯；可逆原因先臨時"
+      ],
+      "orders": [
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg（變不穩時）", "note": "備床邊；Mobitz II／3° 寬 QRS 效果差，直接 TCP" },
+        { "drug": "經皮節律（TCP）standby", "dose": "rate 60–80，output 至 capture +10%", "route": "貼片前後位預貼", "freq": "變不穩時啟動", "note": "鎮靜 midazolam 1–2 mg ± fentanyl 25–50 mcg" },
+        { "drug": "（停用）β-blocker／CCB／digoxin／amiodarone／clonidine", "dose": "0 mg（hold）", "route": "—", "freq": "至心率 > 60 且穩定", "note": "突然停 β-blocker 注意反彈；恢復由原團隊決定" }
+      ],
+      "watch": ["連續監測：進展為高度／3°、停頓、逃脫節律變寬變慢", "BP／意識 q1h；昏厥", "K/Mg、troponin 動態"],
+      "call": ["Mobitz II、高度或 3° AV block、停頓 > 3 秒、寬 QRS 逃脫 → 即使穩定也通知後線／心臟科", "HR < 40、任何不穩定徵候、下壁 MI 合併 block、需臨時節律"],
+      "refs": [{ "ch": "21", "q": "穩定但高風險" }, { "ch": "21", "q": "永久節律器適應症" }],
+      "next": [{ "label": "變不穩 → atropine／TCP", "next": "r_unstable" }, { "label": "TCP 設定", "next": "r_tcp" }]
+    },
+    "r_lowrisk": {
+      "type": "result",
+      "urgency": "green",
+      "title": "穩定低風險心搏過緩（竇性、1°、Mobitz I、無症狀）",
+      "summary": "停用或減量致病藥物、觀察、白天由原團隊處理；心率 > 60 且穩定後再考慮低劑量恢復（突然停 β-blocker 注意反彈頻脈／高血壓）；HR < 40 或出現症狀要通知。",
+      "steps": [
+        "12 導程 ECG 留存（與舊 ECG 比較）；確認無高風險特徵（Mobitz II、3°、停頓 > 3 秒、寬 QRS 逃脫）",
+        "停用／減量致病藥：β-blocker（含眼藥水）、non-DHP CCB、digoxin、amiodarone、clonidine、鎮靜劑、donepezil、lithium",
+        "K、Mg、Ca、TSH、digoxin 濃度、troponin；體溫；SpO₂（缺氧、OSA 夜間）",
+        "處理迷走刺激（疼痛、嘔吐、抽痰、導尿、便秘）",
+        "監測器續接；HR < 40、症狀出現 → 通知",
+        "病竇症候群（tachy-brady）→ 心臟科（多需節律器 + 藥物）"
+      ],
+      "orders": [
+        { "drug": "（停用／減量）β-blocker／CCB／digoxin／amiodarone／clonidine", "dose": "0 mg（hold）", "route": "—", "freq": "至心率 > 60 且穩定", "note": "白天原團隊決定恢復；突然停 β-blocker 注意反彈" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "PRN（出現症狀時），q3–5 min max 3 mg", "note": "備床邊" }
+      ],
+      "watch": ["HR／BP q4h（監測器）；HR < 40 或新症狀 → 通知", "K、Mg 複驗；夜間 SpO₂"],
+      "call": ["HR < 40；出現低血壓、昏厥、胸痛、意識改變", "節律變為 Mobitz II／高度／3°、停頓 > 3 秒"],
+      "refs": [{ "ch": "21", "q": "穩定低風險" }, { "ch": "21", "q": "停用或減量致病藥物" }],
+      "next": [{ "label": "出現症狀 → 不穩定處置", "next": "r_unstable" }]
+    },
+    "r_bb_ccb": {
+      "type": "result",
+      "urgency": "red",
+      "title": "β-blocker／CCB 過量",
+      "summary": "Atropine 常無效：**glucagon 3–5 mg IVP（可重複 → 3–5 mg/hr）、calcium chloride 1 g IV（或 gluconate 3 g）q10–20 min × 3、高劑量 insulin 1 U/kg bolus → 1 U/kg/hr + D10W**；脂肪乳劑、ECMO；TCP；毒物科。",
+      "steps": [
+        "叫後線 + 毒物科；監測、IV × 2、12 導程 ECG、血糖、K、Ca；TCP 貼片備妥",
+        "Atropine 1 mg 可試（常無效）；低血壓 → NS 500 mL bolus（小心肺水腫）",
+        "Glucagon 3–5 mg IV push，可重複 → 3–5 mg/hr 滴注（嘔吐）",
+        "Calcium chloride 1 g IV（CVC；或 gluconate 3 g 周邊）q10–20 min × 3",
+        "高劑量 insulin：{round(wt)} U bolus → {round(wt)} U/hr + D10W；血糖 q30 min、K q1h",
+        "仍不穩 → dopamine／epinephrine、TCP／臨時節律、脂肪乳劑、ECMO",
+        "停所有負性肌力／變時藥"
+      ],
+      "orders": [
+        { "drug": "Glucagon", "dose": "3–5 mg", "route": "IV push", "freq": "可重複 → 3–5 mg/hr 滴注", "note": "嘔吐、高血糖" },
+        { "drug": "Calcium chloride 10%", "dose": "1 g（10 mL）", "route": "IV push（CVC 為佳）", "freq": "q10–20 min × 3", "note": "或 calcium gluconate 10% 3 g（30 mL）周邊" },
+        { "drug": "Regular insulin（高劑量）", "dose": "{round(wt)} U（1 U/kg）", "route": "IV push", "freq": "STAT → {round(wt)} U/hr 滴注", "note": "依 {wt} kg；併 D10W；監測血糖 q30 min、K q1h" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg", "note": "常無效" },
+        { "drug": "Dopamine", "dose": "5–20 mcg/kg/min", "route": "IV drip", "freq": "持續", "note": "400 mg in 250 mL：{wt} kg 5 mcg/kg/min ≈ {round(wt*5*60/1600, 1)} mL/hr" },
+        { "drug": "Epinephrine", "dose": "2–10 mcg/min", "route": "IV drip", "freq": "持續", "note": "1 mg in NS 100 mL（10 mcg/mL）：2 mcg/min = 12 mL/hr" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "小心肺水腫" },
+        { "drug": "經皮節律（TCP）", "dose": "rate 60–80，output 至 capture +10%", "route": "貼片前後位", "freq": "藥物無效時", "note": "CCB 過量 capture 可能困難" }
+      ],
+      "watch": ["HR／BP q5 min、心律", "血糖 q30 min、K q1h、iCa（高劑量 insulin）", "肺水腫、意識"],
+      "call": ["β-blocker／CCB 過量 = 後線 + 毒物科 + ICU", "需 TCP／升壓劑／高劑量 insulin、考慮 ECMO"],
+      "refs": [{ "ch": "21", "q": "β-blocker／CCB 過量" }, { "ch": "19", "q": "藥物性低血壓" }],
+      "next": [{ "label": "TCP 設定", "next": "r_tcp" }]
+    },
+    "r_dig": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Digoxin 中毒",
+      "summary": "**Digoxin-specific Fab（DigiFab）**：合併高血鉀或致命心律不整時；急性已知量 = 劑量(mg) × 0.8 ÷ 0.5 支；慢性 = 濃度 × kg ÷ 100 支；不明 → 急性 10 支、慢性 3–6 支。心搏過緩 atropine／節律；矯正低血鉀（勿過度）、Mg；**避免 calcium**（爭議）；確認院內庫存。",
+      "steps": [
+        "叫後線；監測、IV、12 導程 ECG；K、Mg、Cr、digoxin 濃度（服藥 < 6 hr 不準）",
+        "Fab 適應症：合併高血鉀、致命心律不整 → DigiFab（確認院內庫存、毒物科）",
+        "心搏過緩有症狀 → atropine 1 mg；無效 → TCP；心室心律不整 → lidocaine",
+        "矯正低血鉀（勿過度）、補 Mg；**避免 calcium**（爭議）",
+        "停 digoxin；腎功能差（CrCl {round(crcl)}）者清除慢",
+        "毒性加重因子：低血鉀、低血鎂、amiodarone、腎衰竭"
+      ],
+      "orders": [
+        { "drug": "Digoxin-specific Fab（DigiFab）", "dose": "{diglvl > 0 ? round(diglvl * wt / 100) + ' 支（慢性，濃度 ' + diglvl + ' × ' + wt + ' kg ÷ 100）' : '不明：急性 10 支、慢性 3–6 支'}", "route": "IV drip", "freq": "單次（依毒物科）", "note": "急性已知量 = 劑量(mg) × 0.8 ÷ 0.5 支；適應症：高血鉀、致命心律不整；確認院內庫存" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg（有症狀心搏過緩）", "note": "" },
+        { "drug": "Lidocaine", "dose": "{round(wt)}–{round(wt*1.5)} mg（1–1.5 mg/kg）", "route": "IV push", "freq": "→ 1–4 mg/min 滴注（心室心律不整）", "note": "Ch20" },
+        { "drug": "MgSO₄", "dose": "2 g", "route": "IV drip over 15 min", "freq": "單次（Mg 低）", "note": "Ch20" },
+        { "drug": "經皮節律（TCP）", "dose": "rate 60–80，output 至 capture +10%", "route": "貼片前後位", "freq": "atropine 無效時", "note": "digoxin 中毒心肌易激惹，小心" }
+      ],
+      "watch": ["連續監測（VT、block）、BP", "K、Mg、Cr 複驗"],
+      "call": ["digoxin 中毒 + 心搏過緩／心律不整／高血鉀 = 後線 + 毒物科 + 心臟科", "需 DigiFab、TCP"],
+      "refs": [{ "ch": "21", "q": "Digoxin 中毒" }, { "ch": "21", "q": "DigiFab" }]
+    },
+    "r_hyperk": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血鉀相關心搏過緩",
+      "summary": "尖 T、寬 QRS、心搏過緩／停搏前兆：**calcium gluconate 3 g IV（穩定心肌）→ regular insulin 10 U + D50W 50 mL → 移除（透析）**；atropine／TCP 效果差，先降 K；停所有含 K／保鉀藥；腎臟科（Ch33）。",
+      "steps": [
+        "叫後線；監測、IV、12 導程 ECG；VBG 快速驗 K",
+        "Calcium gluconate 3 g IV over 5–10 min（ECG 變化必給；5 分鐘未改善可重複）",
+        "Regular insulin 10 U IV + D50W 50 mL（血糖 > 250 不給糖）；salbutamol 霧化",
+        "停所有含 K 輸液／保鉀藥（ACEI/ARB、spironolactone、K 補充）",
+        "移除：furosemide、Lokelma／結合劑；透析病人／無尿 → 緊急透析（腎臟科）",
+        "心搏過緩不穩 → atropine／TCP 同時做（高血鉀時 capture 可能困難）"
+      ],
+      "orders": [
+        { "drug": "Calcium gluconate 10%", "dose": "3 g（30 mL）", "route": "IV push over 5–10 min", "freq": "STAT；5 分鐘後 ECG 未改善可重複", "note": "台灣 1 g/10 mL amp × 3；digoxin 中毒者慢滴 20–30 min" },
+        { "drug": "Regular insulin", "dose": "10 U", "route": "IV push", "freq": "STAT", "with": "D50W 50 mL IV push（血糖 > 250 不給糖）", "note": "血糖 q1h × 6 hr" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg（不穩時）", "note": "高血鉀時效果差，重點是降 K" },
+        { "drug": "經皮節律（TCP）", "dose": "rate 60–80，output 至 capture +10%", "route": "貼片前後位", "freq": "不穩且 atropine 無效", "note": "" }
+      ],
+      "watch": ["連續 ECG（QRS 變窄 = 有效）、K 於治療後 1、2、4、6 小時", "血糖 q1h × 6 hr", "HR／BP q5 min"],
+      "call": ["高血鉀 + ECG 變化／心搏過緩 = 後線 + 腎臟科（緊急透析）", "K ≥ 6.5、無尿、透析病人"],
+      "refs": [{ "ch": "33", "q": "Calcium gluconate 10%" }, { "ch": "21", "q": "高血鉀" }]
+    },
+    "r_myxedema": {
+      "type": "result",
+      "urgency": "red",
+      "title": "黏液水腫昏迷（甲狀腺低下）心搏過緩",
+      "summary": "低體溫 + 意識差 + 心搏過緩 + 低 Na／低血糖：**先 hydrocortisone 100 mg IV q8h（腎上腺儲備不足）→ levothyroxine 200–400 mcg IV load → 50–100 mcg IV QD**；保溫、找誘因（感染）；鎮靜劑減量；ICU／內分泌科。",
+      "steps": [
+        "叫後線 + ICU／內分泌科；監測、IV、ECG；抽 TSH、fT4、cortisol、Na、血糖、ABG、培養（**不等結果**）",
+        "**先** hydrocortisone 100 mg IV → 再 levothyroxine（否則誘發腎上腺危症）",
+        "保溫；低血糖 → 葡萄糖；矯正低 Na",
+        "找誘因：感染、鎮靜劑、冷暴露、停藥；鎮靜劑減量（代謝慢）",
+        "呼吸抑制（CO₂ 滯留）→ 早期插管；心搏過緩不穩 → atropine／TCP（甲狀腺補充後才改善）"
+      ],
+      "orders": [
+        { "drug": "Hydrocortisone", "dose": "100 mg", "route": "IV push", "freq": "q8h（**先於** levothyroxine）", "note": "腎上腺儲備不足" },
+        { "drug": "Levothyroxine", "dose": "200–400 mcg load", "route": "IV drip", "freq": "STAT（類固醇後）→ 50–100 mcg IV QD", "note": "類固醇後才給" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg（不穩時）", "note": "效果有限" },
+        { "drug": "NS", "dose": "250–500 mL", "route": "IV drip over 15 min", "freq": "低血壓時，小心", "note": "低 Na 者避免低張液" }
+      ],
+      "watch": ["體溫、HR、BP、意識 q1h；SpO₂／ABG（CO₂ 滯留）", "血糖、Na q4–6h", "心律不整（levothyroxine 後）"],
+      "call": ["疑黏液水腫昏迷 = 後線 + ICU + 內分泌科", "呼吸抑制、低血壓、心搏過緩不穩"],
+      "refs": [{ "ch": "21", "q": "甲狀腺低下（黏液水腫）" }]
+    },
+    "r_hypothermia": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低體溫心搏過緩",
+      "summary": "**主動復溫**是治療；體溫 < 30℃ 的心搏過緩**不用藥物／節律**（無效且易誘發 VF）；小心搬動；核心體溫監測；找原因（敗血症、甲狀腺低下、藥物、環境）。",
+      "steps": [
+        "核心體溫（直腸／膀胱／食道）；監測、IV；小心搬動（VF 風險）",
+        "主動復溫：加溫毯、加溫輸液、加溫 O₂；嚴重（< 30℃／不穩）→ 體外復溫（ICU）",
+        "< 30℃ 心搏過緩：不給 atropine、不 pacing；復溫後多自行改善",
+        "找原因：敗血症、甲狀腺低下（黏液水腫）、腎上腺不足、藥物／酒精、低血糖、環境",
+        "血糖、K、ABG（依體溫校正）、TSH、cortisol、培養"
+      ],
+      "orders": [
+        { "drug": "加溫輸液（NS）", "dose": "500 mL", "route": "IV drip", "freq": "可重複", "note": "依院內復溫流程；小心肺水腫" },
+        { "drug": "加溫毯／加溫 O₂", "dose": "1 張加溫毯", "route": "體表／面罩", "freq": "持續至核心體溫正常", "note": "嚴重者體外復溫（ICU）" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "僅 ≥ 30℃ 且有症狀時，q3–5 min max 3 mg", "note": "< 30℃ 不用藥物／節律" }
+      ],
+      "watch": ["核心體溫 q30 min、HR、BP、心律（VF）", "K、血糖（復溫後變化）、ABG"],
+      "call": ["體溫 < 30℃、不穩、需體外復溫 = 後線 + ICU", "復溫後心搏過緩持續 → 找其他原因"],
+      "refs": [{ "ch": "21", "q": "低體溫" }],
+      "next": [{ "label": "疑黏液水腫昏迷", "next": "r_myxedema" }]
+    },
+    "r_pacer": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "節律器病人心搏過緩",
+      "summary": "確認 **capture／sensing、電池、導線**（ECG 有 spike 無 QRS = failure to capture；無 spike = oversensing／電池／導線）；磁鐵測試（強制非同步 pacing）；不穩 → 依有症狀心搏過緩處置（TCP 可用）；聯絡心臟科／原廠。",
+      "steps": [
+        "12 導程 ECG、長條 rhythm strip：有無 pacing spike？spike 後有無 QRS？",
+        "Failure to capture（spike 無 QRS）：導線移位／斷裂、電池耗盡、高血鉀、缺血、藥物（抗心律不整藥）→ K、ECG",
+        "無 spike：oversensing（肌電、電磁干擾）、電池、導線 → 磁鐵放在節律器上（強制非同步固定頻率）",
+        "CXR（導線位置／斷裂）；節律器卡片／型號、上次檢查",
+        "不穩 → atropine／TCP／dopamine（同有症狀心搏過緩）；TCP 貼片避開節律器",
+        "聯絡心臟科／原廠程控"
+      ],
+      "orders": [
+        { "drug": "磁鐵測試", "dose": "1 個磁鐵", "route": "放在節律器上方", "freq": "持續監測下", "note": "強制非同步 pacing（磁鐵頻率）；ICD 則是暫停放電" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV push", "freq": "q3–5 min，max 3 mg（不穩時）", "note": "" },
+        { "drug": "經皮節律（TCP）", "dose": "rate 60–80，output 至 capture +10%", "route": "貼片前後位（避開節律器）", "freq": "不穩時", "note": "" }
+      ],
+      "watch": ["連續監測 capture／sensing", "BP、意識；K、缺血徵候"],
+      "call": ["節律器故障（failure to capture／sensing）→ 心臟科／原廠", "不穩定、需 TCP"],
+      "refs": [{ "ch": "21", "q": "節律器病人心搏過緩" }],
+      "next": [{ "label": "不穩 → 有症狀心搏過緩處置", "next": "r_unstable" }]
+    }
+  }
+}

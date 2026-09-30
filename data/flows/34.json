@@ -1,0 +1,629 @@
+{
+  "id": "34",
+  "title": "鈣離子異常",
+  "chapter": "34",
+  "entries": [
+    {
+      "label": "Ca 低（護理師報 Ca < 8.4）",
+      "type": "symptom",
+      "start": "q_ca",
+      "group": "檢驗異常",
+      "keywords": [
+        "低血鈣",
+        "鈣低",
+        "Ca 7",
+        "hypocalcemia",
+        "calcium low",
+        "校正鈣",
+        "游離鈣",
+        "ionized calcium"
+      ]
+    },
+    {
+      "label": "Ca 高（> 10.5）",
+      "type": "symptom",
+      "start": "q_ca",
+      "group": "檢驗異常",
+      "keywords": [
+        "高血鈣",
+        "鈣高",
+        "Ca 12",
+        "Ca 14",
+        "hypercalcemia",
+        "calcium high"
+      ]
+    },
+    {
+      "label": "手足抽搐／口周麻／Trousseau（疑低血鈣）",
+      "type": "symptom",
+      "start": "r_hypoca_iv",
+      "group": "檢驗異常",
+      "keywords": [
+        "手足抽搐",
+        "tetany",
+        "Trousseau",
+        "Chvostek",
+        "口周麻",
+        "喉痙攣",
+        "甲狀腺術後 抽搐"
+      ]
+    },
+    {
+      "label": "低血鈣",
+      "type": "diagnosis",
+      "start": "q_ca",
+      "keywords": [
+        "低血鈣",
+        "hypocalcemia",
+        "calcium gluconate",
+        "calcitriol",
+        "副甲狀腺低下"
+      ]
+    },
+    {
+      "label": "高血鈣",
+      "type": "diagnosis",
+      "start": "q_ca",
+      "keywords": [
+        "高血鈣",
+        "hypercalcemia",
+        "PTH",
+        "副甲狀腺亢進",
+        "hyperparathyroidism"
+      ]
+    },
+    {
+      "label": "惡性高血鈣（Ca > 14／有症狀）",
+      "type": "diagnosis",
+      "start": "r_hyperca_severe",
+      "keywords": [
+        "惡性高血鈣",
+        "hypercalcemia of malignancy",
+        "PTHrP",
+        "zoledronic acid",
+        "calcitonin",
+        "denosumab",
+        "骨髓瘤 高血鈣"
+      ]
+    },
+    {
+      "label": "甲狀腺／副甲狀腺術後低血鈣",
+      "type": "diagnosis",
+      "start": "r_postthyroid",
+      "keywords": [
+        "甲狀腺術後",
+        "post-thyroidectomy",
+        "副甲狀腺切除",
+        "hungry bone",
+        "術後 PTH",
+        "頸部手術 低血鈣"
+      ]
+    }
+  ],
+  "nodes": {
+    "q_ca": {
+      "type": "number",
+      "title": "測得總鈣（mg/dL）？",
+      "help": "下一題輸入 albumin 自動算校正鈣 = Ca + 0.8 × (4 − albumin)；ICU、輸血、pH 異常者最好直接驗游離鈣（正常 4.6–5.3 mg/dL／1.15–1.32 mmol/L）",
+      "var": "ca",
+      "unit": "mg/dL",
+      "step": 0.1,
+      "quick": [
+        6.5,
+        7.0,
+        7.5,
+        8.0,
+        11,
+        12,
+        14
+      ],
+      "branches": [
+        {
+          "else": "q_alb"
+        }
+      ]
+    },
+    "q_alb": {
+      "type": "number",
+      "title": "Albumin（g/dL）？",
+      "help": "不知道請輸入 4.0（不校正）；校正鈣 = Ca + 0.8 × (4 − albumin)",
+      "var": "alb",
+      "unit": "g/dL",
+      "step": 0.1,
+      "quick": [
+        2.0,
+        2.5,
+        3.0,
+        3.5,
+        4.0
+      ],
+      "branches": [
+        {
+          "if": "ca + 0.8*(4-alb) > 14",
+          "next": "r_hyperca_severe"
+        },
+        {
+          "if": "ca + 0.8*(4-alb) > 10.5",
+          "next": "q_hyperca_sx"
+        },
+        {
+          "if": "ca + 0.8*(4-alb) >= 8.4",
+          "next": "r_ca_normal"
+        },
+        {
+          "if": "ca + 0.8*(4-alb) < 7.5",
+          "next": "r_hypoca_iv"
+        },
+        {
+          "else": "q_hypoca_sx"
+        }
+      ]
+    },
+    "q_hypoca_sx": {
+      "type": "choice",
+      "title": "校正 Ca 7.5–8.3：有症狀、QT 延長或頸部術後嗎？",
+      "help": "症狀：口周／指尖麻、手足抽搐（Trousseau、Chvostek）、喉痙攣、癲癇、意識改變、低血壓；ECG QT 延長",
+      "options": [
+        {
+          "label": "有症狀／QT 延長／頸部手術後急性",
+          "next": "r_hypoca_iv"
+        },
+        {
+          "label": "無症狀",
+          "next": "r_hypoca_po"
+        }
+      ]
+    },
+    "r_hypoca_iv": {
+      "type": "result",
+      "urgency": "red",
+      "title": "症狀性低血鈣（或校正 Ca < 7.5、QT 延長）：calcium gluconate 1–2 g IV → 持續滴注",
+      "summary": "**Calcium gluconate 1–2 g in 50–100 mL over 10–20 min**（效果只 1–2 小時）→ **一定接持續滴注**（10 g/1 L，起始 50 mL/hr，依 q4–6h 游離鈣調）；同時補 Mg；高血磷者先降磷；心電監測。",
+      "steps": [
+        "心電監測、12 導程 ECG（QT）；IV（大靜脈，外滲壞死）；喉痙攣／癲癇 → ABC、備插管",
+        "抽：albumin、游離 Ca、P、Mg、Cr、PTH、25-OH vit D、ALP、lipase、VBG",
+        "Calcium gluconate 1–2 g over 10–20 min（digoxin 使用者慢滴 + 監測）；可重複",
+        "接持續滴注 10 g in 1 L，50 mL/hr 起，q4–6h 游離 Ca 調整（目標 1.0–1.2 mmol/L）",
+        "Mg < 1.8 → MgSO₄ 2 g over 1 hr（低鎂不矯正低鈣不會好）",
+        "高血磷（腎衰竭、腫瘤溶解、橫紋肌溶解）→ 先降磷（結合劑、透析），再補鈣（避免鈣磷沉積）",
+        "同時開始口服鈣 + calcitriol 作過渡；找原因（術後、vit D、藥物、輸血枸櫞酸、胰臟炎）",
+        "避免與 NaHCO₃／磷同管"
+      ],
+      "orders": [
+        {
+          "drug": "Calcium gluconate 10%（1 g/10 mL = 93 mg 元素鈣）",
+          "dose": "1–2 g in D5W/NS 50–100 mL",
+          "route": "IV drip over 10–20 min",
+          "freq": "STAT；可重複；之後接持續滴注",
+          "note": "digoxin 使用者慢滴 + 心電監測；外滲壞死；勿與 NaHCO₃／磷同管"
+        },
+        {
+          "drug": "Calcium gluconate 持續滴注",
+          "dose": "10 g (100 mL) in NS/D5W 900 mL（≈ 1 mg 元素鈣/mL），{round(wt*0.5)}–{round(wt*1.5)} mL/hr（0.5–1.5 mg/kg/hr），起始 50 mL/hr",
+          "route": "IV drip（大靜脈）",
+          "freq": "持續，q4–6h 游離 Ca 調整（目標 1.0–1.2 mmol/L）",
+          "note": "依 {wt} kg；效果只 1–2 hr 故必須接續"
+        },
+        {
+          "drug": "MgSO₄",
+          "dose": "2 g（必要時 4–8 g/24 hr）",
+          "route": "IV drip over 1 hr",
+          "freq": "STAT Mg < 1.8 mg/dL 時",
+          "note": "低鎂不矯正低鈣不會好（Ch36）"
+        },
+        {
+          "drug": "Calcium carbonate（1,250 mg = 500 mg 元素鈣）",
+          "dose": "元素鈣 500–1,000 mg",
+          "route": "PO 隨餐",
+          "freq": "TID",
+          "note": "IV 後過渡；PPI 使用者改 calcium citrate（空腹可）"
+        },
+        {
+          "drug": "Calcitriol",
+          "dose": "0.25–0.5 mcg（術後副甲狀腺低下 0.5–1 mcg）",
+          "route": "PO",
+          "freq": "BID",
+          "note": "起效 1–2 天；監測高血鈣／高尿鈣"
+        },
+        {
+          "drug": "Calcium chloride 10%（1 g = 273 mg 元素鈣）",
+          "dose": "0.5–1 g",
+          "route": "IV push via CVC over 5–10 min",
+          "freq": "僅急救／心跳停止",
+          "note": "3 倍效力；周邊外滲嚴重"
+        }
+      ],
+      "watch": [
+        "游離 Ca q4–6h（滴注中）；目標 1.0–1.2 mmol/L",
+        "ECG QT、心電監測；Mg、P、K",
+        "注射部位外滲；喉痙攣、抽搐、意識"
+      ],
+      "call": [
+        "校正 Ca < 7.0 或抽搐、喉痙攣、QT 延長 → 通知後線",
+        "頸部術後急性低血鈣",
+        "需要持續鈣滴注",
+        "腎衰竭合併高血磷 → 腎臟科"
+      ],
+      "ddx": [
+        "低血鎂",
+        "高血磷（腫瘤溶解、橫紋肌溶解）",
+        "大量輸血枸櫞酸（每 4 U 血品 calcium gluconate 1 g）",
+        "急性胰臟炎"
+      ],
+      "refs": [
+        {
+          "ch": "34",
+          "q": "Calcium gluconate 10%"
+        },
+        {
+          "ch": "34",
+          "q": "Calcium gluconate 持續"
+        },
+        {
+          "ch": "36",
+          "q": "MgSO₄"
+        }
+      ],
+      "next": [
+        {
+          "label": "甲狀腺／副甲狀腺術後 → 術後追蹤與預防",
+          "next": "r_postthyroid"
+        }
+      ]
+    },
+    "r_hypoca_po": {
+      "type": "result",
+      "urgency": "green",
+      "title": "無症狀低血鈣（校正 Ca 7.5–8.3）：口服鈣 + calcitriol，補 Mg，找原因",
+      "summary": "口服元素鈣 500–1,000 mg TID + calcitriol 0.25–0.5 mcg BID；Mg 偏低就補；vit D 缺乏補 D3；高血磷者先降磷；追 Ca、Mg、P、PTH、25-OH D。",
+      "steps": [
+        "ECG 一次（QT）；抽 albumin、游離 Ca、P、Mg、Cr、PTH、25-OH vit D、ALP",
+        "口服鈣隨餐（carbonate；PPI 使用者改 citrate）+ calcitriol",
+        "Mg < 1.8 → 補鎂（口服 MgO 或 IV MgSO₄ 2 g）",
+        "vit D 缺乏 → cholecalciferol；CKD → 腎臟科調整",
+        "高血磷者先降磷再補鈣；停 loop 利尿劑、檢視藥物（cinacalcet、雙磷酸鹽、phenytoin）",
+        "Ca q12–24h；出現症狀或 < 7.5 → IV"
+      ],
+      "orders": [
+        {
+          "drug": "Calcium carbonate（1,250 mg = 500 mg 元素鈣）",
+          "dose": "元素鈣 500–1,000 mg",
+          "route": "PO 隨餐",
+          "freq": "TID",
+          "note": "calcium citrate 空腹可、PPI 使用者較好"
+        },
+        {
+          "drug": "Calcitriol",
+          "dose": "0.25–0.5 mcg",
+          "route": "PO",
+          "freq": "BID",
+          "note": "起效 1–2 天；監測高血鈣／高尿鈣"
+        },
+        {
+          "drug": "Cholecalciferol（D3）",
+          "dose": "50,000 IU 每週 × 8 週 或 2,000–5,000 IU QD",
+          "route": "PO",
+          "freq": "每週／QD",
+          "note": "vit D 缺乏者；慢"
+        },
+        {
+          "drug": "MgSO₄",
+          "dose": "2 g",
+          "route": "IV drip over 1 hr",
+          "freq": "Mg < 1.8 mg/dL 時",
+          "note": "或口服 MgO 250–500 mg BID–QID"
+        }
+      ],
+      "watch": [
+        "Ca（校正／游離）q12–24h；Mg、P",
+        "新出現麻、抽搐、QT 延長 → IV"
+      ],
+      "call": [
+        "校正 Ca < 7.0 或出現抽搐、喉痙攣、QT 延長",
+        "腎衰竭合併高血磷"
+      ],
+      "refs": [
+        {
+          "ch": "34",
+          "q": "口服鈣"
+        },
+        {
+          "ch": "34",
+          "q": "Calcitriol"
+        }
+      ],
+      "next": [
+        {
+          "label": "出現症狀／< 7.5 → IV 處置",
+          "next": "r_hypoca_iv"
+        }
+      ]
+    },
+    "r_postthyroid": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "甲狀腺全切／副甲狀腺術後低血鈣：術後 6、12、24 hr 驗 Ca/PTH，PTH 低者預防性補",
+      "summary": "術後 6、12、24 小時驗 Ca、PTH；**PTH < 10–15 pg/mL → 預防性 calcium carbonate 1–2 g TID + calcitriol 0.5 mcg BID**；有症狀（口周麻、抽搐、喉痙攣）依 IV 流程；hungry bone 者需求量大。",
+      "steps": [
+        "術後 6、12、24 hr 驗 Ca（校正／游離）、PTH；Mg、P",
+        "PTH < 10–15 → 預防性口服鈣 + calcitriol，不必等症狀",
+        "有症狀、QT 延長或校正 Ca < 7.5 → calcium gluconate IV + 持續滴注（見連結）",
+        "Mg 偏低就補（術後常見）",
+        "喉痙攣／喘鳴 → ABC、通知外科與麻醉（血腫壓迫要排除）",
+        "術後副甲狀腺低下 calcitriol 用 0.5–1 mcg BID"
+      ],
+      "orders": [
+        {
+          "drug": "Calcium carbonate",
+          "dose": "1–2 g（元素鈣 400–800 mg）",
+          "route": "PO 隨餐",
+          "freq": "TID",
+          "note": "PTH < 10–15 pg/mL 預防性；hungry bone 需更高"
+        },
+        {
+          "drug": "Calcitriol",
+          "dose": "0.5 mcg（術後副甲狀腺低下 0.5–1 mcg）",
+          "route": "PO",
+          "freq": "BID",
+          "note": "起效 1–2 天"
+        },
+        {
+          "drug": "Calcium gluconate 10%",
+          "dose": "1–2 g in D5W/NS 50–100 mL",
+          "route": "IV drip over 10–20 min",
+          "freq": "PRN 症狀／QT 延長／校正 Ca < 7.5，之後持續滴注",
+          "note": "見「症狀性低血鈣」流程"
+        },
+        {
+          "drug": "MgSO₄",
+          "dose": "2 g",
+          "route": "IV drip over 1 hr",
+          "freq": "Mg < 1.8 時"
+        }
+      ],
+      "watch": [
+        "Ca、PTH 術後 6、12、24 hr，之後 q12–24h",
+        "口周麻、Trousseau/Chvostek、喘鳴（喉痙攣 vs 血腫）",
+        "Mg、P"
+      ],
+      "call": [
+        "頸部術後急性低血鈣有症狀 → 通知後線 + 外科",
+        "喘鳴／呼吸困難（血腫或喉痙攣）",
+        "校正 Ca < 7.0"
+      ],
+      "refs": [
+        {
+          "ch": "34",
+          "q": "術後（甲狀腺全切）"
+        },
+        {
+          "ch": "34",
+          "q": "Calcitriol"
+        }
+      ],
+      "next": [
+        {
+          "label": "有症狀 → IV calcium gluconate",
+          "next": "r_hypoca_iv"
+        }
+      ]
+    },
+    "q_hyperca_sx": {
+      "type": "choice",
+      "title": "校正 Ca 10.6–14：有症狀嗎？",
+      "help": "stones, bones, groans, moans：多尿、口渴、脫水、便秘、噁心嘔吐、腹痛、無力、意識改變／嗜睡、AKI；ECG QT 縮短、心搏過緩、AV block",
+      "options": [
+        {
+          "label": "有症狀（意識改變、AKI、心律不整、嚴重脫水／嘔吐）",
+          "next": "r_hyperca_severe"
+        },
+        {
+          "label": "無症狀或輕微",
+          "next": "r_hyperca_mild"
+        }
+      ]
+    },
+    "r_hyperca_severe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "嚴重高血鈣（Ca > 14 或有症狀）：NS 大量 + calcitonin（快）+ zoledronate（慢）",
+      "summary": "幾乎都脫水：**NS 1–2 L bolus → 200–300 mL/hr（目標尿量 100–150 mL/hr）**；**calcitonin 4 IU/kg SC/IM q12h** 4–6 小時起效（只 48 小時）；**zoledronic acid 4 mg IV** 2–4 天起效（惡性首選）；心腎衰竭無法灌水或 Ca > 18 → 透析；多數是癌症或副甲狀腺亢進。",
+      "steps": [
+        "心電監測、ECG（QT 縮短、心搏過緩、AV block）；IV × 2、Foley 記 I/O",
+        "抽：albumin、游離 Ca、P、Mg、Cr、K、**PTH**（低 → 找癌症：PTHrP、SPEP/UPEP、25-OH-D、1,25-D、ALP、TSH）",
+        "NS 1–2 L bolus → 200–300 mL/hr；心腎衰竭者減量、頻繁評估；體液補足後有 overload 才 furosemide",
+        "Calcitonin 4 IU/kg SC/IM q12h（可增至 8 IU/kg q6h）；48 hr 內 tachyphylaxis",
+        "Zoledronic acid 4 mg IV（CrCl < 30–35 減量或改 pamidronate／denosumab）；一週內不重複",
+        "停鈣片、vit D、thiazide、lithium、含鈣結合劑；活動；淋巴瘤／骨髓瘤／肉芽腫 → 類固醇",
+        "Ca > 18、心腎衰竭無法灌水、神經症狀嚴重 → 腎臟科透析（低鈣透析液）",
+        "Ca q6–12h；補 K/Mg（利尿與輸液後）"
+      ],
+      "orders": [
+        {
+          "drug": "NS",
+          "dose": "1–2 L bolus → 200–300 mL/hr",
+          "route": "IV drip",
+          "freq": "持續（目標尿量 100–150 mL/hr；總量常 3–6 L/d）",
+          "note": "心腎衰竭者減量、監測肺水腫；降 Ca 約 1–2 mg/dL"
+        },
+        {
+          "drug": "Calcitonin（鮭魚）",
+          "dose": "{round(wt*4)} IU（4 IU/kg）",
+          "route": "SC／IM",
+          "freq": "q12h（可增至 8 IU/kg = {round(wt*8)} IU q6h）",
+          "note": "依 {wt} kg；4–6 hr 起效、48 hr 內失效；橋接用"
+        },
+        {
+          "drug": "Zoledronic acid",
+          "dose": "4 mg in NS 100 mL",
+          "route": "IV drip over 15–30 min",
+          "freq": "× 1（一週內不重複）",
+          "cond": "crcl >= 35",
+          "note": "CrCl {round(crcl)}；惡性高血鈣首選；發燒／肌痛、低鈣、下顎骨壞死（長期）"
+        },
+        {
+          "drug": "Pamidronate",
+          "dose": "60–90 mg",
+          "route": "IV drip over 2–4 hr",
+          "freq": "× 1",
+          "cond": "crcl < 35",
+          "note": "CrCl {round(crcl)} < 35 時取代 zoledronate（或 denosumab）"
+        },
+        {
+          "drug": "Denosumab",
+          "dose": "120 mg",
+          "route": "SC",
+          "freq": "× 1（1 週後可再 1 次）",
+          "note": "雙磷酸鹽無效／腎衰竭；低鈣風險（補 vit D）；自費／事前審查"
+        },
+        {
+          "drug": "Furosemide",
+          "dose": "20–40 mg",
+          "route": "IV push",
+          "freq": "PRN 體液補足後有 overload 時",
+          "note": "不再常規（加重脫水、低 K/Mg）"
+        },
+        {
+          "drug": "Prednisolone",
+          "dose": "20–40 mg",
+          "route": "PO",
+          "freq": "QD",
+          "note": "僅淋巴瘤、骨髓瘤、肉芽腫、vit D 中毒；或 hydrocortisone 100 mg IV q8h；2–5 天起效"
+        },
+        {
+          "drug": "血液透析（低鈣透析液）",
+          "dose": "依腎臟科",
+          "route": "—",
+          "freq": "Ca > 18、心腎衰竭無法灌水、神經症狀嚴重",
+          "note": "腎臟科"
+        }
+      ],
+      "watch": [
+        "Ca q6–12h；Cr、K、Mg、P",
+        "I/O、尿量（目標 100–150 mL/hr）、肺水腫（囉音、SpO₂）",
+        "ECG、意識；zoledronate 後低鈣、發燒"
+      ],
+      "call": [
+        "Ca > 14 或意識改變／AKI／心律不整 → 通知後線",
+        "需要 calcitonin／雙磷酸鹽或透析",
+        "原因不明（可能新診斷癌症）→ 血液腫瘤科",
+        "心腎衰竭無法灌水"
+      ],
+      "ddx": [
+        "原發性副甲狀腺亢進（PTH 高／正常偏高）",
+        "惡性腫瘤（PTHrP、溶骨轉移、淋巴瘤）",
+        "肉芽腫、vit D 中毒、thiazide、lithium、乳鹼症候群、長期臥床"
+      ],
+      "refs": [
+        {
+          "ch": "34",
+          "q": "NS"
+        },
+        {
+          "ch": "34",
+          "q": "Calcitonin"
+        },
+        {
+          "ch": "34",
+          "q": "Zoledronic acid"
+        }
+      ]
+    },
+    "r_hyperca_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕–中度無症狀高血鈣（10.6–14）：停來源、補水、查 PTH 找原因",
+      "summary": "停鈣片、vit D、thiazide、lithium、含鈣結合劑；口服／IV 補水；**PTH 高／正常偏高 → 副甲狀腺亢進（門診、外科）；低 → 找癌症**；Ca q12–24h，惡化或有症狀 → 積極處置。",
+      "steps": [
+        "ECG 一次（QT 縮短）；抽 albumin、游離 Ca、P、Mg、Cr、PTH；PTH 低 → PTHrP、SPEP/UPEP、25-OH-D、1,25-D、ALP、TSH；尿 Ca/Cr（FHH）",
+        "停鈣片、vit D、thiazide、lithium、含鈣結合劑、制酸劑（乳鹼）；鼓勵活動與飲水",
+        "脫水者 NS 補水（心腎衰竭者小心）",
+        "副甲狀腺亢進 → 內分泌／外科門診；不能手術者 cinacalcet；透析三發性 → 腎臟科",
+        "Ca q12–24h；> 14 或出現症狀 → 嚴重處置（見連結）"
+      ],
+      "orders": [
+        {
+          "drug": "NS",
+          "dose": "500 mL bolus（心腎衰竭 250 mL）→ 依體液狀態維持",
+          "route": "IV drip",
+          "freq": "脫水者 STAT，之後持續至補足",
+          "note": "無法口服或脫水者；章節僅述「補水」，速率依體液與心腎功能（有症狀者見嚴重處置 200–300 mL/hr）"
+        },
+        {
+          "drug": "（停止來源）",
+          "dose": "鈣片、vit D、thiazide、lithium、含鈣結合劑 0（停）",
+          "route": "—",
+          "freq": "—"
+        },
+        {
+          "drug": "Cinacalcet",
+          "dose": "30 mg → 90 mg",
+          "route": "PO",
+          "freq": "BID",
+          "note": "副甲狀腺癌、透析三發性、不能手術者；依專科"
+        }
+      ],
+      "watch": [
+        "Ca q12–24h；Cr、K",
+        "新症狀（意識、嘔吐、多尿）"
+      ],
+      "call": [
+        "Ca > 14 或出現意識改變／AKI／心律不整",
+        "原因不明（可能新診斷癌症）"
+      ],
+      "refs": [
+        {
+          "ch": "34",
+          "q": "原發性副甲狀腺亢進"
+        },
+        {
+          "ch": "34",
+          "q": "停止來源"
+        }
+      ],
+      "next": [
+        {
+          "label": "惡化 > 14／有症狀 → 嚴重處置",
+          "next": "r_hyperca_severe"
+        }
+      ]
+    },
+    "r_ca_normal": {
+      "type": "result",
+      "urgency": "green",
+      "title": "校正 Ca 8.4–10.5：正常範圍",
+      "summary": "校正後在正常範圍；ICU、輸血、pH 異常（鹼血症游離鈣↓）者若有症狀請直接驗游離鈣（正常 4.6–5.3 mg/dL／1.15–1.32 mmol/L）。",
+      "steps": [
+        "有手足抽搐、QT 延長等症狀 → 驗游離鈣、Mg、P、VBG（過度換氣鹼血症）",
+        "大量輸血中：每 4 U 血品 calcium gluconate 1 g IV",
+        "無症狀 → 不需處置"
+      ],
+      "orders": [
+        {
+          "drug": "Calcium gluconate 10%",
+          "dose": "1 g",
+          "route": "IV drip",
+          "freq": "每 4 U 血品（大量輸血時）",
+          "note": "枸櫞酸螯合"
+        }
+      ],
+      "watch": [
+        "有症狀者游離鈣",
+        "大量輸血者 q4 U 驗游離鈣"
+      ],
+      "call": [
+        "游離鈣 < 0.8 mmol/L 或抽搐、QT 延長"
+      ],
+      "refs": [
+        {
+          "ch": "34",
+          "q": "校正鈣"
+        },
+        {
+          "ch": "34",
+          "q": "大量輸血"
+        }
+      ]
+    }
+  }
+}

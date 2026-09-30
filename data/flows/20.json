@@ -1,0 +1,497 @@
+{
+  "id": "20",
+  "title": "心搏過速",
+  "chapter": "20",
+  "entries": [
+    { "label": "心跳快（HR > 100／監視器警報）", "type": "symptom", "start": "i_phone", "group": "生命徵象",
+      "keywords": ["心搏過速", "心跳快", "tachycardia", "HR 150", "心率 140", "心跳 180", "monitor alarm", "頻脈"] },
+    { "label": "心悸", "type": "symptom", "start": "i_phone", "group": "生命徵象",
+      "keywords": ["心悸", "palpitation", "心跳很快", "心臟怦怦跳", "突發突止"] },
+    { "label": "不穩定心搏過速（同步電擊整流）", "type": "diagnosis", "start": "q_cv_rhythm",
+      "keywords": ["同步電擊", "cardioversion", "整流", "不穩定心搏過速", "unstable tachycardia", "200 J", "100 J", "SYNC"] },
+    { "label": "竇性心搏過速", "type": "diagnosis", "start": "r_sinus",
+      "keywords": ["竇性心搏過速", "sinus tachycardia", "竇速", "代償性頻脈"] },
+    { "label": "PSVT（AVNRT／AVRT）", "type": "diagnosis", "start": "r_psvt",
+      "keywords": ["PSVT", "SVT", "AVNRT", "AVRT", "adenosine", "Valsalva", "窄 QRS 規則", "陣發性上心室頻脈"] },
+    { "label": "心房顫動／撲動 RVR", "type": "diagnosis", "start": "q_af_hf",
+      "keywords": ["心房顫動", "Afib", "AF", "atrial fibrillation", "RVR", "心房撲動", "AFL", "flutter", "rate control", "diltiazem"] },
+    { "label": "Afib 抗凝評估（CHA₂DS₂-VA、DOAC）", "type": "diagnosis", "start": "r_af_anticoag",
+      "keywords": ["抗凝", "anticoagulation", "CHA2DS2-VA", "CHA2DS2-VASc", "DOAC", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "轉律"] },
+    { "label": "Pre-excited AF（WPW + Afib）", "type": "diagnosis", "start": "r_wpw_af",
+      "keywords": ["WPW", "pre-excited AF", "Wolff-Parkinson-White", "副傳導路徑", "procainamide", "delta wave"] },
+    { "label": "多源性心房頻脈（MAT）", "type": "diagnosis", "start": "r_mat",
+      "keywords": ["MAT", "多源性心房頻脈", "multifocal atrial tachycardia", "COPD 頻脈"] },
+    { "label": "頻繁 PAC／PVC、非持續性 VT", "type": "diagnosis", "start": "r_ectopy",
+      "keywords": ["PVC", "PAC", "NSVT", "非持續性 VT", "早期收縮", "ectopy", "couplet", "bigeminy"] },
+    { "label": "穩定單型 VT（有脈搏）", "type": "diagnosis", "start": "r_vt_stable",
+      "keywords": ["VT", "心室頻脈", "ventricular tachycardia", "寬 QRS", "wide QRS", "amiodarone", "lidocaine", "單型 VT"] },
+    { "label": "Torsades de pointes／多型 VT（QT 延長）", "type": "diagnosis", "start": "r_torsades",
+      "keywords": ["Torsades", "TdP", "多型性 VT", "polymorphic VT", "QT 延長", "long QT", "MgSO4", "isoproterenol"] },
+    { "label": "電風暴／ICD 反覆放電", "type": "diagnosis", "start": "r_storm",
+      "keywords": ["電風暴", "electrical storm", "ICD 放電", "ICD shock", "VT storm", "磁鐵"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中立即口頭醫囑",
+      "body": [
+        "**12 導程 ECG STAT**、接監測器、完整生命徵象（血壓、意識、胸痛、喘、SpO₂、體溫）、IV、O₂（SpO₂ < 94%）",
+        "問：心率多少？規則／不規則？何時開始？以前有沒有？節律器／ICD？今天的 K／Mg？β-blocker 被停？剛給 salbutamol／dopamine／atropine？",
+        "**不穩（低血壓、意識改變、胸痛、肺水腫）→ 推急救車與電擊器、叫後線、立刻到床邊**",
+        "到床邊前：舊 ECG 比較；K、Mg、Ca、Hb、TSH、troponin；體液狀態、出血、感染"
+      ],
+      "next": "q_pulse"
+    },
+    "q_pulse": {
+      "type": "choice",
+      "title": "到床邊：有沒有脈搏？",
+      "options": [
+        { "label": "有脈搏", "next": "q_sbp" },
+        { "label": "無脈搏（VF／無脈 VT）", "next": "r_pulseless" }
+      ]
+    },
+    "q_sbp": {
+      "type": "number",
+      "title": "收縮壓（SBP）？",
+      "help": "不穩定 = 心律不整**造成**的低血壓、意識改變、休克、缺血性胸痛、急性肺水腫；竇性頻脈的不穩定是原因造成，要治原因不能電",
+      "var": "sbp", "unit": "mmHg", "step": 1,
+      "quick": [70, 80, 90, 100, 120, 140],
+      "branches": [
+        { "if": "sbp < 90", "next": "q_cv_rhythm" },
+        { "else": "q_unstable" }
+      ]
+    },
+    "q_unstable": {
+      "type": "multi",
+      "title": "SBP ≥ 90：還有其他不穩定徵候嗎？",
+      "help": "心率 > 150 才通常需要立即介入；100–150 多半是竇性或代償",
+      "options": [
+        { "label": "意識改變", "set": { "altered": true } },
+        { "label": "休克徵候（花斑、CRT > 3 秒、少尿、乳酸↑）", "set": { "shock": true } },
+        { "label": "缺血性胸痛", "set": { "ischemia": true } },
+        { "label": "急性肺水腫／心衰竭", "set": { "hf": true } }
+      ],
+      "branches": [
+        { "if": "altered || shock || ischemia || hf", "next": "q_cv_rhythm" },
+        { "else": "q_qrs" }
+      ]
+    },
+    "q_cv_rhythm": {
+      "type": "choice",
+      "title": "不穩定：ECG 是哪種節律？（決定電擊能量）",
+      "help": "貼片前後位、按 SYNC 確認 R 波標記；清醒者鎮靜（極危急可不等）；每次電擊後重新按 SYNC",
+      "options": [
+        { "label": "心房顫動（不規則、無 P）", "next": "r_cardioversion", "set": { "cvr": "af" } },
+        { "label": "心房撲動（鋸齒波、常 2:1 心室率 ~150）", "next": "r_cardioversion", "set": { "cvr": "afl" } },
+        { "label": "窄 QRS 規則（SVT／PSVT）", "next": "r_cardioversion", "set": { "cvr": "svt" } },
+        { "label": "寬 QRS 規則（單型 VT）", "next": "r_cardioversion", "set": { "cvr": "vt" } },
+        { "label": "多型性 VT／Torsades（寬、不規則、QRS 形態多變）", "next": "r_cardioversion", "set": { "cvr": "poly" } },
+        { "label": "極快 > 250、寬 QRS 不規則、形態多變（pre-excited AF／WPW）", "next": "r_wpw_af" },
+        { "label": "竇性頻脈（P 波正常、逐漸起伏、通常 < 150）→ 不能電，治原因", "next": "r_sinus" }
+      ]
+    },
+    "q_qrs": {
+      "type": "choice",
+      "title": "穩定：12 導程 ECG 分「窄／寬、規則／不規則」",
+      "help": "QRS < 120 ms = 窄。寬 QRS 不確定一律當 VT 處理（不要給 verapamil）",
+      "options": [
+        { "label": "窄 QRS、規則", "next": "q_narrow_reg" },
+        { "label": "窄 QRS、不規則", "next": "q_narrow_irreg" },
+        { "label": "寬 QRS、規則（VT 直到證明不是）", "next": "r_vt_stable" },
+        { "label": "寬 QRS、不規則", "next": "q_wide_irreg" }
+      ]
+    },
+    "q_narrow_reg": {
+      "type": "choice",
+      "title": "窄 QRS 規則：哪一種？",
+      "help": "迷走刺激／adenosine 可幫助診斷（顯現撲動鋸齒波、終止 PSVT）；備電擊器與連續 rhythm strip",
+      "options": [
+        { "label": "竇性頻脈：P 波正常、逐漸起伏、通常 < 150、有明顯原因（發燒、疼痛、脫水、缺氧）", "next": "r_sinus" },
+        { "label": "PSVT：突發突止、150–250、P 藏在 QRS 內（V1 假 r'）或緊接其後", "next": "r_psvt" },
+        { "label": "心房撲動 2:1：心室率 ~150、鋸齒波", "next": "q_af_hf" },
+        { "label": "心房頻脈（異常 P 波）／交界性頻脈（術後、心肌炎、digoxin）", "next": "r_psvt" }
+      ]
+    },
+    "q_narrow_irreg": {
+      "type": "choice",
+      "title": "窄 QRS 不規則：哪一種？",
+      "options": [
+        { "label": "心房顫動（無 P、RR 完全不規則）或撲動變異傳導", "next": "q_af_hf" },
+        { "label": "多源性心房頻脈（≥ 3 種 P 形態，COPD）", "next": "r_mat" },
+        { "label": "竇性頻脈 + 頻繁 PAC", "next": "r_ectopy" }
+      ]
+    },
+    "q_wide_irreg": {
+      "type": "choice",
+      "title": "寬 QRS 不規則：哪一種？",
+      "help": "看基礎節律的 QTc、有沒有 delta 波／WPW 病史",
+      "options": [
+        { "label": "多型性 VT／Torsades，QT 延長（QRS 繞基線扭轉）", "next": "r_torsades" },
+        { "label": "多型性 VT，QT 正常（通常缺血）", "next": "r_poly_normal" },
+        { "label": "極快 > 250、QRS 形態多變、已知 WPW（pre-excited AF）", "next": "r_wpw_af" },
+        { "label": "Afib 合併束支阻滯／變異傳導（QRS 固定形態、已知 BBB）", "next": "q_af_hf" }
+      ]
+    },
+    "q_af_hf": {
+      "type": "choice",
+      "title": "Afib／AFL RVR（穩定）：心功能與血壓？",
+      "help": "不穩定 → 同步電擊 200 J。穩定 → 先控制心率（休息 < 110，有症狀 < 80）+ 找誘因 + 評估抗凝",
+      "options": [
+        { "label": "EF ≥ 40%、血壓正常、無失代償心衰竭", "next": "r_af_rate" },
+        { "label": "EF < 40%／失代償心衰竭／血壓 borderline（SBP 90–100）", "next": "r_af_hf" },
+        { "label": "已知 WPW／delta 波（pre-excited AF）", "next": "r_wpw_af" },
+        { "label": "不穩定（SBP < 90、意識改變、胸痛、肺水腫）→ 電擊", "next": "q_cv_rhythm" }
+      ]
+    },
+    "r_pulseless": {
+      "type": "result",
+      "urgency": "red",
+      "title": "無脈 VT／VF → 去顫 + CPR（Ch38）",
+      "summary": "立刻 CPR、叫急救團隊；**非同步去顫最大能量**（雙相 ≥ 200 J）→ 2 分鐘 CPR → 再評估；epinephrine 1 mg q3–5 min；頑固 VF/pVT → amiodarone 300 mg。",
+      "steps": [
+        "叫急救團隊、推急救車；CPR 100–120/min、深 5–6 cm、減少中斷",
+        "貼片 → 非同步去顫最大能量 → 立即 CPR 2 分鐘 → 看節律",
+        "IV/IO：第 2 次電擊後 epinephrine 1 mg（之後 q3–5 min）；第 3 次電擊後 amiodarone 300 mg（第 2 次 150 mg）",
+        "找可逆原因：K、缺氧、缺血、毒物、PE、填塞、張力性氣胸",
+        "Torsades → MgSO₄ 1–2 g IV"
+      ],
+      "orders": [
+        { "drug": "非同步去顫（雙相）", "dose": "120–200 J 依機器建議（不知道就最大；單相 360 J）", "route": "貼片前後位", "freq": "每 2 分鐘 CPR 後可重複，後續等同或更高", "note": "不按 SYNC（Ch38）" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min", "note": "每次後沖 20 mL NS" },
+        { "drug": "Amiodarone", "dose": "300 mg → 150 mg", "route": "IV/IO push", "freq": "1 次 → 1 次", "note": "頑固 VF/pVT；D5W 稀釋 20 mL" },
+        { "drug": "MgSO₄", "dose": "1–2 g in 10 mL", "route": "IV/IO over 1–2 min", "freq": "單次", "note": "只用於 TdP／低血鎂" }
+      ],
+      "watch": ["每 2 分鐘換手、看節律", "ETCO₂、ROSC 後 12 導程 ECG、K/Mg"],
+      "call": ["心跳停止 = 急救團隊 + 後線 + ICU + 心臟科"],
+      "refs": [{ "ch": "38", "q": "Epinephrine 1 mg/mL" }, { "ch": "20", "q": "有沒有脈搏" }]
+    },
+    "r_cardioversion": {
+      "type": "result",
+      "urgency": "red",
+      "title": "不穩定心搏過速：同步電擊整流（AHA 2025）",
+      "summary": "**Afib／AFL 200 J；窄 QRS 規則（SVT）100 J；單型 VT 100 J**（無效逐步增加至最大）；多型 VT／VF：**非同步**最大能量。清醒者先鎮靜（極危急可不等）；每次電擊後重新按 SYNC。",
+      "steps": [
+        "叫後線；O₂、抽吸、IV、插管器材、監測；推急救車",
+        "電擊貼片前後位（或胸骨右上–心尖）；按 **SYNC** 並確認 R 波標記",
+        "清醒者鎮靜：midazolam ± fentanyl（或 propofol／etomidate），等 1–2 分鐘；不穩定極危急可不等",
+        "依節律選能量（下方醫囑）→ 無效逐步增加至最大 → 可重複；每次後**重新按 SYNC**",
+        "電擊前若時間允許 heparin 5,000 U IV（Afib／AFL）",
+        "電擊後：12 導程 ECG、找原因（K/Mg、缺血、缺氧、藥物）、抗心律不整藥防復發",
+        "Afib > 48 小時電擊後抗凝 ≥ 4 週"
+      ],
+      "orders": [
+        { "drug": "同步電擊（雙相）", "dose": "200 J", "route": "貼片前後位，SYNC", "freq": "無效逐步增加至最大，可重複", "note": "Afib；單相 200 J", "cond": "cvr == 'af'" },
+        { "drug": "同步電擊（雙相）", "dose": "200 J（AFL 對電擊反應好，50–100 J 也常有效）", "route": "貼片前後位，SYNC", "freq": "無效逐步增加至最大，可重複", "note": "心房撲動", "cond": "cvr == 'afl'" },
+        { "drug": "同步電擊（雙相）", "dose": "100 J", "route": "貼片前後位，SYNC", "freq": "無效逐步增加至最大，可重複", "note": "窄 QRS 規則（SVT）；單相 100–200 J", "cond": "cvr == 'svt'" },
+        { "drug": "同步電擊（雙相）", "dose": "100 J → 200 J → 最大", "route": "貼片前後位，SYNC", "freq": "重複", "note": "單型 VT；之後 amiodarone 防復發", "cond": "cvr == 'vt'" },
+        { "drug": "非同步去顫（雙相）", "dose": "機器最大能量（雙相 ≥ 200 J）", "route": "貼片前後位，**不按 SYNC**", "freq": "可重複", "note": "多型 VT／VF；QT 延長者加 MgSO₄ 2 g IV", "cond": "cvr == 'poly'" },
+        { "drug": "Midazolam", "dose": "1–2 mg（0.02–0.05 mg/kg = {round(wt*0.02,1)}–{round(wt*0.05,1)} mg）", "route": "IV push", "freq": "等 1–2 分鐘", "with": "Fentanyl 25–50 mcg IV push", "note": "備 BVM；低血壓者減量" },
+        { "drug": "Propofol", "dose": "{round(wt*0.5)}–{round(wt)} mg（0.5–1 mg/kg）", "route": "IV push", "freq": "單次", "note": "midazolam 替代；低血壓慎用", "alt": "midazolam" },
+        { "drug": "Etomidate", "dose": "{round(wt*0.1)}–{round(wt*0.15,1)} mg（0.1–0.15 mg/kg）", "route": "IV push", "freq": "單次", "note": "血行動力較穩", "alt": "midazolam" },
+        { "drug": "Heparin（UFH）", "dose": "5,000 U", "route": "IV push", "freq": "電擊前（時間允許）", "note": "Afib／AFL；> 48 hr 電擊後抗凝 ≥ 4 週", "cond": "cvr == 'af' || cvr == 'afl'" },
+        { "drug": "Amiodarone", "dose": "150 mg", "route": "IV drip over 10 min", "freq": "→ 1 mg/min × 6 hr → 0.5 mg/min × 18 hr（電擊後防復發）", "note": "VT；150 mg in D5W 100 mL、900 mg in D5W 500 mL；**TdP／pre-excited AF 禁**", "cond": "cvr == 'vt'" }
+      ],
+      "watch": ["電擊後節律、BP q5 min、SpO₂、意識（鎮靜）", "12 導程 ECG；K/Mg、troponin", "復發 → 抗心律不整藥、找原因"],
+      "call": ["任何要電擊的心搏過速 = 後線 + 心臟科", "電擊無效、復發、需 amiodarone／procainamide／臨時節律"],
+      "refs": [{ "ch": "20", "q": "表 20-1" }, { "ch": "20", "q": "穩不穩？" }],
+      "next": [
+        { "label": "電擊後 Afib → 心率控制／抗凝", "next": "q_af_hf" },
+        { "label": "電擊後 VT → 穩定 VT 藥物", "next": "r_vt_stable" },
+        { "label": "多型 VT／Torsades", "next": "r_torsades" }
+      ]
+    },
+    "r_sinus": {
+      "type": "result",
+      "urgency": "green",
+      "title": "竇性心搏過速：治療原因，不要降心率",
+      "summary": "竇速是**別的問題的結果**（發燒、疼痛、脫水、出血、缺氧、PE、甲亢、藥物）：治原因；不電擊；不用 β-blocker 除非甲亢／ACS 且無心衰竭／休克。",
+      "steps": [
+        "確認 P 波正常、逐漸起伏、通常 < 150（撲動 2:1 用迷走刺激／adenosine 顯現）",
+        "找原因：發燒／感染、疼痛、脫水／出血（Hb）、缺氧（SpO₂）、PE、甲亢（TSH）、心衰竭、戒斷、藥物（β-agonist、theophylline、dopamine、caffeine）、β-blocker 被停",
+        "治原因：輸液、止痛、退燒、輸血、給氧、抗生素、停 β-agonist",
+        "K、Mg、CBC、TSH、troponin、ABG（缺氧時）、CXR",
+        "HR > 150 或不成比例 → 重看 ECG（PSVT？撲動？）",
+        "β-blocker 只在甲亢／ACS 且無心衰竭／休克"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "500 mL", "route": "IV drip over 15 min", "freq": "STAT，可重複（脫水／出血）", "note": "心／腎衰竭 250 mL；肺水腫不給" },
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h PRN 發燒／疼痛", "note": "Ch06" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "持續", "note": "SpO₂ < 94% 才給" }
+      ],
+      "watch": ["治原因後心率下降趨勢；持續 > 150 重看 ECG", "BP、尿量、SpO₂、體溫"],
+      "call": ["心率 > 150 且原因不明、合併低血壓／胸痛／喘", "懷疑 PE、出血、敗血症"],
+      "refs": [{ "ch": "20", "q": "竇性心搏過速" }, { "ch": "06", "q": "Acetaminophen" }],
+      "next": [{ "label": "其實是 PSVT／撲動 → 重新分類", "next": "q_qrs" }]
+    },
+    "r_psvt": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "PSVT（AVNRT／AVRT）穩定",
+      "summary": "**改良式 Valsalva → adenosine 6 → 12 → 12 mg 快推**（連續 rhythm strip、備電擊器）→ diltiazem／verapamil／metoprolol → 無效／不穩 → 同步 100 J。WPW + Afib 禁 AV 結阻斷劑。",
+      "steps": [
+        "12 導程 ECG、連續 rhythm strip、備電擊器；IV 大靜脈（肘前）",
+        "改良式 Valsalva：半坐臥用力吹 10 mL 空針 15 秒 → 立即平躺、抬腿 45° 15 秒，可重複 2 次；或頸動脈竇按摩（無雜音、無中風史，5–10 秒單側）",
+        "Adenosine 6 mg 快推 + 20 mL NS 沖 → 1–2 分鐘後 12 mg → 12 mg；推藥時印 rhythm strip（診斷撲動／心房頻脈）",
+        "無效 → diltiazem 或 verapamil（EF < 40%、低血壓避免）或 metoprolol（氣喘、心衰竭失代償避免）",
+        "仍無效／變不穩 → 鎮靜後同步電擊 100 J",
+        "K、Mg、TSH、troponin；找誘因（咖啡因、酒精、藥物）；心臟科安排電燒",
+        "心房頻脈：adenosine 多半只減速不終止 → 心率控制；交界性頻脈：找 digoxin／心肌炎"
+      ],
+      "orders": [
+        { "drug": "改良式 Valsalva", "dose": "吹 10 mL 空針 15 秒", "route": "半坐臥 → 立即平躺、抬腿 45° 15 秒", "freq": "可重複 2 次", "note": "成功率 40%（REVERT）" },
+        { "drug": "Adenosine", "dose": "6 mg → 12 mg → 12 mg", "route": "IV push 快推（大靜脈）+ 20 mL NS 沖", "freq": "各隔 1–2 分鐘", "note": "CVC、dipyridamole、carbamazepine、心臟移植者減半；theophylline 需更高；氣喘慎；**WPW + Afib 禁**；短暫停搏、潮紅、胸悶" },
+        { "drug": "Diltiazem", "dose": "{min(round(wt*0.25),20)} mg（0.25 mg/kg，15–20 mg）", "route": "IV push over 2 min", "freq": "15 分鐘後可再 {min(round(wt*0.35),25)} mg（0.35 mg/kg，20–25 mg）→ 5–15 mg/hr 滴注", "note": "依 {wt} kg；低血壓、EF < 40% 避免；WPW 禁；泡法 125 mg + NS 100 mL（1 mg/mL）" },
+        { "drug": "Verapamil", "dose": "5–10 mg", "route": "IV push over 2 min", "freq": "15–30 分鐘後可再 5–10 mg", "note": "同 diltiazem 禁忌；寬 QRS 不明禁", "alt": "diltiazem" },
+        { "drug": "Metoprolol", "dose": "2.5–5 mg", "route": "IV push over 2 min", "freq": "q5 min，max 15 mg", "note": "氣喘、心衰竭失代償避免" },
+        { "drug": "同步電擊（雙相）", "dose": "100 J", "route": "貼片前後位，SYNC", "freq": "無效／不穩時，可增加", "note": "先鎮靜（midazolam 1–2 mg ± fentanyl 25–50 mcg）" },
+        { "drug": "Diltiazem SR（長期）", "dose": "120–240 mg", "route": "PO", "freq": "QD", "note": "或 metoprolol 25–50 mg PO BID、verapamil 40–80 mg TID；電燒（心臟科）" }
+      ],
+      "watch": ["連續 rhythm strip；adenosine 後短暫停搏、AF（AVRT 者備電擊）", "BP q5 min（CCB／β-blocker 後）", "復發、K/Mg"],
+      "call": ["adenosine × 3 無效、需電擊、變不穩", "懷疑 WPW（delta 波）、合併 ACS／心衰竭"],
+      "refs": [{ "ch": "20", "q": "PSVT（AVNRT／AVRT）" }, { "ch": "20", "q": "Adenosine" }],
+      "next": [{ "label": "不穩 → 同步電擊", "next": "q_cv_rhythm" }, { "label": "顯現撲動／Afib → 心率控制", "next": "q_af_hf" }]
+    },
+    "r_af_rate": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Afib／AFL RVR（EF 正常、血壓 OK）：心率控制",
+      "summary": "**Diltiazem IV push → 滴注**（或 metoprolol IV；血壓 borderline 用 esmolol）目標休息 < 110（有症狀 < 80）；找誘因（感染、缺氧、PE、甲亢、ACS、心衰竭、酒精、術後）；**評估抗凝**；新發 AF 約 70% 在 48 hr 內自行轉回。",
+      "steps": [
+        "12 導程 ECG（排除 pre-excited AF：極快 > 250、QRS 形態多變 → 禁 AV 結阻斷劑）",
+        "K（4–5）、Mg（≥ 2）、CBC、TSH、troponin、NT-proBNP、CXR；找誘因並處理",
+        "Diltiazem 0.25 mg/kg IV over 2 min → 15 分鐘後 0.35 mg/kg → 5–15 mg/hr；或 metoprolol 2.5–5 mg IV q5–10 min",
+        "心率控制後轉口服：diltiazem 30 mg q6h／SR 120–360 mg QD 或 metoprolol 25–100 mg BID",
+        "評估抗凝（CHA₂DS₂-VA）與轉律時機（< 48 hr 或已抗凝 ≥ 3 週或 TEE）；住院急性 AF 與後線討論",
+        "術後／敗血症誘發的 AF 常在原因處理後自行轉回，先 rate control",
+        "轉律（rhythm control）：電擊；或 propafenone 450–600 mg PO／flecainide 200–300 mg PO（無結構性心臟病）、ibutilide 1 mg IV、amiodarone"
+      ],
+      "orders": [
+        { "drug": "Diltiazem", "dose": "{round(wt*0.25)} mg（0.25 mg/kg）", "route": "IV push over 2 min", "freq": "15 分鐘後可再 {round(wt*0.35)} mg（0.35 mg/kg）→ 5–15 mg/hr 滴注", "note": "依 {wt} kg；泡法 125 mg（25 mL）+ NS 100 mL（1 mg/mL）→ 5 mg/hr = 5 mL/hr；EF < 40%、低血壓避免；WPW 禁" },
+        { "drug": "Metoprolol", "dose": "2.5–5 mg", "route": "IV push over 2 min", "freq": "q5–10 min，max 15 mg", "note": "COPD 可用（β1 選擇性）；→ PO 25–100 mg BID", "alt": "diltiazem" },
+        { "drug": "Esmolol", "dose": "{round(wt*0.5)} mg（500 mcg/kg）", "route": "IV push over 1 min", "freq": "→ 50–200 mcg/kg/min 滴注", "note": "血壓 borderline、需快速停藥；泡法 2,500 mg/250 mL：{wt} kg 50 mcg/kg/min ≈ {round(wt*0.3)} mL/hr" },
+        { "drug": "Diltiazem（口服接續）", "dose": "30 mg", "route": "PO", "freq": "q6h（或 SR 120–360 mg QD）", "note": "IV 心率控制後" },
+        { "drug": "Metoprolol（口服接續）", "dose": "25–100 mg", "route": "PO", "freq": "BID", "note": "EF 低者較合適（小心失代償）" },
+        { "drug": "Heparin（UFH）", "dose": "5,000 U", "route": "IV push", "freq": "電擊前（時間允許）", "note": "轉律前；長期抗凝見「Afib 抗凝評估」" }
+      ],
+      "watch": ["HR／BP q15 min 至 < 110；低血壓（CCB／β-blocker）", "K/Mg、troponin；復發／自行轉回", "一線藥後 1 小時心率仍 > 130 或低血壓 → 叫後線"],
+      "call": ["一線藥後 1 小時 HR 仍 > 130 或低血壓", "懷疑 WPW、合併 ACS／心衰竭／休克", "新發 Afib 抗凝／轉律決策"],
+      "refs": [{ "ch": "20", "q": "心房顫動／心房撲動" }, { "ch": "20", "q": "轉律（rhythm control）" }],
+      "next": [
+        { "label": "抗凝評估（CHA₂DS₂-VA、DOAC 劑量）", "next": "r_af_anticoag" },
+        { "label": "變不穩 → 同步電擊 200 J", "next": "q_cv_rhythm" },
+        { "label": "EF < 40%／心衰竭／血壓低 → 改用 digoxin／amiodarone", "next": "r_af_hf" }
+      ]
+    },
+    "r_af_hf": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Afib RVR + 心衰竭（EF < 40%）／低血壓：digoxin／amiodarone",
+      "summary": "**避免 diltiazem／verapamil**；心衰竭／低血壓用 **digoxin**（起效慢 > 1 hr）或 **amiodarone**（心率控制 + 可能轉律；> 48 hr 未抗凝者轉律有栓塞風險）；小劑量 metoprolol 若代償；不穩 → 同步 200 J。",
+      "steps": [
+        "確認不是不穩定（SBP < 90、意識改變、胸痛、肺水腫 → 電擊 200 J）",
+        "找誘因：缺血、心衰竭惡化、感染、缺氧、甲亢；K、Mg、troponin、NT-proBNP",
+        "Digoxin 0.25–0.5 mg IV → 0.25 mg q6h（24 hr 總 0.75–1.5 mg）；腎功能減量（CrCl {round(crcl)}）",
+        "或 amiodarone 150 mg over 10 min → 1 mg/min × 6 hr → 0.5 mg/min × 18 hr（CVC 為佳；pre-excited AF 禁）",
+        "代償者可小劑量 metoprolol 2.5 mg IV，小心失代償",
+        "肺水腫 → Ch7（利尿、NTG）；評估抗凝（CHA₂DS₂-VA）",
+        "電擊前 heparin 5,000 U（時間允許）"
+      ],
+      "orders": [
+        { "drug": "Digoxin", "dose": "0.25–0.5 mg", "route": "IV push", "freq": "→ 0.25 mg q6h（24 hr 總 0.75–1.5 mg）", "note": "起效 > 1 hr；休息時有效、活動時差；CrCl {round(crcl)} → 腎功能減量；毒性（K、Mg、amiodarone）" },
+        { "drug": "Amiodarone", "dose": "150 mg", "route": "IV drip over 10 min", "freq": "→ 1 mg/min × 6 hr → 0.5 mg/min × 18 hr", "note": "150 mg in D5W 100 mL、900 mg in D5W 500 mL；靜脈炎（CVC 為佳）、低血壓；**pre-excited AF 禁**；> 48 hr 未抗凝者轉律有栓塞風險" },
+        { "drug": "Metoprolol", "dose": "2.5 mg", "route": "IV push over 2 min", "freq": "q10 min，max 15 mg（代償者）", "note": "小心失代償" },
+        { "drug": "同步電擊（雙相）", "dose": "200 J", "route": "貼片前後位，SYNC", "freq": "不穩時", "note": "先鎮靜；電擊前 heparin 5,000 U" }
+      ],
+      "watch": ["HR／BP q15 min；低血壓（amiodarone）", "K/Mg；digoxin 毒性（噁心、心搏過緩、心律不整）", "肺水腫、尿量"],
+      "call": ["Afib RVR + 心衰竭／低血壓 = 後線 + 心臟科", "一線藥後 1 小時 HR > 130、需 amiodarone、需電擊"],
+      "refs": [{ "ch": "20", "q": "Digoxin" }, { "ch": "20", "q": "Amiodarone" }],
+      "next": [{ "label": "抗凝評估", "next": "r_af_anticoag" }, { "label": "不穩 → 同步電擊", "next": "q_cv_rhythm" }]
+    },
+    "r_af_anticoag": {
+      "type": "result",
+      "urgency": "green",
+      "title": "Afib／AFL 抗凝評估（CHA₂DS₂-VA，ESC 2024）",
+      "summary": "心衰竭 1、高血壓 1、年齡 ≥ 75 2（65–74 1）、糖尿病 1、中風／TIA／栓塞 2、血管疾病 1：**≥ 2 建議、1 考慮**；DOAC 優先（機械瓣膜／中重度 MS 用 warfarin）；HCM 不論分數皆抗凝；AFL 原則同 AF；住院急性 AF 時機與後線討論。",
+      "steps": [
+        "算 CHA₂DS₂-VA（{age} 歲：{age >= 75 ? '≥ 75 → 2 分' : (age >= 65 ? '65–74 → 1 分' : '< 65 → 0 分')}）；≥ 2 建議、1 考慮（ACC/AHA 2023 用 VASc：男 ≥ 2／女 ≥ 3）",
+        "出血風險（HAS-BLED）、血小板、Cr（CrCl {round(crcl)}）、肝功能、活動出血、近期手術",
+        "DOAC 優先；機械瓣膜／中重度二尖瓣狹窄 → warfarin；HCM 不論分數皆抗凝",
+        "轉律：發作 < 48 hr（保守 < 24 hr）且低栓塞風險，或已抗凝 ≥ 3 週，或 TEE／心臟 CT 排除血栓；轉律後抗凝 ≥ 4 週",
+        "AF 合併 PCI 後：DOAC + clopidogrel（不用 ticagrelor／prasugrel），aspirin 1–4 週後停",
+        "住院急性（術後／敗血症）AF 抗凝時機與後線討論"
+      ],
+      "orders": [
+        { "drug": "Apixaban", "dose": "{((age >= 80 ? 1 : 0) + (wt <= 60 ? 1 : 0) + (cr >= 1.5 ? 1 : 0)) >= 2 ? '2.5 mg（符合 ≥ 2 項減量條件）' : '5 mg'}", "route": "PO", "freq": "BID", "note": "減量條件 ≥ 2 項：≥ 80 歲、≤ 60 kg、Cr ≥ 1.5（目前 {age} 歲、{wt} kg、Cr {cr}）" },
+        { "drug": "Rivaroxaban", "dose": "{crcl <= 50 ? '15 mg（CrCl 15–50）' : '20 mg'}", "route": "PO 隨餐", "freq": "QD", "note": "CrCl {round(crcl)}；CrCl < 15 避免", "alt": "apixaban" },
+        { "drug": "Edoxaban", "dose": "60 mg", "route": "PO", "freq": "QD", "note": "依腎功能、體重減量（查仿單）" },
+        { "drug": "Dabigatran", "dose": "150 mg", "route": "PO", "freq": "BID", "note": "依腎功能、年齡減量（查仿單）；逆轉劑 idarucizumab" },
+        { "drug": "Heparin（UFH）", "dose": "5,000 U", "route": "IV push", "freq": "電擊前（時間允許）", "note": "轉律前橋接" }
+      ],
+      "watch": ["出血徵候、Hb、Cr（DOAC 劑量）", "轉律後 ≥ 4 週抗凝遵從"],
+      "call": ["新發 Afib 抗凝／轉律決策與後線討論", "出血高風險、機械瓣膜、腎功能差（CrCl < 15–25）"],
+      "refs": [{ "ch": "20", "q": "抗凝" }, { "ch": "20", "q": "CHA₂DS₂-VA" }]
+    },
+    "r_wpw_af": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Pre-excited AF（WPW + Afib）",
+      "summary": "極快 > 250、QRS 形態多變：**禁 AV 結阻斷劑（adenosine、CCB、β-blocker、digoxin）與 amiodarone**（→ VF）；穩定用 **procainamide**（台灣不一定有）→ 否則／不穩 → 同步電擊 200 J。",
+      "steps": [
+        "叫後線 + 心臟科；備電擊器、鎮靜藥；監測、IV",
+        "不穩定 → 鎮靜後同步電擊 200 J（無效增加至最大）",
+        "穩定：procainamide 20–50 mg/min 至心律轉、低血壓、QRS 寬 > 50% 或 max 17 mg/kg；沒有 procainamide → 直接電擊",
+        "**不要給** adenosine、diltiazem、verapamil、metoprolol、digoxin、amiodarone",
+        "K/Mg、TSH、troponin；心臟科安排副傳導路徑電燒"
+      ],
+      "orders": [
+        { "drug": "Procainamide", "dose": "20–50 mg/min 至 max {round(wt*17)} mg（17 mg/kg）", "route": "IV drip", "freq": "至心律轉、低血壓、QRS 寬 > 50%", "note": "依 {wt} kg；台灣不一定有 → 電擊" },
+        { "drug": "同步電擊（雙相）", "dose": "200 J", "route": "貼片前後位，SYNC", "freq": "無效逐步增加至最大", "note": "先鎮靜 midazolam 1–2 mg ± fentanyl 25–50 mcg（不穩可不等）" },
+        { "drug": "Midazolam", "dose": "1–2 mg", "route": "IV push", "freq": "電擊前", "with": "Fentanyl 25–50 mcg IV", "note": "備 BVM" }
+      ],
+      "watch": ["連續監測（→ VF 風險）、BP q5 min", "procainamide：QRS 寬度、低血壓"],
+      "call": ["懷疑 WPW + Afib 當下 = 後線 + 心臟科", "需電擊、變 VF"],
+      "refs": [{ "ch": "20", "q": "Procainamide" }, { "ch": "20", "q": "常用抗心律不整藥的禁忌摘要" }]
+    },
+    "r_mat": {
+      "type": "result",
+      "urgency": "green",
+      "title": "多源性心房頻脈（MAT）",
+      "summary": "≥ 3 種 P 波形態、不規則，多為 COPD／缺氧：**治療肺病／缺氧、矯正 K／Mg**；有症狀 → verapamil 或 diltiazem（β-blocker 若可，COPD 慎）；**不電擊、digoxin 無效**。",
+      "steps": [
+        "治療肺病／缺氧：支氣管擴張劑、O₂（目標 88–92% 若 CO₂ 滯留）、減少 theophylline／β-agonist",
+        "矯正 K（> 4）、Mg（> 2）；ABG",
+        "有症狀：verapamil 5–10 mg IV 或 diltiazem；β-blocker 若可（COPD 慎）",
+        "不電擊；digoxin 無效"
+      ],
+      "orders": [
+        { "drug": "Verapamil", "dose": "5–10 mg", "route": "IV push over 2 min", "freq": "15–30 分鐘後可再 5–10 mg", "note": "低血壓、EF < 40% 避免" },
+        { "drug": "Diltiazem", "dose": "{round(wt*0.25)} mg（0.25 mg/kg）", "route": "IV push over 2 min", "freq": "→ 5–15 mg/hr 滴注", "note": "verapamil 替代；依 {wt} kg", "alt": "verapamil" },
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%（CO₂ 滯留 88–92%）", "route": "nasal cannula", "freq": "持續", "note": "" }
+      ],
+      "watch": ["SpO₂／ABG、HR、BP（CCB 後）", "K/Mg 補充後複驗"],
+      "call": ["低血壓、HR 持續 > 130、呼吸衰竭"],
+      "refs": [{ "ch": "20", "q": "多源性心房頻脈（MAT）" }]
+    },
+    "r_ectopy": {
+      "type": "result",
+      "urgency": "green",
+      "title": "頻繁 PAC／PVC、非持續性 VT",
+      "summary": "找原因（缺氧、缺血、電解質、藥物、咖啡因、心衰竭）；**K > 4、Mg > 2**；無症狀可觀察；有症狀 → metoprolol PO；**NSVT + 結構性心臟病 → 心臟科**（amiodarone、ICD 評估）。",
+      "steps": [
+        "12 導程 ECG（R on T、多源性、couplet）、K、Mg、troponin、SpO₂、藥物（β-agonist、caffeine、digoxin）",
+        "矯正 K > 4、Mg > 2（Ch33、Ch34）；治缺氧、缺血、心衰竭",
+        "無症狀 → 觀察、交班",
+        "有症狀 → metoprolol 25–50 mg PO BID",
+        "NSVT + 結構性心臟病（舊 MI、EF 低）→ 心臟科（amiodarone、ICD 評估）；心臟超音波"
+      ],
+      "orders": [
+        { "drug": "Metoprolol", "dose": "25–50 mg", "route": "PO", "freq": "BID（有症狀）", "note": "氣喘、心衰竭失代償、HR < 60 避免" }
+      ],
+      "watch": ["監測：持續 VT、頻率增加", "K/Mg 複驗、troponin"],
+      "call": ["NSVT + 結構性心臟病、持續 VT、合併缺血", "PVC 伴低血壓／症狀惡化"],
+      "refs": [{ "ch": "20", "q": "頻繁 PAC／PVC、非持續性 VT" }],
+      "next": [{ "label": "持續 VT → 穩定 VT 處置", "next": "r_vt_stable" }]
+    },
+    "r_vt_stable": {
+      "type": "result",
+      "urgency": "red",
+      "title": "穩定單型 VT（寬 QRS 規則，有脈搏）",
+      "summary": "寬 QRS 不確定一律當 VT（舊 MI／LV 差是最強預測因子；**血行動力穩定不能用來區分**；禁 verapamil）：**amiodarone 150 mg over 10 min**（或 procainamide／lidocaine）→ 藥物無效 → 鎮靜後同步電擊 100 J；找缺血；K/Mg；叫後線。",
+      "steps": [
+        "叫後線 + 心臟科；備電擊器（貼片先貼）、鎮靜藥；監測、IV × 2、12 導程 ECG（AV 分離、融合波、capture beat）",
+        "K（> 4）、Mg（> 2）、troponin、ABG；找缺血（緊急心導管）、藥物（QT 延長藥、digoxin）",
+        "Amiodarone 150 mg over 10 min（可重複）→ 1 mg/min × 6 hr → 0.5 mg/min × 18 hr",
+        "或 procainamide（QT 正常、無心衰竭）；或 lidocaine（缺血性 VT）",
+        "藥物無效或變不穩 → 鎮靜後同步電擊 100 J → 200 → 最大",
+        "**不要給 verapamil／diltiazem／adenosine**（寬 QRS 不明）"
+      ],
+      "orders": [
+        { "drug": "Amiodarone", "dose": "150 mg", "route": "IV drip over 10 min", "freq": "可重複 → 1 mg/min × 6 hr → 0.5 mg/min × 18 hr", "note": "150 mg in D5W 100 mL、900 mg in D5W 500 mL；低血壓、靜脈炎（CVC 為佳）；TdP／QT 延長禁" },
+        { "drug": "Procainamide", "dose": "20–50 mg/min 至 max {round(wt*17)} mg（17 mg/kg）", "route": "IV drip", "freq": "至心律轉、低血壓、QRS 寬 > 50%", "note": "QT 正常、無心衰竭；台灣不一定有", "alt": "amiodarone" },
+        { "drug": "Lidocaine", "dose": "{round(wt)}–{round(wt*1.5)} mg（1–1.5 mg/kg）", "route": "IV push", "freq": "→ {round(wt*0.5)}–{round(wt*0.75)} mg q5–10 min（max {round(wt*3)} mg = 3 mg/kg）→ 1–4 mg/min 滴注", "note": "缺血性 VT；依 {wt} kg", "alt": "amiodarone" },
+        { "drug": "同步電擊（雙相）", "dose": "100 J → 200 J → 最大", "route": "貼片前後位，SYNC", "freq": "藥物無效／不穩", "note": "先鎮靜 midazolam 1–2 mg ± fentanyl 25–50 mcg" },
+        { "drug": "Midazolam", "dose": "1–2 mg（0.02–0.05 mg/kg）", "route": "IV push", "freq": "電擊前", "with": "Fentanyl 25–50 mcg IV", "note": "備 BVM" }
+      ],
+      "watch": ["連續監測、BP q5 min（amiodarone 低血壓）", "QRS／QT、K/Mg、troponin", "復發 → 電風暴流程"],
+      "call": ["寬 QRS 頻脈當下 = 後線 + 心臟科", "需 amiodarone／procainamide／電擊、合併 ACS、復發"],
+      "refs": [{ "ch": "20", "q": "心室頻脈（有脈搏）" }, { "ch": "20", "q": "穩定單型 VT" }],
+      "next": [
+        { "label": "不穩 → 同步電擊", "next": "q_cv_rhythm" },
+        { "label": "24 hr 內 ≥ 3 次 VT/VF → 電風暴", "next": "r_storm" },
+        { "label": "多型性／QT 延長 → Torsades", "next": "r_torsades" }
+      ]
+    },
+    "r_torsades": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Torsades de pointes／多型性 VT（QT 延長）",
+      "summary": "**MgSO₄ 2 g IV**（不穩 over 1–2 min；穩定 over 15 min）可重複至 4–6 g → 1–4 g/hr；**停 QT 延長藥**；K > 4.5；心率慢 → isoproterenol 或 overdrive pacing 90–110；**amiodarone／procainamide 禁**；不穩 → 非同步去顫。",
+      "steps": [
+        "叫後線 + 心臟科；備電擊器；不穩／無脈 → 非同步去顫最大能量 + CPR",
+        "MgSO₄ 2 g IV（即使 Mg 正常）→ 可重複 → 滴注 1–4 g/hr",
+        "**停所有 QT 延長藥**：抗精神病藥、macrolide、fluoroquinolone、ondansetron、methadone、amiodarone、抗心律不整藥",
+        "矯正 K > 4.5、Mg；12 導程 ECG 量 QTc",
+        "心率慢／停頓依賴 → isoproterenol 2–10 mcg/min（台灣不一定有）或臨時節律 overdrive pacing 90–110",
+        "Lidocaine 可用；**amiodarone／procainamide 禁**",
+        "QT 正常的多型 VT = 缺血 → 抗缺血、β-blocker、amiodarone、緊急心導管"
+      ],
+      "orders": [
+        { "drug": "MgSO₄", "dose": "2 g", "route": "IV push over 1–2 min（不穩）或 IV drip over 15 min（穩定）", "freq": "可重複至 4–6 g → 1–4 g/hr 滴注", "note": "即使 Mg 正常也給；監測膝反射、RR" },
+        { "drug": "非同步去顫（雙相）", "dose": "機器最大能量（雙相 ≥ 200 J）", "route": "貼片前後位，不按 SYNC", "freq": "不穩／無脈時", "note": "多型 VT 無法同步" },
+        { "drug": "Isoproterenol", "dose": "2–10 mcg/min", "route": "IV drip", "freq": "持續（心率慢、停頓依賴）", "note": "台灣不一定有；替代：臨時節律 overdrive pacing 90–110" },
+        { "drug": "Lidocaine", "dose": "{round(wt)}–{round(wt*1.5)} mg（1–1.5 mg/kg）", "route": "IV push", "freq": "→ 1–4 mg/min 滴注", "note": "可用；amiodarone／procainamide 禁" },
+        { "drug": "KCl", "dose": "目標 K > 4.5", "route": "IV（周邊 ≤ 10 mEq/hr、CVC ≤ 20 mEq/hr）", "freq": "依 K 值（Ch33）", "note": "絕不 IV push；同時補 Mg" }
+      ],
+      "watch": ["連續監測（復發）、QTc q4–6h", "Mg、K q4–6h；MgSO₄ 中毒（膝反射、RR）", "HR（心搏過緩誘發）"],
+      "call": ["Torsades 當下 = 後線 + 心臟科（臨時節律）", "復發、需 isoproterenol／pacing、無脈"],
+      "refs": [{ "ch": "20", "q": "Torsades（QT 延長）" }, { "ch": "20", "q": "多型性 VT（QT 正常）" }],
+      "next": [{ "label": "QT 正常的多型 VT（缺血）", "next": "r_poly_normal" }, { "label": "無脈 → 去顫 + CPR", "next": "r_pulseless" }]
+    },
+    "r_poly_normal": {
+      "type": "result",
+      "urgency": "red",
+      "title": "多型性 VT（QT 正常）：通常是缺血",
+      "summary": "抗缺血（ACS 流程，Ch6）、β-blocker、amiodarone、**緊急心導管**；K/Mg；不穩 → 非同步去顫。",
+      "steps": [
+        "叫後線 + 心臟科；備電擊器；不穩／無脈 → 非同步去顫最大能量",
+        "12 導程 ECG（STEMI？）、troponin；啟動 ACS 流程／緊急心導管",
+        "Amiodarone 150 mg over 10 min → 滴注；β-blocker（metoprolol IV）若血壓允許",
+        "K > 4、Mg > 2；缺氧矯正",
+        "反覆 → 電風暴流程、鎮靜"
+      ],
+      "orders": [
+        { "drug": "Amiodarone", "dose": "150 mg", "route": "IV drip over 10 min", "freq": "→ 1 mg/min × 6 hr → 0.5 mg/min × 18 hr", "note": "QT 正常才可；150 mg in D5W 100 mL" },
+        { "drug": "Metoprolol", "dose": "2.5–5 mg", "route": "IV push over 2 min", "freq": "q5 min，max 15 mg", "note": "血壓允許、無心衰竭失代償" },
+        { "drug": "非同步去顫（雙相）", "dose": "機器最大能量（雙相 ≥ 200 J）", "route": "貼片前後位，不按 SYNC", "freq": "不穩／無脈時", "note": "" },
+        { "drug": "Aspirin", "dose": "300 mg", "route": "PO 嚼服", "freq": "STAT（疑 ACS）", "note": "Ch06 ACS" }
+      ],
+      "watch": ["連續監測、BP、troponin／ECG 動態", "K/Mg"],
+      "call": ["多型 VT 當下 = 後線 + 心臟科（緊急心導管）"],
+      "refs": [{ "ch": "20", "q": "多型性 VT（QT 正常）" }, { "ch": "06", "q": "急性冠心症（ACS）" }],
+      "next": [{ "label": "反覆 VT/VF → 電風暴", "next": "r_storm" }]
+    },
+    "r_storm": {
+      "type": "result",
+      "urgency": "red",
+      "title": "電風暴／ICD 反覆放電（24 hr 內 ≥ 3 次 VT/VF）",
+      "summary": "**β-blocker（propranolol）+ amiodarone ± lidocaine + 鎮靜（必要時插管）**；不當放電 → 磁鐵暫停 ICD；矯正缺血、K/Mg；緊急心臟科（電燒、星狀神經節阻斷）。",
+      "steps": [
+        "叫後線 + 心臟科 + ICU；監測、IV × 2、貼片、12 導程 ECG",
+        "確認放電是否恰當（VT/VF？）；不當放電（Afib RVR、雜訊）→ 磁鐵放 ICD 上暫停治療（持續監測）",
+        "Amiodarone 150 mg over 10 min → 滴注；± lidocaine；β-blocker（propranolol，劑量依院內／心臟科）",
+        "鎮靜（midazolam）降交感；必要時插管全身麻醉",
+        "矯正原因：缺血（緊急心導管）、K > 4、Mg > 2、缺氧、藥物",
+        "心臟科：電燒、星狀神經節阻斷、機械輔助；MI 後 48 hr 內 VT 多為缺血，48 hr 後仍有才評估 ICD"
+      ],
+      "orders": [
+        { "drug": "Amiodarone", "dose": "150 mg", "route": "IV drip over 10 min", "freq": "可重複 → 1 mg/min × 6 hr → 0.5 mg/min × 18 hr", "note": "QT 延長／TdP 禁" },
+        { "drug": "Lidocaine", "dose": "{round(wt)}–{round(wt*1.5)} mg（1–1.5 mg/kg）", "route": "IV push", "freq": "→ 1–4 mg/min 滴注", "note": "與 amiodarone 併用（缺血性）" },
+        { "drug": "Midazolam", "dose": "1–2 mg", "route": "IV push", "freq": "PRN 鎮靜，可重複", "note": "備 BVM；必要時插管" },
+        { "drug": "MgSO₄", "dose": "2 g", "route": "IV drip over 15 min", "freq": "單次（Mg < 2 或多型 VT）", "note": "" }
+      ],
+      "watch": ["連續監測放電次數、節律", "BP、SpO₂（鎮靜）、K/Mg、troponin"],
+      "call": ["ICD 放電／電風暴當下 = 後線 + 心臟科 + ICU", "需插管、機械輔助"],
+      "refs": [{ "ch": "20", "q": "ICD 反覆放電" }]
+    }
+  }
+}

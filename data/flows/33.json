@@ -1,0 +1,943 @@
+{
+  "id": "33",
+  "title": "鉀離子異常",
+  "chapter": "33",
+  "entries": [
+    {
+      "label": "K 高（護理師報 K > 5）",
+      "type": "symptom",
+      "start": "q_k",
+      "group": "檢驗異常",
+      "keywords": [
+        "高血鉀",
+        "鉀高",
+        "K 6",
+        "K 6.5",
+        "hyperkalemia",
+        "potassium high",
+        "尖高 T 波"
+      ]
+    },
+    {
+      "label": "K 低（< 3.5）",
+      "type": "symptom",
+      "start": "q_k",
+      "group": "檢驗異常",
+      "keywords": [
+        "低血鉀",
+        "鉀低",
+        "K 2.5",
+        "K 3.0",
+        "hypokalemia",
+        "potassium low",
+        "補鉀",
+        "KCl"
+      ]
+    },
+    {
+      "label": "ECG 尖高 T 波／寬 QRS／心搏過緩（疑高血鉀）",
+      "type": "symptom",
+      "start": "r_hyperk_critical",
+      "group": "檢驗異常",
+      "keywords": [
+        "尖高 T 波",
+        "peaked T",
+        "寬 QRS",
+        "正弦波",
+        "sine wave",
+        "高血鉀 ECG",
+        "calcium gluconate"
+      ]
+    },
+    {
+      "label": "高血鉀",
+      "type": "diagnosis",
+      "start": "q_k",
+      "keywords": [
+        "高血鉀",
+        "hyperkalemia",
+        "Lokelma",
+        "Kalimate",
+        "insulin glucose",
+        "透析"
+      ]
+    },
+    {
+      "label": "低血鉀",
+      "type": "diagnosis",
+      "start": "q_k",
+      "keywords": [
+        "低血鉀",
+        "hypokalemia",
+        "KCl",
+        "補鉀",
+        "U 波",
+        "低血鎂"
+      ]
+    },
+    {
+      "label": "高血鉀合併心跳停止",
+      "type": "diagnosis",
+      "start": "r_hyperk_arrest",
+      "keywords": [
+        "高血鉀 心跳停止",
+        "hyperkalemia arrest",
+        "calcium chloride",
+        "ACLS 高血鉀",
+        "PEA 高血鉀"
+      ]
+    },
+    {
+      "label": "腫瘤溶解／橫紋肌溶解（高血鉀來源）",
+      "type": "diagnosis",
+      "start": "r_tls",
+      "keywords": [
+        "腫瘤溶解",
+        "tumor lysis",
+        "TLS",
+        "橫紋肌溶解",
+        "rhabdomyolysis",
+        "rasburicase",
+        "allopurinol",
+        "CK 高"
+      ]
+    },
+    {
+      "label": "甲狀腺毒性週期性麻痺",
+      "type": "diagnosis",
+      "start": "r_ptp",
+      "keywords": [
+        "週期性麻痺",
+        "periodic paralysis",
+        "thyrotoxic periodic paralysis",
+        "TPP",
+        "四肢無力 低血鉀",
+        "propranolol"
+      ]
+    }
+  ],
+  "nodes": {
+    "q_k": {
+      "type": "number",
+      "title": "血鉀（mEq/L）？",
+      "help": "高值先想溶血檢體（最常見）；VBG 的 K 快；同時停含鉀輸液（LR、Taita）與保鉀藥",
+      "var": "k",
+      "unit": "mEq/L",
+      "step": 0.1,
+      "quick": [
+        2.0,
+        2.5,
+        3.0,
+        3.3,
+        5.5,
+        6.0,
+        6.5,
+        7.0
+      ],
+      "branches": [
+        {
+          "if": "k >= 6.5",
+          "next": "r_hyperk_critical"
+        },
+        {
+          "if": "k >= 5.5",
+          "next": "q_hyperk_ecg"
+        },
+        {
+          "if": "k > 5.0",
+          "next": "r_hyperk_mild"
+        },
+        {
+          "if": "k >= 3.5",
+          "next": "r_k_normal"
+        },
+        {
+          "if": "k < 2.5",
+          "next": "r_hypok_severe"
+        },
+        {
+          "else": "q_hypok_sx"
+        }
+      ]
+    },
+    "q_hyperk_ecg": {
+      "type": "choice",
+      "title": "K 5.5–6.4：12 導程 ECG 與臨床？",
+      "help": "ECG 正常不能排除（K > 6.5 半數無變化）；尖高 T → PR 延長、P 平 → QRS 寬 → 正弦波；心搏過緩、AV block",
+      "options": [
+        {
+          "label": "ECG 有變化／有症狀（無力、心悸）／腎衰竭無尿／持續來源（組織破壞）／快速上升",
+          "next": "r_hyperk_critical"
+        },
+        {
+          "label": "ECG 正常、無症狀、有尿",
+          "next": "r_hyperk_moderate"
+        },
+        {
+          "label": "檢體溶血／握拳止血帶過久／從輸 K 管路抽 → 先重驗",
+          "next": "r_hyperk_recheck"
+        }
+      ]
+    },
+    "r_hyperk_critical": {
+      "type": "result",
+      "urgency": "red",
+      "title": "危急性高血鉀（K ≥ 6.5、或 ≥ 6.0 + ECG 變化／症狀／持續來源）",
+      "summary": "**Calcium gluconate 3 g IV（穩定心肌）→ RI 10 U + D50W 50 mL（移入細胞）→ salbutamol 霧化 10–20 mg → 移除（furosemide、Lokelma／Kalimate、透析）**；停所有含 K／保鉀藥；聯絡腎臟科同時做暫時措施。",
+      "steps": [
+        "心電監測、IV × 2、12 導程 ECG 立刻；重驗（非溶血檢體／VBG）但**不要等結果才治療**",
+        "停含 K 輸液（LR、Taita）、補充劑、低鈉鹽、保鉀利尿劑、ACEI/ARB、NSAID、TMP-SMX、β-blocker；灌食換低鉀配方",
+        "Calcium gluconate 3 g IV over 5–10 min（有 ECG 變化必給）；5 分鐘後 ECG 未改善可重複",
+        "RI 10 U IV + D50W 50 mL（血糖 > 250 只給 insulin；腎衰竭／瘦小用 5 U）→ 之後 D10W 或 q1h 血糖 × 6 hr",
+        "Salbutamol 霧化 10–20 mg；HCO₃ < 20 才加 NaHCO₃（與 Ca 不可同管）",
+        "移除：有尿 → furosemide + NS；Lokelma 10 g TID 或 Kalimate；腎衰竭／頑固／持續破壞 → 透析",
+        "抽：BUN/Cr、HCO₃、血糖、Ca、Mg、CK、LDH、尿酸、digoxin 濃度、尿 K/Cr",
+        "K 於 1、2、4、6 hr 複驗；2 小時未下降或反彈 → 透析"
+      ],
+      "orders": [
+        {
+          "drug": "Calcium gluconate 10%",
+          "dose": "3 g (30 mL)",
+          "route": "IV push over 5–10 min（或 in 50 mL 滴注）",
+          "freq": "STAT；5 min 後 ECG 未改善可重複",
+          "note": "台灣 1 g/10 mL amp × 3；不降 K；digoxin 中毒者慢滴 20–30 min；與 NaHCO₃ 不同管",
+          "alt": "CaCl₂ 10% 1 g via CVC（3 倍效力、外滲壞死）"
+        },
+        {
+          "drug": "Regular insulin",
+          "dose": "10 U（腎衰竭／瘦小 5 U）",
+          "route": "IV push",
+          "freq": "STAT；可 4–6 hr 重複",
+          "with": "D50W 50 mL（25 g）IV push（血糖 > 250 不給糖）",
+          "note": "15–30 min 起效，降 0.5–1.2；低血糖風險至 6 hr"
+        },
+        {
+          "drug": "Dextrose 10%（D10W）",
+          "dose": "50–75 mL/hr",
+          "route": "IV drip",
+          "freq": "insulin 後持續 4–6 hr（或改 q1h 血糖 × 6 hr）",
+          "note": "預防延遲低血糖"
+        },
+        {
+          "drug": "Salbutamol",
+          "dose": "10–20 mg（2.5 mg/2.5 mL nebule × 4–8；5 mg/mL 溶液 2–4 mL）",
+          "route": "霧化吸入",
+          "freq": "STAT",
+          "note": "30 min 起效，降 0.5–1；心搏過速；β-blocker 使用者效果差"
+        },
+        {
+          "drug": "NaHCO₃",
+          "dose": "50–100 mEq",
+          "route": "IV drip over 15–30 min",
+          "freq": "STAT 僅代謝性酸中毒 HCO₃ < 20 者",
+          "note": "單獨效果差；Na／體液負荷；與 Ca 不可同管（沉澱）"
+        },
+        {
+          "drug": "Furosemide",
+          "dose": "{crcl < 30 ? '80–200 mg' : '40–80 mg'}",
+          "route": "IV push",
+          "freq": "STAT（有尿者）",
+          "with": "NS 維持體液（體液不足先補 NS）",
+          "note": "CrCl {round(crcl)}：腎功能差 80–200 mg"
+        },
+        {
+          "drug": "Sodium zirconium cyclosilicate（Lokelma）",
+          "dose": "10 g",
+          "route": "PO",
+          "freq": "TID × 48 hr → 5–10 g QD 維持",
+          "note": "1 hr 起效（4 hr 明顯）；台灣多自費；水腫、低血鉀",
+          "alt": "Kalimate／SPS 15–30 g PO（可 QID）或 30–50 g in 100–150 mL 保留灌腸（術後、腸阻塞／腸麻痺、IBD、腎移植避免；腸壞死 ~0.4%）"
+        },
+        {
+          "drug": "血液透析",
+          "dose": "依腎臟科（每小時降 1–1.5）",
+          "route": "—",
+          "freq": "腎衰竭、頑固、持續組織破壞",
+          "note": "最有效；聯絡腎臟科同時做上述暫時措施"
+        }
+      ],
+      "watch": [
+        "心電監測；K 於治療後 1、2、4、6 hr",
+        "血糖 q1h × 6 hr（insulin 後低血糖）",
+        "只做暫時措施未移除 K 會反彈；HR（salbutamol）"
+      ],
+      "call": [
+        "K ≥ 6.5 或 ≥ 6.0 合併 ECG 變化／腎衰竭無尿／持續來源 → 立刻後線 + 腎臟科",
+        "藥物治療 2 小時後未下降或反彈（需透析）",
+        "digoxin 中毒",
+        "高血鉀 + 心搏過緩／AV block"
+      ],
+      "ddx": [
+        "假性高血鉀（溶血、白血球／血小板極高）— 重驗",
+        "digoxin 中毒",
+        "腫瘤溶解／橫紋肌溶解"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "表 33-1"
+        },
+        {
+          "ch": "33",
+          "q": "危急性高血鉀"
+        }
+      ],
+      "next": [
+        {
+          "label": "心跳停止 → ACLS 高血鉀",
+          "next": "r_hyperk_arrest"
+        },
+        {
+          "label": "腫瘤溶解／橫紋肌溶解來源",
+          "next": "r_tls"
+        }
+      ]
+    },
+    "r_hyperk_moderate": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "中度高血鉀（K 5.5–6.4，ECG 正常、無症狀）：移除 + 找原因 + 監測",
+      "summary": "停所有含 K／保鉀藥 → 有尿給 furosemide、Lokelma／Kalimate → 2 小時複驗；上升或出現 ECG 變化 → 升級為危急處置；慢性 CKD 5.5–6.0 可不必全停 RAAS 藥。",
+      "steps": [
+        "心電監測（或至少重複 ECG）；重驗非溶血檢體",
+        "停含 K 輸液（LR、Taita）、補充劑、低鈉鹽、保鉀利尿劑、ACEI/ARB、NSAID、TMP-SMX、heparin；低鉀飲食／換灌食配方",
+        "抽：BUN/Cr、HCO₃、血糖、Ca、Mg、CK、LDH、尿酸、digoxin 濃度、尿 K/Cr",
+        "有尿 → furosemide（體液不足先補 NS）；口服結合劑 Lokelma 或 Kalimate",
+        "HCO₃ < 20 → NaHCO₃ 50–100 mEq；腎上腺不足（type 4 RTA）想 fludrocortisone（依院內）",
+        "2 小時複驗 K；≥ 6.0 或 ECG 變化 → 危急處置"
+      ],
+      "orders": [
+        {
+          "drug": "Furosemide",
+          "dose": "{crcl < 30 ? '80–200 mg' : '40–80 mg'}",
+          "route": "IV push",
+          "freq": "STAT（有尿者）",
+          "with": "NS 維持體液",
+          "note": "CrCl {round(crcl)}"
+        },
+        {
+          "drug": "Sodium zirconium cyclosilicate（Lokelma）",
+          "dose": "10 g",
+          "route": "PO",
+          "freq": "TID × 48 hr → 5–10 g QD",
+          "note": "自費；1–4 hr 起效",
+          "alt": "Kalimate／SPS 15–30 g PO（可 QID）；腸壞死風險，術後／腸阻塞避免"
+        },
+        {
+          "drug": "Patiromer",
+          "dose": "8.4 g（可至 25.2 g）",
+          "route": "PO",
+          "freq": "QD",
+          "note": "慢（7 hr），非急性用；與其他口服藥隔 3 小時"
+        },
+        {
+          "drug": "NaHCO₃",
+          "dose": "50–100 mEq",
+          "route": "IV drip over 15–30 min",
+          "freq": "僅 HCO₃ < 20",
+          "note": "單獨效果差"
+        }
+      ],
+      "watch": [
+        "K 2 hr 後複驗，之後 q4–6h 至 < 5.5",
+        "ECG 變化、無力、心悸",
+        "尿量（無尿 → 透析）"
+      ],
+      "call": [
+        "K ≥ 6.0 合併 ECG 變化、腎衰竭無尿、持續來源",
+        "2 小時後未下降或反彈",
+        "digoxin 中毒"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "表 33-1"
+        },
+        {
+          "ch": "33",
+          "q": "慢性 CKD 高血鉀"
+        }
+      ],
+      "next": [
+        {
+          "label": "上升 ≥ 6.0／ECG 變化 → 危急處置",
+          "next": "r_hyperk_critical"
+        }
+      ]
+    },
+    "r_hyperk_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕度高血鉀（K 5.1–5.4）：停藥、飲食、追蹤",
+      "summary": "停含 K 輸液／補充劑／保鉀藥、低鉀飲食、找原因（AKI／CKD、藥物），隔日或 q6–12h 追蹤；有 ECG 變化或快速上升則升級。",
+      "steps": [
+        "確認非溶血檢體；12 導程 ECG 一次",
+        "停 KCl 補充、含 K 輸液（LR、Taita）、低鈉鹽、灌食高鉀配方；檢視 ACEI/ARB、spironolactone、NSAID、TMP-SMX、β-blocker",
+        "BUN/Cr、HCO₃、血糖；AKI → Ch11",
+        "低鉀飲食（香蕉、柳橙、青草茶、乾果）",
+        "追蹤 K q6–12h 或隔日；上升趨勢 → 加 furosemide／結合劑"
+      ],
+      "orders": [
+        {
+          "drug": "（停止 K 來源）",
+          "dose": "KCl 補充 0（停）",
+          "route": "—",
+          "freq": "—",
+          "note": "含 K 輸液改 NS；保鉀藥依原團隊評估"
+        },
+        {
+          "drug": "Furosemide",
+          "dose": "40 mg",
+          "route": "PO／IV",
+          "freq": "QD PRN 持續上升且有尿",
+          "note": "體液不足者不用"
+        }
+      ],
+      "watch": [
+        "K 隔日（腎衰竭者 q6–12h）",
+        "ECG 若出現無力／心悸"
+      ],
+      "call": [
+        "K ≥ 6.0 或 ECG 變化",
+        "持續上升合併腎衰竭無尿"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "嚴重度"
+        },
+        {
+          "ch": "33",
+          "q": "停止來源"
+        }
+      ]
+    },
+    "r_hyperk_recheck": {
+      "type": "result",
+      "urgency": "green",
+      "title": "疑假性高血鉀：重驗（非溶血、不握拳、不從輸 K 管路抽）",
+      "summary": "溶血檢體最常見；白血球／血小板極高也會假性升高（改 heparin 管／血漿 K）；**重驗同時 ECG**，有 ECG 變化就當真的處理。",
+      "steps": [
+        "重抽：不綁止血帶過久、不握拳、不從輸 K 的管路抽；VBG 的 K 最快",
+        "白血球／血小板極高 → 驗血漿 K（heparin 管）",
+        "同時 12 導程 ECG；有變化 → 危急處置，不等重驗",
+        "重驗仍高 → 依數值進入高血鉀流程"
+      ],
+      "orders": [
+        {
+          "drug": "（暫停含 K 輸液與補充）",
+          "dose": "0（停至重驗結果）",
+          "route": "—",
+          "freq": "—",
+          "note": "重驗期間先停"
+        }
+      ],
+      "watch": [
+        "重驗結果 30–60 min 內",
+        "ECG"
+      ],
+      "call": [
+        "重驗 ≥ 6.0 或 ECG 變化"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "假性"
+        }
+      ],
+      "next": [
+        {
+          "label": "重驗仍高 → 重新輸入 K",
+          "next": "q_k"
+        }
+      ]
+    },
+    "r_hyperk_arrest": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血鉀 + 心跳停止：CPR + calcium chloride + NaHCO₃ + insulin/glucose + 緊急透析",
+      "summary": "持續 CPR（ACLS，Ch38）同時給 **calcium chloride 1 g IV、NaHCO₃ 50 mEq、RI 10 U + D50W 50 mL**，並安排緊急透析；ROSC 後依危急性高血鉀處置。",
+      "steps": [
+        "啟動急救、CPR、除顫（VF/VT）、依 AHA 2025 ACLS（Ch38）",
+        "Calcium chloride 1 g IV push（CVC 佳；周邊可但外滲壞死）",
+        "NaHCO₃ 50 mEq IV push（與 Ca 不同管路／沖管）",
+        "RI 10 U IV + D50W 50 mL",
+        "緊急透析（腎臟科）；ROSC 後 salbutamol 霧化、移除 K、找來源",
+        "持續 CPR 時間可延長（可逆原因）"
+      ],
+      "orders": [
+        {
+          "drug": "Calcium chloride 10%",
+          "dose": "1 g (10 mL)",
+          "route": "IV push（CVC 佳）",
+          "freq": "STAT；可重複",
+          "note": "3 倍 calcium gluconate 效力",
+          "alt": "Calcium gluconate 10% 3 g IV push"
+        },
+        {
+          "drug": "NaHCO₃ 8.4%",
+          "dose": "50 mEq",
+          "route": "IV push",
+          "freq": "STAT；可重複",
+          "note": "與 Ca 不同管"
+        },
+        {
+          "drug": "Regular insulin",
+          "dose": "10 U",
+          "route": "IV push",
+          "freq": "STAT",
+          "with": "D50W 50 mL IV push",
+          "note": "ROSC 後 q1h 血糖"
+        },
+        {
+          "drug": "Epinephrine",
+          "dose": "1 mg",
+          "route": "IV push",
+          "freq": "q3–5 min（ACLS）",
+          "note": "依 Ch38"
+        }
+      ],
+      "watch": [
+        "心律、ETCO₂、脈搏 q2 min",
+        "ROSC 後 K q1h、血糖 q1h",
+        "ECG 寬 QRS 改善"
+      ],
+      "call": [
+        "立刻急救團隊 + 腎臟科緊急透析",
+        "ICU"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "心跳停止"
+        },
+        {
+          "ch": "38",
+          "q": "ACLS"
+        }
+      ],
+      "next": [
+        {
+          "label": "ROSC 後 → 危急性高血鉀處置",
+          "next": "r_hyperk_critical"
+        }
+      ]
+    },
+    "r_tls": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "腫瘤溶解／橫紋肌溶解：大量輸液 + rasburicase／allopurinol，早期腎臟科",
+      "summary": "腫瘤溶解：NS 大量（目標尿量 80–100 mL/hr）+ rasburicase 0.1–0.2 mg/kg（或 6 mg）IV × 1（**G6PD 缺乏禁**）或 allopurinol 300 mg；橫紋肌溶解：NS（目標尿量 ~3 mL/kg/hr）、尿 pH < 6.5 可考慮 NaHCO₃；治 K／P，低血鈣**有症狀才補**。",
+      "steps": [
+        "心電監測；K、P、Ca、尿酸、LDH、CK、BUN/Cr q4–6h；I/O、Foley",
+        "NS 大量輸液：腫瘤溶解目標尿量 80–100 mL/hr；橫紋肌溶解目標 ~3 mL/kg/hr",
+        "腫瘤溶解：rasburicase（G6PD 先驗；缺乏禁用）或 allopurinol；避免顯影劑、NSAID",
+        "橫紋肌溶解：尿 pH < 6.5 可考慮 NaHCO₃（依院內）；追 K/Ca/CK",
+        "高血鉀依數值處置（≥ 6.0 → 危急）；高血磷 Ch35；低血鈣有症狀才補（避免鈣磷沉積）",
+        "早期腎臟科（少尿、P > 10、K 頑固 → 透析）；血液腫瘤科"
+      ],
+      "orders": [
+        {
+          "drug": "NS",
+          "dose": "{round(wt*3)} mL/hr（橫紋肌溶解 3 mL/kg/hr）或依尿量目標 80–100 mL/hr（腫瘤溶解）",
+          "route": "IV drip",
+          "freq": "持續",
+          "note": "依 {wt} kg；心腎衰竭者減量並監測 overload"
+        },
+        {
+          "drug": "Rasburicase",
+          "dose": "{round(wt*0.1,1)}–{round(wt*0.2,1)} mg（0.1–0.2 mg/kg）或固定 6 mg",
+          "route": "IV drip",
+          "freq": "× 1",
+          "note": "G6PD 缺乏禁用；腫瘤溶解；自費／事前審查依院內"
+        },
+        {
+          "drug": "Allopurinol",
+          "dose": "300 mg",
+          "route": "PO",
+          "freq": "QD–BID",
+          "note": "依腎功能調（CrCl {round(crcl)}）；rasburicase 替代"
+        },
+        {
+          "drug": "NaHCO₃",
+          "dose": "依院內（尿 pH 目標 > 6.5）",
+          "route": "IV drip",
+          "freq": "橫紋肌溶解、尿 pH < 6.5 可考慮",
+          "note": "章節未指定劑量；注意低血鈣加重"
+        }
+      ],
+      "watch": [
+        "K、P、Ca、尿酸、Cr q4–6h；CK q12–24h",
+        "尿量每小時；overload（囉音、SpO₂）",
+        "ECG（高血鉀、低血鈣 QT）"
+      ],
+      "call": [
+        "K ≥ 6.0、少尿、P > 10、Cr 急升 → 腎臟科",
+        "症狀性低血鈣",
+        "血液腫瘤科（腫瘤溶解）"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "腫瘤溶解"
+        },
+        {
+          "ch": "11",
+          "q": "腫瘤溶解"
+        },
+        {
+          "ch": "35",
+          "q": "高血磷"
+        }
+      ],
+      "next": [
+        {
+          "label": "K ≥ 6.0／ECG 變化 → 危急性高血鉀",
+          "next": "r_hyperk_critical"
+        }
+      ]
+    },
+    "r_k_normal": {
+      "type": "result",
+      "urgency": "green",
+      "title": "K 3.5–5.0：正常範圍",
+      "summary": "目前 K 正常；高風險者（心臟病、心律不整、MI、心衰竭、digoxin、肝硬化）目標 > 4.0；DKA／利尿中／腹瀉者仍要追蹤。",
+      "steps": [
+        "高風險者（心臟病、digoxin、MI、心衰竭）K < 4.0 可口服補到 > 4.0",
+        "持續流失（利尿劑、腹瀉、NG）或 insulin 滴注中 → q6–12h 追蹤",
+        "有 ECG 變化或無力 → 想 Mg、Ca、其他原因"
+      ],
+      "orders": [
+        {
+          "drug": "KCl 錠／糖漿",
+          "dose": "20–40 mEq（KCl 錠 600 mg = 8 mEq；糖漿 10% 15 mL = 20 mEq）",
+          "route": "PO",
+          "freq": "QD–BID PRN 高風險者 K < 4.0",
+          "note": "隨餐、多水"
+        }
+      ],
+      "watch": [
+        "持續流失者 K q6–12h"
+      ],
+      "call": [
+        "K < 3.0 或 > 5.5 出現"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "目標"
+        }
+      ]
+    },
+    "q_hypok_sx": {
+      "type": "multi",
+      "title": "低血鉀（K 2.5–3.4）：勾選所有符合",
+      "help": "ECG：T 平／倒、U 波、ST 下降、QT 延長、PVC、TdP、AF；同時驗 Mg（低鎂不補 K 補不起來）",
+      "options": [
+        {
+          "label": "心律不整（PVC、TdP、AF）／癱瘓／呼吸肌無力／橫紋肌溶解",
+          "set": {
+            "arr": true
+          }
+        },
+        {
+          "label": "高風險：心臟病、MI、心衰竭、digoxin、肝硬化、高血壓、QT 延長",
+          "set": {
+            "highrisk": true
+          }
+        },
+        {
+          "label": "有症狀（無力、抽筋、腸麻痺、心悸）或無法口服",
+          "set": {
+            "sx": true
+          }
+        },
+        {
+          "label": "細胞內移造成（週期性麻痺、β-agonist、insulin、鹼血症）",
+          "set": {
+            "shift": true
+          }
+        }
+      ],
+      "branches": [
+        {
+          "if": "arr",
+          "next": "r_hypok_severe"
+        },
+        {
+          "if": "highrisk || sx || k < 3.0",
+          "next": "r_hypok_moderate"
+        },
+        {
+          "else": "r_hypok_mild"
+        }
+      ]
+    },
+    "r_hypok_severe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "重度低血鉀（K < 2.5 或心律不整／癱瘓／呼吸肌無力）：CVC KCl 20 mEq/hr + 補 Mg",
+      "summary": "心電監測、CVC **KCl 20 mEq in NS 100 mL over 1 hr（≤ 20 mEq/hr；極危急 ≤ 40 mEq/hr 於 ICU）**，q1–2h 驗 K 直到 > 3.0；**同時補 MgSO₄**；絕不 IV push、不用含糖輸液稀釋；ICU。",
+      "steps": [
+        "心電監測、12 導程 ECG；IV（CVC 建立或大周邊 ≤ 10 mEq/hr）",
+        "抽 Mg、Ca、VBG、BUN/Cr、血糖、CK；尿 K/Cr、尿 Cl；TSH（週期性麻痺）",
+        "KCl 20 mEq/hr via CVC（泡 NS，不用含糖輸液）；q1–2h 驗 K 至 > 3.0，之後 q4–6h 至目標",
+        "MgSO₄ 1–2 g over 1 hr（Mg < 1.6 → 2–4 g）",
+        "能吃的同時口服 KCl 20–40 mEq；低磷（DKA、再餵食）改 potassium phosphate",
+        "呼吸肌無力 → 監測 RR／SpO₂、備插管；TdP → 依 Ch5 給 MgSO₄ 2 g IV push",
+        "腎衰竭者補鉀減半、更密集監測；細胞內移（週期性麻痺）小心補過頭反彈",
+        "停止流失：停瀉劑／利尿劑、治療嘔吐、NG 引流者加 PPI"
+      ],
+      "orders": [
+        {
+          "drug": "KCl",
+          "dose": "20 mEq in NS 100 mL",
+          "route": "IV drip via CVC over 1 hr",
+          "freq": "每小時 20 mEq（≤ 20 mEq/hr），q1–2h 驗 K 至 > 3.0",
+          "note": "極危急 ≤ 40 mEq/hr 於 ICU 心電監測；腎衰竭（CrCl {round(crcl)}）減半；絕不 IV push"
+        },
+        {
+          "drug": "KCl（周邊替代）",
+          "dose": "20 mEq in NS 500 mL",
+          "route": "IV drip 周邊",
+          "freq": "≤ 10 mEq/hr 持續",
+          "note": "無 CVC 時；靜脈炎可加 lidocaine；每 L ≤ 40 mEq"
+        },
+        {
+          "drug": "MgSO₄",
+          "dose": "1–2 g（Mg < 1.6 mg/dL 時 2–4 g）",
+          "route": "IV drip over 1 hr",
+          "freq": "STAT；依 Mg q6–12h",
+          "note": "Mg < 2.4 mg/dL 即補；低鎂不補 K 補不起來（Ch36）"
+        },
+        {
+          "drug": "KCl 口服",
+          "dose": "20–40 mEq",
+          "route": "PO",
+          "freq": "q4–6h（每日 40–100 mEq）",
+          "note": "能吃就同時給；隨餐、多水"
+        },
+        {
+          "drug": "Potassium phosphate",
+          "dose": "20–30 mmol P（含 K 30–44 mEq）",
+          "route": "IV drip over 6 hr",
+          "freq": "同時低磷時（DKA、再餵食）取代部分 KCl",
+          "note": "勿與含鈣輸液同管"
+        }
+      ],
+      "watch": [
+        "心電監測；K q1–2h 至 > 3.0，之後 q4–6h；目標 > 3.0–3.5（高風險 > 4.0）",
+        "Mg、P；RR／SpO₂（呼吸肌）",
+        "注射部位（靜脈炎）；反彈高血鉀（細胞內移者）"
+      ],
+      "call": [
+        "K < 2.5 或合併心律不整／癱瘓／呼吸肌無力一律通知後線；ICU",
+        "digoxin 中毒",
+        "需要 > 20 mEq/hr"
+      ],
+      "ddx": [
+        "低血鎂",
+        "甲狀腺毒性週期性麻痺",
+        "腎小管酸血症、Cushing／高醛固酮"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "KCl 靜脈（CVC）"
+        },
+        {
+          "ch": "33",
+          "q": "重度（< 2.5）"
+        },
+        {
+          "ch": "36",
+          "q": "MgSO₄"
+        }
+      ],
+      "next": [
+        {
+          "label": "甲狀腺毒性週期性麻痺",
+          "next": "r_ptp"
+        }
+      ]
+    },
+    "r_hypok_moderate": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "中度低血鉀（2.5–2.9，或 3.0–3.4 有症狀／高風險）：口服 + 周邊 IV 10 mEq/hr，q4–6h 驗",
+      "summary": "口服 KCl 20–40 mEq q4–6h + 周邊 IV KCl ≤ 10 mEq/hr（20 mEq/500 mL NS）；補 Mg；高風險者（心臟病、digoxin、MI、心衰竭、肝硬化）補到 > 4.0；q4–6h 驗。",
+      "steps": [
+        "ECG 一次（U 波、QT）；高風險者心電監測",
+        "抽 Mg、Ca、VBG、BUN/Cr、血糖；尿 K/Cr、尿 Cl（嘔吐 < 20）；高血壓者 aldosterone/renin",
+        "口服 KCl 為主（能吃就吃）；症狀或無法口服 → 加周邊 IV ≤ 10 mEq/hr，泡 NS 不泡糖水",
+        "Mg < 2.4 mg/dL 就補 MgSO₄",
+        "停止流失：停瀉劑、換利尿劑（或加 spironolactone）、治療嘔吐、NG 引流加 PPI",
+        "q4–6h 驗 K；< 2.5 或心律不整 → 重度處置"
+      ],
+      "orders": [
+        {
+          "drug": "KCl 口服（錠 600 mg = 8 mEq；糖漿 10% 15 mL = 20 mEq）",
+          "dose": "20–40 mEq",
+          "route": "PO",
+          "freq": "q4–6h（每日 40–100 mEq）",
+          "note": "首選；隨餐、多水；每次 ≤ 40 mEq；緩釋錠潰瘍風險"
+        },
+        {
+          "drug": "KCl 靜脈（周邊）",
+          "dose": "20 mEq in NS 500 mL",
+          "route": "IV drip over 2 hr",
+          "freq": "≤ 10 mEq/hr，可重複；q4–6h 驗 K",
+          "note": "每 L ≤ 40 mEq；勿用含糖輸液；靜脈炎可加 lidocaine；絕不 IV push；腎衰竭（CrCl {round(crcl)}）減半"
+        },
+        {
+          "drug": "MgSO₄",
+          "dose": "1–2 g",
+          "route": "IV drip over 1 hr",
+          "freq": "Mg < 2.4 mg/dL 時",
+          "note": "Ch36"
+        },
+        {
+          "drug": "Spironolactone",
+          "dose": "25–50 mg",
+          "route": "PO",
+          "freq": "QD",
+          "note": "腎流失（利尿劑、高醛固酮）長期；或 amiloride 5–10 mg QD"
+        },
+        {
+          "drug": "Potassium citrate",
+          "dose": "10–20 mEq",
+          "route": "PO",
+          "freq": "BID–TID",
+          "note": "RTA、結石者取代 KCl"
+        }
+      ],
+      "watch": [
+        "K q4–6h；目標 > 3.5（高風險 > 4.0）",
+        "Mg；ECG 若心悸",
+        "注射部位疼痛／靜脈炎"
+      ],
+      "call": [
+        "K < 2.5 或出現心律不整／癱瘓／呼吸肌無力",
+        "digoxin 中毒",
+        "補了仍不升（想 Mg、持續流失）"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "KCl 口服"
+        },
+        {
+          "ch": "33",
+          "q": "中度（2.5–2.9）"
+        }
+      ],
+      "next": [
+        {
+          "label": "K < 2.5／心律不整 → 重度處置",
+          "next": "r_hypok_severe"
+        }
+      ]
+    },
+    "r_hypok_mild": {
+      "type": "result",
+      "urgency": "green",
+      "title": "輕度低血鉀（3.0–3.4，無症狀、非高風險）：口服 40–80 mEq/d，隔日驗",
+      "summary": "口服 KCl 40–80 mEq/d 分次、隨餐；查 Mg；停止流失（瀉劑、利尿劑、嘔吐）；隔日驗 K。",
+      "steps": [
+        "口服 KCl 20–40 mEq q6–12h（每日 40–80 mEq）",
+        "Mg 偏低就補（口服 MgO 或 IV）",
+        "找原因：利尿劑、腹瀉／瀉劑、嘔吐／NG、insulin、β-agonist、類固醇、低鎂",
+        "隔日驗 K、Mg；長期利尿劑者考慮加 spironolactone／amiloride"
+      ],
+      "orders": [
+        {
+          "drug": "KCl 口服（錠 600 mg = 8 mEq；糖漿 10% 15 mL = 20 mEq）",
+          "dose": "20–40 mEq",
+          "route": "PO",
+          "freq": "BID–TID（每日 40–80 mEq）",
+          "note": "隨餐、多水；每次 ≤ 40 mEq"
+        },
+        {
+          "drug": "MgO",
+          "dose": "250–500 mg",
+          "route": "PO",
+          "freq": "BID–QID PRN Mg 偏低",
+          "note": "腹瀉限制劑量（Ch36）"
+        },
+        {
+          "drug": "Spironolactone",
+          "dose": "25–50 mg",
+          "route": "PO",
+          "freq": "QD",
+          "note": "利尿劑造成的腎流失長期用；或 amiloride 5–10 mg QD"
+        }
+      ],
+      "watch": [
+        "K、Mg 隔日",
+        "新出現無力、心悸 → 重驗、ECG"
+      ],
+      "call": [
+        "K < 3.0 或出現心律不整／無力",
+        "補了不升"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "輕–中度（3.0–3.4 無症狀）"
+        },
+        {
+          "ch": "33",
+          "q": "KCl 口服"
+        }
+      ]
+    },
+    "r_ptp": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "甲狀腺毒性週期性麻痺：propranolol，補 K 小心反彈",
+      "summary": "急性四肢無力 + 低血鉀 + 甲狀腺亢進（亞洲男性）：細胞內移，總體不缺 K → **propranolol 3 mg/kg PO**，補 K 用低劑量並密集監測，避免反彈高血鉀。",
+      "steps": [
+        "心電監測、ECG；TSH、free T4、K、Mg、P、CK",
+        "propranolol 3 mg/kg PO（無氣喘／心衰竭禁忌）",
+        "K < 2.5 或心律不整才 IV KCl（≤ 10 mEq/hr，總量少）；q1–2h 驗，恢復期 K 會自行回升",
+        "避免葡萄糖輸液、避免大量補 K（反彈高血鉀）",
+        "內分泌科；治療甲狀腺亢進（Ch21）"
+      ],
+      "orders": [
+        {
+          "drug": "Propranolol",
+          "dose": "{round(wt*3)} mg（3 mg/kg）",
+          "route": "PO",
+          "freq": "STAT × 1",
+          "note": "依 {wt} kg；氣喘、心衰竭、心搏過緩禁"
+        },
+        {
+          "drug": "KCl",
+          "dose": "10 mEq",
+          "route": "IV drip 周邊 over 1 hr",
+          "freq": "PRN K < 2.5 或心律不整，q1–2h 驗",
+          "note": "低劑量、密集監測；泡 NS 不泡糖水"
+        }
+      ],
+      "watch": [
+        "K q1–2h × 6 hr（反彈高血鉀）",
+        "肌力恢復、RR",
+        "ECG"
+      ],
+      "call": [
+        "K < 2.5、心律不整、呼吸肌無力",
+        "反彈 K > 5.5"
+      ],
+      "refs": [
+        {
+          "ch": "33",
+          "q": "週期性麻痺"
+        },
+        {
+          "ch": "21",
+          "q": "甲狀腺"
+        }
+      ]
+    }
+  }
+}

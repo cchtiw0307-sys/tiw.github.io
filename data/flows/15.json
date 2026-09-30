@@ -1,0 +1,546 @@
+{
+  "id": "15",
+  "title": "傷口問題",
+  "chapter": "15",
+  "entries": [
+    { "label": "傷口出血（紗布濕透）", "type": "symptom", "start": "q_bleed", "group": "皮膚四肢",
+      "keywords": ["傷口出血", "wound bleeding", "紗布濕透", "滲血", "oozing", "血腫", "hematoma", "頸部血腫", "術後出血"] },
+    { "label": "傷口紅腫／滲液／有膿／發燒", "type": "symptom", "start": "i_phone", "group": "皮膚四肢",
+      "keywords": ["傷口紅腫", "傷口感染", "wound infection", "surgical site infection", "SSI", "傷口滲液", "有膿", "傷口臭", "蜂窩性組織炎", "cellulitis"] },
+    { "label": "傷口裂開／腸子跑出來", "type": "symptom", "start": "q_dehisc", "group": "皮膚四肢",
+      "keywords": ["傷口裂開", "dehiscence", "evisceration", "臟器外露", "筋膜開裂", "拆線 裂開", "腸子跑出來"] },
+    { "label": "傷口劇痛／變紫黑／捻髮音", "type": "symptom", "start": "q_wound_look", "group": "皮膚四肢",
+      "keywords": ["傷口劇痛", "傷口變黑", "捻髮音", "crepitus", "壞死性筋膜炎", "necrotizing", "傷口水泡"] },
+    { "label": "壞死性軟組織感染（壞死性筋膜炎）", "type": "diagnosis", "start": "r_nsti",
+      "keywords": ["壞死性筋膜炎", "necrotizing fasciitis", "NSTI", "necrotizing soft tissue infection", "Fournier", "gas gangrene", "LRINEC"] },
+    { "label": "蜂窩性組織炎／手術部位感染", "type": "diagnosis", "start": "q_cellulitis_sev",
+      "keywords": ["蜂窩性組織炎", "cellulitis", "手術部位感染", "surgical site infection", "SSI", "膿瘍", "abscess", "MRSA", "cefazolin", "cephalexin", "I&D"] },
+    { "label": "特殊暴露感染（海水 Vibrio、淡水、貓狗咬傷）", "type": "diagnosis", "start": "q_exposure",
+      "keywords": ["Vibrio vulnificus", "海洋弧菌", "生蠔", "魚刺", "Aeromonas", "淡水", "咬傷", "dog bite", "cat bite", "Capnocytophaga", "Pasteurella"] },
+    { "label": "傷口血腫（含頸部術後）", "type": "diagnosis", "start": "q_hematoma",
+      "keywords": ["血腫", "hematoma", "頸部血腫", "neck hematoma", "甲狀腺術後", "頸動脈術後", "拆線減壓"] },
+    { "label": "筋膜開裂／臟器外露（evisceration）", "type": "diagnosis", "start": "r_evisceration",
+      "keywords": ["evisceration", "臟器外露", "筋膜開裂", "fascial dehiscence", "burst abdomen"] },
+    { "label": "滲液／血清腫／瘻管（腸液、膽汁、尿液）", "type": "diagnosis", "start": "q_exudate",
+      "keywords": ["滲液", "血清腫", "seroma", "瘻管", "fistula", "吻合口滲漏", "anastomotic leak", "膽汁滲液", "腸液", "salmon-colored"] },
+    { "label": "壓瘡", "type": "diagnosis", "start": "r_pressure",
+      "keywords": ["壓瘡", "褥瘡", "pressure ulcer", "pressure injury", "bedsore", "壓瘡分級", "氣墊床"] },
+    { "label": "破傷風預防（Td／TIG）", "type": "diagnosis", "start": "r_tetanus",
+      "keywords": ["破傷風", "tetanus", "Td", "TIG", "破傷風免疫球蛋白", "外傷 疫苗"] },
+    { "label": "換藥與傷口照護原則（敷料、水泡、燒燙傷）", "type": "diagnosis", "start": "r_dressing",
+      "keywords": ["換藥", "dressing", "敷料", "wet-to-dry", "銀離子", "藻酸鹽", "水泡", "燒燙傷", "silver sulfadiazine", "NPWT", "負壓", "抗菌藥膏", "mupirocin", "fusidic acid"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中先問",
+      "body": [
+        "傷口位置、種類（手術／壓瘡／外傷／造口）、**術後第幾天**；現在的問題（出血、滲液性質、紅腫、開裂、疼痛）",
+        "生命徵象（發燒、心搏過速、低血壓）；引流管量與顏色是否改變",
+        "抗凝／抗血小板、類固醇、免疫抑制、糖尿病；目前抗生素",
+        "術後 24–48 小時的傷口紅與低燒常是正常發炎；**術後 5–7 天發燒 + 紅腫膿 = 手術部位感染**",
+        "請準備換藥車、好光線；**打開紗布親眼看**"
+      ],
+      "next": "q_wound_look"
+    },
+    "q_wound_look": {
+      "type": "multi",
+      "title": "打開所有敷料，勾選所有符合",
+      "help": "用筆畫線標記紅腫範圍、拍照記時間；肢體傷口摸遠端脈搏、CRT、感覺運動",
+      "options": [
+        { "label": "劇痛與外觀不成比例／紫黑／捻髮音／出血性水泡／快速擴散／休克", "set": { "nsti": true } },
+        { "label": "傷口開裂（看到筋膜、腸子或表淺分開）", "set": { "dehis": true } },
+        { "label": "滲液像腸液／膽汁／尿液，或大量漿液（salmon-colored）", "set": { "fluid": true } },
+        { "label": "發燒／心搏過速／全身症狀，或糖尿病、紅腫 > 2 cm 快速擴大", "set": { "sys": true } },
+        { "label": "膿／波動感（膿瘍）", "set": { "pus": true } },
+        { "label": "邊緣紅 < 1–2 cm、無全身症狀（術後 1–2 天常是正常發炎）", "set": { "mild": true } },
+        { "label": "以上都沒有（只是滲液少量／換藥問題）", "set": { "none": true } }
+      ],
+      "branches": [
+        { "if": "nsti", "next": "r_nsti" },
+        { "if": "dehis", "next": "q_dehisc" },
+        { "if": "fluid", "next": "q_exudate" },
+        { "if": "sys", "next": "r_cellulitis_iv" },
+        { "if": "pus", "next": "r_abscess" },
+        { "if": "mild", "next": "r_cellulitis_po" },
+        { "else": "r_dressing" }
+      ]
+    },
+    "q_bleed": {
+      "type": "choice",
+      "title": "傷口出血：哪一種？",
+      "help": "電話中已交代：無菌紗布直接加壓 10–15 分鐘不要偷看、抬高、量生命徵象、IV",
+      "options": [
+        { "label": "大量出血（紗布連續濕透）、術後 24 小時內、心搏過速／低血壓", "next": "r_bleed_major" },
+        { "label": "皮緣／縫線少量滲血，生命徵象穩定", "next": "r_bleed_minor" },
+        { "label": "腫脹、張力（血腫）", "next": "q_hematoma" }
+      ]
+    },
+    "q_hematoma": {
+      "type": "choice",
+      "title": "血腫：位置與進展？",
+      "options": [
+        { "label": "頸部術後（甲狀腺、頸動脈、頸椎）或壓迫氣道／呼吸困難", "next": "r_hematoma_urgent" },
+        { "label": "擴大中、張力大、壓迫神經（麻、無力）", "next": "r_hematoma_urgent" },
+        { "label": "小且穩定，不再擴大", "next": "r_hematoma_small" }
+      ]
+    },
+    "q_dehisc": {
+      "type": "choice",
+      "title": "傷口開裂：看到什麼？",
+      "help": "腹部：筋膜開裂常在術後 5–10 天，先有大量漿液性滲液；腹壓↑（咳嗽、腹脹）誘發",
+      "options": [
+        { "label": "看到筋膜分開／腸子或臟器外露", "next": "r_evisceration" },
+        { "label": "只有皮膚／皮下表淺分開（含拆線到一半發現分開）", "next": "r_superficial_dehisc" }
+      ]
+    },
+    "q_exudate": {
+      "type": "choice",
+      "title": "滲液性質？",
+      "options": [
+        { "label": "腸液／膽汁／尿液樣（瘻管、吻合口滲漏），或引流管突然出現腸內容物", "next": "r_fistula" },
+        { "label": "淡黃清（血清）／淡紅（血性）／大量漿液", "next": "r_seroma" },
+        { "label": "黃綠濁、臭（膿）", "next": "r_abscess" }
+      ]
+    },
+    "q_cellulitis_sev": {
+      "type": "choice",
+      "title": "蜂窩性組織炎／傷口感染：嚴重度與風險？",
+      "help": "膿瘍一定要切開引流（I&D），抗生素不能取代；深部培養要清創後取，不要只擦表面膿",
+      "options": [
+        { "label": "表淺、無膿、無全身症狀", "next": "r_cellulitis_po" },
+        { "label": "中重度／全身症狀／糖尿病／需 IV", "next": "r_cellulitis_iv" },
+        { "label": "有膿／波動感、既往 MRSA、長照機構（MRSA 風險）", "next": "r_abscess" },
+        { "label": "術後深部／腹內、會陰、糞便汙染", "next": "r_deep_ssi" },
+        { "label": "海水／淡水／咬傷等特殊暴露", "next": "q_exposure" },
+        { "label": "劇痛不成比例、紫黑、捻髮音、水泡、休克", "next": "r_nsti" }
+      ]
+    },
+    "q_exposure": {
+      "type": "choice",
+      "title": "特殊暴露：哪一種？",
+      "help": "出血性水泡 + 快速進展 = 壞死性感染處理，立即清創",
+      "options": [
+        { "label": "海水／生蠔／魚刺 + 肝硬化（Vibrio vulnificus）", "next": "r_vibrio" },
+        { "label": "淡水（Aeromonas）", "next": "r_aeromonas" },
+        { "label": "貓狗咬傷", "next": "r_bite" },
+        { "label": "已有出血性水泡／快速進展／休克", "next": "r_nsti" }
+      ]
+    },
+    "r_bleed_major": {
+      "type": "result",
+      "urgency": "red",
+      "title": "傷口大量出血／術後 24 小時內大量出血",
+      "summary": "**直接加壓不放手**（抗凝者 20–30 分鐘）、抬高、IV × 2、輸液；深部或動脈性出血 = 外科急症，立即叫後線與外科；查凝血並逆轉抗凝（Ch30）。",
+      "steps": [
+        "無菌紗布持續直接加壓 10–15 分鐘（抗凝者 20–30 分鐘）不偷看；抬高肢體；壓迫敷料",
+        "生命徵象 q5–15 min、IV × 2、NS/LR bolus；監測器",
+        "CBC、PT/aPTT/INR、type & screen（備血）；抗凝藥停用並評估逆轉（Ch30）",
+        "立即通知後線與外科（深部大血管、術後 24 小時內大量出血 = 回手術室）",
+        "明確表淺出血點：局麻後 8 字縫合或結紮；不確定深度不要盲目縫",
+        "頸部血腫 → 床邊拆線減壓、叫麻醉（氣道）"
+      ],
+      "orders": [
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT bolus，可重複", "note": "心／腎衰竭 250 mL；持續低血壓考慮輸血（Ch26）" },
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV drip over 10 min", "freq": "STAT × 1（依後線）", "note": "抗凝者、瀰漫滲血" },
+        { "drug": "Tranexamic acid（局部）", "dose": "500 mg/5 mL", "route": "浸紗布加壓", "freq": "單次", "note": "表淺滲血" },
+        { "drug": "Epinephrine 1 mg (1:1,000) 稀釋 NS 10 mL（1:10,000）", "dose": "浸紗布", "route": "局部加壓", "freq": "單次", "note": "手指／耳／鼻／陰莖等末端避免" }
+      ],
+      "watch": ["生命徵象 q5–15 min；紗布濕透速度", "Hb 追蹤（出血後 2–4 小時）、INR", "血腫張力、遠端脈搏／神經"],
+      "call": ["加壓 15–30 分鐘仍出血、術後 24 小時內大量出血、血腫擴大 = 立即外科 + 後線", "頸部術後血腫 = 氣道急症（麻醉）"],
+      "refs": [{ "ch": "15", "q": "1. 出血" }, { "ch": "30", "q": "抗凝血劑逆轉" }]
+    },
+    "r_bleed_minor": {
+      "type": "result",
+      "urgency": "green",
+      "title": "皮緣／縫線少量滲血",
+      "summary": "直接加壓 10–15 分鐘（抗凝者 20–30 分鐘）+ 抬高多半就止；仍滲 → epinephrine 紗布／局部 tranexamic acid／止血材料；明確出血點局麻後 8 字縫合。",
+      "steps": [
+        "無菌紗布直接加壓 10–15 分鐘（抗凝者 20–30 分鐘），抬高；壓迫敷料",
+        "檢視抗凝／抗血小板藥、INR、血小板",
+        "仍滲：epinephrine 紗布或局部 tranexamic acid 加壓；小滲血用 Gelfoam／Surgicel",
+        "明確出血點：局麻後 8 字縫合或結紮",
+        "記錄、交班原團隊"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1 mg (1:1,000) 稀釋 NS 10 mL（1:10,000）", "dose": "浸紗布", "route": "局部加壓", "freq": "單次", "note": "手指／耳／鼻／陰莖避免" },
+        { "drug": "Tranexamic acid（局部）", "dose": "500 mg/5 mL", "route": "浸紗布加壓", "freq": "單次", "note": "表淺滲血、抗凝者" },
+        { "drug": "可吸收明膠海綿（Gelfoam／Spongostan）或氧化纖維素（Surgicel）", "dose": "1 片", "route": "局部", "freq": "單次", "note": "小滲血" },
+        { "drug": "Lidocaine 1%", "dose": "2–5 mL", "route": "局部浸潤", "freq": "縫合前", "note": "8 字縫合或結紮明確出血點" }
+      ],
+      "watch": ["30 分鐘、2 小時複查紗布", "血腫形成"],
+      "call": ["加壓 15–30 分鐘仍出血", "血腫擴大或深部／動脈性出血"],
+      "refs": [{ "ch": "15", "q": "1. 出血" }]
+    },
+    "r_hematoma_urgent": {
+      "type": "result",
+      "urgency": "red",
+      "title": "擴大／張力性血腫（頸部術後 = 氣道急症）",
+      "summary": "**頸部術後血腫：床邊拆線（皮膚 + 深層縫線）減壓，叫後線／麻醉**；其他部位擴大、張力大、壓迫神經 → 立即外科拆線減壓；查凝血、逆轉抗凝。",
+      "steps": [
+        "頸部：呼吸困難／喘鳴／聲音改變 → 立即床邊拆線（含深層）放出血腫、坐起、O₂、叫麻醉 + 外科（可能需緊急插管／回手術室）",
+        "其他部位：評估遠端脈搏、CRT、感覺運動（腔室症候群？）；擴大或壓迫神經 → 外科拆線減壓",
+        "IV、生命徵象、CBC、PT/aPTT/INR、type & screen",
+        "停抗凝／抗血小板，評估逆轉（Ch30）",
+        "畫線標記範圍，q15 min 觀察"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "15 L/min", "route": "NRM", "freq": "持續（頸部血腫、氣道症狀）", "note": "目標 ≥ 94%" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT bolus（低血壓時）", "note": "心／腎衰竭 250 mL" },
+        { "drug": "Tranexamic acid", "dose": "1 g", "route": "IV drip over 10 min", "freq": "STAT × 1（依後線）", "note": "抗凝者" }
+      ],
+      "watch": ["氣道：喘鳴、聲音、SpO₂ 持續", "血腫範圍 q15 min", "遠端神經血管"],
+      "call": ["頸部術後血腫 = 立刻後線 + 麻醉 + 外科", "血腫擴大、壓迫神經、疑腔室症候群"],
+      "refs": [{ "ch": "15", "q": "頸部術後血腫" }, { "ch": "30", "q": "抗凝血劑逆轉" }]
+    },
+    "r_hematoma_small": {
+      "type": "result",
+      "urgency": "green",
+      "title": "小且穩定的血腫",
+      "summary": "觀察、冰敷、加壓敷料、抬高；畫線標記，擴大／張力大／壓迫神經或氣道才需外科減壓。",
+      "steps": [
+        "畫線標記範圍、拍照記時間",
+        "冰敷、壓迫敷料、抬高",
+        "檢視抗凝／抗血小板藥、INR、血小板",
+        "2–4 小時複查；交班原團隊"
+      ],
+      "orders": [
+        { "drug": "冰敷", "dose": "15–20 分鐘", "route": "局部", "freq": "q2–4h（前 24 小時）", "note": "隔布" }
+      ],
+      "watch": ["範圍是否超過標記線、張力、疼痛加劇", "遠端脈搏、感覺"],
+      "call": ["血腫擴大、張力大、壓迫神經／氣道"],
+      "refs": [{ "ch": "15", "q": "血腫" }],
+      "next": [{ "label": "擴大／張力大 → 緊急減壓", "next": "r_hematoma_urgent" }]
+    },
+    "r_cellulitis_po": {
+      "type": "result",
+      "urgency": "green",
+      "title": "表淺蜂窩性組織炎／輕度傷口紅腫（無膿、無全身症狀）",
+      "summary": "術後 1–2 天邊緣 < 1–2 cm 的紅常是正常發炎；蜂窩性組織炎 → 口服 cephalexin（或 amoxicillin-clavulanate）× 5–7 天，標記範圍、抬高、48 小時評估。",
+      "steps": [
+        "畫線標記紅斑範圍、拍照記時間；抬高患肢",
+        "找入口：足癬、傷口、壓瘡、注射處；肢體檢查遠端脈搏",
+        "口服抗生素 × 5–7 天（依反應可至 14 天）；抗生素後 24–48 小時紅斑略擴大不等於失敗",
+        "表面拭子培養無意義；有膿才做深部培養",
+        "48 小時評估；發燒、快速擴散、全身症狀 → 改 IV"
+      ],
+      "orders": [
+        { "drug": "Cephalexin", "dose": "500 mg", "route": "PO", "freq": "q6h × 5–7 天", "note": "首選；腎功能差（CrCl {round(crcl)}）依院內減量", "alt": "cefadroxil 500 mg PO q12h" },
+        { "drug": "Amoxicillin-clavulanate", "dose": "{crcl >= 30 ? '875/125 mg' : '500/125 mg'}", "route": "PO", "freq": "{crcl >= 10 ? 'q12h' : 'q24h'} × 5–7 天", "note": "CrCl {round(crcl)} 依附錄 A5" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "止痛退燒" }
+      ],
+      "watch": ["48 小時：範圍相對標記線、疼痛、體溫", "膿／波動感出現 → I&D"],
+      "call": ["48 小時無改善或快速擴散", "發燒 + 全身症狀、糖尿病足深部感染、劇痛不成比例（壞死性）"],
+      "refs": [{ "ch": "15", "q": "表淺蜂窩性組織炎" }, { "ch": "A5", "q": "Amoxicillin-clavulanate" }]
+    },
+    "r_cellulitis_iv": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "中重度蜂窩性組織炎／全身症狀／糖尿病",
+      "summary": "IV cefazolin（或 oxacillin）；糖尿病足、咬傷、會陰用 amoxicillin-clavulanate IV；膿瘍一定要 I&D；發燒抽血液培養；標記範圍。",
+      "steps": [
+        "畫線標記、拍照；抬高；生命徵象",
+        "CBC、CRP、血糖、Cr、血液培養（發燒）；膿或深部組織培養（清創後取）",
+        "膿瘍／波動感 → 切開引流（I&D），抗生素不能取代",
+        "IV 抗生素（CrCl {round(crcl)} 已調整）；MRSA 風險（膿、既往 MRSA、長照）→ 加 vancomycin",
+        "影像：超音波（積液）、X 光（氣體、異物）、疑深部感染 CT",
+        "再確認沒有壞死性徵候（劇痛不成比例、紫黑、捻髮音、水泡）"
+      ],
+      "orders": [
+        { "drug": "Cefazolin", "dose": "{crcl >= 35 ? '1–2 g' : '0.5–1 g'}", "route": "IV drip", "freq": "{crcl >= 35 ? 'q8h' : crcl >= 11 ? 'q12h' : 'q18–24h'}", "note": "首選；CrCl {round(crcl)} 依附錄 A5", "alt": "oxacillin 2 g IV q4–6h（不需腎調）" },
+        { "drug": "Amoxicillin-clavulanate", "dose": "{crcl >= 10 ? '1.2 g' : '600 mg'}", "route": "IV drip", "freq": "{crcl >= 30 ? 'q8h' : crcl >= 10 ? 'q12h' : 'q24h'}", "note": "糖尿病足、咬傷、會陰；CrCl {round(crcl)} 依 A5" },
+        { "drug": "Vancomycin（MRSA 風險時加）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5）；trough 15–20" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "" }
+      ],
+      "watch": ["24–48 小時範圍 vs 標記線、體溫、疼痛", "血糖（糖尿病）、Cr", "敗血症徵候（SBP、RR、意識）"],
+      "call": ["48 小時無改善或快速擴散", "傷口 + 敗血症徵候、糖尿病足深部感染／壞疽、人工植入物周圍感染", "壞死性徵候 → 外科"],
+      "refs": [{ "ch": "15", "q": "cefazolin 1–2 g q8h" }, { "ch": "A5", "q": "Cefazolin" }],
+      "next": [{ "label": "有膿／MRSA 風險 → I&D + MRSA 涵蓋", "next": "r_abscess" }]
+    },
+    "r_abscess": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "膿瘍／化膿性感染／MRSA 風險（膿、既往 MRSA、長照）",
+      "summary": "**膿瘍一定要切開引流（I&D）**，抗生素不能取代；感染的手術傷口拆除部分縫線引流、沖洗、濕敷 BID；MRSA 涵蓋：vancomycin IV，輕症 TMP-SMX／doxycycline PO；深部培養。",
+      "steps": [
+        "超音波確認積液；I&D 或拆除部分縫線引流，NS 沖洗，清創後取深部培養",
+        "濕敷（wet-to-dry 或 NS 濕紗布）BID；深腔填塞不要太緊",
+        "MRSA 涵蓋抗生素（輕症口服、全身症狀 IV）",
+        "發燒 → 血液培養、CBC、CRP",
+        "人工植入物（血管移植物、人工關節、節律器）周圍感染 → 通知後線與相關外科"
+      ],
+      "orders": [
+        { "drug": "Vancomycin", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "全身症狀者；依 {wt} kg、CrCl {round(crcl)}（附錄 A5）；trough 15–20" },
+        { "drug": "TMP-SMX", "dose": "2 錠", "route": "PO", "freq": "BID", "note": "輕症；CrCl 15–30 減半、< 15 避免（A5）；監測 K、Cr", "alt": "doxycycline 100 mg PO BID（不需腎調）" },
+        { "drug": "NS 濕紗布（wet-to-dry）", "dose": "填塞傷口", "route": "局部", "freq": "BID 換藥", "note": "深腔不要塞太緊" },
+        { "drug": "Lidocaine 1%", "dose": "2–5 mL", "route": "局部浸潤", "freq": "I&D 前", "note": "" }
+      ],
+      "watch": ["引流量與性質、範圍 vs 標記線", "培養結果 48–72 小時後降階"],
+      "call": ["需要手術室引流（深部、大膿瘍）", "48 小時無改善、敗血症徵候、植入物感染"],
+      "refs": [{ "ch": "15", "q": "MRSA 風險" }, { "ch": "15", "q": "感染的手術傷口" }, { "ch": "A5", "q": "TMP-SMX" }]
+    },
+    "r_deep_ssi": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "術後深部／腹內、會陰、糞便汙染傷口感染",
+      "summary": "Piperacillin-tazobactam（或 ceftriaxone + metronidazole）；影像找積液並引流（來源控制）；聯絡原外科團隊。",
+      "steps": [
+        "生命徵象、腹膜炎徵候；血液培養 × 2、CBC、CRP、Cr、乳酸",
+        "CT／超音波找積液、氣體、瘻管；可引流的積液 → 引流（放射科／外科）",
+        "IV 抗生素（CrCl {round(crcl)} 已調整）",
+        "深部培養（引流液），48–72 小時後降階",
+        "通知外科"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "CrCl {round(crcl)} 依附錄 A5；第一劑不減量" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "QD（替代方案，+ metronidazole）", "note": "不需腎調" },
+        { "drug": "Metronidazole", "dose": "500 mg", "route": "IV drip", "freq": "{crcl >= 10 ? 'q8h' : 'q8–12h'}", "note": "與 ceftriaxone 併用；肝病減量" }
+      ],
+      "watch": ["體溫、腹痛、引流液性質、乳酸", "Cr（抗生素調整）"],
+      "call": ["需要引流／再手術、腹膜炎徵候、敗血症徵候", "引流液變成腸內容物／膽汁／膿／鮮血"],
+      "refs": [{ "ch": "15", "q": "術後深部／腹內" }, { "ch": "A5", "q": "Piperacillin-tazobactam" }]
+    },
+    "r_nsti": {
+      "type": "result",
+      "urgency": "red",
+      "title": "壞死性軟組織感染（壞死性筋膜炎）",
+      "summary": "**緊急外科清創——不要等影像**（CT 可做但不可延誤手術）；piperacillin-tazobactam + vancomycin + clindamycin（抑制毒素）；輸液／升壓、ICU；確認 GAS → penicillin G + clindamycin。",
+      "steps": [
+        "立即通知後線 + 外科（清創）；畫線標記範圍、拍照記時間",
+        "IV × 2、監測器；血液培養 × 2、CBC、Cr、**lactate、CK、AST**（深部壞死）、CRP、凝血、血糖（LRINEC 只是輔助）",
+        "抗生素 1 小時內三合一（CrCl {round(crcl)} 已調整，第一劑不減）",
+        "輸液 30 mL/kg，MAP < 65 → norepinephrine（Ch17）；ICU",
+        "海水暴露 + 肝硬化 → 加 doxycycline（Vibrio）",
+        "合併毒性休克考慮 IVIG（感染科）；止痛"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "CrCl {round(crcl)} 依附錄 A5；第一劑不減量", "alt": "meropenem 1 g q8h（CrCl 30–50 q12h）或 ceftriaxone 2 g q24h + metronidazole 500 mg q8h" },
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg；loading 不減量" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "CrCl {round(crcl)} 依 A5；trough 15–20" },
+        { "drug": "Clindamycin", "dose": "600–900 mg", "route": "IV drip", "freq": "q8h", "note": "抑制毒素；不需腎調" },
+        { "drug": "Penicillin G", "dose": "400 萬 U", "route": "IV drip", "freq": "q4h（確認 GAS 後 + clindamycin）", "note": "腎功能差依院內" },
+        { "drug": "Doxycycline", "dose": "100 mg", "route": "IV／PO", "freq": "q12h（海水暴露 + 肝硬化時加）", "note": "Vibrio；+ ceftriaxone 2 g q24h" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "前 3 小時，之後依評估 250–500 mL bolus", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起（{wt} kg：{round(wt*0.05*60/32,1)}–{round(wt*0.1*60/32,1)} mL/hr）", "route": "IV drip（可周邊短暫）", "freq": "持續，MAP < 65 就給", "note": "泡法 8 mg in D5W 250 mL（32 mcg/mL）" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN", "note": "腎衰竭累積" }
+      ],
+      "watch": ["範圍 vs 標記線每 30–60 分鐘", "MAP、乳酸 q2–4h、尿量", "CK、K、Cr"],
+      "call": ["懷疑當下 = 後線 + 外科 + ICU；不要等影像", "休克、乳酸 > 2、擴散超過標記"],
+      "ddx": ["嚴重蜂窩性組織炎", "腔室症候群", "DVT", "痛風（足部）"],
+      "refs": [{ "ch": "15", "q": "壞死性軟組織感染" }, { "ch": "17", "q": "表 17-1" }, { "ch": "A5", "q": "Piperacillin-tazobactam" }]
+    },
+    "r_vibrio": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Vibrio vulnificus（海水／生蠔／魚刺 + 肝硬化）",
+      "summary": "台灣沿海常見、進展極快：doxycycline + ceftriaxone（或 ceftazidime）；**出血性水泡 + 快速進展 = 壞死性感染，立即清創**；輸液／升壓。",
+      "steps": [
+        "畫線標記、拍照；生命徵象；血液培養 × 2、傷口／水泡液培養、乳酸、CK",
+        "立即抗生素：doxycycline + ceftriaxone",
+        "出血性水泡、紫黑、快速擴散、休克 → 依壞死性感染：緊急外科清創、ICU",
+        "輸液 30 mL/kg，MAP < 65 → norepinephrine（Ch17）",
+        "通知後線 + 外科 + 感染科"
+      ],
+      "orders": [
+        { "drug": "Doxycycline", "dose": "100 mg", "route": "IV／PO", "freq": "q12h", "note": "不需腎調" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q24h", "note": "不需腎調", "alt": "ceftazidime 2 g IV q8h（CrCl 30–50 q12h；10–30 q24h）" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "休克時前 3 小時", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起（{wt} kg：{round(wt*0.05*60/32,1)}–{round(wt*0.1*60/32,1)} mL/hr）", "route": "IV drip", "freq": "持續，MAP < 65", "note": "8 mg in D5W 250 mL" }
+      ],
+      "watch": ["範圍每 30–60 分鐘 vs 標記線；水泡進展", "MAP、乳酸、尿量"],
+      "call": ["懷疑 Vibrio 當下通知後線 + 外科；任何壞死性徵候 = 緊急清創", "休克 → ICU"],
+      "refs": [{ "ch": "15", "q": "Vibrio vulnificus" }],
+      "next": [{ "label": "壞死性徵候 → 壞死性軟組織感染", "next": "r_nsti" }]
+    },
+    "r_aeromonas": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "淡水暴露傷口感染（Aeromonas）",
+      "summary": "Ciprofloxacin IV（或 ceftriaxone）；標記範圍；快速進展／出血性水泡 → 壞死性感染處理。",
+      "steps": [
+        "畫線標記、拍照；清創、沖洗、深部培養、血液培養（發燒）",
+        "IV 抗生素（CrCl {round(crcl)} 已調整）",
+        "24–48 小時評估；快速進展 → 外科清創"
+      ],
+      "orders": [
+        { "drug": "Ciprofloxacin", "dose": "400 mg", "route": "IV drip", "freq": "{crcl >= 30 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依附錄 A5", "alt": "ceftriaxone 2 g IV q24h" }
+      ],
+      "watch": ["範圍 vs 標記線、疼痛、體溫"],
+      "call": ["快速擴散、出血性水泡、劇痛不成比例、敗血症徵候"],
+      "refs": [{ "ch": "15", "q": "Aeromonas" }, { "ch": "A5", "q": "Ciprofloxacin" }],
+      "next": [{ "label": "壞死性徵候 → 壞死性軟組織感染", "next": "r_nsti" }]
+    },
+    "r_bite": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "貓狗咬傷",
+      "summary": "沖洗、清創、不要一期縫合（臉部除外，依外科）；amoxicillin-clavulanate IV；脾切除／肝硬化被狗咬（Capnocytophaga）→ piperacillin-tazobactam；破傷風評估；狂犬病依疾管署。",
+      "steps": [
+        "大量 NS 沖洗、清創、探查深度（肌腱、關節、骨）；X 光（異物、骨折）",
+        "IV 抗生素（CrCl {round(crcl)} 已調整）；深部培養",
+        "破傷風：> 5 年未接種 → Td；未完整接種 → + TIG",
+        "手部／關節／深部咬傷 → 外科；高風險動物依疾管署評估狂犬病",
+        "標記範圍、抬高、24–48 小時評估"
+      ],
+      "orders": [
+        { "drug": "Amoxicillin-clavulanate", "dose": "{crcl >= 10 ? '1.2 g' : '600 mg'}", "route": "IV drip", "freq": "{crcl >= 30 ? 'q8h' : crcl >= 10 ? 'q12h' : 'q24h'}", "note": "CrCl {round(crcl)} 依附錄 A5" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "脾切除／肝硬化狗咬（Capnocytophaga）時取代 amoxicillin-clavulanate；A5" },
+        { "drug": "Td 疫苗", "dose": "0.5 mL", "route": "IM", "freq": "單次（汙染傷口 > 5 年未接種）", "note": "" },
+        { "drug": "TIG（破傷風免疫球蛋白）", "dose": "250 U", "route": "IM（另側）", "freq": "單次（未完整接種或不明 + 汙染傷口）", "note": "" }
+      ],
+      "watch": ["24–48 小時範圍、疼痛、發燒", "關節活動、肌腱功能"],
+      "call": ["深部／關節／肌腱受累、快速擴散、敗血症徵候", "脾切除／肝硬化者狗咬（Capnocytophaga 猛爆性）"],
+      "refs": [{ "ch": "15", "q": "貓狗咬" }, { "ch": "15", "q": "破傷風" }, { "ch": "A5", "q": "Amoxicillin-clavulanate" }]
+    },
+    "r_evisceration": {
+      "type": "result",
+      "urgency": "red",
+      "title": "筋膜開裂／臟器外露（evisceration）",
+      "summary": "**NS 濕紗布覆蓋（不要乾紗布、不要推回去）**、腹帶、平躺屈膝、NPO、IV、止痛、抗生素、**緊急外科**。",
+      "steps": [
+        "NS 濕紗布覆蓋外露臟器，外加乾紗布與腹帶；不要推回、不要乾紗布",
+        "平躺屈膝（降低腹壓）、NPO、IV × 2、生命徵象",
+        "立即通知後線與外科（回手術室）",
+        "CBC、Cr、電解質、PT/aPTT、type & screen、血液培養（發燒）",
+        "止痛；抗生素（腹內／糞便汙染）",
+        "找誘因：咳嗽、腹脹（NG 減壓）、感染、營養差"
+      ],
+      "orders": [
+        { "drug": "NS 濕紗布", "dose": "覆蓋全部外露臟器", "route": "局部 + 腹帶", "freq": "保持濕潤至手術", "note": "不要乾紗布、不要推回去" },
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT，之後維持輸液", "note": "NPO；心／腎衰竭 250 mL" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN", "note": "腎衰竭累積" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "腹內／糞便汙染；CrCl {round(crcl)} 依 A5", "alt": "ceftriaxone 2 g QD + metronidazole 500 mg q8h" }
+      ],
+      "watch": ["生命徵象、腹膜炎徵候", "外露臟器顏色（缺血）"],
+      "call": ["筋膜開裂／臟器外露 = 立刻後線 + 外科"],
+      "refs": [{ "ch": "15", "q": "筋膜開裂／臟器外露" }]
+    },
+    "r_superficial_dehisc": {
+      "type": "result",
+      "urgency": "green",
+      "title": "表淺傷口開裂（皮膚／皮下）",
+      "summary": "清潔、NS 濕敷 BID 或負壓傷口治療（依外科）；**不縫合**；拆線到一半分開 → 停止、Steri-Strips 拉合、通知外科。",
+      "steps": [
+        "確認筋膜完整（看不到筋膜分開／腸子）；有大量漿液性滲液（salmon-colored）要警覺筋膜開裂",
+        "NS 沖洗、清除壞死組織；深部培養（有膿時）",
+        "NS 濕紗布 BID 換藥，或 NPWT 依外科；不縫合",
+        "拆線中發現分開 → 停止拆線，Steri-Strips 拉合",
+        "找原因：感染、營養（albumin）、類固醇、腹壓；通知外科白天評估"
+      ],
+      "orders": [
+        { "drug": "NS 濕紗布", "dose": "填塞傷口", "route": "局部", "freq": "BID 換藥", "note": "或 NPWT 依外科" },
+        { "drug": "Steri-Strips", "dose": "適量", "route": "局部拉合", "freq": "單次", "note": "拆線中分開時" }
+      ],
+      "watch": ["滲液量與性質（大量漿液 → 筋膜？）", "紅腫、膿、發燒"],
+      "call": ["看到筋膜或臟器、大量漿液性滲液、腹壓上升", "感染徵候"],
+      "refs": [{ "ch": "15", "q": "表淺開裂" }],
+      "next": [{ "label": "看到筋膜／臟器 → 緊急外科", "next": "r_evisceration" }]
+    },
+    "r_fistula": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "腸液／膽汁／尿液樣滲液（瘻管、吻合口滲漏）",
+      "summary": "**NPO、造口袋收集記量、皮膚保護、聯絡後線／外科**；術後引流管突然出現腸內容物／膽汁 + 發燒／腹痛 = 立即通知。",
+      "steps": [
+        "NPO、IV 輸液；生命徵象、腹膜炎徵候",
+        "造口袋收集滲液並記量；皮膚保護（氧化鋅、造口粉）",
+        "CBC、CRP、Cr、電解質、乳酸、血液培養（發燒）；滲液送 creatinine（尿）／bilirubin（膽汁）／amylase",
+        "CT 找積液／滲漏；抗生素（腹內）",
+        "立即通知後線與外科"
+      ],
+      "orders": [
+        { "drug": "NS／LR", "dose": "500 mL", "route": "IV drip", "freq": "STAT bolus（低血壓／脫水），之後維持", "note": "NPO；心／腎衰竭 250 mL" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "發燒／腹痛時；CrCl {round(crcl)} 依 A5", "alt": "ceftriaxone 2 g QD + metronidazole 500 mg q8h" },
+        { "drug": "氧化鋅軟膏／造口粉", "dose": "適量", "route": "周圍皮膚", "freq": "每次換袋", "note": "皮膚保護" }
+      ],
+      "watch": ["滲液量 q4–8h、電解質", "腹痛、發燒、乳酸"],
+      "call": ["引流液變成腸內容物／膽汁／膿／鮮血 = 立即通知後線／外科", "腹膜炎徵候、敗血症徵候"],
+      "refs": [{ "ch": "15", "q": "腸液／膽汁／尿液樣滲液" }]
+    },
+    "r_seroma": {
+      "type": "result",
+      "urgency": "green",
+      "title": "漿液／血清腫滲液",
+      "summary": "少量：觀察、加厚敷料、增加換藥頻率；大量或緊繃 → 無菌抽吸（可反覆），必要時外科放引流；大量漿液性滲液（salmon-colored，術後 5–10 天）要警覺筋膜開裂。",
+      "steps": [
+        "確認性質（淡黃清＝血清；淡紅＝血性）與量；腹部傷口確認筋膜完整",
+        "少量：加厚敷料、增加換藥頻率",
+        "大量或緊繃：無菌抽吸送檢（培養）；反覆者外科放引流",
+        "記錄量、交班原團隊"
+      ],
+      "orders": [
+        { "drug": "泡棉／藻酸鹽敷料", "dose": "1 片", "route": "局部", "freq": "滲液多時 QD–BID 更換", "note": "滲液少改一般紗布" }
+      ],
+      "watch": ["滲液量趨勢、紅腫、發燒", "腹部：突然大量漿液 → 筋膜開裂？"],
+      "call": ["大量漿液性滲液 + 腹壓上升／看到筋膜", "感染徵候、需外科引流"],
+      "refs": [{ "ch": "15", "q": "漿液／血清腫" }],
+      "next": [{ "label": "看到筋膜／臟器 → 緊急外科", "next": "r_evisceration" }]
+    },
+    "r_pressure": {
+      "type": "result",
+      "urgency": "green",
+      "title": "壓瘡",
+      "summary": "分級（1 紅不褪、2 表皮破損、3 全層達皮下、4 達骨／肌肉、unstageable、DTI）；減壓 q2h 翻身、氣墊床、足跟懸空；營養蛋白質 1.2–1.5 g/kg；壞死／感染 → 外科清創；傷口護理師會診。",
+      "steps": [
+        "分級並拍照記錄大小、深度、壞死組織、滲液、周圍紅腫",
+        "減壓：q2h 翻身、氣墊床、足跟懸空；失禁處理、皮膚保護",
+        "營養：蛋白質 1.2–1.5 g/kg/d、albumin、血糖",
+        "敷料：乾淨少滲液 → 薄膜／水膠；滲液多 → 泡棉／藻酸鹽；感染 → 銀離子；深腔填塞（不塞太緊）",
+        "壞死／感染組織 → 外科清創；蜂窩性組織炎 → 抗生素（本章感染表）",
+        "疑骨髓炎（骨外露、probe-to-bone）→ 影像、骨科／整形外科；無清創／皮瓣計畫時不宜單靠長期抗生素",
+        "傷口護理師會診"
+      ],
+      "orders": [
+        { "drug": "蛋白質營養補充", "dose": "{round(wt*1.2)}–{round(wt*1.5)} g/day（1.2–1.5 g/kg）", "route": "PO／NG", "freq": "每日（營養師）", "note": "依 {wt} kg" },
+        { "drug": "氧化鋅軟膏", "dose": "適量", "route": "周圍皮膚", "freq": "每次清潔後", "note": "隔離失禁" },
+        { "drug": "銀離子敷料（感染時）／泡棉敷料（滲液多）", "dose": "1 片", "route": "局部", "freq": "依滲液 QD–q3d", "note": "深腔填塞不塞太緊" }
+      ],
+      "watch": ["每週量大小、深度；紅腫、膿、臭味", "albumin、血糖"],
+      "call": ["壞死／感染需清創、疑骨髓炎", "壓瘡 + 敗血症徵候"],
+      "refs": [{ "ch": "15", "q": "壓瘡：分級" }]
+    },
+    "r_tetanus": {
+      "type": "result",
+      "urgency": "green",
+      "title": "破傷風預防",
+      "summary": "外傷汙染傷口且 > 5 年未接種（乾淨傷口 > 10 年）→ Td 0.5 mL IM；未完整接種或不明 + 汙染傷口 → 加 TIG 250 U IM。",
+      "steps": [
+        "問接種史（最後一劑年份、是否完成基礎 3 劑）",
+        "傷口：汙染（土、糞便、唾液、刺傷、壓砸、燒傷）或乾淨",
+        "依規則給 Td ± TIG（不同部位注射）",
+        "傷口清創沖洗"
+      ],
+      "orders": [
+        { "drug": "Td 疫苗", "dose": "0.5 mL", "route": "IM", "freq": "單次", "note": "汙染傷口 > 5 年未接種；乾淨傷口 > 10 年" },
+        { "drug": "TIG（破傷風免疫球蛋白）", "dose": "250 U", "route": "IM（與 Td 不同部位）", "freq": "單次", "note": "未完整接種或不明 + 汙染傷口" }
+      ],
+      "watch": ["局部反應"],
+      "call": ["疑破傷風症狀（牙關緊閉、肌肉痙攣）"],
+      "refs": [{ "ch": "15", "q": "破傷風" }]
+    },
+    "r_dressing": {
+      "type": "result",
+      "urgency": "green",
+      "title": "換藥與傷口照護基本原則",
+      "summary": "NS 沖洗（不要碘酒／雙氧水／優碘原液泡開放傷口）；敷料依滲液量與感染選擇；水泡保留表皮；抗菌藥膏只用於小面積感染；燒燙傷／表皮剝落用 silver sulfadiazine 或凡士林紗布。",
+      "steps": [
+        "NS 沖洗；壞死組織清創（機械、酵素、外科）",
+        "敷料：乾淨滲液少 → 一般紗布／薄膜；滲液多 → 泡棉／藻酸鹽；感染 → 銀離子；深腔 → 填塞不塞太緊",
+        "水泡：保留表皮不刺破；張力大者無菌抽吸保留頂",
+        "抗菌藥膏（fusidic acid、mupirocin）只用於小面積感染或縫線周圍，不常規塗乾淨傷口",
+        "拆線／拆釘依外科指示；拆到一半分開 → 停止、Steri-Strips、通知外科",
+        "外傷汙染傷口評估破傷風"
+      ],
+      "orders": [
+        { "drug": "NS 沖洗", "dose": "100–500 mL", "route": "局部沖洗", "freq": "每次換藥", "note": "不用碘酒／雙氧水／優碘原液" },
+        { "drug": "Silver sulfadiazine 1% 乳膏", "dose": "薄塗 1–2 mm", "route": "外用", "freq": "QD", "note": "燒燙傷／表皮剝落；磺胺過敏、G6PD 缺乏禁；替代凡士林紗布" },
+        { "drug": "Fusidic acid 或 mupirocin 藥膏", "dose": "薄塗", "route": "外用（小面積感染／縫線周圍）", "freq": "依院內（常 BID–TID）", "note": "章節未列頻次；不常規塗乾淨傷口" },
+        { "drug": "銀離子敷料", "dose": "1 片", "route": "局部", "freq": "依滲液 QD–q3d", "note": "感染傷口" }
+      ],
+      "watch": ["滲液量／性質、紅腫範圍、疼痛", "壞死組織進展"],
+      "call": ["出血不止、開裂、壞死性徵候、感染 + 全身症狀"],
+      "refs": [{ "ch": "15", "q": "換藥與傷口照護基本原則" }],
+      "next": [{ "label": "有紅腫熱痛 → 感染評估", "next": "q_cellulitis_sev" }, { "label": "破傷風預防", "next": "r_tetanus" }]
+    }
+  }
+}

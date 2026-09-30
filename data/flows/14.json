@@ -1,0 +1,492 @@
+{
+  "id": "14",
+  "title": "皮疹與過敏反應",
+  "chapter": "14",
+  "entries": [
+    { "label": "病人起疹子／皮膚紅", "type": "symptom", "start": "i_phone", "group": "皮膚四肢",
+      "keywords": ["皮疹", "起疹子", "紅疹", "rash", "skin rash", "藥物疹", "drug eruption", "水泡", "瘀點", "紫斑", "purpura", "petechiae"] },
+    { "label": "嘴唇／舌頭／臉腫、喉嚨緊", "type": "symptom", "start": "q_angio", "group": "皮膚四肢",
+      "keywords": ["血管性水腫", "angioedema", "嘴唇腫", "舌頭腫", "喉嚨緊", "臉腫", "ACEI", "喉水腫"] },
+    { "label": "輸注中臉紅、喘、癢（藥物／輸血／顯影劑反應）", "type": "symptom", "start": "q_infusion", "group": "皮膚四肢",
+      "keywords": ["輸注反應", "infusion reaction", "vancomycin 臉紅", "red man", "紅人症候群", "flushing", "顯影劑過敏", "輸血過敏", "打藥過敏"] },
+    { "label": "癢、蕁麻疹（風疹塊）", "type": "symptom", "start": "q_abc", "group": "皮膚四肢",
+      "keywords": ["癢", "蕁麻疹", "風疹塊", "urticaria", "hives", "pruritus", "itching", "抗組織胺"] },
+    { "label": "過敏性反應／過敏性休克（anaphylaxis）", "type": "diagnosis", "start": "r_anaphylaxis",
+      "keywords": ["過敏性休克", "anaphylaxis", "anaphylactic shock", "epinephrine", "腎上腺素", "過敏 低血壓", "過敏 喘"] },
+    { "label": "藥物疹／蕁麻疹（無系統性症狀）", "type": "diagnosis", "start": "r_drug_rash",
+      "keywords": ["藥物疹", "斑丘疹", "maculopapular", "drug eruption", "蕁麻疹", "urticaria", "cetirizine", "diphenhydramine"] },
+    { "label": "ACEI／ARNi 血管性水腫（bradykinin 型）", "type": "diagnosis", "start": "r_acei_angio",
+      "keywords": ["ACEI angioedema", "ACEI 血管性水腫", "bradykinin", "sacubitril", "Entresto", "icatibant", "遺傳性血管性水腫", "HAE"] },
+    { "label": "SJS／TEN", "type": "diagnosis", "start": "r_sjs",
+      "keywords": ["SJS", "TEN", "Stevens-Johnson", "toxic epidermal necrolysis", "史蒂芬強生", "表皮剝落", "Nikolsky", "黏膜糜爛", "allopurinol 皮疹", "carbamazepine 皮疹"] },
+    { "label": "DRESS", "type": "diagnosis", "start": "r_dress",
+      "keywords": ["DRESS", "drug reaction with eosinophilia", "嗜酸性球", "藥物過敏 發燒 肝炎", "AGEP"] },
+    { "label": "Vancomycin 輸注反應（flushing syndrome）", "type": "diagnosis", "start": "r_vanco",
+      "keywords": ["vancomycin flushing", "red man syndrome", "紅人症候群", "vancomycin 臉紅", "萬古黴素"] },
+    { "label": "帶狀皰疹／單純皰疹", "type": "diagnosis", "start": "q_herpes",
+      "keywords": ["帶狀皰疹", "皮蛇", "herpes zoster", "shingles", "單純皰疹", "HSV", "herpes simplex", "valacyclovir", "acyclovir", "Ramsay Hunt", "眼部帶狀皰疹"] },
+    { "label": "毒性休克症候群（TSS）", "type": "diagnosis", "start": "r_tss",
+      "keywords": ["毒性休克", "toxic shock syndrome", "TSS", "衛生棉條", "鼻填塞", "曬傷樣紅斑", "clindamycin"] },
+    { "label": "疥瘡", "type": "diagnosis", "start": "r_scabies",
+      "keywords": ["疥瘡", "scabies", "permethrin", "ivermectin", "夜間癢", "群聚 癢", "crusted scabies"] },
+    { "label": "瘀點／紫斑（± 發燒：腦膜炎雙球菌、DIC）", "type": "diagnosis", "start": "q_purp",
+      "keywords": ["瘀點", "紫斑", "petechiae", "purpura", "腦膜炎雙球菌", "meningococcemia", "DIC", "血管炎", "vasculitis", "不褪色"] },
+    { "label": "皮膚炎／對磨疹／黴菌／失禁性皮膚炎", "type": "diagnosis", "start": "r_dermatitis",
+      "keywords": ["皮膚炎", "dermatitis", "對磨疹", "intertrigo", "念珠菌", "candida", "皮癬菌", "tinea", "失禁性皮膚炎", "外用類固醇", "類固醇藥膏", "接觸性皮膚炎"] },
+    { "label": "壞死性軟組織感染（壞死性筋膜炎）", "type": "diagnosis", "start": "r_nsti",
+      "keywords": ["壞死性筋膜炎", "necrotizing fasciitis", "NSTI", "壞死性軟組織感染", "捻髮音", "紫黑 水泡"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中先問四件事",
+      "body": [
+        "**型態**：風疹塊？紅斑？水泡？瘀點？表皮剝落？範圍、開始時間、癢不癢",
+        "**有沒有**嘴唇／舌頭／眼皮腫、喉嚨緊、聲音沙啞、喘、哮鳴、頭暈、腹痛嘔吐？（過敏性反應）",
+        "**生命徵象**：血壓、心率、SpO₂、體溫",
+        "**近 24 小時**新給的藥、顯影劑、輸血、新食物／醫材；**近 2–4 週**新藥（藥物疹多在用藥 4–14 天後）",
+        "有系統性症狀 → 停可疑輸注、備 epinephrine 0.5 mg IM、IV、O₂、監測器、立刻到床邊；只有局部皮膚且穩定 → 可稍後看"
+      ],
+      "next": "q_abc"
+    },
+    "q_abc": {
+      "type": "choice",
+      "title": "有沒有呼吸或循環症狀？",
+      "help": "喉嚨緊、聲音沙啞、喘鳴、哮鳴、SpO₂↓、低血壓、頭暈昏厥、嚴重腹痛嘔吐",
+      "options": [
+        { "label": "有（皮膚黏膜症狀 + 呼吸／循環／嚴重腸胃症狀）", "next": "r_anaphylaxis" },
+        { "label": "只有嘴唇／舌頭／臉腫，沒有喘、血壓正常", "next": "q_angio" },
+        { "label": "沒有，生命徵象穩定", "next": "q_morph" }
+      ]
+    },
+    "q_angio": {
+      "type": "choice",
+      "title": "血管性水腫：屬於哪一種？",
+      "help": "bradykinin 型（ACEI／ARNi）不癢、無蕁麻疹、常在臉唇舌；IgE 型多合併蕁麻疹、癢",
+      "options": [
+        { "label": "合併喉嚨緊／聲音改變／喘鳴／低血壓", "next": "r_anaphylaxis" },
+        { "label": "正在用 ACEI／ARNi（sacubitril-valsartan），不癢、無蕁麻疹", "next": "r_acei_angio" },
+        { "label": "合併蕁麻疹／癢，呼吸循環正常", "next": "r_drug_rash" }
+      ]
+    },
+    "q_infusion": {
+      "type": "choice",
+      "title": "輸注中反應：有哪些表現？",
+      "help": "先停輸注、量生命徵象 + SpO₂",
+      "options": [
+        { "label": "喘鳴／哮鳴／低血壓／蕁麻疹／舌喉腫（真正過敏）", "next": "r_anaphylaxis" },
+        { "label": "Vancomycin 快滴：臉頸背潮紅、癢，血壓正常", "next": "r_vanco" },
+        { "label": "輸血中發燒／寒顫／背痛／血尿（輸血反應）", "next": "r_transfusion" },
+        { "label": "只有局部皮疹，生命徵象正常", "next": "q_morph" }
+      ]
+    },
+    "r_transfusion": {
+      "type": "result",
+      "urgency": "red",
+      "title": "輸血中出現反應",
+      "summary": "**立刻停止輸血**、保留血袋與管路、換新 IV line 給 NS；有喘、低血壓、蕁麻疹 → 依過敏性反應處理；發燒／寒顫／背痛／血尿 → 溶血反應流程（Ch26）。",
+      "steps": [
+        "停輸血，保留血袋與輸血套送血庫核對；新管路 NS 維持",
+        "生命徵象、SpO₂；核對病人與血品標籤",
+        "喘鳴／低血壓／舌喉腫 → 立即 epinephrine 0.5 mg IM（下方過敏性反應）",
+        "發燒、寒顫、背痛、血尿、低血壓 → 疑急性溶血：抽血（CBC、LDH、haptoglobin、DAT、Cr、凝血）、尿液，通知血庫，詳見 Ch26"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip", "freq": "STAT（低血壓可重複）", "note": "心／腎衰竭 250 mL" },
+        { "drug": "Diphenhydramine", "dose": "30–50 mg", "route": "IV／IM", "freq": "q6h PRN 蕁麻疹／癢", "note": "只緩解癢，不治療休克" }
+      ],
+      "watch": ["生命徵象 q15 min 至穩定", "尿量／尿色（血紅素尿）"],
+      "call": ["任何呼吸／循環症狀", "疑急性溶血或敗血性輸血反應 → 通知後線與血庫"],
+      "refs": [{ "ch": "26", "q": "輸血反應" }, { "ch": "14", "q": "表 14-1" }],
+      "next": [{ "label": "有喘、低血壓、舌喉腫 → 過敏性反應", "next": "r_anaphylaxis" }]
+    },
+    "q_morph": {
+      "type": "choice",
+      "title": "皮疹主要型態？（先找危險徵候）",
+      "help": "危險：黏膜糜爛、皮膚疼痛 > 外觀、Nikolsky 陽性、表皮剝落、瘀點紫斑不褪色、暗紫壞死、水泡快速擴大、皮下捻髮音",
+      "options": [
+        { "label": "風疹塊（蕁麻疹）／對稱斑丘疹、癢，無黏膜症狀", "next": "r_drug_rash" },
+        { "label": "斑丘疹 + 黏膜（口／眼／生殖器）糜爛、皮膚疼痛、Nikolsky 陽性、表皮剝落", "next": "r_sjs" },
+        { "label": "斑丘疹 + 發燒 + 臉腫／淋巴結／肝炎／嗜酸性球↑（用藥 2–8 週）", "next": "r_dress" },
+        { "label": "瘀點／紫斑（玻片壓不褪色）", "next": "q_purp" },
+        { "label": "單側皮節分佈成簇水泡（帶狀皰疹）／口唇生殖器水泡（HSV）", "next": "q_herpes" },
+        { "label": "瀰漫曬傷樣紅斑 + 發燒 + 低血壓（TSS）", "next": "r_tss" },
+        { "label": "紅腫劇痛（與外觀不成比例）、紫黑、水泡、捻髮音、快速擴散", "next": "r_nsti" },
+        { "label": "夜間劇癢、指縫／腕／腰際丘疹，同房或家人也癢（疥瘡）", "next": "r_scabies" },
+        { "label": "皺褶處紅、衛星病灶、膠帶處、失禁部位、壓迫處（皮膚炎／黴菌／壓瘡）", "next": "r_dermatitis" },
+        { "label": "輸注 vancomycin 時臉頸潮紅", "next": "r_vanco" }
+      ]
+    },
+    "q_purp": {
+      "type": "choice",
+      "title": "瘀點／紫斑：有沒有發燒或病容？",
+      "help": "瘀點 + 發燒 = 腦膜炎雙球菌血症／心內膜炎／DIC 直到證明不是",
+      "options": [
+        { "label": "有發燒／寒顫／低血壓／意識改變", "next": "r_purpura" },
+        { "label": "沒有發燒，生命徵象穩定", "next": "r_purpura_nofever" }
+      ]
+    },
+    "q_herpes": {
+      "type": "choice",
+      "title": "皰疹：哪一種情況？",
+      "options": [
+        { "label": "單一皮節帶狀皰疹、免疫正常", "next": "r_zoster_po" },
+        { "label": "免疫低下／播散性（> 2 皮節）／內臟／眼部 V1／耳部（Ramsay Hunt）", "next": "r_zoster_iv" },
+        { "label": "單純皰疹（口唇／生殖器）初發或復發；免疫低下或疑腦炎", "next": "r_hsv" }
+      ]
+    },
+    "r_anaphylaxis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "過敏性反應／過敏性休克（anaphylaxis）",
+      "summary": "**Epinephrine 0.5 mg IM 大腿外側是唯一一線藥，不要延遲**；停可疑藥物／輸血、平躺抬腿、O₂、大量輸液、叫後線；喉水腫／聲音改變 → 早期準備插管。",
+      "steps": [
+        "**Epinephrine IM 立刻給**（體重 < 50 kg 0.3 mg），q5–15 min 可重複，通常 ≤ 3 次",
+        "停止可疑藥物／輸注／輸血；平躺抬腿（喘者半坐）；監測器、SpO₂、IV × 2",
+        "O₂ NRM 15 L/min（目標 ≥ 94%）；NS/LR 1,000 mL bolus，可至 2–3 L",
+        "喘鳴／喉水腫／聲音改變 → 叫麻醉早期插管，困難氣道備環甲膜切開",
+        "2–3 次 IM 無效或持續低血壓／喉水腫 → epinephrine 持續輸注（**避免只用純 α 升壓劑**）",
+        "用 β-blocker 者反應差 → glucagon",
+        "Tryptase（過敏後 1–2 小時，陰性不排除）；記錄過敏原、開 EpiPen 衛教",
+        "觀察：僅蕁麻疹／輕度支氣管痙攣 ≥ 6 小時；其餘住院觀察（重度 24 小時）——雙相反應可達 ~20%，多在 8–10 小時內"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1 mg/mL (1:1,000)", "dose": "{wt < 50 ? '0.3 mg（0.3 mL）' : '0.5 mg（0.5 mL）'}", "route": "IM 大腿外側", "freq": "STAT；q5–15 min PRN，通常 ≤ 3 次", "note": "依體重 {wt} kg（< 50 kg 0.3 mg）；勿 SC、勿 IV push（心跳停止除外）" },
+        { "drug": "Epinephrine 持續輸注", "dose": "0.05–0.1 mcg/kg/min，titrate to 0.5（{wt} kg：{round(wt*0.3)}–{round(wt*0.6)} mL/hr）", "route": "IV drip", "freq": "持續", "note": "2–3 次 IM 無效、持續低血壓／喉水腫；泡法 1 mg in NS 100 mL（10 mcg/mL）；需監測" },
+        { "drug": "NS／LR", "dose": "1,000 mL bolus（可至 2–3 L）", "route": "IV drip", "freq": "STAT，重複至血壓回升", "note": "心衰竭 250–500 mL；血管擴張 + 滲漏" },
+        { "drug": "O₂", "dose": "15 L/min", "route": "NRM", "freq": "持續", "note": "目標 ≥ 94%" },
+        { "drug": "Salbutamol", "dose": "5 mg", "route": "霧化吸入", "freq": "q20 min PRN 支氣管痙攣", "note": "哮鳴時" },
+        { "drug": "Diphenhydramine", "dose": "30–50 mg", "route": "IV／IM", "freq": "q6h", "note": "只緩解癢／蕁麻疹，不治療休克；台灣針劑 30 mg/amp" },
+        { "drug": "Famotidine", "dose": "20 mg", "route": "IV", "freq": "q12h", "note": "輔助" },
+        { "drug": "Methylprednisolone", "dose": "{round(clamp(wt*1,40,125))}–{round(clamp(wt*2,40,125))} mg（1–2 mg/kg）", "route": "IV", "freq": "QD × 1–2 天", "note": "依 {wt} kg；可能減少雙相反應；非急救藥" },
+        { "drug": "Glucagon", "dose": "1–2 mg over 5 min → 5–15 mcg/min", "route": "IV", "freq": "持續", "note": "β-blocker 使用者對 epinephrine 反應差時" }
+      ],
+      "watch": ["BP／HR／SpO₂ q5 min 至穩定，之後 q15–30 min", "氣道：聲音、喘鳴、舌喉腫（惡化 → 插管）", "雙相反應：觀察 6–24 小時，可遲至 72 小時"],
+      "call": ["任何呼吸／循環症狀 = 立刻通知後線", "喉水腫／聲音改變 → 麻醉科", "IM × 2–3 次無效、需要 epinephrine 輸注 → ICU"],
+      "ddx": ["ACEI 血管性水腫（無蕁麻疹、不癢）", "Vancomycin 輸注反應（潮紅、血壓正常）", "血管迷走反應（心搏過緩）", "敗血性休克"],
+      "refs": [{ "ch": "14", "q": "表 14-1" }, { "ch": "14", "q": "過敏性反應（anaphylaxis）" }]
+    },
+    "r_acei_angio": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "ACEI／ARNi 血管性水腫（bradykinin 型）",
+      "summary": "**終身停用 ACEI／ARNi**；主要風險是喉水腫——監測氣道，抗組織胺／類固醇／epinephrine 效果有限，嚴重者早期插管；icatibant／FFP 依過敏免疫科。",
+      "steps": [
+        "停用 ACEI／ARNi（sacubitril-valsartan），記錄為終身禁忌",
+        "評估氣道：舌／口底／喉部腫、聲音改變、吞嚥困難、喘鳴 → 監測床、備插管，叫麻醉（可能需清醒纖維鏡插管）",
+        "坐起、O₂、IV；不確定型別（合併蕁麻疹）時仍可給 epinephrine IM",
+        "抽血：C4／C1 inhibitor（疑遺傳性血管性水腫時）",
+        "嚴重或進展 → 與過敏免疫科討論 icatibant／FFP；遺傳性血管性水腫用 C1 inhibitor 濃縮劑",
+        "監測至消退（通常 24–72 小時）"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1 mg/mL (1:1,000)", "dose": "{wt < 50 ? '0.3 mg' : '0.5 mg'}", "route": "IM 大腿外側", "freq": "PRN 喉水腫／喘鳴（效果有限，不可依賴）", "note": "依 {wt} kg；同時準備氣道" },
+        { "drug": "Diphenhydramine", "dose": "30–50 mg", "route": "IV", "freq": "q6h", "note": "bradykinin 型效果有限" },
+        { "drug": "Methylprednisolone", "dose": "{round(clamp(wt*1,40,125))} mg（1 mg/kg）", "route": "IV", "freq": "QD", "note": "效果有限" },
+        { "drug": "Icatibant", "dose": "依院內", "route": "SC", "freq": "單次（依過敏免疫科）", "note": "章節未列劑量；bradykinin B2 拮抗劑，嚴重者" }
+      ],
+      "watch": ["氣道 q15–30 min：聲音、喘鳴、SpO₂、舌喉腫進展", "腫脹範圍拍照記錄"],
+      "call": ["累及舌／喉／聲音改變 → 後線 + 麻醉科（早期插管）", "進展快或需 icatibant／FFP → 過敏免疫科"],
+      "refs": [{ "ch": "14", "q": "ACEI／ARNi" }]
+    },
+    "r_drug_rash": {
+      "type": "result",
+      "urgency": "green",
+      "title": "藥物疹／蕁麻疹（無系統性症狀）",
+      "summary": "停用可疑藥物（列出近 2–4 週所有新藥，找替代與後線討論）、記錄過敏；抗組織胺止癢；廣泛或血管性水腫短期類固醇；斑丘疹停藥後 1–2 週消退。",
+      "steps": [
+        "列出近 2–4 週新藥（含 PRN、輸注中抗生素、顯影劑、血品）對上皮疹出現日；**停用可疑藥物**，重要藥物找替代",
+        "再看一次危險徵候：黏膜、皮膚疼痛、Nikolsky、發燒、臉腫 → 改走 SJS/TEN／DRESS",
+        "抗組織胺（第二代首選；急性／夜間可用 diphenhydramine）",
+        "廣泛蕁麻疹或血管性水腫 → 短期 prednisolone",
+        "斑丘疹：止癢、潤膚、外用中效類固醇；拍照記錄範圍",
+        "記錄過敏於病歷與藥物過敏欄"
+      ],
+      "orders": [
+        { "drug": "Cetirizine", "dose": "10 mg（可增至 20 mg）", "route": "PO", "freq": "QD–BID", "note": "第二代首選；腎功能差減半（CrCl {round(crcl)}）" },
+        { "drug": "Diphenhydramine", "dose": "30 mg", "route": "IV／IM", "freq": "q6h PRN", "note": "台灣針劑 30 mg；急性、夜間；老年人譫妄、尿滯留" },
+        { "drug": "Hydroxyzine", "dose": "10–25 mg", "route": "PO", "freq": "q6–8h PRN", "note": "鎮靜止癢" },
+        { "drug": "Chlorpheniramine", "dose": "4 mg", "route": "PO", "freq": "q6–8h", "note": "台灣常見；IM 10 mg" },
+        { "drug": "Famotidine", "dose": "20 mg", "route": "PO／IV", "freq": "BID", "note": "頑固蕁麻疹加成" },
+        { "drug": "Prednisolone", "dose": "30–40 mg", "route": "PO", "freq": "QD × 3–5 天", "note": "廣泛蕁麻疹或血管性水腫時" },
+        { "drug": "Betamethasone valerate 0.1% 乳膏", "dose": "薄塗患處", "route": "外用（軀幹四肢）", "freq": "BID", "note": "中效；臉／皺褶改 hydrocortisone 1%；calamine lotion 亦可止癢" }
+      ],
+      "watch": ["24–48 小時內範圍與癢是否改善", "新出現黏膜症狀、皮膚疼痛、發燒、水泡 → 重新評估"],
+      "call": ["需要停用關鍵藥物（抗生素、抗癲癇藥）找替代", "出現黏膜症狀、水泡、發燒、皮膚疼痛（SJS/TEN／DRESS）", "任何呼吸／循環症狀"],
+      "refs": [{ "ch": "14", "q": "表 14-2" }, { "ch": "14", "q": "藥物疹、蕁麻疹" }]
+    },
+    "r_sjs": {
+      "type": "result",
+      "urgency": "red",
+      "title": "SJS／TEN（黏膜糜爛、皮膚疼痛、Nikolsky 陽性、表皮剝落）",
+      "summary": "**立即停用所有可疑藥物**（近 4–8 週新藥：抗癲癇藥、allopurinol、sulfa、NSAID、抗生素）；聯絡後線 + 皮膚科；燒燙傷等級支持照護，重症轉燒燙傷中心／ICU。",
+      "steps": [
+        "停用所有可疑藥物；列出近 4–8 週藥物時間線",
+        "分級：SJS < 10% BSA、overlap 10–30%、TEN > 30%；SCORTEN 評估；拍照",
+        "聯絡後線 + 皮膚科（切片）；眼科會診（眼部後遺症）",
+        "抽血：CBC/DC、肝腎功能、電解質、血糖、CRP、血液培養（發燒）",
+        "支持：保溫、輸液依 BSA、無菌換藥（不撕皮）、口腔／生殖器護理、疼痛控制、營養",
+        "感染監測但**不預防性抗生素**；DVT 預防",
+        "免疫調節由皮膚科決定：cyclosporine、etanercept、IVIG（類固醇爭議）",
+        "記錄嚴重藥物過敏，通報藥害救濟"
+      ],
+      "orders": [
+        { "drug": "Cyclosporine", "dose": "{round(wt*3)}–{round(wt*5)} mg/day（3–5 mg/kg/d）", "route": "PO", "freq": "每日（皮膚科決定）", "note": "依 {wt} kg；腎功能（CrCl {round(crcl)}）與血壓監測" },
+        { "drug": "Etanercept", "dose": "50 mg", "route": "SC", "freq": "單次（皮膚科決定）", "note": "免疫調節替代" },
+        { "drug": "IVIG", "dose": "依院內", "route": "IV", "freq": "依皮膚科", "note": "章節未列劑量" },
+        { "drug": "NS／LR", "dose": "依 BSA 與尿量", "route": "IV drip", "freq": "持續", "note": "燒燙傷等級輸液；尿量監測" }
+      ],
+      "watch": ["BSA 進展每日拍照", "體溫、尿量、電解質、肝腎功能", "眼、口腔、生殖器黏膜；感染徵候（培養而非預防性抗生素）"],
+      "call": ["懷疑 SJS/TEN 當下 = 後線 + 皮膚科", "BSA > 10%、血行不穩、呼吸道黏膜受累 → ICU／燒燙傷中心"],
+      "ddx": ["SSSS（嬰幼兒／腎衰竭，黏膜不受累）", "DRESS", "TSS", "多形性紅斑（標靶狀病灶）"],
+      "refs": [{ "ch": "14", "q": "SJS/TEN、DRESS、AGEP" }]
+    },
+    "r_dress": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "DRESS（發燒 + 皮疹 + 嗜酸性球↑ + 肝炎／淋巴結，用藥後 2–8 週）",
+      "summary": "停用可疑藥物（抗癲癇藥、allopurinol、sulfa 最常見）；器官受累給系統性類固醇 prednisolone 0.5–1 mg/kg/d；監測肝、腎、心；病程數週到數月。",
+      "steps": [
+        "停用所有可疑藥物（近 2–8 週新藥）；找替代與後線討論",
+        "抽血：CBC/DC（嗜酸性球、非典型淋巴球）、肝功能、Cr、CK、troponin（心肌炎）、TSH",
+        "皮膚科會診（切片）；記錄嚴重藥物過敏",
+        "器官受累（肝炎、腎炎、肺炎、心肌炎）→ 系統性類固醇，緩慢減量",
+        "止癢與皮膚照護（抗組織胺、潤膚、外用類固醇）"
+      ],
+      "orders": [
+        { "drug": "Prednisolone", "dose": "{round(wt*0.5)}–{round(wt*1)} mg（0.5–1 mg/kg/d）", "route": "PO", "freq": "QD（器官受累時；緩慢減量）", "note": "依 {wt} kg" },
+        { "drug": "Cetirizine", "dose": "10 mg", "route": "PO", "freq": "QD–BID", "note": "止癢；腎功能差減半" },
+        { "drug": "Betamethasone valerate 0.1% 乳膏", "dose": "薄塗患處", "route": "外用", "freq": "BID", "note": "臉／皺褶改低效" }
+      ],
+      "watch": ["肝功能、Cr、CBC/DC 每 1–2 天", "體溫、心臟症狀（心肌炎可晚發）", "皮疹範圍"],
+      "call": ["懷疑 DRESS 當下通知後線", "肝酶急升、腎功能惡化、胸痛／心衰竭、需停用關鍵藥物找替代"],
+      "refs": [{ "ch": "14", "q": "DRESS：停藥" }]
+    },
+    "r_vanco": {
+      "type": "result",
+      "urgency": "green",
+      "title": "Vancomycin 輸注反應（flushing syndrome，非過敏）",
+      "summary": "停止輸注 → diphenhydramine IV → 緩解後以**一半速率（每 1 g ≥ 2 小時）**重新開始；下次輸注前 30 分鐘預防性 diphenhydramine。真正過敏（喘鳴、低血壓、蕁麻疹）才需換藥。",
+      "steps": [
+        "暫停 vancomycin 輸注；量生命徵象、SpO₂",
+        "排除真正過敏：喘鳴、低血壓、蕁麻疹、舌喉腫 → 改依過敏性反應",
+        "Diphenhydramine IV；症狀緩解後以一半速率重新輸注",
+        "下次輸注：每 1 g 至少 2 小時 + 輸注前 30 分鐘 diphenhydramine",
+        "不需記錄為藥物過敏（記錄為輸注反應）"
+      ],
+      "orders": [
+        { "drug": "Diphenhydramine", "dose": "30–50 mg", "route": "IV", "freq": "STAT；之後每次 vancomycin 輸注前 30 分鐘", "note": "台灣針劑 30 mg/amp" },
+        { "drug": "Vancomycin（重新開始）", "dose": "原劑量", "route": "IV drip，每 1 g ≥ 2 小時", "freq": "依原醫囑", "note": "以一半速率重新輸注" }
+      ],
+      "watch": ["重新輸注時的潮紅、癢、血壓"],
+      "call": ["喘鳴、低血壓、蕁麻疹（真正過敏 → 停藥換藥）"],
+      "refs": [{ "ch": "14", "q": "Vancomycin 輸注反應" }],
+      "next": [{ "label": "有喘鳴／低血壓／蕁麻疹 → 過敏性反應", "next": "r_anaphylaxis" }]
+    },
+    "r_zoster_po": {
+      "type": "result",
+      "urgency": "green",
+      "title": "帶狀皰疹（單一皮節、免疫正常）",
+      "summary": "起疹 72 小時內開始口服抗病毒 × 7 天（> 72 小時仍有新水泡也給）；**依 CrCl 調整**；接觸隔離至結痂；止痛 ± gabapentin。",
+      "steps": [
+        "確認範圍（單一皮節？跨中線／> 2 皮節 = 播散 → 改 IV）；V1 眼部 → 眼科；耳部／顏面麻痺 → ENT",
+        "接觸隔離至結痂；水痘未免疫者避免接觸",
+        "口服 valacyclovir × 7 天（CrCl {round(crcl)} 已調整）",
+        "止痛：acetaminophen／NSAID ± gabapentin；合併細菌性蜂窩性組織炎 → 加抗生素（Ch15）",
+        "水泡不刺破，保持清潔乾燥"
+      ],
+      "orders": [
+        { "drug": "Valacyclovir", "dose": "{crcl >= 10 ? '1,000 mg' : '500 mg'}", "route": "PO", "freq": "{crcl > 50 ? 'TID' : crcl >= 30 ? 'q12h' : 'q24h'} × 7 天", "note": "首選；依 CrCl {round(crcl)} 調整（附錄 A5：> 50 TID；30–50 q12h；10–30 q24h；< 10 500 mg q24h）", "alt": "famciclovir 500 mg TID 或 acyclovir 800 mg 5×/d × 7 天（皆依 CrCl 調整）" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "肝病／酗酒 2 g/d" },
+        { "drug": "Gabapentin", "dose": "300 mg", "route": "PO", "freq": "HS 起始", "note": "神經痛；CrCl < 60 需減量（附錄 A5）" }
+      ],
+      "watch": ["新水泡是否停止、疼痛", "眼部症狀（V1）、聽力／顏面神經（耳部）"],
+      "call": ["免疫低下、播散性（> 2 皮節）、眼部、內臟受累", "合併蜂窩性組織炎或敗血症徵候"],
+      "refs": [{ "ch": "14", "q": "帶狀皰疹" }, { "ch": "A5", "q": "Valacyclovir" }]
+    },
+    "r_zoster_iv": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "帶狀皰疹：免疫低下／播散性／內臟／眼部／耳部",
+      "summary": "**Acyclovir 10 mg/kg IV q8h（依 CrCl 調整）**；播散性／免疫低下者空氣 + 接觸隔離；V1 眼部 → 眼科；Ramsay Hunt → ENT + prednisolone；通知後線。",
+      "steps": [
+        "隔離：空氣 + 接觸（播散性／免疫低下）；單一皮節接觸隔離至結痂",
+        "通知後線；眼部 V1（鼻尖 Hutchinson 徵候）→ 眼科；耳部／顏面麻痺 → ENT",
+        "IV acyclovir（CrCl {round(crcl)} 已調整）；監測 Cr",
+        "疑內臟受累（肝炎、肺炎、腦炎）→ 抽血、CXR，必要時 LP（HSV/VZV PCR）",
+        "止痛：acetaminophen／NSAID ± gabapentin；合併蜂窩性組織炎加抗生素"
+      ],
+      "orders": [
+        { "drug": "Acyclovir", "dose": "{crcl >= 10 ? round(wt*10) + ' mg（10 mg/kg）' : round(wt*2.5) + '–' + round(wt*5) + ' mg（2.5–5 mg/kg）'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : crcl >= 10 ? 'q24h' : 'q24h（HD 後給）'}", "note": "依 {wt} kg、CrCl {round(crcl)}（附錄 A5：> 50 q8h；30–50 q12h；10–30 q24h；< 10 改 2.5–5 mg/kg q24h，HD 後給）" },
+        { "drug": "Prednisolone", "dose": "依院內", "route": "PO", "freq": "QD（Ramsay Hunt 時，與 ENT 討論）", "note": "章節未列劑量" },
+        { "drug": "Acetaminophen", "dose": "500–1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "肝病 2 g/d" },
+        { "drug": "Gabapentin", "dose": "300 mg", "route": "PO", "freq": "HS 起始", "note": "CrCl < 60 減量（A5）" }
+      ],
+      "watch": ["Cr q1–2 天（acyclovir）", "新皮節／內臟症狀（喘、腹痛、意識）", "視力（V1）、顏面神經"],
+      "call": ["免疫低下者帶狀皰疹／播散性感染 = 通知後線", "眼部受累 → 眼科；腦炎／肺炎徵候 → ICU 評估"],
+      "refs": [{ "ch": "14", "q": "acyclovir 10 mg/kg IV q8h" }, { "ch": "A5", "q": "Acyclovir IV" }]
+    },
+    "r_hsv": {
+      "type": "result",
+      "urgency": "green",
+      "title": "單純皰疹（HSV）",
+      "summary": "初發：valacyclovir 1,000 mg BID × 7–10 天；復發：500 mg BID × 3 天；免疫低下皮膚黏膜／播散：acyclovir 5 mg/kg IV q8h；**疑腦炎：acyclovir 10 mg/kg IV q8h 不等結果**。唇皰疹輕症可不治療。",
+      "steps": [
+        "確認型態：成簇水泡於紅底（口唇、生殖器）；水泡液 Tzanck／HSV PCR",
+        "免疫正常 → 口服；免疫低下、播散、無法口服 → IV",
+        "發燒 + 意識改變／癲癇／局部神經徵候 → 疑 HSV 腦炎：立即 IV acyclovir、CT／LP（PCR）、通知後線",
+        "外用 acyclovir 效果差；止痛、保持清潔"
+      ],
+      "orders": [
+        { "drug": "Valacyclovir（初發）", "dose": "{crcl >= 10 ? '1,000 mg' : '500 mg'}", "route": "PO", "freq": "{crcl > 50 ? 'BID' : crcl >= 30 ? 'q12h' : 'q24h'} × 7–10 天", "note": "CrCl {round(crcl)} 依 A5 調整", "alt": "acyclovir 400 mg PO TID" },
+        { "drug": "Valacyclovir（復發）", "dose": "500 mg", "route": "PO", "freq": "BID × 3 天", "note": "腎功能差依 A5 減量" },
+        { "drug": "Acyclovir（免疫低下皮膚黏膜／播散）", "dose": "{crcl >= 10 ? round(wt*5) + ' mg（5 mg/kg）' : round(wt*2.5) + ' mg（2.5 mg/kg）'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : crcl >= 10 ? 'q24h' : 'q24h（HD 後給）'}", "note": "依 {wt} kg、CrCl {round(crcl)}（A5：< 10 改 2.5–5 mg/kg q24h）" },
+        { "drug": "Acyclovir（疑 HSV 腦炎）", "dose": "{crcl >= 10 ? round(wt*10) + ' mg（10 mg/kg）' : round(wt*2.5) + '–' + round(wt*5) + ' mg（2.5–5 mg/kg）'}", "route": "IV drip", "freq": "{crcl > 50 ? 'q8h' : crcl >= 30 ? 'q12h' : crcl >= 10 ? 'q24h' : 'q24h（HD 後給）'}", "note": "不等 PCR 結果；依 CrCl {round(crcl)}（A5：< 10 改 2.5–5 mg/kg q24h）" }
+      ],
+      "watch": ["病灶進展、新水泡", "IV acyclovir：Cr、尿量"],
+      "call": ["疑 HSV 腦炎（發燒 + 意識改變／癲癇）", "免疫低下播散性感染、眼部受累"],
+      "refs": [{ "ch": "14", "q": "單純皰疹" }, { "ch": "A5", "q": "Acyclovir IV" }]
+    },
+    "r_tss": {
+      "type": "result",
+      "urgency": "red",
+      "title": "毒性休克症候群（TSS）",
+      "summary": "發燒 + 瀰漫曬傷樣紅斑 + 低血壓 + 多器官：**移除填塞物（衛生棉條、鼻填塞）、探查／清創傷口**；vancomycin + clindamycin（抑制毒素）± piperacillin-tazobactam；大量輸液／升壓（Ch17）；不需培養陽性才診斷。",
+      "steps": [
+        "ABC、IV × 2、監測器；找並**移除衛生棉條／鼻填塞／異物**，探查傷口並清創",
+        "血液培養 × 2、傷口／陰道／鼻腔培養、CBC、Cr、肝功能、CK、凝血、乳酸",
+        "抗生素 1 小時內：vancomycin + clindamycin ± piperacillin-tazobactam（來源不明）",
+        "輸液 30 mL/kg 晶體液；MAP < 65 → norepinephrine（Ch17 bundle）",
+        "通知後線 + 感染科（考慮 IVIG）；ICU",
+        "確認 GAS → 改 penicillin G + clindamycin"
+      ],
+      "orders": [
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg；loading 不因腎功能減量" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度（HD 後 500–1,000 mg）'}", "note": "CrCl {round(crcl)}：依附錄 A5；trough 15–20 mg/L" },
+        { "drug": "Clindamycin", "dose": "600–900 mg", "route": "IV drip", "freq": "q8h", "note": "抑制毒素；不需腎功能調整" },
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "來源不明時加；CrCl {round(crcl)} 依 A5；第一劑不減量" },
+        { "drug": "Penicillin G", "dose": "400 萬 U", "route": "IV drip", "freq": "q4h（確認 GAS 後，+ clindamycin）", "note": "腎功能差依院內調整" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "前 3 小時；之後 250–500 mL bolus 依評估", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起（{wt} kg：{round(wt*0.05*60/32,1)}–{round(wt*0.1*60/32,1)} mL/hr）", "route": "IV drip（可周邊短暫）", "freq": "持續，MAP < 65 就給", "note": "泡法 8 mg in D5W 250 mL（32 mcg/mL）" }
+      ],
+      "watch": ["BP／MAP、乳酸 q2–4h、尿量", "皮膚脫屑（1–2 週後）、器官功能（Cr、肝、血小板）"],
+      "call": ["懷疑 TSS 當下 = 後線 + 感染科 + ICU", "需要外科清創或婦產科／ENT 移除填塞物"],
+      "ddx": ["敗血性休克其他來源", "SJS/TEN", "壞死性軟組織感染", "川崎病／麻疹（少見）"],
+      "refs": [{ "ch": "14", "q": "毒性休克症候群（TSS）" }, { "ch": "17", "q": "表 17-1" }, { "ch": "A5", "q": "Vancomycin" }]
+    },
+    "r_scabies": {
+      "type": "result",
+      "urgency": "green",
+      "title": "疥瘡（含住院群聚）",
+      "summary": "Permethrin 5% 乳膏頸部以下全身塗 8–14 小時後洗掉，**1 週後重複一次**；同房病人／照顧者同時治療；衣物被單 60℃ 清洗或密封 3 天；接觸隔離；通知感控。",
+      "steps": [
+        "接觸隔離；皮膚刮片疥蟲鏡檢（皮膚科）",
+        "Permethrin 全身（老人／免疫低下含頭皮），8–14 小時後洗掉，第 7 天重複",
+        "同房病人、照顧者、家屬同時治療；衣物被單 60℃ 清洗或密封袋 3 天",
+        "止癢抗組織胺；癢可持續 2–4 週不代表失敗",
+        "結痂型（crusted）疥瘡 → permethrin 每 2–3 天 + 口服 ivermectin（D1、2、8、9、15）",
+        "通知感控（群聚）；lindane 不再使用"
+      ],
+      "orders": [
+        { "drug": "Permethrin 5% 乳膏", "dose": "頸部以下全身塗抹（老人／免疫低下含頭皮），8–14 小時後洗掉", "route": "外用", "freq": "第 0 天與第 7 天各 1 次", "note": "替代：benzyl benzoate 25%、crotamiton" },
+        { "drug": "Ivermectin", "dose": "{round(wt*0.2,1)} mg（200 mcg/kg）", "route": "PO", "freq": "D1、2、8、9、15（crusted scabies）", "note": "依 {wt} kg；合併 permethrin 每 2–3 天" },
+        { "drug": "Cetirizine", "dose": "10 mg", "route": "PO", "freq": "QD–BID", "note": "止癢；腎功能差減半" },
+        { "drug": "Hydroxyzine", "dose": "10–25 mg", "route": "PO", "freq": "HS PRN", "note": "夜間癢" }
+      ],
+      "watch": ["新丘疹／隧道是否停止（治療後 2–4 週仍癢屬正常）", "同房病人是否出現癢"],
+      "call": ["疥瘡群聚（≥ 2 例）→ 通知感控", "結痂型疥瘡或免疫低下者"],
+      "refs": [{ "ch": "14", "q": "疥瘡" }]
+    },
+    "r_purpura": {
+      "type": "result",
+      "urgency": "red",
+      "title": "瘀點／紫斑 + 發燒（腦膜炎雙球菌血症、DIC、心內膜炎）",
+      "summary": "血液培養後 **ceftriaxone 2 g IV q12h 立即給**、飛沫隔離至排除；查血小板、凝血（DIC）、腎功能；低血壓依敗血性休克（Ch17）。確診腦膜炎雙球菌 → 密切接觸者預防、通知感控。",
+      "steps": [
+        "ABC、IV × 2、監測器；飛沫隔離",
+        "血液培養 × 2（不延遲抗生素 > 45 分鐘）、CBC、PT/aPTT/fibrinogen（DIC）、Cr、乳酸、CRP",
+        "Ceftriaxone 2 g IV q12h 立即；頸僵／意識改變 → 腦膜炎流程（Ch4、Ch17）",
+        "低血壓 → 30 mL/kg 晶體液、norepinephrine（Ch17 bundle）",
+        "找其他來源：心雜音（心內膜炎）、血小板低下（Ch30）",
+        "確診腦膜炎雙球菌 → 同住者、口鼻分泌物暴露醫護預防：ciprofloxacin 500 mg PO × 1 或 rifampin 600 mg PO BID × 2 天或 ceftriaxone 250 mg IM × 1；通知感控"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV drip", "freq": "q12h", "note": "不需腎功能調整；血培養後立即給" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "低血壓時 3 小時內給完", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起（{wt} kg：{round(wt*0.05*60/32,1)}–{round(wt*0.1*60/32,1)} mL/hr）", "route": "IV drip", "freq": "持續，MAP < 65 就給", "note": "泡法 8 mg in D5W 250 mL（32 mcg/mL）" }
+      ],
+      "watch": ["紫斑範圍每小時（畫線）、BP／MAP、乳酸", "血小板、凝血（DIC 進展）", "意識、頸僵"],
+      "call": ["瘀點性紫斑 + 發燒 = 立刻通知後線（敗血症）", "低血壓、意識改變、DIC → ICU；確診腦膜炎雙球菌 → 感控"],
+      "ddx": ["DIC／TTP（Ch30）", "感染性心內膜炎（瘀點、Janeway）", "血管炎（可觸摸性紫斑）", "藥物性血小板低下"],
+      "refs": [{ "ch": "14", "q": "紫斑、瘀斑、血管炎" }, { "ch": "17", "q": "腦膜炎" }]
+    },
+    "r_purpura_nofever": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "瘀點／紫斑，無發燒（血小板低下、凝血異常、血管炎）",
+      "summary": "先查血小板與凝血；可觸摸性紫斑 = 血管炎（查尿液、腎功能）；瘀斑 + 抗凝／抗血小板藥 → 檢視劑量與 INR；血小板低下處理見 Ch30。",
+      "steps": [
+        "CBC（血小板）、PT/aPTT、INR（抗凝者）、Cr、尿液（血尿／蛋白：IgA 血管炎、ANCA）",
+        "檢視藥物：抗凝、抗血小板、heparin（HIT？）、新藥（藥物性血小板低下）",
+        "型態：可觸摸性紫斑 → 血管炎（皮膚科切片）；瘀斑於受壓處 → 老年性／類固醇性",
+        "血小板 < 50,000 或活動性出血 → 依 Ch30；生命徵象變化或新發燒 → 改依發燒紫斑流程",
+        "拍照記錄範圍與日期"
+      ],
+      "orders": [],
+      "watch": ["紫斑範圍進展", "血小板、凝血追蹤", "新發燒 → 立即重新評估"],
+      "call": ["血小板 < 50,000、INR 明顯延長、活動性出血", "新發燒、低血壓、意識改變", "疑 HIT／TTP（MAHA + 血小板低）"],
+      "refs": [{ "ch": "14", "q": "紫斑、瘀斑、血管炎" }, { "ch": "30", "q": "血小板" }],
+      "next": [{ "label": "出現發燒 → 發燒紫斑流程", "next": "r_purpura" }]
+    },
+    "r_dermatitis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "皮膚炎／對磨疹／黴菌／失禁性皮膚炎／壓瘡皮膚照護",
+      "summary": "保護（氧化鋅／凡士林隔離、保持乾燥、減壓翻身 q2h）；外用類固醇依部位選效價（臉／皺褶低效、軀幹四肢中效、手掌腳掌高效 ≤ 2 週）；黴菌用外用抗黴菌；感染未控制時不用複方類固醇藥膏。",
+      "steps": [
+        "找原因：膠帶／消毒劑（接觸性）、皺褶潮濕（對磨疹／念珠菌：衛星病灶）、失禁、壓迫（壓瘡分級）",
+        "KOH 刮片（黴菌）；皺褶處保持乾燥、氧化鋅隔離；失禁處理",
+        "壓瘡：減壓翻身 q2h、氣墊床、足跟懸空、營養；壞死／感染 → Ch15",
+        "外用類固醇依部位選效價，短期使用；明確感染時避免複方類固醇 + 抗生素藥膏",
+        "缺脂性濕疹：潤膚、減少清潔劑"
+      ],
+      "orders": [
+        { "drug": "Hydrocortisone 1% 乳膏", "dose": "薄塗患處", "route": "外用（臉、眼周、皺褶、生殖器）", "freq": "BID", "note": "低效（Class VI–VII）；替代 desonide 0.05%、fluocinolone 0.01%" },
+        { "drug": "Betamethasone valerate 0.1% 乳膏", "dose": "薄塗患處", "route": "外用（軀幹四肢）", "freq": "BID", "note": "中效（Class III–V）；替代 mometasone 0.1%、triamcinolone 0.1%、fluticasone 0.05%" },
+        { "drug": "Clobetasol 0.05% 乳膏", "dose": "薄塗患處", "route": "外用（手掌腳掌、苔癬化）", "freq": "BID，≤ 2 週", "note": "高效（Class I–II）；皮膚科；替代 betamethasone dipropionate 0.05%" },
+        { "drug": "Clotrimazole 1%（或 miconazole 2%／terbinafine 1%）乳膏", "dose": "薄塗患處", "route": "外用", "freq": "BID × 2–4 週", "note": "皮癬菌；念珠菌對磨疹用 clotrimazole／miconazole／nystatin BID × 2 週 + 保持乾燥" },
+        { "drug": "Terbinafine", "dose": "250 mg", "route": "PO", "freq": "QD", "note": "廣泛／頭皮／指甲皮癬菌時" },
+        { "drug": "氧化鋅軟膏（或凡士林）", "dose": "厚塗隔離", "route": "外用（皺褶、失禁部位）", "freq": "每次清潔後", "note": "保護隔離" }
+      ],
+      "watch": ["1–2 週後改善與否；範圍擴大、滲液、膿 → 想感染", "壓瘡分級變化"],
+      "call": ["疑感染未控制（蜂窩性組織炎、膿）", "壓瘡 3–4 級或需清創 → 傷口護理師／外科"],
+      "refs": [{ "ch": "14", "q": "表 14-3" }, { "ch": "14", "q": "皮膚炎、對磨疹、失禁性皮膚炎、壓瘡" }]
+    },
+    "r_nsti": {
+      "type": "result",
+      "urgency": "red",
+      "title": "疑壞死性軟組織感染（壞死性筋膜炎）",
+      "summary": "疼痛與外觀不成比例、快速擴散、紫黑、水泡、捻髮音、休克：**緊急外科清創（不要等影像）**；廣效抗生素 + vancomycin + clindamycin；輸液／升壓；ICU。",
+      "steps": [
+        "立刻通知後線 + 外科（清創決定不等 CT／MRI）；畫線標記範圍、拍照記時間",
+        "IV × 2、監測器；血液培養 × 2、CBC、Cr、乳酸、CK、AST、CRP、凝血、血糖",
+        "抗生素 1 小時內：piperacillin-tazobactam + vancomycin + clindamycin",
+        "輸液 30 mL/kg，MAP < 65 → norepinephrine（Ch17）",
+        "海水／生蠔暴露 + 肝硬化想 Vibrio（加 doxycycline + ceftriaxone，Ch15）",
+        "合併毒性休克考慮 IVIG（感染科）；ICU"
+      ],
+      "orders": [
+        { "drug": "Piperacillin-tazobactam", "dose": "{crcl > 50 ? '4.5 g' : crcl >= 30 ? '3.375 g' : '2.25 g'}", "route": "IV drip", "freq": "{crcl >= 10 ? 'q6h' : 'q8–12h'}", "note": "CrCl {round(crcl)} 依附錄 A5，第一劑不減量；替代 meropenem 1 g q8h 或 ceftriaxone 2 g q24h + metronidazole 500 mg q8h" },
+        { "drug": "Vancomycin（loading）", "dose": "{round(wt*25)}–{round(wt*30)} mg（25–30 mg/kg）", "route": "IV drip", "freq": "STAT × 1", "note": "依 {wt} kg；loading 不減量" },
+        { "drug": "Vancomycin（維持）", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IV drip", "freq": "{crcl > 50 ? 'q8–12h' : crcl >= 30 ? 'q24h' : crcl >= 10 ? 'q24–48h' : '依濃度'}", "note": "CrCl {round(crcl)} 依 A5；trough 15–20" },
+        { "drug": "Clindamycin", "dose": "600–900 mg", "route": "IV drip", "freq": "q8h", "note": "抑制毒素" },
+        { "drug": "NS／LR", "dose": "{round(wt*30)} mL（30 mL/kg）", "route": "IV drip", "freq": "前 3 小時，之後依評估 250–500 mL bolus", "note": "心／腎衰竭每 250 mL 評估" },
+        { "drug": "Norepinephrine", "dose": "0.05–0.1 mcg/kg/min 起（{wt} kg：{round(wt*0.05*60/32,1)}–{round(wt*0.1*60/32,1)} mL/hr）", "route": "IV drip", "freq": "持續，MAP < 65", "note": "泡法 8 mg in D5W 250 mL" },
+        { "drug": "Morphine", "dose": "2–4 mg", "route": "IV push", "freq": "q10–15 min PRN 疼痛", "note": "腎衰竭累積" }
+      ],
+      "watch": ["紅腫範圍每 30–60 分鐘對照畫線", "BP／MAP、乳酸、尿量", "CK、K（橫紋肌溶解）"],
+      "call": ["懷疑當下 = 後線 + 外科（緊急清創）+ ICU", "休克、乳酸 > 2、擴散 > 標記線"],
+      "refs": [{ "ch": "15", "q": "壞死性軟組織感染" }, { "ch": "17", "q": "表 17-1" }, { "ch": "A5", "q": "Piperacillin-tazobactam" }]
+    }
+  }
+}

@@ -1,0 +1,408 @@
+{
+  "id": "11",
+  "title": "尿量減少（少尿、AKI）",
+  "chapter": "11",
+  "entries": [
+    { "label": "尿量少（< 0.5 mL/kg/hr／4 小時 < 100 mL）", "type": "symptom", "start": "i_phone", "group": "水與尿",
+      "keywords": ["少尿", "尿量少", "oliguria", "尿量減少", "4 小時 100", "尿量 < 30", "沒尿", "anuria", "無尿"] },
+    { "label": "尿管沒尿／病人沒解尿、下腹脹", "type": "symptom", "start": "q_bladder", "group": "水與尿",
+      "keywords": ["尿管沒尿", "Foley 沒尿", "沒解尿", "尿滯留", "urinary retention", "下腹脹", "膀胱脹", "bladder scan", "解不出來"] },
+    { "label": "Cr 上升（AKI）", "type": "symptom", "start": "i_phone", "group": "水與尿",
+      "keywords": ["Cr 上升", "creatinine", "AKI", "急性腎損傷", "acute kidney injury", "腎功能變差", "BUN 上升", "KDIGO"] },
+    { "label": "腎前性 AKI（低血容／低灌流）", "type": "diagnosis", "start": "q_hf",
+      "keywords": ["腎前性", "prerenal", "低血容 AKI", "FENa", "脫水 少尿"] },
+    { "label": "尿滯留／尿管阻塞（腎後性）", "type": "diagnosis", "start": "r_retention",
+      "keywords": ["尿滯留", "尿管阻塞", "postrenal", "BPH 尿滯留", "導尿", "tamsulosin", "post-obstructive diuresis"] },
+    { "label": "上泌尿道阻塞／腎水腫", "type": "diagnosis", "start": "r_upper_obs",
+      "keywords": ["腎水腫", "hydronephrosis", "輸尿管阻塞", "double-J", "PCN", "阻塞 感染"] },
+    { "label": "ATN／AIN／顯影劑腎病（腎因性）", "type": "diagnosis", "start": "q_intrinsic_type",
+      "keywords": ["ATN", "急性腎小管壞死", "AIN", "間質性腎炎", "顯影劑腎病", "contrast nephropathy", "CIN", "腎毒性藥物"] },
+    { "label": "橫紋肌溶解", "type": "diagnosis", "start": "r_rhabdo",
+      "keywords": ["橫紋肌溶解", "rhabdomyolysis", "CK 高", "肌紅素尿", "myoglobinuria"] },
+    { "label": "腫瘤溶解症候群", "type": "diagnosis", "start": "r_tls",
+      "keywords": ["腫瘤溶解", "tumor lysis", "TLS", "rasburicase", "uric acid 高"] },
+    { "label": "肝腎症候群", "type": "diagnosis", "start": "r_hrs",
+      "keywords": ["肝腎症候群", "hepatorenal", "HRS", "terlipressin", "肝硬化 AKI"] },
+    { "label": "AKI 體液過多／肺水腫（利尿）", "type": "diagnosis", "start": "r_overload",
+      "keywords": ["體液過多", "肺水腫 AKI", "furosemide", "利尿", "overload", "metolazone", "利尿劑抗性"] },
+    { "label": "緊急透析指標（AEIOU）", "type": "diagnosis", "start": "r_dialysis",
+      "keywords": ["透析指標", "AEIOU", "緊急透析", "dialysis", "尿毒", "uremia", "少尿 高血鉀"] },
+    { "label": "GN／血管炎／TMA", "type": "diagnosis", "start": "r_gn",
+      "keywords": ["腎絲球腎炎", "glomerulonephritis", "血管炎", "vasculitis", "TMA", "TTP", "HUS", "RBC cast"] }
+  ],
+  "nodes": {
+    "i_phone": {
+      "type": "info",
+      "title": "電話中：問清楚 + 立即口頭醫囑",
+      "body": [
+        "**問**：24 小時與這一班的尿量、怎麼測（尿管／自解估計）、最後一次排尿；生命徵象與意識；腹脹／下腹痛、喘、無力／心悸；入院診斷、近期手術、顯影劑（48–72 小時內）、新藥；今日輸液量、I/O、體重",
+        "**口頭醫囑**：量生命徵象；**bladder scan**；有尿管者沖洗確認通暢（近期泌尿道手術先問泌尿科）",
+        "**抽血**：BUN/Cr、Na、K、HCO₃、CBC；尿液常規、UNa、UCr、尿滲透壓",
+        "低血壓／脫水徵候 → NS/LR 500 mL bolus（心衰竭 250 mL）；K > 5.5 或懷疑高血鉀 → ECG",
+        "少尿 + 生命徵象不穩／高血鉀／喘 → 立刻到床邊"
+      ],
+      "next": "m_danger"
+    },
+    "m_danger": {
+      "type": "multi",
+      "title": "有沒有下列危險徵象？",
+      "help": "少尿（< 0.5 mL/kg/hr ≥ 6 小時）= AKI 直到證明不是",
+      "options": [
+        { "label": "低血壓（MAP < 65）／休克／心搏過速", "set": { "shock": true } },
+        { "label": "喘、SpO₂↓、囉音（肺水腫）", "set": { "pe": true } },
+        { "label": "K ≥ 6 或 ECG 變化／無力、心悸", "set": { "hyperk": true } },
+        { "label": "意識改變（尿毒／低灌流）", "set": { "uremia": true } }
+      ],
+      "branches": [
+        { "if": "hyperk", "next": "r_dialysis" },
+        { "if": "shock", "next": "q_hf_shock" },
+        { "if": "pe", "next": "r_overload" },
+        { "if": "uremia", "next": "r_dialysis" },
+        { "else": "q_bladder" }
+      ]
+    },
+    "q_hf_shock": {
+      "type": "choice",
+      "title": "病人有心衰竭、腎衰竭／透析或是老年人嗎？",
+      "help": "有 → bolus 250 mL 分次；沒有 → 500 mL",
+      "options": [
+        { "label": "有", "next": "r_shock", "set": { "hf": true } },
+        { "label": "沒有", "next": "r_shock", "set": { "hf": false } }
+      ]
+    },
+    "r_shock": {
+      "type": "result",
+      "urgency": "red",
+      "title": "少尿 + 低血壓／休克：先灌流",
+      "summary": "MAP < 65 = 灌流不足：晶體液 {hf ? 250 : 500} mL bolus 重複至 1–2 L，仍 MAP < 65 → norepinephrine；同時停腎毒性藥、找原因（出血、敗血症、心因性）。",
+      "steps": [
+        "到床邊：ABC、IV × 2、心電監測、ECG；bladder scan（先排除滯留）",
+        "抽血：CBC、BUN/Cr、Na、K、HCO₃、lactate、VBG、血液培養（發燒）；尿液常規、UNa、UCr",
+        "晶體液 bolus，每次後評估 BP／CRT／肺音；出血 → 備血輸血（Ch9）；敗血症 → 1 小時內抗生素（Ch17）",
+        "1–2 L 後 MAP 仍 < 65 → norepinephrine（Ch19），不要無止盡灌水",
+        "停 NSAID、ACEI/ARB、利尿劑、metformin；腎代謝藥依 CrCl（≈ {round(crcl)}，Cr 上升中實際更低）從嚴",
+        "Foley 記每小時尿量；已 euvolemic 仍少尿 → 停止灌水，想腎因／腎後"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "{hf ? 250 : 500} mL", "route": "IV drip over 15–30 min", "freq": "STAT；每次後評估，可重複至 1–2 L", "note": "{hf ? '心衰竭／腎衰竭／老年：250 mL 分次' : '腎功能恢復前避免含 K 液（LR 含 K 4）'}" },
+        { "drug": "Norepinephrine", "dose": "{round(wt*0.05,1)}–{round(wt*0.3,1)} mcg/min（0.05–0.3 mcg/kg/min）", "route": "IV drip（中心靜脈為佳）", "freq": "持續，滴定 MAP ≥ 65", "note": "{wt} kg；敗血症／血管擴張性；泡法依院內（Ch19）" }
+      ],
+      "watch": ["BP／MAP、HR q5–15 min；尿量每小時（目標 ≥ 0.5 mL/kg/hr ≈ {round(wt*0.5)} mL/hr）", "肺音、SpO₂（每次 bolus 後）", "K、HCO₃、Cr q6–12h；lactate 2 小時"],
+      "call": ["輸液 1–2 L 後仍無尿或仍休克（需升壓劑）", "少尿 + 高血鉀（≥ 6 或 ECG 變化）、pH < 7.2、肺水腫、意識改變", "Cr 24 小時內上升 > 1 mg/dL 或達 stage 3；腎移植病人任何 AKI"],
+      "refs": [{ "ch": "11", "q": "2. 腎前性" }, { "ch": "11", "q": "MAP < 65" }, { "ch": "19", "q": "休克" }],
+      "next": [{ "label": "灌流改善但仍少尿 → 膀胱／體液評估", "next": "q_bladder" }, { "label": "出現肺水腫 → 利尿", "next": "r_overload" }]
+    },
+    "q_bladder": {
+      "type": "choice",
+      "title": "膀胱與尿管：bladder scan／沖洗結果？",
+      "help": "先排除最簡單的：尿滯留、尿管阻塞（近期泌尿道手術者操作前先問泌尿科）",
+      "options": [
+        { "label": "無尿管：bladder scan > 300 mL 或膀胱脹（尿滯留）", "next": "r_retention" },
+        { "label": "有尿管：沖洗不通／反抽不出／有血塊", "next": "r_catheter" },
+        { "label": "膀胱空、尿管通暢（真的少尿）", "next": "q_volume" }
+      ]
+    },
+    "r_retention": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "尿滯留（腎後性）：導尿",
+      "summary": "bladder scan > 300 mL 或膀胱脹 → **Foley 14–16 Fr**；放不進去、近期泌尿道手術或懷疑尿道損傷 → 泌尿科。放出 > 1 L 要注意解除阻塞後利尿。",
+      "steps": [
+        "導尿（單導或留置）；大量滯留可分段緩慢放尿減少減壓後血尿",
+        "找原因：BPH、抗膽鹼藥／鴉片、神經性膀胱、便秘、術後；停抗膽鹼藥",
+        "抽 BUN/Cr、K；放尿後記每小時尿量",
+        "放出 > 1 L 後：尿量 > 200 mL/hr 持續 2 小時 → 補前一小時尿量 50–75%（½NS），監測電解質",
+        "BPH：α-blocker，留置尿管 3–7 天後試拔",
+        "Cr 已上升者：腎臟超音波看是否腎水腫"
+      ],
+      "orders": [
+        { "drug": "Foley 留置導尿管", "dose": "14–16 Fr", "route": "經尿道", "freq": "STAT；BPH 留 3–7 天後試拔", "note": "放不進去／近期泌尿道手術／懷疑尿道損傷（尿道口出血、會陰血腫）→ 不要硬放，泌尿科" },
+        { "drug": "Tamsulosin", "dose": "0.4 mg（台灣 0.2 mg × 2）", "route": "PO", "freq": "QD", "note": "BPH；姿態性低血壓", "alt": "silodosin 8 mg PO QD 或 doxazosin 2–4 mg PO QD" },
+        { "drug": "½NS（解除阻塞後利尿時）", "dose": "前一小時尿量的 50–75%", "route": "IV drip", "freq": "每小時調整；24–48 小時後遞減", "note": "尿量 > 200 mL/hr × 2 hr 才啟動；不要 1:1 補到底" }
+      ],
+      "watch": ["放尿後每小時尿量 × 4–6 小時（解除阻塞後利尿）", "Na、K、Mg、P q6–12h（大量利尿時）", "減壓後血尿：多為輕微，血塊阻塞 → Ch13"],
+      "call": ["尿管放不進去、近期泌尿道手術、懷疑尿道損傷 → 泌尿科", "雙側腎水腫、阻塞 + 感染（緊急減壓）", "少尿 + 高血鉀／肺水腫／意識改變"],
+      "refs": [{ "ch": "11", "q": "3. 腎後性" }, { "ch": "11", "q": "post-obstructive diuresis" }],
+      "next": [{ "label": "解除阻塞後利尿（> 200 mL/hr × 2 hr）", "next": "r_postobs" }, { "label": "腎水腫／上泌尿道阻塞", "next": "r_upper_obs" }]
+    },
+    "r_catheter": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "尿管阻塞：沖洗、換管",
+      "summary": "NS 30–50 mL **手動沖洗反抽**（無菌）；仍不通或反覆血塊 → 換 **3-way Foley 22–24 Fr** 持續膀胱沖洗（Ch13）；近期泌尿道手術先問泌尿科。",
+      "steps": [
+        "確認管路：打折、位置、氣球；bladder scan 看膀胱有沒有尿",
+        "NS 30–50 mL 沖洗反抽，反覆至通暢；阻力大不要硬推",
+        "沖洗仍不通 → 換管；血塊多 → 3-way Foley 22–24 Fr + CBI",
+        "沖洗通了但仍少尿 → 膀胱是空的，回到體液／腎因評估",
+        "沖洗劇痛、灌不進、持續阻力 → 停止，聯絡泌尿科（穿孔／位置不對）"
+      ],
+      "orders": [
+        { "drug": "NS 沖洗（導尿空針）", "dose": "30–50 mL", "route": "經尿管手動沖洗反抽", "freq": "需要時反覆至通暢", "note": "無菌操作；近期泌尿道手術先問泌尿科" },
+        { "drug": "3-way Foley + NS 持續膀胱沖洗（CBI）", "dose": "22–24 Fr；NS 3 L 袋", "route": "經尿道", "freq": "持續，速率使流出液淡粉紅", "note": "記錄灌入與流出量；流出 < 灌入 → 立即停、檢查阻塞（Ch13）" }
+      ],
+      "watch": ["沖洗後每小時尿量", "血尿程度、血塊", "發燒（尿管相關感染）"],
+      "call": ["沖洗無法通暢／灌入 > 流出／沖洗時劇痛", "近期泌尿道手術後阻塞或出血", "膀胱空但仍少尿 + 高血鉀／肺水腫"],
+      "refs": [{ "ch": "11", "q": "尿管阻塞：NS 30–50 mL" }, { "ch": "13", "q": "持續膀胱沖洗" }],
+      "next": [{ "label": "通了但仍少尿 → 體液評估", "next": "q_volume" }]
+    },
+    "r_postobs": {
+      "type": "result",
+      "urgency": "green",
+      "title": "解除阻塞後利尿（post-obstructive diuresis）",
+      "summary": "多為生理性：補充**前一小時尿量的 50–75%（½NS）**，24–48 小時後逐漸減少；不要 1:1 補到底（會延長利尿）。",
+      "steps": [
+        "每小時記尿量；尿量 > 200 mL/hr 持續 2 小時才啟動補充",
+        "抽 Na、K、Mg、P、Cr q6–12h；體重、姿態性血壓",
+        "能喝的病人依口渴補水；意識不清／喝不到水者靠 IV",
+        "24–48 小時後遞減；利尿超過 48 小時或 Na 快速變化 → 腎臟科"
+      ],
+      "orders": [
+        { "drug": "½NS", "dose": "前一小時尿量的 50–75%", "route": "IV drip", "freq": "每小時調整；24–48 小時後遞減", "note": "尿量 > 200 mL/hr × 2 hr 才給；高血鈉改依 Ch32" }
+      ],
+      "watch": ["每小時尿量、每日體重", "Na、K、Mg、P q6–12h", "姿態性低血壓、心搏過速（補不夠）"],
+      "call": ["尿量 > 400–500 mL/hr 持續或血行不穩", "Na > 150 或快速變化", "利尿超過 48 小時"],
+      "refs": [{ "ch": "11", "q": "post-obstructive diuresis" }, { "ch": "12", "q": "解除阻塞後利尿" }]
+    },
+    "q_volume": {
+      "type": "choice",
+      "title": "體液狀態？",
+      "help": "脫水：口乾、CRT > 2 s、姿態性低血壓、JVP 塌陷；過多：水腫、囉音、JVP↑、體重↑",
+      "options": [
+        { "label": "脫水／低血容徵候", "next": "q_hf" },
+        { "label": "體液過多（水腫、囉音、JVP↑）", "next": "r_overload" },
+        { "label": "Euvolemic、血壓正常，仍少尿（想腎因／腎後）", "next": "q_cause" }
+      ]
+    },
+    "q_hf": {
+      "type": "choice",
+      "title": "病人有心衰竭、腎衰竭／透析或是老年人嗎？",
+      "help": "有 → bolus 250 mL 分次；沒有 → 500 mL",
+      "options": [
+        { "label": "有", "next": "r_prerenal", "set": { "hf": true } },
+        { "label": "沒有", "next": "r_prerenal", "set": { "hf": false } }
+      ]
+    },
+    "r_prerenal": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "腎前性 AKI（低血容）：補回血容、停腎毒性藥",
+      "summary": "晶體液 {hf ? 250 : 500} mL over 15–30 分鐘，每次後評估，可重複至 1–2 L；**已 euvolemic 仍少尿 → 停止灌水，想其他原因**。",
+      "steps": [
+        "抽血：BUN/Cr（比值 > 20 支持腎前）、Na、K、HCO₃、CBC；尿液常規、UNa、UCr（FENa < 1%；用利尿劑改 FEUrea ≤ 35%）",
+        "晶體液 bolus，每次後看 BP／CRT／尿量／肺音",
+        "停腎毒性藥：NSAID、ACEI/ARB（急性期）、利尿劑、SGLT2i、metformin、保鉀利尿劑、含 Mg／P 製劑；vancomycin 改 trough/AUC 調整；顯影劑延後",
+        "腎代謝藥依附錄 A5 調整（抗生素、LMWH 改 UFH 或減量、gabapentin、digoxin、morphine 改 fentanyl、DOAC）；CrCl ≈ {round(crcl)}，Cr 上升中實際更低",
+        "維持輸液依流失量 + 25–30 mL/kg/d，腎功能恢復前避免含 K 液",
+        "每日體重、精確 I/O、q6–12h 電解質；肝硬化腹水者想肝腎症候群"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "{hf ? 250 : 500} mL", "route": "IV drip over 15–30 min", "freq": "每次後評估，可重複至 1–2 L", "note": "{hf ? '心衰竭／腎衰竭／老年：250 mL 分次' : '已 euvolemic 仍少尿 → 停'}" },
+        { "drug": "NS 或 D5-½NS（不加 K）", "dose": "{round(wt*25/24)}–{round(wt*30/24)} mL/hr + 流失量", "route": "IV drip", "freq": "持續，每日重新評估", "note": "25–30 mL/kg/d；腎功能恢復前避免含 K 液（LR、Taita）" },
+        { "drug": "（停腎毒性藥）", "dose": "NSAID、ACEI/ARB、利尿劑、metformin、SGLT2i 全停", "route": "—", "freq": "STAT", "note": "aminoglycoside／vancomycin 依濃度調整；顯影劑非必要延後" }
+      ],
+      "watch": ["每小時尿量（目標 ≥ 0.5 mL/kg/hr ≈ {round(wt*0.5)} mL/hr）、每日體重", "K、HCO₃、Cr q6–12h", "肺音、SpO₂（每次 bolus 後）"],
+      "call": ["輸液 1–2 L 後仍無尿", "少尿 + 高血鉀（≥ 6 或 ECG 變化）、pH < 7.2、肺水腫、意識改變", "Cr 24 小時內上升 > 1 mg/dL 或達 stage 3；腎移植病人任何 AKI"],
+      "refs": [{ "ch": "11", "q": "2. 腎前性" }, { "ch": "11", "q": "FENa" }, { "ch": "11", "q": "1. 所有 AKI 病人" }],
+      "next": [{ "label": "灌水後仍少尿 → 想腎因／腎後", "next": "q_cause" }, { "label": "肝硬化腹水 → 肝腎症候群", "next": "r_hrs" }]
+    },
+    "r_overload": {
+      "type": "result",
+      "urgency": "red",
+      "title": "AKI 體液過多／肺水腫：利尿",
+      "summary": "坐起、O₂／NIV，**furosemide IV**（{crcl < 30 ? 'CrCl < 30：80–200 mg' : '40–80 mg'}），1–2 小時無反應加倍再給；停利尿劑後仍少尿或頑固性缺氧 → 透析。",
+      "steps": [
+        "停所有輸液；坐起；O₂ 目標 94–98%（CO₂ 滯留 88–92%）；SpO₂ < 90% 或費力 → CPAP",
+        "心電監測、ECG（高血鉀？）、CXR；抽 K、HCO₃、Cr、BNP、VBG",
+        "Furosemide IV bolus（或持續滴注，效果相當）；Foley 記每小時尿量",
+        "抗性 → 加 metolazone（利尿劑前 30–60 分鐘）",
+        "高血壓 + 肺水腫 → NTG（Ch18）；K ≥ 6 → Ch33",
+        "利尿劑無反應（頑固性缺氧）→ 緊急透析指標 O，聯絡腎臟科"
+      ],
+      "orders": [
+        { "drug": "Furosemide", "dose": "{crcl < 30 ? '80–200' : '40–80'} mg（經驗法則 ≈ 30 × Cr = {round(30*cr)} mg）", "route": "IV push（≤ 4 mg/min）", "freq": "STAT；1–2 小時無反應加倍再給，max 200 mg/次；有效後 BID–QID", "note": "CrCl ≈ {round(crcl)}；CKD／已用利尿劑者 80–200 mg；長期口服者給平日口服總量 1–2.5 倍" },
+        { "drug": "Furosemide 持續滴注", "dose": "10–20 mg/hr", "route": "IV drip", "freq": "持續", "note": "與 bolus 效果相當；bolus 後可接", "alt": "furosemide bolus" },
+        { "drug": "Metolazone", "dose": "5–10 mg", "route": "PO", "freq": "QD，利尿劑前 30–60 min", "note": "抗性時；eGFR < 30 仍有效（HCTZ 無效）；注意低血鉀／低血鎂" },
+        { "drug": "CPAP", "dose": "5–10 cmH₂O", "route": "面罩", "freq": "持續至改善", "note": "肺水腫等透析時；意識不清、嘔吐、血行不穩禁" }
+      ],
+      "watch": ["尿量每小時（1–2 小時內反應）、SpO₂、RR", "K、Mg、Cr q6–12h", "利尿無反應 → 透析評估"],
+      "call": ["肺水腫對利尿劑無反應（頑固性缺氧）→ 腎臟科透析", "少尿 + 高血鉀（≥ 6 或 ECG 變化）、pH < 7.2、意識改變", "需要 NIV／插管"],
+      "refs": [{ "ch": "11", "q": "5. 體液過多、肺水腫" }, { "ch": "11", "q": "AEIOU" }, { "ch": "07", "q": "急性心衰竭" }],
+      "next": [{ "label": "利尿無效／高血鉀／尿毒 → 透析指標", "next": "r_dialysis" }]
+    },
+    "q_cause": {
+      "type": "choice",
+      "title": "Euvolemic 仍少尿：最符合的線索？",
+      "help": "看尿液鏡檢、CK、近 24–48 小時事件與用藥",
+      "options": [
+        { "label": "近期顯影劑（48–72 小時內）", "next": "r_intrinsic", "set": { "cause": "cin" } },
+        { "label": "低血壓／敗血症／腎毒性藥後，muddy brown cast（ATN）", "next": "r_intrinsic", "set": { "cause": "atn" } },
+        { "label": "新藥 + 皮疹／發燒／嗜酸性球、無菌膿尿（AIN）", "next": "r_intrinsic", "set": { "cause": "ain" } },
+        { "label": "肌肉痛、CK↑、試紙血紅素陽性但無 RBC（橫紋肌溶解）", "next": "r_rhabdo" },
+        { "label": "血液腫瘤／化療後，K／P／uric acid↑（腫瘤溶解）", "next": "r_tls" },
+        { "label": "肝硬化腹水（肝腎症候群）", "next": "r_hrs" },
+        { "label": "血尿 + 蛋白尿 + RBC cast，或血小板低 + schistocyte（GN／血管炎／TMA）", "next": "r_gn" },
+        { "label": "超音波腎水腫、單腎、骨盆腫瘤（上泌尿道阻塞）", "next": "r_upper_obs" }
+      ]
+    },
+    "q_intrinsic_type": {
+      "type": "choice",
+      "title": "哪一種腎因性 AKI？",
+      "options": [
+        { "label": "ATN（缺血／敗血症／腎毒素）", "next": "r_intrinsic", "set": { "cause": "atn" } },
+        { "label": "AIN（藥物過敏性間質性腎炎）", "next": "r_intrinsic", "set": { "cause": "ain" } },
+        { "label": "顯影劑腎病（含高風險預防）", "next": "r_intrinsic", "set": { "cause": "cin" } }
+      ]
+    },
+    "r_intrinsic": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "{cause == 'ain' ? 'AIN：停致病藥 ± 類固醇' : cause == 'cin' ? '顯影劑腎病：支持性、預防為主' : 'ATN：支持性，避免進一步傷害'}",
+      "summary": "{cause == 'ain' ? '越早停致病藥越好（β-lactam、sulfa／TMP-SMX、PPI、NSAID、fluoroquinolone、allopurinol、rifampin、免疫檢查點抑制劑）；prednisolone 1 mg/kg 在診斷 7 天內開始較有效，由腎臟科決定。' : cause == 'cin' ? 'Cr 24–48 小時內上升、3–5 天高峰、7–10 天恢復（未恢復想膽固醇栓塞）；治療為支持性，重點是高風險者的預防。' : '等恢復（1–3 週）；利尿劑只用於 overload，不促進恢復；重點是停腎毒性藥、避免低血壓、調整劑量。'}",
+      "steps": [
+        "停腎毒性藥：NSAID、ACEI/ARB、aminoglycoside、顯影劑、metformin、保鉀利尿劑、含 Mg／P 製劑；vancomycin 依濃度調整",
+        "腎代謝藥依 CrCl（≈ {round(crcl)}，Cr 上升中實際更低）從嚴：抗生素、LMWH 改 UFH、gabapentin、digoxin、morphine 改 fentanyl、DOAC（附錄 A5）",
+        "{cause == 'ain' ? '找 Cr 上升前 24–48 小時的新藥並停用；尿液嗜酸性球、WBC cast；皮疹／發燒／關節痛' : cause == 'cin' ? '停 NSAID／metformin／ACEI/ARB／利尿劑；避免再次顯影劑；監測 Cr 至 7–10 天' : '避免低血壓（MAP ≥ 65）；euvolemic 就不要再灌水'}",
+        "每日體重、精確 I/O、q6–12h K／HCO₃／P；腎臟超音波（排除阻塞）",
+        "處理併發症：高血鉀（Ch33）、酸中毒（Ch31）、肺水腫（利尿）、高血磷；尿毒出血 → desmopressin",
+        "{cause == 'ain' ? '腎臟科會診（類固醇、必要時切片）' : 'Stage 3 少尿 > 72 小時或出現 AEIOU 指標 → 腎臟科'}"
+      ],
+      "orders": [
+        { "drug": "（停致病藥／腎毒性藥）", "dose": "全部停用（NSAID、ACEI/ARB、metformin、保鉀利尿劑、含 Mg／P 製劑）", "route": "—", "freq": "STAT", "note": "AIN 致病藥越早停越好" },
+        { "drug": "Prednisolone", "dose": "{round(wt)} mg（1 mg/kg）", "route": "PO", "freq": "QD", "note": "AIN；診斷 7 天內開始較有效；由腎臟科決定", "cond": "cause == 'ain'" },
+        { "drug": "等張輸液（NS）預防性水化", "dose": "{round(wt)}–{round(wt*1.5)} mL/hr（1–1.5 mL/kg/hr）", "route": "IV drip", "freq": "顯影劑前 6–12 小時至後 6–12 小時", "note": "高風險（eGFR < 60、糖尿病、心衰竭、低血壓）；最少量等滲透壓顯影劑；心衰竭減量", "cond": "cause == 'cin'" },
+        { "drug": "Desmopressin", "dose": "{round(wt*0.3,1)} mcg（0.3 mcg/kg）", "route": "IV", "freq": "× 1", "note": "尿毒出血傾向時；或鼻噴 3 mcg/kg" }
+      ],
+      "watch": ["Cr、K、HCO₃、P q6–12h；每日體重、尿量", "{cause == 'cin' ? 'Cr 3–5 天高峰，7–10 天應恢復' : 'ATN 恢復 1–3 週；多尿期注意電解質'}", "肺水腫、尿毒症狀"],
+      "call": ["少尿 + 高血鉀（≥ 6 或 ECG 變化）、pH < 7.2、肺水腫、意識改變", "Cr 24 小時內上升 > 1 mg/dL 或達 stage 3", "懷疑 AIN 需類固醇／切片；腎移植病人任何 AKI；需要透析"],
+      "refs": [{ "ch": "11", "q": "4. 腎因性" }, { "ch": "11", "q": "1. 所有 AKI 病人" }, { "ch": "11", "q": "顯影劑腎病" }]
+    },
+    "r_rhabdo": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "橫紋肌溶解：大量 NS，目標尿量 3 mL/kg/hr",
+      "summary": "NS 1–2 L/hr 起始（老年／心腎衰竭減量），目標尿量約 3 mL/kg/hr（{wt} kg ≈ {round(wt*3)} mL/hr，200–300 mL/hr）；監測 K、Ca、P、CK；CK > 20,000 AKI 風險高。",
+      "steps": [
+        "抽 CK、K、Ca、P、Cr、uric acid、VBG；尿液試紙血紅素陽性但無 RBC = 肌紅素尿；ECG（高血鉀）",
+        "NS 大量輸液，Foley 記每小時尿量；每 2–4 小時評估肺音／SpO₂",
+        "尿 pH < 6.5 可考慮 NaHCO₃ 鹼化尿液（劑量依院內／Ch31）",
+        "停 statin 等致病藥；找原因（壓迫、癲癇、運動、藥物、感染）",
+        "注意腔室症候群（肢體腫脹、疼痛、感覺異常）→ 外科",
+        "高血鉀 → Ch33；低血鈣只在有症狀時補"
+      ],
+      "orders": [
+        { "drug": "NS", "dose": "1–2 L/hr 起始", "route": "IV drip", "freq": "持續，依尿量調整（目標 ≈ {round(wt*3)} mL/hr）", "note": "老年／心腎衰竭減量並密切評估肺音；CK 趨勢下降後遞減" },
+        { "drug": "NaHCO₃（鹼化尿液）", "dose": "依院內／Ch31", "route": "IV drip", "freq": "尿 pH < 6.5 時考慮", "note": "章節未列固定劑量；目標尿 pH > 6.5；注意低血鈣、鹼血症" }
+      ],
+      "watch": ["尿量每小時（目標 200–300 mL/hr）；肺音、SpO₂ q2–4h", "K、Ca、P、CK q6–12h（CK 趨勢）", "肢體腔室症候群徵候"],
+      "call": ["懷疑橫紋肌溶解即告知後線；CK > 20,000 或 Cr 上升", "高血鉀（≥ 6 或 ECG 變化）、少尿對輸液無反應", "腔室症候群 → 外科"],
+      "refs": [{ "ch": "11", "q": "橫紋肌溶解" }, { "ch": "33", "q": "高血鉀" }]
+    },
+    "r_tls": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "腫瘤溶解症候群",
+      "summary": "輸液（目標尿量 80–100 mL/hr）+ **rasburicase**（G6PD 缺乏禁用）或 allopurinol；處理 K／P；低血鈣只在有症狀時補；避免顯影劑與 NSAID。",
+      "steps": [
+        "抽 K、P、Ca、uric acid、Cr、LDH、VBG；ECG（高血鉀）",
+        "等張輸液，Foley 記尿量，目標 80–100 mL/hr",
+        "Rasburicase（首選）或 allopurinol（依腎功能減量）",
+        "高血鉀 → Ch33；高血磷 → 磷結合劑；低血鈣有症狀才補（避免磷酸鈣沉積）",
+        "避免顯影劑、NSAID；血液腫瘤科 + 腎臟科（可能需透析）"
+      ],
+      "orders": [
+        { "drug": "NS（或其他等張液，不含 K）", "dose": "依尿量調整（目標 80–100 mL/hr）", "route": "IV drip", "freq": "持續", "note": "心腎衰竭者減量並評估肺音" },
+        { "drug": "Rasburicase", "dose": "{round(wt*0.1,1)}–{round(wt*0.2,1)} mg（0.1–0.2 mg/kg；或固定 6 mg）", "route": "IV", "freq": "× 1", "note": "{wt} kg；G6PD 缺乏禁用；抽 uric acid 檢體要冰浴" },
+        { "drug": "Allopurinol", "dose": "300 mg", "route": "PO", "freq": "QD–BID", "note": "依腎功能減量（CrCl ≈ {round(crcl)}）；rasburicase 不可用時", "alt": "rasburicase" }
+      ],
+      "watch": ["K、P、Ca、uric acid、Cr q6h", "尿量每小時", "ECG／心律（高血鉀、低血鈣）"],
+      "call": ["K ≥ 6 或 ECG 變化、少尿、Cr 上升 → 腎臟科／血液腫瘤科", "需要透析", "有症狀低血鈣、心律不整"],
+      "refs": [{ "ch": "11", "q": "腫瘤溶解" }, { "ch": "33", "q": "高血鉀" }]
+    },
+    "r_hrs": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "肝腎症候群：albumin 擴容 + terlipressin",
+      "summary": "肝硬化 + AKI：先停利尿劑／腎毒性藥、**albumin 1 g/kg/d（max 100 g）× 2 天**擴容，Cr 未改善 → **terlipressin 1 mg IV q6h + albumin**；聯絡後線／腎臟科。",
+      "steps": [
+        "停利尿劑、NSAID、ACEI/ARB、β-blocker 視情況；排除感染（SBP：腹水細胞數／培養）、出血、阻塞（超音波）",
+        "Albumin 擴容 2 天後評估 Cr；未降 → 肝腎症候群診斷並開始 terlipressin",
+        "Terlipressin 禁忌：缺氧 SpO₂ < 90%；呼吸惡化或冠狀／腸／肢體缺血即停",
+        "3 天後 Cr 未降 ≥ 25–30% → 可增至 2 mg q6h",
+        "非重症替代：midodrine + octreotide + albumin；或 ICU norepinephrine",
+        "每日 Cr、Na、尿量；肺音（albumin 體液負荷）"
+      ],
+      "orders": [
+        { "drug": "Albumin 20%", "dose": "{min(round(wt), 100)} g/d（1 g/kg，max 100 g）", "route": "IV drip", "freq": "× 2 天擴容，之後 20–40 g/d", "note": "20% 100 mL = 20 g；SBP 者 1.5 g/kg 第 1 天 + 1 g/kg 第 3 天" },
+        { "drug": "Terlipressin", "dose": "1 mg", "route": "IV", "freq": "q6h，持續至 Cr 改善；3 天後 Cr 未降 ≥ 25–30% 可增至 2 mg q6h", "note": "SpO₂ < 90% 不用；呼吸惡化或缺血即停；聯絡後線" },
+        { "drug": "Midodrine", "dose": "依院內起始，最高 15 mg", "route": "PO", "freq": "TID", "note": "非重症替代；與 octreotide + albumin 併用", "cond": "false" },
+        { "drug": "Octreotide", "dose": "100–200 mcg", "route": "SC", "freq": "TID", "note": "與 midodrine + albumin 併用（terlipressin 不可用時）", "alt": "terlipressin" }
+      ],
+      "watch": ["Cr、Na、尿量每日；SpO₂、肺音（albumin／terlipressin）", "胸痛、腹痛、肢體冰冷（缺血）", "腹水感染徵候"],
+      "call": ["肝硬化 AKI 擴容無效即聯絡後線／腎臟科（terlipressin 需監測）", "缺氧、缺血症狀", "需要透析或肝移植評估"],
+      "refs": [{ "ch": "11", "q": "肝腎症候群" }, { "ch": "10", "q": "Albumin 5%／20%" }]
+    },
+    "r_gn": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "GN／血管炎／TMA：緊急腎臟科",
+      "summary": "血尿 + 蛋白尿 + RBC cast（GN／血管炎）或血小板低 + schistocyte + AKI（TMA）→ **緊急腎臟科**（可能需切片、血漿置換、類固醇）；值班先支持與控制血壓。",
+      "steps": [
+        "尿液鏡檢（RBC cast、dysmorphic RBC、蛋白尿）；CBC + 抹片（schistocyte）、LDH、haptoglobin、Cr、補體、ANCA、ANA（白天可補）",
+        "血壓控制（惡性高血壓 → Ch18）；停腎毒性藥、調整劑量",
+        "TMA（TTP/HUS）→ 血液科 + 腎臟科，血漿置換（Ch30）",
+        "每日體重、I/O、q6–12h K／HCO₃；處理高血鉀、肺水腫",
+        "咳血／肺出血、關節痛、皮疹 → 血管炎，通知後線"
+      ],
+      "orders": [
+        { "drug": "（停腎毒性藥、調整腎代謝藥）", "dose": "依 CrCl ≈ {round(crcl)}（Cr 上升中從嚴）", "route": "—", "freq": "STAT", "note": "類固醇／免疫抑制由腎臟科決定" }
+      ],
+      "watch": ["Cr、K、HCO₃ q6–12h；血小板、Hb（TMA）", "血壓、尿量", "咳血、呼吸（肺腎症候群）"],
+      "call": ["懷疑 GN／血管炎／TMA 當下就聯絡腎臟科（血液科）", "少尿 + 高血鉀、肺水腫、pH < 7.2、意識改變", "咳血／肺出血"],
+      "refs": [{ "ch": "11", "q": "GN／血管炎／TMA" }, { "ch": "30", "q": "血漿置換" }]
+    },
+    "r_upper_obs": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "上泌尿道阻塞／腎水腫：泌尿科減壓",
+      "summary": "腎水腫（雙側，或單腎）→ 泌尿科放 double-J 或 PCN；**阻塞 + 感染（發燒）= 緊急減壓**，同時抗生素。",
+      "steps": [
+        "床邊腎臟超音波確認腎水腫、餘尿；抽 Cr、K、CBC、尿液常規／培養、血液培養（發燒）",
+        "發燒／敗血症 → 血液培養後立即抗生素（Ch17），緊急泌尿科減壓",
+        "無感染：泌尿科安排 double-J／PCN；CT（結石、腫瘤、後腹腔）",
+        "減壓後注意解除阻塞後利尿；高血鉀 → Ch33",
+        "腹脹 + 少尿 → 量膀胱內壓（> 20 mmHg 腹腔腔室症候群）"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone（阻塞 + 感染時）", "dose": "1–2 g", "route": "IV", "freq": "QD", "note": "腎盂腎炎劑量（Ch13／Ch17）；先留培養；依院內抗藥性調整" }
+      ],
+      "watch": ["體溫、血壓（敗血症）", "Cr、K q6–12h；減壓後尿量每小時", "減壓後利尿 > 200 mL/hr × 2 hr → 補 ½NS 50–75%"],
+      "call": ["雙側腎水腫、阻塞 + 感染 → 立即泌尿科（緊急減壓）", "少尿 + 高血鉀、肺水腫、意識改變", "需要 PCN／double-J"],
+      "refs": [{ "ch": "11", "q": "上泌尿道阻塞" }, { "ch": "11", "q": "腎臟超音波" }],
+      "next": [{ "label": "減壓後利尿", "next": "r_postobs" }]
+    },
+    "r_dialysis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "少尿 + 高血鉀／酸中毒／肺水腫／尿毒：併發症與透析指標（AEIOU）",
+      "summary": "**A**cidosis pH < 7.1–7.15 藥物無法矯正；**E**lectrolyte K > 6.5 或 ECG 變化藥物無效；**I**ntoxication 可透析毒物；**O**verload 利尿無反應；**U**remia 心包膜炎／腦病變／癲癇／出血；由腎臟科決定時機。",
+      "steps": [
+        "ECG、心電監測；K ≥ 6 或 ECG 變化 → 立即依 Ch33 處置（calcium、insulin/glucose、排出）",
+        "抽 K、HCO₃、VBG、Cr、Ca、P、CBC；停所有含 K 輸液與藥物",
+        "酸中毒 pH < 7.2 → Ch31（NaHCO₃ 適應症）；肺水腫 → furosemide、NIV",
+        "尿毒症狀（意識改變、心包摩擦音、出血傾向）→ 腎臟科；出血傾向 desmopressin",
+        "可透析毒物（lithium、methanol、ethylene glycol、salicylate、metformin、valproate、theophylline）→ 毒物中心 + 腎臟科",
+        "無緊急指標時提早透析不改善預後；Stage 3 少尿 > 72 小時也是開始時機",
+        "透析病人少尿是正常的——看 K、overload、下次透析時間"
+      ],
+      "orders": [
+        { "drug": "（停所有含 K 輸液／藥物）", "dose": "LR、Taita、KCl、保鉀利尿劑、ACEI/ARB 全停", "route": "—", "freq": "STAT", "note": "高血鉀處置劑量見 Ch33" },
+        { "drug": "Furosemide", "dose": "{crcl < 30 ? '80–200' : '40–80'} mg", "route": "IV push（≤ 4 mg/min）", "freq": "STAT；1–2 小時無反應加倍再給，max 200 mg/次", "note": "肺水腫時；CrCl ≈ {round(crcl)}；無反應 → 透析" },
+        { "drug": "Desmopressin", "dose": "{round(wt*0.3,1)} mcg（0.3 mcg/kg）", "route": "IV", "freq": "× 1", "note": "尿毒出血傾向；或鼻噴 3 mcg/kg" }
+      ],
+      "watch": ["ECG／心電監測；K q1–2h 治療後", "SpO₂、RR、尿量每小時", "意識、抽搐"],
+      "call": ["少尿 + 高血鉀（≥ 6 或 ECG 變化）、pH < 7.2、肺水腫、意識改變 → 立刻通知後線 + 腎臟科", "任何 AEIOU 指標 → 腎臟科安排透析", "可透析毒物 → 毒物中心"],
+      "refs": [{ "ch": "11", "q": "AEIOU" }, { "ch": "33", "q": "高血鉀" }, { "ch": "31", "q": "NaHCO₃" }]
+    }
+  }
+}

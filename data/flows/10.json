@@ -1,0 +1,362 @@
+{
+  "id": "10",
+  "title": "輸液與體液評估",
+  "chapter": "10",
+  "entries": [
+    { "label": "護理師報 I/O positive／水腫／輸液要不要調", "type": "symptom", "start": "i_assess", "group": "水與尿",
+      "keywords": ["I/O positive", "IO positive", "水腫", "體液過多", "輸液調整", "edema", "fluid overload", "input output", "喝水太多"] },
+    { "label": "血壓低／脫水要補水（bolus）", "type": "symptom", "start": "q_resus_risk", "group": "水與尿",
+      "keywords": ["脫水", "血壓低", "補水", "bolus", "灌水", "hypovolemia", "dehydration", "fluid challenge", "少尿 脫水", "口乾"] },
+    { "label": "病人 NPO 要開維持輸液", "type": "symptom", "start": "q_maint_pop", "group": "水與尿",
+      "keywords": ["NPO", "維持輸液", "維持液", "開輸液", "IV fluid", "maintenance", "D5-½NS", "Taita", "禁食 點滴", "掛點滴"] },
+    { "label": "嘔吐／腹瀉／引流量多要補流失", "type": "symptom", "start": "q_loss", "group": "水與尿",
+      "keywords": ["嘔吐", "腹瀉", "NG 引流", "瘻管", "造口", "引流量多", "補充流失", "ongoing loss", "第三空間", "發燒 補水"] },
+    { "label": "復甦輸液（休克／低血容）", "type": "diagnosis", "start": "q_resus_risk",
+      "keywords": ["復甦", "resuscitation", "休克 輸液", "shock fluid", "低血容", "hypovolemic shock", "敗血性休克 輸液", "30 mL/kg"] },
+    { "label": "維持輸液（NPO、特殊族群調整）", "type": "diagnosis", "start": "q_maint_pop",
+      "keywords": ["維持輸液", "maintenance fluid", "25–30 mL/kg", "心衰竭 輸液", "腎衰竭 輸液", "肝硬化 輸液", "腦水腫 輸液", "透析 輸液"] },
+    { "label": "補充持續流失（嘔吐／NG／腹瀉／瘻管／發燒）", "type": "diagnosis", "start": "q_loss",
+      "keywords": ["補充流失", "replacement fluid", "NG loss", "diarrhea", "fistula", "insensible loss", "隱性流失"] },
+    { "label": "燒燙傷 Parkland 公式", "type": "diagnosis", "start": "q_tbsa",
+      "keywords": ["燒燙傷", "burn", "Parkland", "TBSA", "燙傷 輸液"] },
+    { "label": "Albumin：大量放液／SBP／肝腎症候群", "type": "diagnosis", "start": "q_albumin",
+      "keywords": ["albumin", "白蛋白", "放腹水", "paracentesis", "SBP", "自發性細菌性腹膜炎", "肝腎症候群", "HRS", "大量放液"] },
+    { "label": "輸液後肺水腫／體液過多", "type": "diagnosis", "start": "r_overload",
+      "keywords": ["肺水腫", "pulmonary edema", "輸液過多", "volume overload", "灌太多水", "SpO2 掉 輸液"] }
+  ],
+  "nodes": {
+    "i_assess": {
+      "type": "info",
+      "title": "先看病人，再看數字（I/O 誤差很大）",
+      "body": [
+        "**過多**：呼吸／SpO₂↓、囉音、JVP↑、S3、凹陷性水腫（臥床看薦骨／大腿後側）、腹水、體重↑；超音波 IVC > 2.1 cm 無塌陷、B-lines",
+        "**脫水**：口乾、腋下乾、CRT > 2 s、心搏過速、姿態性低血壓、JVP 塌陷、尿量 < 0.5 mL/kg/hr、體重↓；IVC < 1.5 cm 吸氣塌陷 > 50%",
+        "**每日體重**是最可靠的總體液指標；I/O 只看趨勢與單項（尿量、引流量）",
+        "把抗生素稀釋液（每天可能 500–1,000 mL）、口服、灌食都算進去"
+      ],
+      "next": "q_io_status"
+    },
+    "q_io_status": {
+      "type": "choice",
+      "title": "病人現在的體液狀態？",
+      "help": "先看呼吸、SpO₂、水腫、血壓，再決定要不要動輸液",
+      "options": [
+        { "label": "喘、SpO₂↓、囉音、水腫（體液過多）", "next": "r_overload" },
+        { "label": "反而有脫水／低血壓徵象", "next": "q_resus_risk" },
+        { "label": "穩定、沒有症狀（只是數字 positive）", "next": "r_io_stable" }
+      ]
+    },
+    "r_io_stable": {
+      "type": "result",
+      "urgency": "green",
+      "title": "I/O positive 但病人穩定：重新評估輸液是否還需要",
+      "summary": "I/O 本身不是治療依據；穩定者可觀察，但要問「這條輸液還有適應症嗎？」——多數「掛著就好」的 NS 都可以停或減。",
+      "steps": [
+        "床邊看：呼吸、SpO₂、肺音、水腫、血壓；量今日體重與前幾天比較",
+        "算總輸入：IV 輸液 + 抗生素稀釋液 + 口服／灌食；有進食或灌食達目標者可停維持輸液",
+        "有適應症才留：復甦（休克）、補流失（嘔吐／腹瀉／引流）、維持（NPO 且無流失）",
+        "心衰竭：限水 1.5 L/d、限鈉 2 g/d；肝硬化腹水：限鈉 2 g/d、低血鈉限水；腎衰竭：水 = 前日尿量 + 500 mL",
+        "改醫囑：減速、換成分或停；不要一次開 3 天不看"
+      ],
+      "orders": [
+        { "drug": "（停或減現有 NS／維持輸液）", "dose": "依評估減至 0–{round(wt*20/24)} mL/hr", "route": "IV", "freq": "每日重新評估", "note": "老年／心腎病水 20–25 mL/kg/d（{wt} kg ≈ {round(wt*20)}–{round(wt*25)} mL/d）；已進食者可停" }
+      ],
+      "watch": ["每日體重、I/O 趨勢", "新出現喘、SpO₂↓、囉音 → 依「輸液後肺水腫」處理"],
+      "call": ["輸液後出現肺水腫／SpO₂ 下降", "少尿合併體液過多（腎衰竭）", "心衰竭／透析病人需要大量輸液"],
+      "refs": [{ "ch": "10", "q": "I/O 常有很大誤差" }, { "ch": "10", "q": "IV. 常見錯誤" }, { "ch": "10", "q": "特殊族群調整" }]
+    },
+    "q_resus_risk": {
+      "type": "choice",
+      "title": "病人有心衰竭、腎衰竭／透析，或是老年人嗎？",
+      "help": "有 → bolus 改 250 mL，每次後重新評估；沒有 → 500 mL",
+      "options": [
+        { "label": "有（心衰竭／腎衰竭／老年）", "next": "q_resus_cause", "set": { "hf": true } },
+        { "label": "沒有", "next": "q_resus_cause", "set": { "hf": false } }
+      ]
+    },
+    "q_resus_cause": {
+      "type": "choice",
+      "title": "低血容／低血壓最可能的原因？",
+      "options": [
+        { "label": "出血（消化道、術後、外傷）", "next": "r_hemorrhage" },
+        { "label": "敗血症／感染（發燒、來源明確）", "next": "r_septic" },
+        { "label": "脫水、腹瀉／嘔吐、第三空間、其他低血容", "next": "r_resus" }
+      ]
+    },
+    "r_resus": {
+      "type": "result",
+      "urgency": "red",
+      "title": "復甦輸液：低血容／低血壓",
+      "summary": "晶體液 {hf ? 250 : 500} mL over 15 分鐘，**每次 bolus 後重新評估**（血壓、CRT、尿量、肺音），重複至灌流改善或出現 overload；一般 1–2 L。",
+      "steps": [
+        "到床邊：ABC、IV × 2、心電監測；量 BP／HR／SpO₂／CRT、看 JVP 與肺音",
+        "抽血：CBC、BUN/Cr、電解質、lactate、VBG；找原因（腹瀉、嘔吐、引流、利尿劑、第三空間）",
+        "晶體液 bolus（LR 首選，NS 亦可；**D5W 不能復甦**）",
+        "動態評估反應：抬腿 45° 1 分鐘 SBP／脈壓↑ ≥ 10%、IVC 變異、尿量、lactate 2 小時降 ≥ 20%、CRT ≤ 3 秒",
+        "每次 bolus 後看 RR、囉音、SpO₂——出現 overload 就停",
+        "灌流改善後改補充流失／維持輸液；含 K 液（LR）勿用於腎衰竭／高血鉀"
+      ],
+      "orders": [
+        { "drug": "LR（或 NS）", "dose": "{hf ? 250 : 500} mL", "route": "IV drip over 15 min", "freq": "STAT；每次後評估，可重複至 1–2 L", "note": "{hf ? '心衰竭／腎衰竭／老年：250 mL 分次，每次後重新評估' : '一般成人 500 mL；敗血性休克見「敗血症」'}" },
+        { "drug": "NS（腦損傷／低血鈉／高血鉀者）", "dose": "{hf ? 250 : 500} mL", "route": "IV drip over 15 min", "freq": "STAT，可重複", "note": "腦損傷只用等張 NS；高血鉀用無 K 液", "alt": "LR" }
+      ],
+      "watch": ["每次 bolus 後 BP／HR／CRT／尿量（目標 0.5–1 mL/kg/hr ≈ {round(wt*0.5)}–{round(wt)} mL/hr）", "RR、SpO₂、囉音（overload）", "lactate 2 小時追蹤"],
+      "call": ["2 L 晶體液後仍休克（需升壓劑 → Ch19）", "輸液後出現肺水腫／SpO₂ 下降", "少尿合併體液過多（腎衰竭）", "心衰竭／透析病人需要大量輸液"],
+      "refs": [{ "ch": "10", "q": "1. 復甦" }, { "ch": "10", "q": "動態評估反應" }, { "ch": "19", "q": "休克" }],
+      "next": [{ "label": "出現喘／囉音／SpO₂↓ → 輸液後肺水腫", "next": "r_overload" }]
+    },
+    "r_hemorrhage": {
+      "type": "result",
+      "urgency": "red",
+      "title": "出血性低血容：晶體 ≤ 1–2 L 後就要輸血",
+      "summary": "晶體液只是橋接；**1–2 L 後仍不穩就輸血**。未止血前允許性低血壓（不需拉到正常；頭部外傷除外）。",
+      "steps": [
+        "到床邊：ABC、IV × 2（大口徑）、心電監測；壓迫可見出血點",
+        "抽血：CBC、PT/aPTT、type & cross（備血 2–4 U）、BUN/Cr、lactate",
+        "晶體液 bolus {hf ? 250 : 500} mL 開始，總量 ≤ 1–2 L",
+        "不穩／Hb 明顯下降 → 輸血（Ch9）；抗凝血劑者考慮逆轉（Ch30）",
+        "找出血來源：消化道（Ch5）、術後、後腹腔；聯絡相關科"
+      ],
+      "orders": [
+        { "drug": "NS 或 LR", "dose": "{hf ? 250 : 500} mL", "route": "IV drip over 15 min", "freq": "STAT；重複至累計 1–2 L 即改輸血", "note": "{hf ? '心腎衰竭／老年：250 mL 分次' : '每次後重新評估'}" },
+        { "drug": "PRBC", "dose": "2 U 起（依 Ch9 表 9-1）", "route": "IV", "freq": "STAT，依 Hb 與血行動力", "note": "晶體 1–2 L 後仍不穩即輸；備血先送" }
+      ],
+      "watch": ["BP／HR q5–15 min；尿量", "Hb q4–6h（急性出血 Hb 初期不會馬上掉）", "囉音／SpO₂（輸液過多）"],
+      "call": ["晶體 1–2 L 後仍休克；需要血品／升壓劑", "活動性出血來源需內視鏡／手術／血管栓塞", "抗凝血劑使用者大量出血"],
+      "refs": [{ "ch": "10", "q": "出血：晶體" }, { "ch": "09", "q": "表 9-1" }, { "ch": "30", "q": "逆轉" }]
+    },
+    "r_septic": {
+      "type": "result",
+      "urgency": "red",
+      "title": "敗血症／敗血性休克的輸液",
+      "summary": "敗血性休克 **30 mL/kg 晶體液（{wt} kg ≈ {round(wt*30)} mL）於 3 小時內**，LR 首選；每 500 mL 後評估反應與 overload；同時抗生素與找來源。",
+      "steps": [
+        "到床邊：ABC、IV × 2、心電監測；血液培養 × 2 後 1 小時內給抗生素（Ch17）",
+        "抽血：CBC、Cr、電解質、lactate、VBG；尿液、CXR 找來源",
+        "晶體液 bolus 開始，累計至 30 mL/kg/3 hr（{hf ? '心衰竭／腎衰竭：250 mL 分次，每次後評估，不要硬灌到 30 mL/kg' : '每 500 mL 後評估'}）",
+        "動態評估：抬腿試驗、lactate 2 小時降 ≥ 20%、CRT ≤ 3 秒、尿量",
+        "MAP < 65 持續 → norepinephrine（Ch19），不要無止盡灌水",
+        "大量晶體後仍需輸液可考慮 albumin（替代，非常規）"
+      ],
+      "orders": [
+        { "drug": "LR（或 NS）", "dose": "{hf ? 250 : 500} mL", "route": "IV drip over 15 min", "freq": "STAT；重複至 30 mL/kg（≈ {round(wt*30)} mL）/3 hr 或出現 overload", "note": "{hf ? '心衰竭／腎衰竭：250 mL 每次後重新評估' : 'LR 首選（NS 死亡率／RRT 無明確差異）'}" },
+        { "drug": "Albumin 5%", "dose": "250–500 mL", "route": "IV drip", "freq": "大量晶體後仍需輸液時", "note": "替代用，不用於營養；依院內" }
+      ],
+      "watch": ["BP／MAP、HR、CRT q15 min；尿量每小時", "RR、SpO₂、囉音（每 500 mL 後）", "lactate 2 小時複驗"],
+      "call": ["2 L 晶體液後仍休克 → 升壓劑／ICU", "輸液後肺水腫／SpO₂ 下降", "心衰竭／透析病人需大量輸液", "需要 albumin／血品／升壓劑"],
+      "refs": [{ "ch": "10", "q": "敗血性休克 30 mL/kg" }, { "ch": "19", "q": "敗血性休克" }, { "ch": "17", "q": "敗血症" }]
+    },
+    "q_loss": {
+      "type": "choice",
+      "title": "主要的持續流失是哪一種？",
+      "help": "原則：等量、等成分，每 4–8 小時依量調整；復甦或休克先走 bolus",
+      "options": [
+        { "label": "嘔吐／NG 引流（失 H⁺、Cl⁻、K⁺）", "next": "r_loss", "set": { "loss": "ng" } },
+        { "label": "腹瀉／瘻管／造口（失 HCO₃⁻、K⁺）", "next": "r_loss", "set": { "loss": "gi" } },
+        { "label": "發燒／多尿／第三空間（胰臟炎、腸阻塞、腹膜炎）", "next": "r_loss", "set": { "loss": "other" } }
+      ]
+    },
+    "r_loss": {
+      "type": "result",
+      "urgency": "green",
+      "title": "補充持續流失：等量、等成分",
+      "summary": "{loss == 'ng' ? '嘔吐／NG：NS + KCl（補 Cl⁻、K⁺，避免低氯性鹼血症）' : loss == 'gi' ? '腹瀉／瘻管：LR 或 NS + KCl ± HCO₃' : '發燒每 1℃ 隱性流失 +10–15%；第三空間依體液評估補'}；每 4–8 小時依實際流失量調整，另外再加維持需求。",
+      "steps": [
+        "量流失：引流量／糞便次數／尿量，每 4–8 小時結算一次",
+        "抽 Na、K、Cl、HCO₃、Mg；嘔吐者看代謝性鹼血症、腹瀉者看酸血症與低血鉀",
+        "補充量 = 流失量（1:1），成分依流失種類；維持需求另計（25–30 mL/kg/d）",
+        "低血壓／脫水徵象 → 先 bolus（見復甦）",
+        "K 補充依血鉀（Ch33）；腎衰竭避免含 K 液"
+      ],
+      "orders": [
+        { "drug": "NS + KCl", "dose": "等量補充：前 4–8 小時 NG／嘔吐流失量 1:1", "route": "IV drip", "freq": "每 4–8 小時依量調整", "note": "KCl 濃度依血鉀與院內規範（維持液常用 20 mEq/L）；1 g KCl ≈ 13.4 mEq", "cond": "loss == 'ng'" },
+        { "drug": "LR（或 NS + KCl）", "dose": "等量補充：前 4–8 小時腹瀉／瘻管流失量 1:1", "route": "IV drip", "freq": "每 4–8 小時依量調整", "note": "失 HCO₃⁻ 者 ± NaHCO₃（Ch31）；腎衰竭／高血鉀勿用 LR", "cond": "loss == 'gi'" },
+        { "drug": "維持輸液加量（發燒）", "dose": "每 1℃ 隱性流失增加 10–15%（隱性流失約 700 mL/d → 每 1℃ 約 +70–105 mL/d）", "route": "IV drip", "freq": "持續", "note": "第三空間流失無法直接量，依血壓／尿量／CRT 給 bolus 再評估", "cond": "loss == 'other'" },
+        { "drug": "D5-½NS + KCl 20 mEq/L（維持部分）", "dose": "{round(wt*25/24)}–{round(wt*30/24)} mL/hr", "route": "IV drip", "freq": "持續（NPO 者）", "note": "25–30 mL/kg/d；老年／心腎病 20–25；有進食者減量" }
+      ],
+      "watch": ["每 4–8 小時流失量與補充量對照；每日體重", "電解質 q12–24h（K、Cl、HCO₃、Mg）", "水腫／囉音（補過頭）"],
+      "call": ["流失量大（> 2 L/d）或血行不穩", "Na 快速變化", "少尿合併體液過多"],
+      "refs": [{ "ch": "10", "q": "2. 補充持續流失" }, { "ch": "10", "q": "II. 常用輸液" }]
+    },
+    "q_maint_pop": {
+      "type": "choice",
+      "title": "病人屬於哪一類？",
+      "help": "維持 = NPO 且無持續流失；每日需求水 25–30 mL/kg、Na 1–1.5 mEq/kg、K 1 mEq/kg、糖 50–100 g",
+      "options": [
+        { "label": "一般成人", "next": "q_intake", "set": { "pop": "adult" } },
+        { "label": "老年人／心衰竭／肝硬化（減量、限鈉）", "next": "q_intake", "set": { "pop": "old" } },
+        { "label": "腎衰竭／透析／高血鉀（無 K 液）", "next": "r_maint_renal" },
+        { "label": "腦損傷／腦水腫／低血鈉（只用等張）", "next": "r_maint_brain" }
+      ]
+    },
+    "q_intake": {
+      "type": "choice",
+      "title": "病人有進食或灌食嗎？",
+      "options": [
+        { "label": "完全 NPO", "next": "r_maint" },
+        { "label": "有部分進食／灌食（或灌食已達目標）", "next": "r_maint_partial" }
+      ]
+    },
+    "r_maint": {
+      "type": "result",
+      "urgency": "green",
+      "title": "維持輸液（NPO、{pop == 'old' ? '老年／心衰竭／肝硬化' : '一般成人'}）",
+      "summary": "{wt} kg → 水 {pop == 'old' ? '20–25' : '25–30'} mL/kg/d ≈ {pop == 'old' ? round(wt*20) : round(wt*25)}–{pop == 'old' ? round(wt*25) : round(wt*30)} mL/d：**D5-½NS + KCl 20 mEq/L，{pop == 'old' ? round(wt*20/24) : round(wt*25/24)}–{pop == 'old' ? round(wt*25/24) : round(wt*30/24)} mL/hr**；每天重新評估。",
+      "steps": [
+        "確認真的是「維持」：沒有休克、沒有持續流失（否則另外補）",
+        "肥胖者用理想體重算；把抗生素稀釋液與其他 IV 藥算進總量",
+        "腎功能正常才加 K（1 mEq/kg/d ≈ {round(wt)} mEq）；糖 50–100 g/d 避免飢餓性酮症（不是營養）",
+        "{pop == 'old' ? '心衰竭限水 1.5 L/d、限鈉 2 g/d；肝硬化限鈉 2 g/d、低血鈉限水；每日看水腫、肺音' : '每日體重、I/O、電解質（Na、K）'}",
+        "NPO > 5–7 天要想營養（腸道優先），不要靠 D5W"
+      ],
+      "orders": [
+        { "drug": "D5-½NS + KCl 20 mEq/L", "dose": "{pop == 'old' ? round(wt*20/24) : round(wt*25/24)}–{pop == 'old' ? round(wt*25/24) : round(wt*30/24)} mL/hr", "route": "IV drip", "freq": "持續，每日重新評估", "note": "{wt} kg × {pop == 'old' ? '20–25' : '25–30'} mL/kg/d；腎功能正常才加 K；肥胖用理想體重" },
+        { "drug": "Taita No.4／Kliglu（台灣維持液）", "dose": "{pop == 'old' ? round(wt*20/24) : round(wt*25/24)}–{pop == 'old' ? round(wt*25/24) : round(wt*30/24)} mL/hr", "route": "IV drip", "freq": "持續", "note": "含 K 20、糖 50 g/L；依各院產品；腎衰竭勿用", "alt": "D5-½NS + KCl" }
+      ],
+      "watch": ["每日體重、I/O 趨勢、水腫／肺音", "Na、K q24–48h（長期輸液者）", "「掛著就好」的 NS 連掛一週 → 高氯性酸中毒、水腫、低血鉀"],
+      "call": ["Na 快速變化", "輸液後出現肺水腫／SpO₂ 下降", "心衰竭／透析病人需要大量輸液"],
+      "refs": [{ "ch": "10", "q": "3. 維持" }, { "ch": "10", "q": "特殊族群調整" }, { "ch": "10", "q": "II. 常用輸液" }]
+    },
+    "r_maint_partial": {
+      "type": "result",
+      "urgency": "green",
+      "title": "有進食／灌食：依進食量減少甚至停 IV",
+      "summary": "灌食達目標或能正常進食者**不需要維持輸液**；部分進食者只補差額，並把抗生素稀釋液算進去。",
+      "steps": [
+        "算口服／灌食量 + IV 藥物稀釋液；差額才用 IV 補",
+        "灌食達目標 → 停維持輸液，保留 IV lock",
+        "每日體重、I/O 看趨勢；有水腫／囉音就停"
+      ],
+      "orders": [
+        { "drug": "D5-½NS + KCl 20 mEq/L（僅補差額）", "dose": "（每日需求 {round(wt*25)}–{round(wt*30)} mL − 口服／灌食量）÷ 24 mL/hr", "route": "IV drip", "freq": "每日重新評估；達目標即停", "note": "老年／心腎病需求 20–25 mL/kg/d" }
+      ],
+      "watch": ["每日體重、I/O", "灌食耐受度（殘餘量、腹脹）"],
+      "call": ["輸液後出現肺水腫／SpO₂ 下降", "Na 快速變化"],
+      "refs": [{ "ch": "10", "q": "有進食或灌食者" }, { "ch": "10", "q": "IV. 常見錯誤" }]
+    },
+    "r_maint_renal": {
+      "type": "result",
+      "urgency": "green",
+      "title": "腎衰竭／透析／高血鉀的輸液",
+      "summary": "水 = **前日尿量 + 500 mL**；**避免含 K 液（LR、Taita）**，用 NS／D5W；透析日由腎臟科調整。",
+      "steps": [
+        "確認前日尿量與體重、透析時程；抽 K、HCO₃、Na",
+        "輸液總量（含抗生素稀釋液）= 前日尿量 + 500 mL",
+        "無 K 液：NS、D5W、D5-½NS（不加 KCl）",
+        "復甦需要時 250 mL bolus，每次後評估肺音／SpO₂",
+        "少尿合併體液過多 → 聯絡腎臟科（可能需透析）"
+      ],
+      "orders": [
+        { "drug": "NS 或 D5-½NS（不加 KCl）", "dose": "（前日尿量 + 500 mL）÷ 24 mL/hr", "route": "IV drip", "freq": "持續，每日重新評估", "note": "無 K 液；含 K 4 的 LR 與 Taita 勿用；CrCl ≈ {round(crcl)}" },
+        { "drug": "NS（復甦需要時）", "dose": "250 mL", "route": "IV drip over 15 min", "freq": "每次後重新評估，可重複", "note": "腎衰竭／透析：250 mL bolus" }
+      ],
+      "watch": ["每日體重、尿量、水腫／肺音", "K、HCO₃ q12–24h", "透析日：由腎臟科調整輸液"],
+      "call": ["少尿合併體液過多", "透析病人需要大量輸液", "K 上升或需要透析"],
+      "refs": [{ "ch": "10", "q": "腎衰竭／透析" }, { "ch": "11", "q": "AEIOU" }]
+    },
+    "r_maint_brain": {
+      "type": "result",
+      "urgency": "green",
+      "title": "腦損傷／腦水腫／低血鈉的輸液：只用等張",
+      "summary": "**只用 NS（等張）**；禁 D5W、½NS、LR（輕微低張）——低張液會加重腦水腫。Na 快速變化要通知後線。",
+      "steps": [
+        "抽 Na（q6–12h 追蹤）、Osm；低血鈉依 Ch32",
+        "維持輸液改 NS，速率依 25–30 mL/kg/d；把 IV 藥稀釋液改成 NS",
+        "ICP↑／症狀性低血鈉 → 3% NaCl（Ch32；周邊可短暫 bolus）",
+        "每日體重、I/O；避免脫水也避免過多"
+      ],
+      "orders": [
+        { "drug": "NS (0.9% NaCl)", "dose": "{round(wt*25/24)}–{round(wt*30/24)} mL/hr", "route": "IV drip", "freq": "持續，每日重新評估", "note": "等張；禁 D5W、½NS、LR；老年減至 20–25 mL/kg/d" },
+        { "drug": "3% NaCl", "dose": "依 Ch32", "route": "IV（周邊可短暫 bolus）", "freq": "症狀性低血鈉／ICP↑ 時", "note": "劑量與速率依 Ch32；Na 每日變化上限依章節" }
+      ],
+      "watch": ["Na q6–12h；意識、GCS", "每日體重、I/O"],
+      "call": ["Na 快速變化", "意識改變、癲癇（低血鈉／腦水腫）"],
+      "refs": [{ "ch": "10", "q": "腦損傷／腦水腫／低血鈉" }, { "ch": "32", "q": "低血鈉" }]
+    },
+    "q_tbsa": {
+      "type": "number",
+      "title": "燒燙傷面積（% TBSA）？",
+      "help": "Parkland：4 mL × kg × %TBSA，前 8 小時給半量；體重 {wt} kg",
+      "var": "tbsa", "unit": "%", "step": 1,
+      "quick": [10, 20, 30, 40, 50],
+      "branches": [
+        { "else": "r_burn" }
+      ]
+    },
+    "r_burn": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "燒燙傷輸液（Parkland）",
+      "summary": "{wt} kg × {tbsa}% TBSA → 24 小時 **{round(4*wt*tbsa)} mL**；前 8 小時（從受傷時起算）給一半 {round(2*wt*tbsa)} mL ≈ **{round(wt*tbsa/4)} mL/hr**，後 16 小時 {round(wt*tbsa/8)} mL/hr；以尿量調整。",
+      "steps": [
+        "ABC（吸入性傷害→ 早期插管評估）、IV × 2（可經燒傷皮膚）、Foley 記尿量",
+        "從受傷時間起算 8 小時給半量，不是從到院起算",
+        "以尿量 0.5–1 mL/kg/hr（≈ {round(wt*0.5)}–{round(wt)} mL/hr）調整速率，不要機械式照公式",
+        "抽血：CBC、電解質、Cr、CK（電燒傷）、lactate；破傷風",
+        "大面積 / 特殊部位 → 燒傷中心／整形外科"
+      ],
+      "orders": [
+        { "drug": "LR（或 NS）", "dose": "{round(wt*tbsa/4)} mL/hr × 前 8 小時", "route": "IV drip", "freq": "持續（受傷後 0–8 小時）", "note": "Parkland 4 × {wt} × {tbsa} = {round(4*wt*tbsa)} mL/24 hr，前半量 {round(2*wt*tbsa)} mL" },
+        { "drug": "LR（或 NS）", "dose": "{round(wt*tbsa/8)} mL/hr × 後 16 小時", "route": "IV drip", "freq": "持續（受傷後 8–24 小時）", "note": "依尿量調整；心腎衰竭者減量並密切評估" }
+      ],
+      "watch": ["尿量每小時（目標 0.5–1 mL/kg/hr）", "RR、SpO₂、囉音（overload）", "電解質、Cr q12h"],
+      "call": ["大面積燒傷、吸入性傷害、電燒傷 → 燒傷中心／整形外科", "尿量不足或出現肺水腫", "心衰竭／透析病人需要大量輸液"],
+      "refs": [{ "ch": "10", "q": "Parkland" }]
+    },
+    "q_albumin": {
+      "type": "choice",
+      "title": "Albumin 的適應症是哪一個？",
+      "help": "Albumin 不用於營養；20% 100 mL = 20 g",
+      "options": [
+        { "label": "大量腹水放液 > 5 L", "next": "r_albumin", "set": { "alb": "para" } },
+        { "label": "SBP（自發性細菌性腹膜炎）", "next": "r_albumin", "set": { "alb": "sbp" } },
+        { "label": "肝腎症候群", "next": "r_albumin", "set": { "alb": "hrs" } },
+        { "label": "敗血症大量晶體後仍需輸液", "next": "r_albumin", "set": { "alb": "sepsis" } }
+      ]
+    },
+    "r_albumin": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Albumin：{alb == 'para' ? '大量放液' : alb == 'sbp' ? 'SBP' : alb == 'hrs' ? '肝腎症候群' : '敗血症替代'}",
+      "summary": "{alb == 'para' ? '放液 > 5 L：每放 1 L 補 6–8 g albumin' : alb == 'sbp' ? 'SBP：albumin 1.5 g/kg 第 1 天 + 1 g/kg 第 3 天（' + wt + ' kg → ' + round(wt*1.5) + ' g + ' + round(wt) + ' g）' : alb == 'hrs' ? '肝腎症候群：albumin 1 g/kg/d（max 100 g）× 2 天擴容，之後 20–40 g/d，配合 terlipressin（Ch11）' : '大量晶體後仍需輸液的替代，非常規；不用於營養'}",
+      "steps": [
+        "確認適應症與肝硬化病史；抽 Cr、Na、albumin、CBC",
+        "{alb == 'para' ? '放液時記錄總量，> 5 L 才需補 albumin；避免 NS 大量（腹水↑）' : alb == 'sbp' ? '腹水培養與細胞數後即給抗生素（Ch17）；albumin 第 1 天與第 3 天' : alb == 'hrs' ? '停利尿劑／腎毒性藥；擴容 2 天後 Cr 未改善 → 依 Ch11 肝腎症候群（terlipressin）並聯絡後線' : '確認已給足晶體並評估反應，再考慮 albumin'}",
+        "肝硬化腹水：限鈉 2 g/d；低血鈉限水",
+        "每次輸注後看肺音、SpO₂（體液負荷）"
+      ],
+      "orders": [
+        { "drug": "Albumin 20%", "dose": "每放 1 L 腹水補 6–8 g（100 mL = 20 g）", "route": "IV drip", "freq": "放液 > 5 L 時，放液中／後給", "note": "例：放 6 L → 36–48 g ≈ 2 瓶 20% 100 mL", "cond": "alb == 'para'" },
+        { "drug": "Albumin 20%", "dose": "{round(wt*1.5)} g（1.5 g/kg）", "route": "IV drip", "freq": "第 1 天", "note": "{wt} kg；20% 100 mL = 20 g → 約 {round(wt*1.5/20)} 瓶", "cond": "alb == 'sbp'" },
+        { "drug": "Albumin 20%", "dose": "{round(wt)} g（1 g/kg）", "route": "IV drip", "freq": "第 3 天", "note": "約 {round(wt/20)} 瓶 20% 100 mL", "cond": "alb == 'sbp'" },
+        { "drug": "Albumin 20%", "dose": "{min(round(wt), 100)} g/d（1 g/kg，max 100 g）", "route": "IV drip", "freq": "× 2 天擴容，之後 20–40 g/d", "note": "配合 terlipressin 1 mg IV q6h（Ch11）；聯絡後線", "cond": "alb == 'hrs'" },
+        { "drug": "Albumin 5%", "dose": "250–500 mL", "route": "IV drip", "freq": "大量晶體後仍需輸液時", "note": "替代用，依院內；不用於營養", "cond": "alb == 'sepsis'" }
+      ],
+      "watch": ["肺音、SpO₂、RR（輸注後）", "Cr、Na 每日", "尿量"],
+      "call": ["需要 albumin／血品／升壓劑時先告知後線", "肝腎症候群（Cr 持續上升）", "少尿合併體液過多"],
+      "refs": [{ "ch": "10", "q": "Albumin 5%／20%" }, { "ch": "11", "q": "肝腎症候群" }, { "ch": "10", "q": "肝硬化腹水" }]
+    },
+    "r_overload": {
+      "type": "result",
+      "urgency": "red",
+      "title": "輸液後肺水腫／體液過多",
+      "summary": "**停輸液、坐起、給氧**，furosemide IV；SpO₂ 仍低或呼吸費力 → CPAP／BiPAP；少尿合併體液過多要想透析。",
+      "steps": [
+        "立刻停所有輸液（含維持液）、把 IV 藥稀釋液減到最少；坐起 ≥ 45°",
+        "O₂ 目標 94–98%（CO₂ 滯留 88–92%）；SpO₂ < 90% 或呼吸費力 → CPAP／BiPAP",
+        "心電監測、ECG、CXR；抽 BUN/Cr、電解質、BNP、troponin、ABG（呼吸費力）",
+        "Furosemide IV；Foley 記尿量",
+        "高血壓合併肺水腫 → NTG（Ch18）；低血壓／休克 → Ch19",
+        "腎衰竭少尿對利尿劑無反應 → 腎臟科透析評估"
+      ],
+      "orders": [
+        { "drug": "（停止所有輸液）", "dose": "0 mL/hr", "route": "IV", "freq": "STAT", "note": "含維持液、抗生素稀釋液改最小量" },
+        { "drug": "Furosemide", "dose": "{crcl < 30 ? '80–200' : '40–80'} mg", "route": "IV push（≤ 4 mg/min）", "freq": "STAT；1–2 小時無反應加倍再給，max 200 mg/次", "note": "CrCl ≈ {round(crcl)}；CKD／已用利尿劑者 80–200 mg；長期口服者給平日口服總量 1–2.5 倍（Ch11）" },
+        { "drug": "CPAP／BiPAP", "dose": "CPAP 5–10 cmH₂O", "route": "面罩", "freq": "持續至改善", "note": "意識不清、嘔吐、血行不穩禁；肺水腫等透析時" }
+      ],
+      "watch": ["SpO₂、RR、BP q5–15 min；尿量每小時", "K、Cr（利尿後）", "NIV 1 小時無改善 → 插管準備"],
+      "call": ["輸液後出現肺水腫／SpO₂ 下降（當下就通知）", "少尿合併體液過多（腎衰竭）→ 腎臟科", "需要 NIV／插管或升壓劑"],
+      "refs": [{ "ch": "10", "q": "V. 何時聯絡後線" }, { "ch": "11", "q": "體液過多、肺水腫" }, { "ch": "07", "q": "急性心衰竭" }]
+    }
+  }
+}

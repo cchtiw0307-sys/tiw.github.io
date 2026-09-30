@@ -1,0 +1,432 @@
+{
+  "id": "03",
+  "title": "癲癇發作",
+  "chapter": "03",
+  "entries": [
+    { "label": "病人正在抽搐（還在抽）", "type": "symptom", "start": "q_still", "group": "頭部",
+      "keywords": ["抽搐", "癲癇", "正在抽", "seizure", "convulsion", "全身抽", "口吐白沫", "翻白眼", "GTC"] },
+    { "label": "病人抽完了／發作後意識混亂", "type": "symptom", "start": "q_post", "group": "頭部",
+      "keywords": ["抽完了", "發作後", "postictal", "抽搐後意識不清", "剛剛抽了一下", "Todd 麻痺", "第一次發作"] },
+    { "label": "癲癇重積症（SE）", "type": "diagnosis", "start": "q_iv",
+      "keywords": ["癲癇重積", "status epilepticus", "SE", "抽超過 5 分鐘", "lorazepam", "midazolam IM", "diazepam"] },
+    { "label": "第二線抗癲癇藥（levetiracetam／valproate／phenytoin 負荷）", "type": "diagnosis", "start": "r_second",
+      "keywords": ["levetiracetam", "Keppra", "valproate", "Depakine", "phenytoin", "Dilantin", "fosphenytoin", "lacosamide", "抗癲癇藥負荷", "loading"] },
+    { "label": "難治性 SE（第三線／ICU）", "type": "diagnosis", "start": "r_refractory",
+      "keywords": ["難治性癲癇重積", "refractory status epilepticus", "RSE", "midazolam 滴注", "propofol", "ketamine", "burst suppression"] },
+    { "label": "非痙攣型癲癇重積（NCSE）", "type": "diagnosis", "start": "r_ncse",
+      "keywords": ["NCSE", "非痙攣型", "nonconvulsive", "發作後意識未恢復", "EEG", "眼球偏斜"] },
+    { "label": "子癲症", "type": "diagnosis", "start": "r_eclampsia",
+      "keywords": ["子癲症", "eclampsia", "懷孕抽搐", "MgSO4", "magnesium", "產後抽搐"] },
+    { "label": "低血鈉性抽搐", "type": "diagnosis", "start": "r_hypona",
+      "keywords": ["低血鈉抽搐", "hyponatremia seizure", "3% NaCl", "Na 115", "高張食鹽水"] },
+    { "label": "低血鈣抽搐", "type": "diagnosis", "start": "r_hypoca",
+      "keywords": ["低血鈣", "hypocalcemia", "calcium gluconate", "tetany", "手足抽搐"] },
+    { "label": "Isoniazid（INH）中毒抽搐", "type": "diagnosis", "start": "r_inh",
+      "keywords": ["isoniazid", "INH 中毒", "pyridoxine", "vitamin B6", "結核藥 抽搐"] },
+    { "label": "酒精戒斷性癲癇", "type": "diagnosis", "start": "r_etoh_sz",
+      "keywords": ["酒精戒斷癲癇", "alcohol withdrawal seizure", "酗酒 抽搐", "戒斷"] },
+    { "label": "癲癇預防（腦腫瘤／膿瘍／SAH／ICH）", "type": "diagnosis", "start": "r_prophylaxis",
+      "keywords": ["癲癇預防", "seizure prophylaxis", "levetiracetam 預防", "腦轉移", "神外術後"] },
+    { "label": "心因性非癲癇發作（PNES）", "type": "diagnosis", "start": "r_pnes",
+      "keywords": ["PNES", "心因性", "pseudoseizure", "假性癲癇", "閉眼抖動"] }
+  ],
+  "nodes": {
+    "q_still": {
+      "type": "number",
+      "title": "從開始抽到現在幾分鐘？",
+      "help": "電話中先叫：側躺、床欄、勿塞口內物、O₂ NRM 10–15 L/min、SpO₂／心電監測、抽痰、血糖、備 lorazepam／diazepam／midazolam、記錄開始時間",
+      "var": "mins", "unit": "min", "step": 1,
+      "quick": [1, 3, 5, 10, 20, 30],
+      "branches": [
+        { "if": "mins >= 5", "next": "q_iv" },
+        { "else": "r_brief" }
+      ]
+    },
+    "q_iv": {
+      "type": "choice",
+      "title": "有可用的 IV 嗎？",
+      "help": "無 IV 首選 midazolam IM（RAMPART）；不要為了打 IV 延誤給藥",
+      "options": [
+        { "label": "有 IV", "next": "q_glu", "set": { "iv": true } },
+        { "label": "沒有 IV／打不上", "next": "q_glu", "set": { "iv": false } }
+      ]
+    },
+    "q_glu": {
+      "type": "number",
+      "title": "指尖血糖（mg/dL）？",
+      "help": "< 70 → D50W 40 mL IVP（酗酒／營養不良先 thiamine 100 mg IV）",
+      "var": "glu", "unit": "mg/dL", "step": 1,
+      "quick": [50, 70, 100, 150, 250],
+      "branches": [
+        { "else": "r_se_first" }
+      ]
+    },
+    "q_post": {
+      "type": "multi",
+      "title": "發作已停止：勾選所有符合",
+      "help": "先確認呼吸、脈搏、SpO₂、VS；復甦姿勢；檢查頭部、舌咬傷、肩關節（後脫臼）、管路",
+      "options": [
+        { "label": "發作後 30–60 min 意識未逐漸恢復、時好時壞、眼球偏斜、臉部細微抽動", "set": { "ncse": true } },
+        { "label": "發燒 / 頸僵 / 免疫低下", "set": { "fever": true } },
+        { "label": "懷孕 > 20 週或產後 6 週內", "set": { "preg": true } },
+        { "label": "第一次發作、局部起始、發作後新局部缺損、頭部外傷、抗凝血劑、癌症", "set": { "first": true } },
+        { "label": "已知癲癇，漏藥／濃度不足／近期停 BZD 或酒精", "set": { "known": true } }
+      ],
+      "branches": [
+        { "if": "ncse", "next": "r_ncse" },
+        { "if": "preg", "next": "r_eclampsia" },
+        { "if": "fever", "next": "r_fever_sz" },
+        { "if": "first", "next": "r_first" },
+        { "if": "known", "next": "r_known" },
+        { "else": "r_postictal" }
+      ]
+    },
+    "r_brief": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "發作 < 5 分鐘：保護、觀察、備藥",
+      "summary": "大多數發作 1–3 分鐘內自行停止：側躺、O₂、抽痰、驗血糖，備好 BZD；**滿 5 分鐘仍在抽 → 癲癇重積流程**。",
+      "steps": [
+        "床欄、移開硬物、側躺（復甦姿勢）、勿約束肢體、勿塞口內物；記錄開始時間",
+        "O₂ NRM 15 L/min、SpO₂／心電監測、抽吸分泌物（牙關緊閉勿硬塞口咽呼吸道）",
+        "指尖血糖 < 70 → D50W 40 mL IVP（酗酒／營養不良先 thiamine）",
+        "建立 IV；抽血（表 3-2：血糖、Na、Ca、Mg、乳酸、CK、AED 濃度）",
+        "備 lorazepam／diazepam（IV）或 midazolam 10 mg（IM）於床邊",
+        "滿 5 分鐘仍在抽或第二次發作意識未恢復 → 立即 BZD"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "10–15 L/min", "route": "NRM", "freq": "持續至恢復", "note": "SpO₂ 監測" },
+        { "drug": "Dextrose 50%（D50W）", "dose": "40 mL（20 g）", "route": "IVP", "freq": "血糖 < 70 時 STAT", "note": "酗酒／營養不良先 thiamine 100 mg IV" },
+        { "drug": "Lorazepam（備用）", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "發作 ≥ 5 min 時 STAT", "note": "依 {wt} kg；病房無常備 → 急救車 diazepam {min(round(wt*0.2,1),10)} mg IV" }
+      ],
+      "watch": ["發作持續時間（計時）", "SpO₂、RR、HR；發作停止後神經學 q1h 至恢復"],
+      "call": ["發作 > 5 分鐘或反覆發作", "第一次發作、發燒 + 發作、懷孕、呼吸抑制"],
+      "refs": [{ "ch": "03", "q": "還在抽" }, { "ch": "03", "q": "立即口頭醫囑" }],
+      "next": [{ "label": "滿 5 分鐘仍在抽 → 癲癇重積", "next": "q_iv" }, { "label": "已停止 → 發作後評估", "next": "q_post" }]
+    },
+    "r_se_first": {
+      "type": "result",
+      "urgency": "red",
+      "title": "癲癇重積症（≥ 5 分鐘）：第一線 BZD",
+      "summary": "**第一線給足劑量是最常見的失誤**：lorazepam 0.1 mg/kg IV（max 4 mg），5 分鐘未停再一次；無 IV → midazolam 10 mg IM。BZD 兩劑後仍抽 → 第二線。",
+      "steps": [
+        "ABC：側躺、抬下巴、抽痰、鼻咽呼吸道；O₂ NRM 15 L/min；SpO₂／心電監測",
+        "血糖 {glu} mg/dL：< 70 → D50W 40 mL IVP（酗酒／營養不良先 thiamine）",
+        "抽血（表 3-2）：Na、Ca、Mg、AED 濃度、乳酸、CK、VBG；驗孕（育齡）",
+        "給 BZD（IV lorazepam 或 diazepam；無 IV → midazolam IM）；備 ambu bag、監測呼吸與血壓",
+        "5 分鐘後未停 → 再給一次 BZD，同時準備第二線抗癲癇藥",
+        "BZD 兩劑後仍抽 → levetiracetam／valproate／fosphenytoin 負荷（第二線）",
+        "想原因：低血糖、低血鈉、缺氧、停藥、戒斷、顱內病灶（CT）、子癲症、INH"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg/次）", "route": "IVP（2 mg/min）", "freq": "STAT；5 min 後未停可再 1 次", "note": "首選；依 {wt} kg；抗癲癇作用 12–24 hr", "cond": "iv" },
+        { "drug": "Diazepam", "dose": "{min(round(wt*0.15,1),10)}–{min(round(wt*0.2,1),10)} mg（0.15–0.2 mg/kg，max 10 mg/次）", "route": "IVP（≤ 5 mg/min）", "freq": "STAT；5 min 後可再 1 次", "note": "急救車常備；15–30 min 重分佈失效，一定要接第二線；不可 IM", "cond": "iv", "alt": "lorazepam" },
+        { "drug": "Midazolam", "dose": "{wt > 40 ? 10 : 5} mg", "route": "IM", "freq": "單次（10 min 後可再 1 次）", "note": "無 IV 首選（RAMPART）；體重 {wt} kg（> 40 kg 10 mg；13–40 kg 5 mg）；IN／buccal 0.2 mg/kg（max 10 mg）", "cond": "!iv" },
+        { "drug": "Diazepam 直腸", "dose": "{min(round(wt*0.2),20)}–{min(round(wt*0.5),20)} mg（0.2–0.5 mg/kg，max 20 mg）", "route": "PR", "freq": "單次", "note": "無 IV 且無 midazolam 時", "cond": "!iv", "alt": "midazolam IM" },
+        { "drug": "Dextrose 50%（D50W）", "dose": "40 mL（20 g）", "route": "IVP", "freq": "STAT", "note": "血糖 {glu} < 70；酗酒／營養不良先 thiamine 100 mg IV", "cond": "glu < 70" },
+        { "drug": "Thiamine（vit B₁）", "dose": "100 mg", "route": "IV", "freq": "給糖前 STAT", "note": "酗酒／營養不良者", "cond": "glu < 70" },
+        { "drug": "O₂", "dose": "15 L/min", "route": "NRM", "freq": "持續", "note": "SpO₂ 監測；備 ambu bag" }
+      ],
+      "watch": ["計時：發作是否於 BZD 後 5 min 內停止", "RR、SpO₂、BP（BZD 後呼吸抑制）", "發作停止後 30–60 min 意識未恢復 → NCSE，EEG"],
+      "call": ["發作 > 5 分鐘（SE）就叫後線", "第一線 BZD 後仍抽、呼吸抑制需 BVM／插管、發燒 + 發作、懷孕"],
+      "refs": [{ "ch": "03", "q": "癲癇重積症的時間軸" }, { "ch": "03", "q": "第一線：Benzodiazepine" }],
+      "next": [{ "label": "BZD 兩劑後仍抽 → 第二線", "next": "r_second" }, { "label": "已停止 → 發作後評估", "next": "q_post" }]
+    },
+    "r_second": {
+      "type": "result",
+      "urgency": "red",
+      "title": "第二線抗癲癇藥（BZD 後仍發作，或發作停止後預防復發）",
+      "summary": "20–40 min：levetiracetam 60 mg/kg（max 4.5 g）、valproate 40 mg/kg（max 3 g）、fosphenytoin 20 PE/kg 三者等效（ESETT）；首選 levetiracetam。仍抽 → 難治性，ICU。",
+      "steps": [
+        "確認已給足第一線 BZD 兩劑；持續 ABC、監測",
+        "擇一負荷：levetiracetam（首選，無交互作用、肝功能差可用）／valproate（肝病、懷孕禁）／fosphenytoin 或 phenytoin（監測 ECG、BP）",
+        "原本有服抗癲癇藥者：濃度不足 → 補原藥；濃度足夠仍發作 → 加另一種",
+        "負荷後仍發作 → 第三線（插管、ICU、持續 EEG）；聯絡後線／神經科",
+        "頭部 CT（SE、第一次、局部起始、外傷、抗凝）；發燒 → LP",
+        "維持劑量依 CrCl（levetiracetam）調整"
+      ],
+      "orders": [
+        { "drug": "Levetiracetam", "dose": "{min(round(wt*60),4500)} mg（60 mg/kg，max 4,500 mg）in NS 100 mL", "route": "IVD over 10–15 min", "freq": "負荷 STAT → 500–1,500 mg IV/PO q12h", "note": "首選；依 {wt} kg；維持依 CrCl {round(crcl)} mL/min 調整（< 50 減量，依院內）；副作用嗜睡、易怒" },
+        { "drug": "Valproate", "dose": "{min(round(wt*40),3000)} mg（40 mg/kg，max 3,000 mg）in NS 50–100 mL", "route": "IVD over 5–10 min（≤ 6 mg/kg/min）", "freq": "負荷 STAT → 10–15 mg/kg/d 分 q8–12h", "note": "肝病、胰臟炎、粒線體病、懷孕禁；NH₃↑、血小板↓；與 carbapenem 併用濃度大降", "alt": "levetiracetam" },
+        { "drug": "Fosphenytoin", "dose": "{min(round(wt*20),1500)} mg PE（20 PE/kg，max 1,500 PE）", "route": "IVD（≤ 150 mg PE/min）", "freq": "負荷 STAT → 4–6 mg PE/kg/d 分 q8–12h", "note": "D5W 或 NS 皆可；監測 ECG／BP；台灣不一定有", "alt": "phenytoin" },
+        { "drug": "Phenytoin", "dose": "{min(round(wt*20),1500)} mg（20 mg/kg，max 1,500 mg）in NS only", "route": "IVD（≤ 50 mg/min；老年 25 mg/min）", "freq": "負荷 STAT → 100 mg IV/PO q8h（目標 10–20 mcg/mL）", "note": "用 0.22 μm filter；勿與 glucose 共管；心律不整、低血壓、purple glove；補充量 = (目標 − 現值) × 0.7 × {wt} mg" },
+        { "drug": "Lacosamide", "dose": "200–400 mg", "route": "IVD over 15 min", "freq": "負荷 → 100–200 mg q12h", "note": "替代／加成；PR 延長" },
+        { "drug": "Phenobarbital", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IVD（≤ 50–100 mg/min）", "freq": "負荷 → 1–3 mg/kg/d", "note": "呼吸抑制、低血壓；長效鎮靜" }
+      ],
+      "watch": ["發作是否於負荷後停止；ECG／BP（phenytoin、fosphenytoin）", "RR、SpO₂；意識恢復情形（30–60 min 未恢復 → EEG）", "AED 濃度（phenytoin 1–2 hr 後）、肝功能／NH₃（valproate）"],
+      "call": ["第二線後仍發作 → 後線 + 神經科 + ICU（第三線）", "呼吸抑制、低血壓、需插管"],
+      "refs": [{ "ch": "03", "q": "第二線：抗癲癇藥" }, { "ch": "03", "q": "Levetiracetam" }],
+      "next": [{ "label": "仍發作 → 難治性 SE（第三線）", "next": "r_refractory" }]
+    },
+    "r_refractory": {
+      "type": "result",
+      "urgency": "red",
+      "title": "難治性 SE（BZD + 一種第二線後仍發作）：第三線",
+      "summary": "40–60 min：插管、ICU、持續 EEG；midazolam 或 propofol 持續輸注（ketamine 血壓穩定替代）；目標臨床與 EEG 發作停止 24–48 hr 後減量。",
+      "steps": [
+        "插管（RSI）、ICU、持續 EEG 監測；聯絡後線／神經科",
+        "midazolam 或 propofol 負荷 + 持續輸注；低血壓 → 升壓劑、改 ketamine 加成",
+        "同時矯正病因（Na、Ca、Mg、感染、顱內病灶、藥物）",
+        "持續第二線抗癲癇藥維持劑量",
+        "propofol > 4 mg/kg/hr 勿超過 48 hr（PRIS）；監測乳酸、CK、TG"
+      ],
+      "orders": [
+        { "drug": "Midazolam", "dose": "{round(wt*0.2)} mg（0.2 mg/kg）負荷，可每 5 min 追加 {round(wt*0.1)}–{round(wt*0.2)} mg（max 2 mg/kg）", "route": "IVP", "freq": "負荷 → 持續 {round(wt*0.05,1)}–{round(wt*2)} mg/hr（0.05–2 mg/kg/hr）", "note": "泡法 50 mg in NS total 50 mL（1 mg/mL）；依 {wt} kg；耐受性、停藥反彈" },
+        { "drug": "Propofol", "dose": "{round(wt)}–{round(wt*2)} mg（1–2 mg/kg，可重複至 10 mg/kg）", "route": "IVP", "freq": "負荷 → 持續 20–200 mcg/kg/min（{round(wt*1.2)}–{round(wt*12)} mg/hr）", "note": "原液 10 mg/mL 直接滴；> 4 mg/kg/hr 勿 > 48 hr（PRIS）；低血壓", "alt": "midazolam" },
+        { "drug": "Ketamine", "dose": "{round(wt)}–{round(wt*2)} mg（1–2 mg/kg）", "route": "IVP", "freq": "負荷 → 持續 {round(wt)}–{round(wt*5)} mg/hr（1–5 mg/kg/hr）", "note": "血壓穩定的替代／加成" },
+        { "drug": "Phenobarbital", "dose": "{round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IVD（50–100 mg/min）", "freq": "負荷 → 1–5 mg/kg/hr", "note": "長效；低血壓、免疫抑制；thiopental／pentobarbital 依 ICU" }
+      ],
+      "watch": ["持續 EEG（目標發作停止 ± burst suppression 依神經科）", "BP、HR、乳酸、CK、TG（PRIS）", "體溫、感染（免疫抑制）"],
+      "call": ["難治性 SE 一律後線 + 神經科 + ICU", "低血壓需升壓劑、PRIS 徵候"],
+      "refs": [{ "ch": "03", "q": "第三線：難治性 SE" }, { "ch": "03", "q": "Midazolam" }]
+    },
+    "r_ncse": {
+      "type": "result",
+      "urgency": "red",
+      "title": "疑非痙攣型癲癇重積（NCSE）",
+      "summary": "發作後 30–60 min 意識未逐漸恢復、時好時壞、眼球偏斜、臉部細微抽動 → 聯絡後線做 EEG；EEG 確認後依 SE 給 BZD + 第二線。",
+      "steps": [
+        "ABC、SpO₂、血糖；神經學檢查（眼球偏斜、眼瞼／臉部細微抽動、自動症）",
+        "聯絡後線／神經科安排 EEG（持續 EEG 更佳）",
+        "排除其他原因：低血糖、低血鈉、藥物過度鎮靜、顱內病灶（CT）",
+        "EEG 證實或高度懷疑 → lorazepam 試驗性給藥 + 第二線抗癲癇藥負荷",
+        "插管或無法評估者需 EEG"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "EEG 證實或高度懷疑時 STAT；5 min 可再 1 次", "note": "依 {wt} kg；備 ambu bag" },
+        { "drug": "Levetiracetam", "dose": "{min(round(wt*60),4500)} mg（60 mg/kg，max 4,500 mg）in NS 100 mL", "route": "IVD over 10–15 min", "freq": "負荷 → 500–1,500 mg q12h", "note": "維持依 CrCl {round(crcl)} 調整" }
+      ],
+      "watch": ["意識 q30 min；EEG 反應", "RR、SpO₂（BZD 後）"],
+      "call": ["發作後 30–60 分鐘意識未恢復 → 後線 + EEG", "需第二線／第三線治療"],
+      "refs": [{ "ch": "03", "q": "非痙攣型癲癇重積" }, { "ch": "03", "q": "已經停了" }]
+    },
+    "r_fever_sz": {
+      "type": "result",
+      "urgency": "red",
+      "title": "發燒 + 發作：疑腦膜炎／腦炎",
+      "summary": "發燒 + 發作 = 腦膜炎／腦炎直到證明不是：血液培養後 **1 小時內抗生素（不等 LP）**，CT → LP；依 Ch4 腦膜炎表選藥；HSV 腦炎加 acyclovir。",
+      "steps": [
+        "ABC、SpO₂、血糖；神經學（頸僵、局部缺損、GCS）、皮膚瘀點",
+        "血液培養 × 2 → 1 小時內抗生素（腦膜炎劑量，Ch4）；免疫低下／局部缺損／GCS < 15 先 CT 再 LP",
+        "LP：細胞數、糖、蛋白、Gram stain、培養、HSV PCR",
+        "發作再發 → 依 SE 流程 BZD + levetiracetam",
+        "飛沫隔離至排除腦膜炎雙球菌"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q12h", "with": "Vancomycin {round(wt*25)}–{round(wt*30)} mg loading → 15–20 mg/kg q8–12h", "note": "腦膜炎劑量；> 50 歲／免疫低下加 ampicillin 2 g q4h；院內／術後改 cefepime 或 meropenem（Ch4）" },
+        { "drug": "Dexamethasone", "dose": "10 mg（0.15 mg/kg = {round(wt*0.15,1)} mg）", "route": "IV", "freq": "q6h × 4 天，第一劑抗生素前 10–20 min 或同時", "note": "隱球菌腦膜炎勿用" },
+        { "drug": "Acyclovir", "dose": "{round(wt*10)} mg（10 mg/kg）in NS 100 mL", "route": "IVD over 1 hr", "freq": "q8h", "note": "懷疑 HSV 腦炎（行為改變、局部缺損）；CrCl {round(crcl)} 需調整；多喝水" },
+        { "drug": "Levetiracetam", "dose": "{min(round(wt*60),4500)} mg（60 mg/kg）in NS 100 mL", "route": "IVD over 10–15 min", "freq": "再發作時負荷 → 500–1,000 mg q12h", "note": "依 {wt} kg" }
+      ],
+      "watch": ["GCS q1h、再發作", "體溫、VS；LP 結果"],
+      "call": ["發燒 + 發作一律後線（腦膜炎）", "GCS 下降、再發作、需插管"],
+      "refs": [{ "ch": "04", "q": "腦膜炎／腦炎" }, { "ch": "03", "q": "腰椎穿刺" }]
+    },
+    "r_eclampsia": {
+      "type": "result",
+      "urgency": "red",
+      "title": "子癲症（妊娠 20 週後或產後 6 週）",
+      "summary": "**MgSO₄ 4–6 g IV over 15–20 min → 1–2 g/hr**，復發再 2 g bolus；BP > 160/110 用 labetalol／hydralazine；緊急聯絡婦產科。",
+      "steps": [
+        "側躺、O₂、IV、SpO₂／心電監測；緊急聯絡婦產科 + 後線",
+        "MgSO₄ 負荷 + 維持；監測膝反射、RR、尿量（中毒 → calcium gluconate）",
+        "BP > 160/110 → labetalol IV 或 hydralazine IV",
+        "抽 CBC（血小板）、肝功能、Cr、LDH、尿蛋白、凝血（HELLP）",
+        "MgSO₄ 後仍抽 → lorazepam；生產是根本治療"
+      ],
+      "orders": [
+        { "drug": "MgSO₄", "dose": "4–6 g", "route": "IV over 15–20 min", "freq": "負荷 STAT → 1–2 g/hr IVD 持續", "note": "復發再 2 g bolus；膝反射消失、RR < 12、尿量 < 30 mL/hr → 停藥、驗 Mg" },
+        { "drug": "Calcium gluconate 10%", "dose": "1–2 g（10–20 mL）", "route": "IVD over 5–10 min", "freq": "PRN MgSO₄ 中毒（反射消失、RR < 12、低血壓），可重複", "note": "備床邊；只暫時拮抗、不降 Mg（Ch36）" },
+        { "drug": "Labetalol", "dose": "20 mg", "route": "IVP over 2 min", "freq": "BP > 160/110；10 min 後未達標 → 40 mg → 80 mg（累計 max 300 mg）", "note": "氣喘、HR < 60 禁（Ch18）" },
+        { "drug": "Hydralazine", "dose": "5–10 mg", "route": "IVP over 2 min", "freq": "q20–30 min，累計 max 20–30 mg", "note": "labetalol 替代（Ch18）", "alt": "labetalol" },
+        { "drug": "Lorazepam", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "MgSO₄ 後仍抽時", "note": "依 {wt} kg" }
+      ],
+      "watch": ["膝反射、RR、尿量 q1h（MgSO₄ 中毒）", "BP q15 min；胎兒監測", "血小板、肝酶（HELLP）"],
+      "call": ["懷孕 + 抽搐 = 立即婦產科 + 後線", "MgSO₄ 後再抽、RR < 12、血小板 < 100k"],
+      "refs": [{ "ch": "03", "q": "子癲症" }, { "ch": "18", "q": "子癲前症" }]
+    },
+    "r_first": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "第一次發作／局部起始／新局部缺損：找病灶",
+      "summary": "第一次發作、局部起始、發作後局部缺損（Todd 麻痺需與中風鑑別）、外傷、抗凝、癌症 → **頭部 CT**、完整檢驗、ECG；是否長期用藥由神經科決定。",
+      "steps": [
+        "神經學 q1h 至恢復基線；Todd 麻痺通常 < 48 hr，但新發作者仍建議 CT（與中風鑑別）",
+        "頭部 CT（非顯影；懷疑腫瘤／局部病灶再安排 MRI）",
+        "抽血（表 3-2）：血糖、Na、K、Ca、Mg、P、BUN/Cr、肝功能、NH₃、CBC、乳酸、CK、VBG；毒藥物篩檢；驗孕",
+        "ECG（QT 延長、心律不整造成的昏厥性抽搐）",
+        "停或減降低閾值藥物（表 3-1：cefepime、imipenem、tramadol、bupropion…）",
+        "聯絡後線／神經科：顱內病灶、EEG 異常、SE、局部缺損者傾向要用藥；可矯正原因已矯正者可暫不用",
+        "跌倒防護、床欄、下床有人陪；吸入性肺炎徵候 → 抗生素"
+      ],
+      "orders": [
+        { "drug": "Levetiracetam", "dose": "500–1,000 mg", "route": "IV／PO", "freq": "q12h（神經科建議用藥時）", "note": "顱內病灶／再發風險高者；CrCl {round(crcl)} 調整" },
+        { "drug": "Lorazepam（再發作備用）", "dose": "{min(round(wt*0.1,1),4)} mg（max 4 mg）", "route": "IVP", "freq": "再發作 ≥ 5 min 時 STAT", "note": "依 {wt} kg" }
+      ],
+      "watch": ["神經學 q1h；局部缺損 > 48 hr 未恢復 → 想中風", "CK 24–48 hr；> 5,000 積極輸液"],
+      "call": ["第一次發作一律通知後線", "新局部缺損、CT 異常、發作後 30–60 分鐘意識未恢復"],
+      "refs": [{ "ch": "03", "q": "頭部 CT" }, { "ch": "03", "q": "發作後" }]
+    },
+    "r_known": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "已知癲癇：漏藥／濃度不足／戒斷",
+      "summary": "驗抗癲癇藥濃度；濃度不足 → 補原藥（phenytoin 補充量 = (目標 − 現值) × 0.7 × 體重）；濃度足夠仍發作 → 加另一種；停 BZD／酒精造成 → BZD。",
+      "steps": [
+        "確認用藥依從性、最近停藥／減量、剛加的降閾值藥（表 3-1）、睡眠剝奪、飲酒",
+        "抽 AED 濃度（phenytoin、valproate、carbamazepine、phenobarbital、lamotrigine）、Na、血糖、Mg",
+        "濃度不足 → 補原藥（IV 或 NG）；濃度足夠仍發作 → 加另一種（levetiracetam）",
+        "酒精／BZD 戒斷性癲癇 → BZD 為主，不需長期抗癲癇藥",
+        "神經學 q1h；跌倒防護、床欄"
+      ],
+      "orders": [
+        { "drug": "Phenytoin（補充）", "dose": "(目標 − 現值) × 0.7 × {wt} mg（例：差 10 mcg/mL → {round(wt*7)} mg）in NS only", "route": "IVD（≤ 50 mg/min）", "freq": "單次補充 → 100 mg q8h", "note": "依 {wt} kg；0.22 μm filter；監測 ECG／BP" },
+        { "drug": "Levetiracetam", "dose": "500–1,500 mg", "route": "IV／PO", "freq": "q12h（加成或補原藥）", "note": "CrCl {round(crcl)} 調整；濃度不足者亦可先 IV 補負荷（見第二線）" },
+        { "drug": "Valproate（原藥者）", "dose": "10–15 mg/kg/d（{round(wt*10)}–{round(wt*15)} mg/d）", "route": "IV／PO", "freq": "分 q8–12h", "note": "依 {wt} kg" },
+        { "drug": "Lorazepam（戒斷／再發作）", "dose": "{min(round(wt*0.1,1),4)} mg（max 4 mg）", "route": "IVP", "freq": "再發作 ≥ 5 min 時 STAT", "note": "依 {wt} kg" }
+      ],
+      "watch": ["神經學 q1h 至恢復基線", "AED 濃度回報後調整"],
+      "call": ["反覆發作、SE", "發作後 30–60 分鐘意識未恢復"],
+      "refs": [{ "ch": "03", "q": "原本有服抗癲癇藥者" }, { "ch": "03", "q": "表 3-1" }]
+    },
+    "r_postictal": {
+      "type": "result",
+      "urgency": "green",
+      "title": "發作後（postictal）照護",
+      "summary": "意識混亂可持續數分鐘到 1–2 小時：復甦姿勢、q1h 神經學、檢查受傷、抽血（乳酸、CK）；**CK > 5,000 積極輸液**；30–60 min 未恢復 → NCSE。",
+      "steps": [
+        "復甦姿勢；確認呼吸、脈搏、SpO₂、VS",
+        "檢查受傷：頭部、舌咬傷、肩關節（後脫臼）、脊椎、傷口、管路是否拔脫",
+        "抽血（表 3-2）：血糖、Na、Ca、Mg、AED 濃度、乳酸（1 hr 內↑）、CK（24–48 hr）；ECG",
+        "神經學 q1h 至恢復基線；Todd 麻痺 < 48 hr",
+        "CK > 5,000 → NS 1–2 L/hr 起始，目標尿量 200–300 mL/hr",
+        "吸入性肺炎徵候（發燒、SpO₂↓、CXR）→ 抗生素（Ch7）",
+        "跌倒防護、床欄、下床有人陪；停降閾值藥（表 3-1）"
+      ],
+      "orders": [
+        { "drug": "NS（CK > 5,000 時）", "dose": "1–2 L/hr 起始", "route": "IVD", "freq": "持續，目標尿量 200–300 mL/hr", "note": "避免橫紋肌溶解造成 AKI；心衰竭慎" },
+        { "drug": "O₂", "dose": "2–4 L/min", "route": "nasal cannula", "freq": "SpO₂ < 94% 時", "note": "目標 94–98%" },
+        { "drug": "Lorazepam（再發作備用）", "dose": "{min(round(wt*0.1,1),4)} mg（max 4 mg）", "route": "IVP", "freq": "再發作 ≥ 5 min 時 STAT", "note": "依 {wt} kg" }
+      ],
+      "watch": ["神經學 q1h；30–60 min 未恢復或時好時壞 → NCSE（EEG）", "SpO₂、體溫（吸入）", "CK、Cr、尿量"],
+      "call": ["發作後 30–60 分鐘意識未恢復或新局部缺損", "反覆發作、CK 明顯上升、吸入"],
+      "refs": [{ "ch": "03", "q": "發作後" }, { "ch": "03", "q": "表 3-2" }],
+      "next": [{ "label": "意識未恢復 → NCSE", "next": "r_ncse" }]
+    },
+    "r_hypona": {
+      "type": "result",
+      "urgency": "red",
+      "title": "低血鈉性抽搐",
+      "summary": "Na < 120 或快速下降 + 抽搐：**3% NaCl 150 mL IV over 20 min，可重複**；同時 BZD 止抽；之後依 Ch32 控制矯正速度。",
+      "steps": [
+        "ABC、側躺、O₂；仍在抽 → lorazepam",
+        "3% NaCl 150 mL over 20 min；Na 上升 4–6 mEq/L 或抽搐停止即可，可重複",
+        "Na q2h；24 hr 上升勿超過 Ch32 上限（避免滲透性脫髓鞘）",
+        "找原因：低張輸液、利尿劑、SIADH、心因性多渴（Ch32）"
+      ],
+      "orders": [
+        { "drug": "3% NaCl", "dose": "150 mL", "route": "IV over 20 min", "freq": "STAT，可重複（Ch32）", "note": "周邊靜脈可短暫用；目標 Na 上升 4–6 即止抽" },
+        { "drug": "Lorazepam", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "仍在抽 STAT；5 min 可再 1 次", "note": "依 {wt} kg" }
+      ],
+      "watch": ["Na q2h × 24 hr", "神經學、尿量"],
+      "call": ["低血鈉性抽搐一律後線", "Na 矯正過快、意識未恢復"],
+      "refs": [{ "ch": "03", "q": "低血鈉性抽搐" }, { "ch": "32", "q": "3% NaCl" }]
+    },
+    "r_hypoca": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "低血鈣抽搐",
+      "summary": "低血鈣（校正 Ca 或 iCa）+ 手足抽搐／癲癇 → calcium gluconate 10% 10–20 mL IV over 10 min，之後依 Ch34 滴注並補 Mg。",
+      "steps": [
+        "ABC；仍在抽 → lorazepam；ECG（QT 延長）",
+        "抽 Ca、albumin（校正）、iCa、Mg、P、Cr、PTH",
+        "Calcium gluconate IV 慢推，之後持續滴注（Ch34）",
+        "低 Mg 需同時矯正，否則低血鈣難矯正",
+        "找原因：甲狀旁腺術後、腎衰竭、胰臟炎、輸血（citrate）"
+      ],
+      "orders": [
+        { "drug": "Calcium gluconate 10%", "dose": "10–20 mL（1–2 g）", "route": "IV over 10 min", "freq": "STAT；之後依 Ch34 滴注", "note": "心電監測；digoxin 使用者慎" },
+        { "drug": "Lorazepam", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "仍在抽 STAT", "note": "依 {wt} kg" }
+      ],
+      "watch": ["iCa q4–6h、Mg、ECG QTc", "手足抽搐、Chvostek／Trousseau"],
+      "call": ["反覆抽搐、喉痙攣、心律不整"],
+      "refs": [{ "ch": "03", "q": "低血鈣" }, { "ch": "34", "q": "calcium gluconate" }]
+    },
+    "r_inh": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Isoniazid（INH）中毒抽搐",
+      "summary": "INH 過量造成的抽搐對 BZD 反應差：**pyridoxine 1 g per 1 g INH（不知量則 5 g）IV**；同時 BZD、支持性治療。",
+      "steps": [
+        "ABC、側躺、O₂；BZD 止抽（效果可能有限）",
+        "Pyridoxine IV：依服用 INH 量等量給；不知量 5 g",
+        "抽 VBG（乳酸酸中毒）、肝功能、血糖",
+        "聯絡毒物中心 02-2871-7121 與後線；仍抽 → 第二線／插管"
+      ],
+      "orders": [
+        { "drug": "Pyridoxine（vit B₆）", "dose": "1 g per 1 g INH（不知量 5 g）", "route": "IV", "freq": "STAT；仍抽可重複", "note": "台灣多為 50–100 mg/amp，需多支；聯絡藥局" },
+        { "drug": "Lorazepam", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "STAT；5 min 可再 1 次", "note": "依 {wt} kg；INH 中毒 BZD 效果差" }
+      ],
+      "watch": ["發作、意識、乳酸／pH", "肝功能"],
+      "call": ["INH 中毒一律後線 + 毒物中心", "pyridoxine 後仍抽、代謝性酸中毒"],
+      "refs": [{ "ch": "03", "q": "Isoniazid 中毒" }]
+    },
+    "r_etoh_sz": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "酒精戒斷性癲癇",
+      "summary": "最後一次飲酒後 12–48 hr 的全身性發作：BZD 為主（lorazepam），**不需長期抗癲癇藥**；thiamine 先給；未治療者約 1/3 進展為 DT。",
+      "steps": [
+        "ABC、側躺、O₂、血糖（酗酒者低血糖）；仍在抽 → lorazepam",
+        "Thiamine 先於含糖輸液；矯正 Mg、K、P",
+        "CIWA-Ar 評分，依 Ch1 酒精戒斷流程給 BZD 至適度鎮靜",
+        "局部起始、頭部外傷、第一次、發作 > 1 次型態不同 → CT（酗酒者硬腦膜下出血）",
+        "避免 phenytoin 預防（無效）"
+      ],
+      "orders": [
+        { "drug": "Lorazepam", "dose": "{min(round(wt*0.1,1),4)} mg（0.1 mg/kg，max 4 mg）", "route": "IVP（2 mg/min）", "freq": "仍在抽 STAT；之後 2–4 mg IV q15–20 min 依 CIWA-Ar 至適度鎮靜", "note": "依 {wt} kg；肝硬化首選" },
+        { "drug": "Thiamine（vit B₁）", "dose": "100–200 mg", "route": "IV／IM", "freq": "QD × 3 天，給糖前", "note": "疑 Wernicke 500 mg TID（Ch1）" },
+        { "drug": "MgSO₄／KCl", "dose": "依 Ch36／Ch33", "route": "IV", "freq": "矯正", "note": "戒斷常低 Mg" }
+      ],
+      "watch": ["CIWA-Ar q1–4h；RR、SpO₂", "48–96 hr 進展為 DT 的徵候（意識混亂、幻覺、自律神經風暴）"],
+      "call": ["反覆發作、SE、懷疑 DT", "局部徵候（硬腦膜下出血）"],
+      "refs": [{ "ch": "03", "q": "酒精戒斷性癲癇" }, { "ch": "01", "q": "酒精戒斷" }]
+    },
+    "r_prophylaxis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "癲癇預防（腦腫瘤／膿瘍／SAH／顱內出血）",
+      "summary": "預防性 levetiracetam 500–1,000 mg IV/PO q12h，依神經外科／神經內科決定；不做常規長期預防。",
+      "steps": [
+        "確認適應症與神外／神內指示（腦腫瘤、膿瘍、SAH、ICH、開顱術後）",
+        "Levetiracetam 依 CrCl 調整",
+        "發作時依 SE 流程；記錄發作型態與時間"
+      ],
+      "orders": [
+        { "drug": "Levetiracetam", "dose": "500–1,000 mg", "route": "IV／PO", "freq": "q12h", "note": "CrCl {round(crcl)} mL/min：< 50 減量依院內；副作用嗜睡、易怒" }
+      ],
+      "watch": ["發作、嗜睡、情緒變化"],
+      "call": ["發作發生（依 SE 流程）"],
+      "refs": [{ "ch": "03", "q": "腦腫瘤／膿瘍／SAH／顱內出血" }]
+    },
+    "r_pnes": {
+      "type": "result",
+      "urgency": "green",
+      "title": "心因性非癲癇發作（PNES）",
+      "summary": "閉眼抵抗睜眼、骨盆推動、不規則不同步抖動、發作中哭泣／說話、對聲音觸碰有反應、時間長、無發作後混亂 → **不要一直加藥**；安全、安撫，會診精神科／神經科。",
+      "steps": [
+        "確認安全（床欄、防跌）；平靜安撫，減少旁觀者刺激",
+        "鑑別線索：真癲癇有舌側緣咬傷、失禁、發作後混亂 ≥ 30 min、乳酸↑（1 hr 內）",
+        "可抽乳酸、prolactin（發作後 10–20 min）協助鑑別；仍不確定者以 EEG（video-EEG）確認",
+        "避免反覆 BZD／抗癲癇藥加量（呼吸抑制風險）",
+        "會診精神科／神經科；不要否定病人感受"
+      ],
+      "orders": [
+        { "drug": "（暫不給抗癲癇藥）", "dose": "0 mg", "route": "—", "freq": "—", "note": "無法排除真癲癇（發作 > 5 min、發紺、SpO₂↓）時仍依 SE 流程給 BZD" }
+      ],
+      "watch": ["SpO₂、發作型態記錄（錄影）", "自傷、跌倒"],
+      "call": ["無法與真癲癇鑑別、發作 > 5 分鐘、SpO₂ 下降", "自傷／傷人風險"],
+      "refs": [{ "ch": "03", "q": "PNES" }, { "ch": "03", "q": "鑑別：不是癲癇的「抽」" }]
+    }
+  }
+}

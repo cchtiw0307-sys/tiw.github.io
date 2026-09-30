@@ -1,0 +1,562 @@
+{
+  "id": "38",
+  "title": "院內急救與 ACLS（AHA 2025）",
+  "chapter": "38",
+  "entries": [
+    { "label": "病人沒反應／沒呼吸／摸不到脈搏（心跳停止）", "type": "symptom", "start": "i_bls", "group": "急救",
+      "keywords": ["心跳停止", "沒有脈搏", "沒呼吸", "沒反應", "CPR", "急救", "cardiac arrest", "code", "999", "叫不醒", "無脈", "OHCA", "IHCA"] },
+    { "label": "沒呼吸但有脈搏（呼吸停止／疑鴉片過量）", "type": "symptom", "start": "r_resp_arrest", "group": "急救",
+      "keywords": ["呼吸停止", "有脈無呼吸", "respiratory arrest", "鴉片過量", "opioid overdose", "naloxone", "morphine 過量", "呼吸很慢"] },
+    { "label": "噎到／異物哽塞（無法說話、咳嗽）", "type": "symptom", "start": "r_choking", "group": "急救",
+      "keywords": ["噎到", "異物哽塞", "choking", "Heimlich", "哈姆立克", "腹部推擠", "食物卡住"] },
+    { "label": "急救後恢復心跳（ROSC）接下來要做什麼", "type": "symptom", "start": "r_rosc", "group": "急救",
+      "keywords": ["ROSC", "恢復心跳", "急救後", "post-cardiac arrest", "體溫控制", "TTM", "低溫治療"] },
+    { "label": "VF／pVT（可電擊節律）", "type": "diagnosis", "start": "r_vf",
+      "keywords": ["VF", "pVT", "心室顫動", "無脈性心室頻脈", "可電擊", "shockable", "去顫", "電擊", "ventricular fibrillation"] },
+    { "label": "Asystole／PEA（不可電擊節律）", "type": "diagnosis", "start": "r_pea",
+      "keywords": ["asystole", "PEA", "心搏停止", "無脈性電氣活動", "不可電擊", "non-shockable", "flat line"] },
+    { "label": "頑固 VF／pVT（≥ 3 次電擊仍 VF）", "type": "diagnosis", "start": "r_refractory_vf",
+      "keywords": ["頑固 VF", "refractory VF", "電擊無效", "electrical storm", "前後位貼片", "ECMO-CPR"] },
+    { "label": "可逆原因 H's & T's（找原因）", "type": "diagnosis", "start": "q_hts",
+      "keywords": ["H's and T's", "Hs Ts", "可逆原因", "reversible causes", "PEA 原因"] },
+    { "label": "高血鉀／透析病人心跳停止", "type": "diagnosis", "start": "r_hyperk",
+      "keywords": ["高血鉀 心跳停止", "hyperkalemia arrest", "透析病人 CPR", "K 7", "calcium chloride", "dialysis arrest"] },
+    { "label": "低血鉀／低血鎂／TdP 心跳停止", "type": "diagnosis", "start": "r_hypok",
+      "keywords": ["低血鉀 心跳停止", "hypokalemia arrest", "TdP", "torsades", "MgSO4", "低血鎂"] },
+    { "label": "疑肺栓塞（PE）心跳停止", "type": "diagnosis", "start": "r_pe",
+      "keywords": ["PE 心跳停止", "肺栓塞 CPR", "alteplase 50 mg", "thrombolysis arrest", "pulmonary embolism"] },
+    { "label": "中毒心跳停止（鴉片、CCB／β-blocker、局麻劑、TCA、digoxin、氰化物）", "type": "diagnosis", "start": "q_toxin",
+      "keywords": ["中毒 心跳停止", "toxins", "鴉片", "CCB 中毒", "beta blocker 中毒", "局麻劑中毒", "lipid emulsion", "TCA 中毒", "digoxin 中毒", "氰化物", "hydroxocobalamin"] },
+    { "label": "張力性氣胸／心包填塞／低血容／缺氧／酸中毒", "type": "diagnosis", "start": "r_mechanical",
+      "keywords": ["張力性氣胸", "tension pneumothorax", "針刺減壓", "心包填塞", "tamponade", "心包穿刺", "低血容", "hypovolemia", "缺氧", "hypoxia", "酸中毒", "NaHCO3"] },
+    { "label": "低體溫心跳停止", "type": "diagnosis", "start": "r_hypothermia",
+      "keywords": ["低體溫", "hypothermia arrest", "復溫", "rewarming", "體溫 < 30"] },
+    { "label": "懷孕心跳停止（復甦性剖腹）", "type": "diagnosis", "start": "r_pregnancy",
+      "keywords": ["懷孕 心跳停止", "孕婦 CPR", "maternal cardiac arrest", "子宮左推", "復甦性剖腹", "perimortem cesarean", "resuscitative hysterotomy"] },
+    { "label": "其他原因：低血糖、高血鎂、過敏、冠狀動脈血栓、溺水、創傷", "type": "diagnosis", "start": "r_other_causes",
+      "keywords": ["低血糖 心跳停止", "高血鎂", "過敏性休克 心跳停止", "anaphylaxis arrest", "STEMI 心跳停止", "冠狀動脈血栓", "溺水", "drowning", "創傷 心跳停止", "電擊傷"] },
+    { "label": "ROSC 後照護（AHA 2025）", "type": "diagnosis", "start": "r_rosc",
+      "keywords": ["ROSC 後", "post-ROSC", "體溫控制", "temperature control", "MAP 65", "心導管", "神經預後"] },
+    { "label": "去顫器操作／電擊能量（去顫、同步整流）", "type": "diagnosis", "start": "i_defib",
+      "keywords": ["去顫器", "defibrillator", "電擊能量", "120–200 J", "360 J", "同步整流", "cardioversion", "SYNC", "貼片位置", "前後位"] },
+    { "label": "停止急救的考量／DNR", "type": "diagnosis", "start": "r_terminate",
+      "keywords": ["停止急救", "termination of resuscitation", "DNR", "不施行心肺復甦", "EtCO2 < 10", "宣告死亡"] },
+    { "label": "急救藥物劑量表", "type": "diagnosis", "start": "r_drugs",
+      "keywords": ["急救藥物", "ACLS drugs", "epinephrine 1 mg", "amiodarone 300", "lidocaine", "vasopressin", "atropine", "急救車藥物"] }
+  ],
+  "nodes": {
+    "i_bls": {
+      "type": "info",
+      "title": "BLS：前 10 秒",
+      "body": [
+        "確認安全 → 拍肩呼喚 → **叫人、啟動急救**（按鈴、廣播 999／院內代碼）、推急救車與去顫器",
+        "**同時**看呼吸與摸頸動脈 **≤ 10 秒**",
+        "同時請人查 DNR 文件；依院內急救流程通知急救小組、後線與主治",
+        "無呼吸／喘息且無脈 → 立刻 CPR；有脈無呼吸 → 通氣；哽塞 → 背部拍擊／腹部推擠"
+      ],
+      "next": "q_pulse"
+    },
+    "q_pulse": {
+      "type": "choice",
+      "title": "呼吸與脈搏（≤ 10 秒）？",
+      "options": [
+        { "label": "無呼吸／只有喘息，且**無脈** → CPR", "next": "i_cpr" },
+        { "label": "有脈但無呼吸／呼吸不足", "next": "r_resp_arrest" },
+        { "label": "有脈有呼吸，但沒反應（意識改變）", "next": "r_not_arrest" },
+        { "label": "已確認有效 DNR", "next": "r_terminate" }
+      ]
+    },
+    "i_cpr": {
+      "type": "info",
+      "title": "高品質 CPR + 貼片（每 2 分鐘判讀）",
+      "body": [
+        "CPR **30:2**（無進階氣道）：按壓 **5–6 cm、100–120/min**、完全回彈、中斷 < 10 秒；每 2 分鐘換人；背板／放氣床墊",
+        "O₂：BVM 15 L/min；接監測／去顫器：貼片右上胸（鎖骨下）+ 左腋中線第 5 肋間；節律器／ICD 病人避開裝置 ≥ 8 cm 或前後位",
+        "IV/IO（IO 為快速替代）、指定記錄者與計時；leader 閉環溝通、明確角色",
+        "AED／去顫器到 → 分析節律（< 10 秒）：可電擊 → 1 次電擊後立即 CPR 2 分鐘；不可電擊 → CPR 2 分鐘再分析",
+        "充電時繼續按壓；「離開」口令確認無人接觸；電擊後立即 CPR 不看節律"
+      ],
+      "next": "q_rhythm"
+    },
+    "q_rhythm": {
+      "type": "choice",
+      "title": "節律判讀（每 2 分鐘，< 10 秒）",
+      "help": "有脈搏的心搏過速／過緩不是這裡：Ch20／Ch21",
+      "options": [
+        { "label": "VF／pVT（可電擊）", "next": "r_vf" },
+        { "label": "Asystole／PEA（不可電擊）", "next": "r_pea" },
+        { "label": "已 ≥ 3 次電擊仍 VF／pVT（頑固）", "next": "r_refractory_vf" },
+        { "label": "有脈搏了（ROSC：脈搏、血壓、EtCO₂ 突然 ↑ ≥ 35–40）", "next": "r_rosc" }
+      ]
+    },
+    "r_vf": {
+      "type": "result",
+      "urgency": "red",
+      "title": "VF／pVT（可電擊）",
+      "summary": "**電擊 → CPR 2 分鐘 → 判讀 → 電擊 → CPR + epinephrine 1 mg（第 2 次電擊後，之後 q3–5 min）→ 判讀 → 電擊 → CPR + amiodarone 300 mg（第 3 次電擊後）**；後續電擊能量等同或更高；同時找 H's & T's。",
+      "steps": [
+        "電擊 1 次：雙相 **120–200 J** 依機器建議（不知道就最大）；單相 360 J → **立即 CPR 2 分鐘**，不看節律",
+        "判讀 → 仍 VF/pVT → 電擊（等同或更高能量）→ CPR 2 分鐘 + **epinephrine 1 mg IV/IO**（之後 q3–5 min）+ 考慮進階氣道與 EtCO₂",
+        "判讀 → 仍 VF/pVT → 電擊 → CPR + **amiodarone 300 mg IV/IO bolus**（第 2 劑 150 mg）或 lidocaine 1–1.5 mg/kg（第 2 劑 0.5–0.75 mg/kg）",
+        "進階氣道（插管或聲門上氣道，中斷按壓 < 10 秒）；EtCO₂ 波形確認；之後**持續按壓 + 每 6 秒 1 次通氣**（不再 30:2）",
+        "EtCO₂ < 10 mmHg → 改善 CPR 品質（深度、速率、換人）",
+        "每 2 分鐘：換按壓者、判讀節律、給藥、找可逆原因（H's & T's）",
+        "≥ 3 次電擊仍 VF → 頑固 VF 流程（貼片改前後位、換抗心律不整藥、ECMO-CPR）",
+        "ROSC 徵候：脈搏、血壓、EtCO₂ 突然 ↑ ≥ 35–40 mmHg、自主呼吸 → ROSC 後照護"
+      ],
+      "orders": [
+        { "drug": "O₂（BVM）", "dose": "15 L/min", "route": "BVM 30:2；進階氣道後每 6 秒 1 次", "freq": "持續", "note": "不中斷按壓 > 10 秒" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg（10 mL 1:10,000 或 1 mL 1:1,000 稀釋）", "route": "IV/IO push", "freq": "第 2 次電擊後開始，q3–5 min", "note": "每次後沖 20 mL NS、抬手；氣管內 2–2.5 mg 稀釋 10 mL 不建議" },
+        { "drug": "Amiodarone", "dose": "300 mg（D5W 稀釋 20 mL）", "route": "IV/IO bolus", "freq": "第 3 次電擊後 1 次 → 第 2 劑 150 mg 1 次", "note": "頑固 VF/pVT", "alt": "Lidocaine" },
+        { "drug": "Lidocaine", "dose": "{round(wt*1)}–{round(wt*1.5)} mg（1–1.5 mg/kg）→ 第 2 劑 {round(wt*0.5)}–{round(wt*0.75)} mg（0.5–0.75 mg/kg）", "route": "IV/IO push", "freq": "q5–10 min，max {round(wt*3)} mg（3 mg/kg）", "note": "amiodarone 替代；依 {wt} kg；ROSC 後可考慮 1–4 mg/min 滴注" },
+        { "drug": "MgSO₄", "dose": "1–2 g in 10 mL", "route": "IV/IO over 1–2 min", "freq": "單次", "note": "**只用於 TdP／低血鎂**，不常規" },
+        { "drug": "Vasopressin", "dose": "20–40 U", "route": "IV/IO", "freq": "單次（可取代第 1 或 2 劑 epinephrine）", "note": "選擇性；院內 vasopressin + methylprednisolone 組合證據不一致" }
+      ],
+      "watch": ["每 2 分鐘節律；EtCO₂（< 10 改善 CPR；突然 ↑ = ROSC）", "記錄：每次電擊時間與能量、每劑藥、節律", "貼片是否貼緊；電擊時無人接觸"],
+      "call": ["任何院內心跳停止：同時啟動急救小組、通知後線與主治", "頑固 VF、疑心因（STEMI）→ 心臟科／ECMO-CPR（若院內有）", "決定停止急救 → leader 與後線共同決定並記錄"],
+      "refs": [{ "ch": "38", "q": "VF／pVT" }, { "ch": "38", "q": "急救藥物" }, { "ch": "38", "q": "去顫器操作" }],
+      "next": [
+        { "label": "≥ 3 次電擊仍 VF → 頑固 VF", "next": "r_refractory_vf" },
+        { "label": "找可逆原因（H's & T's）", "next": "q_hts" },
+        { "label": "轉為 asystole／PEA", "next": "r_pea" },
+        { "label": "ROSC → 後照護", "next": "r_rosc" }
+      ]
+    },
+    "r_pea": {
+      "type": "result",
+      "urgency": "red",
+      "title": "Asystole／PEA（不可電擊）",
+      "summary": "**CPR 2 分鐘 + epinephrine 1 mg 盡快（q3–5 min）**、進階氣道／EtCO₂、每 2 分鐘判讀；**PEA 一定要找 H's & T's**：低血容、缺氧、張力性氣胸、填塞、PE、高血鉀、中毒；床邊超音波。",
+      "steps": [
+        "CPR 2 分鐘 + **epinephrine 1 mg IV/IO 盡快**（之後 q3–5 min）",
+        "進階氣道 + EtCO₂ 波形；之後持續按壓 + 每 6 秒 1 次通氣",
+        "每 2 分鐘判讀（< 10 秒）：轉 VF/pVT → 電擊流程；asystole 確認貼片／導程接好、增益",
+        "找 H's & T's（PEA 尤其）：低血容、缺氧、張力性氣胸、填塞、PE、高血鉀、中毒 → 依原因處置",
+        "床邊超音波（心臟活動、心包積液、氣胸）——不中斷按壓 > 10 秒",
+        "**atropine 心跳停止不用**；NaHCO₃ 只在高血鉀、TCA 中毒、既有嚴重代謝性酸中毒、長時間急救",
+        "無 ROSC、asystole 持續、EtCO₂ < 10 持續 20 分鐘、可逆原因已排除 → 討論停止"
+      ],
+      "orders": [
+        { "drug": "O₂（BVM）", "dose": "15 L/min", "route": "BVM 30:2；進階氣道後每 6 秒 1 次", "freq": "持續", "note": "不中斷按壓 > 10 秒" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg（10 mL 1:10,000 或 1 mL 1:1,000 稀釋）", "route": "IV/IO push", "freq": "盡快，之後 q3–5 min", "note": "每次後沖 20 mL NS、抬手" },
+        { "drug": "NS／LR", "dose": "1–2 L", "route": "IV/IO 快速", "freq": "STAT（疑低血容）", "note": "出血 → 輸血" },
+        { "drug": "NaHCO₃ 8.4%", "dose": "{clamp(round(wt), 50, 100)} mEq（1 mEq/kg，50–100 mEq）", "route": "IV/IO push", "freq": "依 ABG", "note": "僅高血鉀、TCA 中毒、既有嚴重代謝性酸中毒、長時間急救；不常規" }
+      ],
+      "watch": ["每 2 分鐘節律；EtCO₂（< 10 改善 CPR；突然 ↑ ≥ 35–40 = ROSC）", "超音波：心臟活動、心包積液、氣胸", "記錄每劑藥時間"],
+      "call": ["任何院內心跳停止：同時啟動急救小組、通知後線與主治", "懷疑填塞、張力性氣胸、PE、高血鉀等可逆原因 → 相關專科", "決定停止急救 → leader 與後線共同決定"],
+      "refs": [{ "ch": "38", "q": "Asystole／PEA" }, { "ch": "38", "q": "可逆原因" }],
+      "next": [
+        { "label": "找可逆原因（H's & T's）", "next": "q_hts" },
+        { "label": "轉為 VF／pVT → 電擊", "next": "r_vf" },
+        { "label": "ROSC → 後照護", "next": "r_rosc" },
+        { "label": "停止急救的考量", "next": "r_terminate" }
+      ]
+    },
+    "r_refractory_vf": {
+      "type": "result",
+      "urgency": "red",
+      "title": "頑固 VF／pVT（≥ 3 次電擊仍 VF）",
+      "summary": "確認貼片貼緊、**改前後位貼片**（改變電擊向量）、換 amiodarone／lidocaine（第 2 劑）、找可逆原因（冠狀動脈血栓、TdP／低血鎂、高血鉀、中毒）；考慮 ECMO-CPR。",
+      "steps": [
+        "確認貼片貼緊、皮膚乾燥；改為前後位貼片（前胸 + 左肩胛下）",
+        "電擊能量用最大（雙相 200 J 或機器最大；單相 360 J）；充電時繼續按壓",
+        "抗心律不整：amiodarone 第 2 劑 150 mg；或改 lidocaine（0.5–0.75 mg/kg 追加，max 3 mg/kg）",
+        "TdP／多型 VT／低血鎂 → MgSO₄ 1–2 g",
+        "找可逆原因：冠狀動脈血栓（ROSC 後緊急心導管）、高血鉀、中毒（digoxin、TCA）、低體溫",
+        "持續 epinephrine q3–5 min；ECMO-CPR（若院內有）→ 早期聯絡",
+        "持續高品質 CPR，EtCO₂ 監測"
+      ],
+      "orders": [
+        { "drug": "Amiodarone（第 2 劑）", "dose": "150 mg（D5W 稀釋 20 mL）", "route": "IV/IO bolus", "freq": "1 次", "note": "第 1 劑 300 mg 之後" },
+        { "drug": "Lidocaine", "dose": "{round(wt*0.5)}–{round(wt*0.75)} mg（0.5–0.75 mg/kg）", "route": "IV/IO push", "freq": "q5–10 min，累計 max {round(wt*3)} mg（3 mg/kg）", "note": "amiodarone 替代或無效時；首劑 1–1.5 mg/kg；依 {wt} kg" },
+        { "drug": "MgSO₄", "dose": "1–2 g in 10 mL", "route": "IV/IO over 1–2 min", "freq": "單次", "note": "只用於 TdP／低血鎂" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min", "note": "沖 20 mL NS、抬手" }
+      ],
+      "watch": ["每 2 分鐘節律、EtCO₂", "電擊後節律變化（轉 asystole／PEA → 改不可電擊流程）"],
+      "call": ["頑固 VF → 後線 + 心臟科；ECMO-CPR 團隊（若院內有）", "疑 STEMI → ROSC 後緊急心導管"],
+      "refs": [{ "ch": "38", "q": "頑固 VF" }, { "ch": "38", "q": "Thrombosis, coronary" }],
+      "next": [
+        { "label": "找可逆原因（H's & T's）", "next": "q_hts" },
+        { "label": "ROSC → 後照護", "next": "r_rosc" }
+      ]
+    },
+    "q_hts": {
+      "type": "choice",
+      "title": "最可能的可逆原因（H's & T's）？",
+      "help": "PEA 尤其：低血容、缺氧、張力性氣胸、填塞、PE、高血鉀、中毒；床邊超音波（心臟活動、心包積液、氣胸）",
+      "options": [
+        { "label": "高血鉀／透析病人／高血鎂", "next": "r_hyperk" },
+        { "label": "低血鉀／低血鎂／TdP", "next": "r_hypok" },
+        { "label": "疑肺栓塞（PE）", "next": "r_pe" },
+        { "label": "中毒（鴉片、CCB／β-blocker、局麻劑、TCA、digoxin、氰化物）", "next": "q_toxin" },
+        { "label": "張力性氣胸／心包填塞／低血容／缺氧／酸中毒", "next": "r_mechanical" },
+        { "label": "低體溫（< 30℃）", "next": "r_hypothermia" },
+        { "label": "懷孕（子宮底 ≥ 臍）", "next": "r_pregnancy" },
+        { "label": "其他：低血糖、過敏、冠狀動脈血栓、溺水、創傷", "next": "r_other_causes" }
+      ]
+    },
+    "r_hyperk": {
+      "type": "result",
+      "urgency": "red",
+      "title": "高血鉀／透析病人心跳停止（含高血鎂）",
+      "summary": "持續 ACLS + **calcium chloride 1 g IV（或 gluconate 3 g）、NaHCO₃ 50 mEq、insulin 10 U + D50W 50 mL** → 緊急透析；高血鎂同樣給 calcium。",
+      "steps": [
+        "持續高品質 CPR + 依節律電擊／epinephrine",
+        "Calcium chloride 1 g IV/IO（或 calcium gluconate 3 g）→ 可重複",
+        "NaHCO₃ 50 mEq IV/IO",
+        "Regular insulin 10 U IV + D50W 50 mL",
+        "VBG／ABG 驗 K、Mg；停所有含 K 輸液",
+        "ROSC 後（或 ECMO 下）緊急透析 → 腎臟科；透析病人高血鉀優先處理",
+        "高血鎂（MgSO₄ 使用中、腎衰竭）→ 停 Mg、calcium"
+      ],
+      "orders": [
+        { "drug": "Calcium chloride 10%", "dose": "1 g（10 mL）", "route": "IV/IO push", "freq": "STAT，可重複", "alt": "Calcium gluconate 10% 3 g（30 mL）IV" },
+        { "drug": "NaHCO₃ 8.4%", "dose": "50 mEq", "route": "IV/IO push", "freq": "STAT", "note": "高血鉀時；不與 calcium 同一管路" },
+        { "drug": "Regular insulin", "dose": "10 U", "route": "IV push", "freq": "STAT", "with": "D50W 50 mL IV push" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min", "note": "依節律流程" }
+      ],
+      "watch": ["K q15–30 min（VBG）、血糖（insulin 後）", "節律變化；ROSC 後 ECG（T 波）"],
+      "call": ["透析病人／高血鉀心跳停止 → 腎臟科緊急透析", "任何院內心跳停止：急救小組 + 後線 + 主治"],
+      "refs": [{ "ch": "38", "q": "Hypo-/hyperkalemia" }, { "ch": "38", "q": "透析病人" }, { "ch": "33", "q": "高血鉀" }],
+      "next": [{ "label": "ROSC → 後照護", "next": "r_rosc" }]
+    },
+    "r_hypok": {
+      "type": "result",
+      "urgency": "red",
+      "title": "低血鉀／低血鎂／TdP 心跳停止",
+      "summary": "心跳停止或惡性心律不整：**KCl 經 CVC 2 mEq/min × 10 分鐘（20 mEq）後再 10 mEq over 5–10 分鐘，同時補 Mg**；TdP → MgSO₄ 1–2 g。有脈搏者依 Ch33 一般速率（CVC ≤ 20 mEq/hr）。",
+      "steps": [
+        "持續 ACLS；VF/pVT／TdP → 電擊（多型 VT 用非同步去顫）",
+        "KCl 經 CVC：2 mEq/min × 10 分鐘（20 mEq）→ 再 10 mEq over 5–10 分鐘",
+        "同時 MgSO₄ 1–2 g IV/IO（TdP／低血鎂）",
+        "VBG 驗 K、Mg；找原因（利尿劑、嘔吐腹瀉、insulin、QT 延長藥）",
+        "ROSC 後：有脈搏補鉀改一般速率（CVC ≤ 20 mEq/hr，Ch33）、心電監測、停 QT 延長藥"
+      ],
+      "orders": [
+        { "drug": "KCl", "dose": "20 mEq（2 mEq/min × 10 min）→ 再 10 mEq", "route": "經 CVC IV", "freq": "STAT → 第 2 劑 over 5–10 min", "note": "僅心跳停止／惡性心律不整；有脈搏者 CVC ≤ 20 mEq/hr（Ch33）" },
+        { "drug": "MgSO₄", "dose": "1–2 g in 10 mL", "route": "IV/IO over 1–2 min", "freq": "單次", "note": "TdP／低血鎂；同時補 Mg 否則 K 補不起來" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min", "note": "依節律流程" }
+      ],
+      "watch": ["K、Mg q1–2h（ROSC 後）；心電監測、QTc", "節律：TdP 復發"],
+      "call": ["任何院內心跳停止：急救小組 + 後線 + 主治", "ROSC 後 ICU；反覆 TdP → 心臟科"],
+      "refs": [{ "ch": "38", "q": "低血鉀（心跳停止" }, { "ch": "38", "q": "MgSO₄" }, { "ch": "33", "q": "KCl 靜脈（CVC）" }],
+      "next": [{ "label": "ROSC → 後照護", "next": "r_rosc" }]
+    },
+    "r_pe": {
+      "type": "result",
+      "urgency": "red",
+      "title": "疑肺栓塞（PE）心跳停止",
+      "summary": "**alteplase 50 mg IV bolus**（可 15 分鐘後再 50 mg），**持續 CPR 60–90 分鐘**；床邊超音波（右心擴大）支持診斷。",
+      "steps": [
+        "懷疑依據：DVT／VTE 風險、突然 PEA、超音波右心擴大、急救前喘／低血氧",
+        "Alteplase 50 mg IV bolus；15 分鐘後無 ROSC 可再 50 mg",
+        "溶栓後持續 CPR 60–90 分鐘再考慮停止",
+        "持續 epinephrine q3–5 min、依節律電擊",
+        "ROSC 後：抗凝、CTA、心臟科／ECMO 評估"
+      ],
+      "orders": [
+        { "drug": "Alteplase（rt-PA）", "dose": "50 mg", "route": "IV bolus", "freq": "STAT；15 分鐘後可再 50 mg", "note": "疑 PE 心跳停止；給藥後 CPR 持續 60–90 分鐘" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min", "note": "依節律流程" },
+        { "drug": "NS／LR", "dose": "1–2 L", "route": "IV/IO 快速", "freq": "STAT", "note": "阻塞性休克輸液有限效果，勿過量" }
+      ],
+      "watch": ["EtCO₂ 突然 ↑ = ROSC", "溶栓後出血（穿刺處、胸腔按壓傷害）"],
+      "call": ["疑 PE 心跳停止 → 後線同意溶栓；心臟科／ECMO", "任何院內心跳停止：急救小組 + 後線 + 主治"],
+      "refs": [{ "ch": "38", "q": "Thrombosis, pulmonary" }, { "ch": "38", "q": "Alteplase" }],
+      "next": [{ "label": "ROSC → 後照護", "next": "r_rosc" }]
+    },
+    "q_toxin": {
+      "type": "choice",
+      "title": "哪一種中毒？",
+      "help": "無脈：標準 ACLS 為主，解毒劑同時給；有脈的鴉片過量 → 通氣 + naloxone",
+      "options": [
+        { "label": "鴉片（morphine、fentanyl；針孔瞳孔、呼吸抑制）", "next": "r_toxin", "set": { "tox": "opioid" } },
+        { "label": "CCB／β-blocker 過量", "next": "r_toxin", "set": { "tox": "ccb" } },
+        { "label": "局部麻醉劑（bupivacaine、lidocaine 大量）", "next": "r_toxin", "set": { "tox": "la" } },
+        { "label": "TCA（三環抗憂鬱劑；寬 QRS）", "next": "r_toxin", "set": { "tox": "tca" } },
+        { "label": "Digoxin", "next": "r_toxin", "set": { "tox": "dig" } },
+        { "label": "氰化物（火災濃煙、nitroprusside）", "next": "r_toxin", "set": { "tox": "cn" } },
+        { "label": "不確定／多種", "next": "r_toxin", "set": { "tox": "unknown" } }
+      ]
+    },
+    "r_toxin": {
+      "type": "result",
+      "urgency": "red",
+      "title": "中毒心跳停止",
+      "summary": "標準 ACLS 不變，加專屬解毒劑：鴉片 naloxone；CCB／β-blocker calcium／glucagon／高劑量 insulin；局麻劑脂肪乳劑 1.5 mL/kg；TCA NaHCO₃；digoxin Fab；氰化物 hydroxocobalamin 5 g。中毒可延長急救時間，早期 ECMO。",
+      "steps": [
+        "持續高品質 CPR、依節律電擊／epinephrine q3–5 min",
+        "鴉片：無脈以 CPR 為主，naloxone 可給但不優先；有脈 → 通氣 + naloxone",
+        "CCB／β-blocker：calcium chloride 1 g、glucagon、高劑量 insulin（毒物科）",
+        "局麻劑：脂肪乳劑 20% 1.5 mL/kg bolus",
+        "TCA：NaHCO₃ 50–100 mEq（寬 QRS）",
+        "Digoxin：digoxin-specific Fab（確認院內庫存，Ch21）；氰化物：hydroxocobalamin 5 g",
+        "毒物科諮詢；考慮 ECMO；急救時間可較長"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min", "note": "依節律流程" },
+        { "drug": "Naloxone", "dose": "0.4–2 mg（IN 4 mg）", "route": "IV/IM/IN", "freq": "q2–3 min", "cond": "tox=='opioid' || tox=='unknown'", "note": "無脈：CPR 為主；有脈的呼吸停止才優先" },
+        { "drug": "Calcium chloride 10%", "dose": "1 g（10 mL）", "route": "IV/IO push", "freq": "q10–20 min × 3", "cond": "tox=='ccb' || tox=='unknown'", "alt": "Calcium gluconate 3 g", "note": "CCB／β-blocker 中毒（Ch21）" },
+        { "drug": "Glucagon", "dose": "3–5 mg", "route": "IV push", "freq": "可重複 → 3–5 mg/hr 滴注", "cond": "tox=='ccb'", "note": "β-blocker／CCB 過量；劑量依 Ch21；毒物科" },
+        { "drug": "Regular insulin（高劑量）", "dose": "{round(wt*1)} U bolus（1 U/kg）→ {round(wt*1)} U/hr", "route": "IV", "freq": "持續 + D10W，監測血糖／K", "cond": "tox=='ccb'", "note": "β-blocker／CCB 過量；依 {wt} kg；劑量依 Ch21；毒物科" },
+        { "drug": "脂肪乳劑 20%（lipid emulsion）", "dose": "{round(wt*1.5)} mL（1.5 mL/kg）", "route": "IV bolus", "freq": "STAT", "cond": "tox=='la' || tox=='unknown'", "note": "局麻劑中毒；依 {wt} kg" },
+        { "drug": "NaHCO₃ 8.4%", "dose": "{clamp(round(wt), 50, 100)} mEq（1 mEq/kg，50–100 mEq）", "route": "IV/IO push", "freq": "依 ABG／QRS 寬度", "cond": "tox=='tca' || tox=='unknown'", "note": "TCA 中毒" },
+        { "drug": "Digoxin-specific Fab（DigiFab）", "dose": "不明量：急性 10 支、慢性 3–6 支", "route": "IV drip", "freq": "單次", "cond": "tox=='dig' || tox=='unknown'", "note": "劑量依 Ch21；確認院內庫存；避免 calcium" },
+        { "drug": "Hydroxocobalamin", "dose": "5 g", "route": "IV drip", "freq": "單次", "cond": "tox=='cn' || tox=='unknown'", "note": "氰化物（火災濃煙）" }
+      ],
+      "watch": ["節律、EtCO₂；血糖／K（高劑量 insulin）", "QRS 寬度（TCA）"],
+      "call": ["中毒心跳停止 → 後線 + 毒物科；考慮 ECMO", "任何院內心跳停止：急救小組 + 後線 + 主治"],
+      "refs": [{ "ch": "38", "q": "Toxins" }, { "ch": "38", "q": "鴉片過量" }, { "ch": "21", "q": "β-blocker／CCB 過量" }],
+      "next": [{ "label": "ROSC → 後照護", "next": "r_rosc" }]
+    },
+    "r_mechanical": {
+      "type": "result",
+      "urgency": "red",
+      "title": "張力性氣胸／心包填塞／低血容／缺氧／酸中毒",
+      "summary": "張力性氣胸 → **針刺減壓（第 4–5 肋間腋前線）→ 胸管**；填塞 → 超音波導引心包穿刺；低血容 → NS/LR 1–2 L 快速、出血輸血；缺氧 → 確認氣道、100% O₂；酸中毒 → 通氣，NaHCO₃ 只在特定情況。",
+      "steps": [
+        "床邊超音波：心臟活動、心包積液、肺滑動（氣胸）、IVC",
+        "張力性氣胸（單側呼吸音消失、皮下氣腫、呼吸器高壓）→ 針刺減壓第 4–5 肋間腋前線 → 胸管",
+        "心包填塞 → 超音波導引心包穿刺；叫心臟科／外科",
+        "低血容：NS/LR 1–2 L 快速；出血 → 輸血、止血（Ch9）",
+        "缺氧：確認氣道位置（EtCO₂）、通氣、100% O₂；DOPE（Ch37）",
+        "酸中毒：先通氣；NaHCO₃ 50–100 mEq 僅高血鉀、TCA、既有嚴重代謝性酸中毒、長時間急救",
+        "持續 epinephrine q3–5 min、依節律電擊"
+      ],
+      "orders": [
+        { "drug": "針刺減壓（needle decompression）", "dose": "大口徑針 1 支", "route": "第 4–5 肋間腋前線", "freq": "STAT → 接著胸管", "note": "張力性氣胸" },
+        { "drug": "NS／LR", "dose": "1–2 L", "route": "IV/IO 快速", "freq": "STAT", "note": "低血容；出血改輸血" },
+        { "drug": "O₂ 100%", "dose": "15 L/min", "route": "BVM／進階氣道", "freq": "持續", "note": "缺氧" },
+        { "drug": "NaHCO₃ 8.4%", "dose": "{clamp(round(wt), 50, 100)} mEq（1 mEq/kg，50–100 mEq）", "route": "IV/IO push", "freq": "依 ABG", "note": "特定情況；不常規" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min", "note": "依節律流程" }
+      ],
+      "watch": ["減壓／穿刺後節律、EtCO₂、血壓", "超音波追蹤心包積液／氣胸"],
+      "call": ["填塞 → 心臟科／外科；張力性氣胸 → 胸管（胸腔科／外科）", "任何院內心跳停止：急救小組 + 後線 + 主治"],
+      "refs": [{ "ch": "38", "q": "Tension pneumothorax" }, { "ch": "38", "q": "Tamponade" }, { "ch": "38", "q": "Hypovolemia" }],
+      "next": [{ "label": "ROSC → 後照護", "next": "r_rosc" }]
+    },
+    "r_hypothermia": {
+      "type": "result",
+      "urgency": "red",
+      "title": "低體溫心跳停止",
+      "summary": "**< 30℃：只電擊 1 次、不給藥，直到復溫**；持續 CPR 並積極復溫（可考慮 ECMO）；不到復溫不宣告。",
+      "steps": [
+        "核心體溫（食道／膀胱／直腸）",
+        "持續 CPR；< 30℃ VF → 電擊 1 次，之後暫緩電擊與藥物直到 > 30℃",
+        "積極復溫：移除濕衣、暖毯、溫熱輸液、暖氣；ECMO 復溫（若院內有）",
+        "> 30℃ 後依標準 ACLS（藥物間隔可拉長）",
+        "急救時間可以很長；復溫前不宣告"
+      ],
+      "orders": [
+        { "drug": "溫熱 NS", "dose": "1–2 L（加溫）", "route": "IV/IO", "freq": "STAT", "note": "復溫；體溫 > 30℃ 前不給急救藥物" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min（**> 30℃ 後才開始**）", "note": "< 30℃ 不給藥" }
+      ],
+      "watch": ["核心體溫每 15 分鐘", "節律（復溫中 VF 再電擊）"],
+      "call": ["低體溫心跳停止 → 後線；ECMO 團隊（若院內有）", "任何院內心跳停止：急救小組 + 後線 + 主治"],
+      "refs": [{ "ch": "38", "q": "Hypothermia" }, { "ch": "38", "q": "低體溫：復溫" }],
+      "next": [{ "label": "ROSC → 後照護", "next": "r_rosc" }]
+    },
+    "r_pregnancy": {
+      "type": "result",
+      "urgency": "red",
+      "title": "懷孕心跳停止（子宮底 ≥ 臍）",
+      "summary": "標準 ACLS + **持續左推子宮**、IV 在橫膈以上、優先氣道；**停 MgSO₄ 改給 calcium**；**無 ROSC 4 分鐘 → 5 分鐘內復甦性剖腹產**（產科、新生兒科到場）。",
+      "steps": [
+        "立刻叫產科、新生兒科、麻醉；啟動急救小組",
+        "持續**手動左推子宮**（減少主動脈腔靜脈壓迫）；按壓位置與能量同成人",
+        "IV/IO 建立在**橫膈以上**（上肢／頸）",
+        "優先氣道（困難氣道預期）：早期插管、100% O₂",
+        "正在用 MgSO₄ → 停藥，給 calcium chloride 1 g（或 gluconate 3 g）",
+        "無 ROSC 4 分鐘 → **5 分鐘內復甦性剖腹產**（就地，不搬病人）",
+        "找原因：出血、PE／羊水栓塞、子癲症、MgSO₄ 中毒、麻醉併發症"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO（橫膈以上）", "freq": "q3–5 min", "note": "劑量同成人" },
+        { "drug": "Calcium chloride 10%", "dose": "1 g（10 mL）", "route": "IV/IO push", "freq": "STAT", "alt": "Calcium gluconate 3 g", "note": "MgSO₄ 使用中／疑 Mg 中毒；停 MgSO₄" },
+        { "drug": "NS／LR", "dose": "1–2 L", "route": "IV 快速", "freq": "STAT", "note": "疑出血 → 輸血" }
+      ],
+      "watch": ["急救開始時間（4 分鐘決策點）", "左推子宮是否持續、EtCO₂"],
+      "call": ["懷孕心跳停止當下：產科 + 新生兒科 + 麻醉 + 後線 + 主治", "4 分鐘無 ROSC → 復甦性剖腹產"],
+      "refs": [{ "ch": "38", "q": "懷孕" }, { "ch": "38", "q": "復甦性剖腹產" }],
+      "next": [{ "label": "ROSC → 後照護", "next": "r_rosc" }]
+    },
+    "r_other_causes": {
+      "type": "result",
+      "urgency": "red",
+      "title": "其他可逆原因：低血糖、高血鎂、過敏、冠狀動脈血栓、溺水、創傷、電擊傷",
+      "summary": "低血糖 → D50W 40 mL；高血鎂 → calcium；過敏 → epinephrine；冠狀動脈血栓 → ROSC 後緊急心導管／ECMO-CPR；溺水先 5 次通氣；創傷控制出血、張力性氣胸；電擊傷先確認安全。",
+      "steps": [
+        "指尖血糖：低血糖 → D50W 40 mL IV",
+        "高血鎂（MgSO₄、腎衰竭）→ 停 Mg、calcium chloride 1 g",
+        "過敏（anaphylaxis）→ epinephrine（心跳停止用 IV 1 mg；有脈 0.5 mg IM，Ch14）、大量輸液",
+        "冠狀動脈血栓（STEMI／頑固 VF）→ ROSC 後緊急心導管；ECMO-CPR（若院內有）→ 早期聯絡心臟科",
+        "溺水：先 5 次通氣再按壓；創傷：控制出血、張力性氣胸減壓、輸血；電擊傷：先確認電源安全",
+        "持續標準 ACLS"
+      ],
+      "orders": [
+        { "drug": "D50W", "dose": "40 mL", "route": "IV push", "freq": "STAT（血糖低時）", "note": "之後追蹤血糖" },
+        { "drug": "Calcium chloride 10%", "dose": "1 g（10 mL）", "route": "IV/IO push", "freq": "STAT，可重複", "note": "高血鎂／低血鈣", "alt": "Calcium gluconate 3 g" },
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg", "route": "IV/IO push", "freq": "q3–5 min", "note": "過敏性心跳停止亦同；有脈搏 anaphylaxis 改 0.5 mg IM（Ch14）" },
+        { "drug": "NS／LR", "dose": "1–2 L", "route": "IV/IO 快速", "freq": "STAT", "note": "過敏／創傷／低血容" }
+      ],
+      "watch": ["血糖、Mg、Ca", "ROSC 後 12 導程 ECG（STEMI？）"],
+      "call": ["疑 STEMI → 心臟科緊急心導管／ECMO-CPR", "創傷 → 外科；任何院內心跳停止：急救小組 + 後線 + 主治"],
+      "refs": [{ "ch": "38", "q": "其他 | 高血鎂" }, { "ch": "38", "q": "溺水" }, { "ch": "14", "q": "Epinephrine 1 mg/mL" }],
+      "next": [{ "label": "ROSC → 後照護", "next": "r_rosc" }]
+    },
+    "r_rosc": {
+      "type": "result",
+      "urgency": "red",
+      "title": "ROSC 後照護（AHA 2025）",
+      "summary": "**SpO₂ 90–98%、PaCO₂ 35–45、MAP ≥ 65、12 導程 ECG（STEMI → 緊急心導管）、對指令無反應者體溫控制 32–37.5℃ ≥ 24–36 小時**、找原因、ICU；預後評估 ≥ 72 小時再做。",
+      "steps": [
+        "氣道：進階氣道確認（EtCO₂）；SpO₂ 90–98%（避免長時間 100%）、PaO₂ 60–105、PaCO₂ 35–45；潮氣量 6–8 mL/kg（{round(wt*6)}–{round(wt*8)} mL）",
+        "循環：MAP ≥ 65（輸液 → norepinephrine）；12 導程 ECG；STEMI 或高度懷疑心因 → 緊急心導管；心因性休克考慮機械輔助",
+        "找原因：病史、H's & T's、CT 頭／胸／腹（原因或急救傷害）、超音波；抽血 ABG、乳酸、電解質、troponin、CBC、凝血、培養",
+        "體溫控制（對指令無反應者）：目標 32–37.5℃ 至少 24–36 小時、積極避免發燒，之後避免 > 37.7℃ 達 72 小時；不要大量冰生理食鹽水",
+        "神經：鎮靜、EEG 監測（非痙攣性癲癇）並治療；血糖 140–180、避免低血糖",
+        "預後：≥ 72 小時（正常體溫後）多模式評估（瞳孔、角膜、運動反應、EEG、SSEP、NSE、影像）；不要提早下結論",
+        "其他：抗生素依感染證據；壓瘡／VTE 預防；家屬溝通；轉 ICU；記錄與 debriefing"
+      ],
+      "orders": [
+        { "drug": "O₂／呼吸器", "dose": "SpO₂ 90–98%，TV {round(wt*6)}–{round(wt*8)} mL（6–8 mL/kg）", "route": "進階氣道", "freq": "持續；ABG 30 分鐘後調整 PaCO₂ 35–45", "note": "依 {wt} kg；避免長時間 100% O₂" },
+        { "drug": "NS／LR", "dose": "500 mL（心／腎衰竭 250 mL）", "route": "IV drip over 15 min", "freq": "STAT，可重複至 MAP ≥ 65", "note": "低血壓時" },
+        { "drug": "Norepinephrine", "dose": "{round(wt*0.05,1)}–{round(wt*0.1,1)} mcg/min 起（0.05–0.1 mcg/kg/min）", "route": "IV drip（CVC；周邊短暫可）", "freq": "持續，每 5–10 min 調至 MAP ≥ 65", "note": "泡法 8 mg/250 mL（32 mcg/mL）；劑量依 Ch19 表 19-1；依 {wt} kg" },
+        { "drug": "Lidocaine（選擇性）", "dose": "1–4 mg/min", "route": "IV drip", "freq": "持續", "note": "頑固 VF 後 ROSC 可考慮；非常規" },
+        { "drug": "體溫控制（TTM）", "dose": "目標 32–37.5℃", "route": "降溫毯／院內裝置", "freq": "≥ 24–36 小時，之後 72 小時避免 > 37.7℃", "note": "對指令無反應者；監測核心體溫、寒顫" },
+        { "drug": "Regular insulin（血糖控制）", "dose": "依院內 protocol", "route": "IV drip", "freq": "目標血糖 140–180", "note": "避免低血糖" }
+      ],
+      "watch": ["BP／MAP、SpO₂、EtCO₂、核心體溫 q15 min 至穩定", "12 導程 ECG、ABG 30 分鐘、乳酸、電解質（K、Mg）、血糖 q1h", "再次心跳停止；癲癇（EEG）"],
+      "call": ["ROSC 後立即：後線、主治、ICU；STEMI／高度懷疑心因 → 心臟科緊急心導管", "體溫控制、機械輔助（ECMO／IABP）決策", "家屬溝通與病危通知（Ch27）"],
+      "refs": [{ "ch": "38", "q": "ROSC 後照護" }, { "ch": "38", "q": "體溫控制" }, { "ch": "19", "q": "Norepinephrine" }]
+    },
+    "r_resp_arrest": {
+      "type": "result",
+      "urgency": "red",
+      "title": "有脈搏但無呼吸（呼吸停止／疑鴉片過量）",
+      "summary": "**每 6 秒 1 次通氣（10 次/min）**、每 2 分鐘查脈；疑鴉片過量給 **naloxone 0.4–2 mg**；脈搏消失 → 立刻 CPR。",
+      "steps": [
+        "叫人、急救車與去顫器到床邊；BVM 100% O₂ 每 6 秒 1 次通氣（10 次/min）",
+        "每 2 分鐘查脈；無脈 → CPR + 去顫器流程",
+        "疑鴉片（針孔瞳孔、morphine／fentanyl 使用）→ naloxone，可 q2–3 min 重複",
+        "找原因：鴉片、鎮靜劑（Ch25）、氣道阻塞、CO₂ 滯留、神經事件（Ch1）；ABG",
+        "通氣不足持續 → 準備插管、叫麻醉／後線"
+      ],
+      "orders": [
+        { "drug": "O₂ 100%（BVM）", "dose": "15 L/min，每 6 秒 1 次通氣（10 次/min）", "route": "BVM", "freq": "持續至自主呼吸恢復", "note": "每 2 分鐘查脈" },
+        { "drug": "Naloxone", "dose": "0.4–2 mg（IN 4 mg）", "route": "IV/IM/IN", "freq": "q2–3 min", "note": "疑鴉片過量的呼吸停止（有脈）；效果短，需觀察再發" }
+      ],
+      "watch": ["脈搏 q2 min；SpO₂、EtCO₂、RR", "naloxone 後再度呼吸抑制（半衰期短）"],
+      "call": ["呼吸停止當下叫後線；需插管 → 麻醉", "轉為無脈 → 啟動急救小組"],
+      "refs": [{ "ch": "38", "q": "有脈無呼吸" }, { "ch": "38", "q": "Naloxone" }],
+      "next": [{ "label": "脈搏消失 → 心跳停止流程", "next": "i_cpr" }]
+    },
+    "r_choking": {
+      "type": "result",
+      "urgency": "red",
+      "title": "異物哽塞",
+      "summary": "清醒無法說話／咳嗽：**背部拍擊 5 次 + 腹部推擠 5 次交替**（孕婦／肥胖用胸部推擠）；失去意識 → CPR，每次給氣前看口腔。",
+      "steps": [
+        "能咳能說話 → 鼓勵咳嗽、不要拍背干擾",
+        "無法說話／咳嗽：背部拍擊 5 次 + 腹部推擠（Heimlich）5 次交替至排出",
+        "孕婦／肥胖 → 胸部推擠取代腹部推擠",
+        "失去意識 → 放平、開始 CPR（30:2）；每次給氣前看口腔，看得到才取出（勿盲掃）",
+        "叫人、急救車、吸引器、喉頭鏡與 Magill 鉗；後線／麻醉",
+        "排出後仍喘或有腹部推擠 → 評估腹部損傷、CXR"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "100%（NRM 或 BVM）", "route": "面罩", "freq": "異物排出後持續至穩定", "note": "SpO₂ 目標 94–98%" }
+      ],
+      "watch": ["意識、SpO₂、能否說話", "腹部推擠後腹痛（內臟損傷）"],
+      "call": ["無法排出或失去意識 → 急救小組 + 麻醉（喉頭鏡取物）", "排出後持續喘／SpO₂ 低"],
+      "refs": [{ "ch": "38", "q": "異物哽塞" }],
+      "next": [{ "label": "失去意識、無脈 → 心跳停止流程", "next": "i_cpr" }]
+    },
+    "r_not_arrest": {
+      "type": "result",
+      "urgency": "red",
+      "title": "沒反應但有脈搏、有呼吸（非心跳停止）",
+      "summary": "不是 CPR 情境：ABC、復甦姿勢、監測、**血糖**、找原因（意識改變 Ch1）；急救車留在床邊、每 2 分鐘再確認脈搏呼吸。",
+      "steps": [
+        "側躺復甦姿勢（無創傷）、抽吸口腔分泌物、O₂ 目標 94–98%",
+        "心電監測、SpO₂、BP、指尖血糖；低血糖 → D50W 40 mL",
+        "疑鴉片（針孔瞳孔、呼吸慢）→ naloxone",
+        "神經學檢查、瞳孔；依 Ch1 意識改變流程（中風、癲癇、代謝、鎮靜劑）",
+        "急救車與去顫器留床邊；每 2 分鐘再確認呼吸與脈搏"
+      ],
+      "orders": [
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%", "route": "鼻管／面罩", "freq": "持續", "note": "CO₂ 滯留者 88–92%" },
+        { "drug": "D50W", "dose": "40 mL", "route": "IV push", "freq": "STAT（血糖低時）", "note": "15 分鐘後複測（Ch28）" },
+        { "drug": "Naloxone", "dose": "0.4–2 mg（IN 4 mg）", "route": "IV/IM/IN", "freq": "q2–3 min PRN", "note": "疑鴉片過量" }
+      ],
+      "watch": ["呼吸與脈搏 q2 min；GCS、瞳孔", "血糖、SpO₂、BP"],
+      "call": ["GCS 下降、呼吸變慢、血行不穩 → 後線", "疑中風／癲癇 → 依 Ch1／Ch3 通知"],
+      "refs": [{ "ch": "38", "q": "有脈無呼吸" }, { "ch": "01", "q": "意識改變" }],
+      "next": [{ "label": "脈搏消失 → 心跳停止流程", "next": "i_cpr" }]
+    },
+    "i_defib": {
+      "type": "info",
+      "title": "去顫器操作與能量",
+      "body": [
+        "貼片：胸骨右上（鎖骨下）+ 左腋中線第 5 肋間（心尖）；或前後位；節律器／ICD 病人避開裝置 ≥ 8 cm",
+        "**去顫（非同步）**：VF／pVT／多型 VT；雙相 **120–200 J**（第 2 次以後等同或更高，不知道就最大）；單相 360 J",
+        "頑固 VF（≥ 3 次仍 VF）：確認貼片貼緊、改前後位貼片（改變向量）、換 amiodarone／lidocaine、找可逆原因",
+        "**同步整流（有脈搏不穩定的心搏過速）**：按 SYNC 確認 R 波標記；Afib 200 J、AFL 200 J、窄 QRS 規則 100 J、單型 VT 100 J（Ch20 表 20-1）",
+        "充電時繼續按壓；「離開」口令確認無人接觸；電擊後立即 CPR 不看節律",
+        "經皮節律（TCP）：Ch21"
+      ],
+      "next": "q_rhythm"
+    },
+    "r_terminate": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "停止急救的考量／DNR",
+      "summary": "停止考量：無 ROSC、asystole 持續、**EtCO₂ < 10 持續 20 分鐘**、目擊與時間、可逆原因已排除、病人意願；**由 leader 與後線決定並記錄**。DNR：不啟動 CPR，但確認文件有效、通知主治與家屬、舒適照護。",
+      "steps": [
+        "確認：高品質 CPR 已足夠時間、可逆原因（H's & T's）已排除／處理、低體溫已復溫、中毒與 PE 溶栓已給足時間",
+        "客觀指標：asystole 持續、EtCO₂ < 10 mmHg 持續 20 分鐘、未目擊／時間長、無 ROSC",
+        "病人意願、預立醫療決定、家屬意見；家屬要求停止或 DNR 狀態不明 → 主治／後線",
+        "leader 與後線共同決定停止時間並記錄；死亡宣告與病危通知流程（Ch27）",
+        "DNR 病人：不啟動 CPR；確認文件有效；通知主治與家屬；提供舒適照護（止痛、抽吸、氧氣）",
+        "記錄：發現時間、開始 CPR、每次電擊時間與能量、每劑藥、節律、ROSC 或停止時間、參與者；事後 debriefing"
+      ],
+      "orders": [
+        { "drug": "舒適照護（DNR）", "dose": "依需要（止痛 Ch22、抽吸、O₂）", "route": "—", "freq": "持續", "note": "不啟動 CPR；記錄並通知主治與家屬" }
+      ],
+      "watch": ["急救記錄完整性", "家屬情緒與溝通需求"],
+      "call": ["決定停止急救 → 後線與主治共同決定", "家屬要求停止或 DNR 狀態不明 → 主治", "死亡宣告與病危通知（Ch27）"],
+      "refs": [{ "ch": "38", "q": "停止急救的考量" }, { "ch": "38", "q": "DNR 病人" }, { "ch": "27", "q": "死亡宣告" }]
+    },
+    "r_drugs": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急救藥物劑量表（心跳停止）",
+      "summary": "Epinephrine 1 mg q3–5 min；amiodarone 300 → 150 mg；lidocaine 1–1.5 mg/kg；MgSO₄ 只給 TdP；calcium／NaHCO₃ 只給特定情況；**atropine 心跳停止不用**；naloxone 給有脈的鴉片呼吸停止；alteplase 50 mg 疑 PE。",
+      "steps": [
+        "每劑藥後沖 20 mL NS 並抬手；IO 為 IV 的快速替代",
+        "每 2 分鐘給藥時機與節律判讀同步；記錄每劑時間",
+        "可電擊：epinephrine 第 2 次電擊後、amiodarone 第 3 次電擊後；不可電擊：epinephrine 盡快",
+        "特殊藥物只在對應可逆原因時給（見 H's & T's）"
+      ],
+      "orders": [
+        { "drug": "Epinephrine 1 mg/mL", "dose": "1 mg（10 mL 1:10,000 或 1 mL 1:1,000 稀釋）", "route": "IV/IO", "freq": "q3–5 min", "note": "每次後沖 20 mL NS、抬手；氣管內（無 IV）2–2.5 mg 稀釋 10 mL（不建議）" },
+        { "drug": "Amiodarone", "dose": "300 mg bolus → 150 mg", "route": "IV/IO", "freq": "1 次 → 1 次", "note": "頑固 VF/pVT；D5W 稀釋 20 mL" },
+        { "drug": "Lidocaine", "dose": "{round(wt*1)}–{round(wt*1.5)} mg（1–1.5 mg/kg）→ {round(wt*0.5)}–{round(wt*0.75)} mg（0.5–0.75 mg/kg）", "route": "IV/IO", "freq": "q5–10 min，max {round(wt*3)} mg（3 mg/kg）", "note": "amiodarone 替代；依 {wt} kg；ROSC 後 1–4 mg/min 滴注可考慮" },
+        { "drug": "MgSO₄", "dose": "1–2 g in 10 mL", "route": "IV/IO over 1–2 min", "freq": "單次", "note": "只用於 TdP／低血鎂，不常規" },
+        { "drug": "Calcium chloride 10%", "dose": "1 g（10 mL）", "route": "IV/IO", "freq": "可重複", "note": "高血鉀、低血鈣、CCB 中毒、高血鎂；不常規", "alt": "Calcium gluconate 10% 3 g" },
+        { "drug": "NaHCO₃ 8.4%", "dose": "{clamp(round(wt), 50, 100)} mEq（1 mEq/kg，50–100 mEq）", "route": "IV/IO", "freq": "依 ABG", "note": "高血鉀、TCA 中毒、既有嚴重代謝性酸中毒、長時間急救；不常規" },
+        { "drug": "Atropine", "dose": "1 mg", "route": "IV", "freq": "q3–5 min，max 3 mg", "note": "**心跳停止不用**；有脈搏心搏過緩用（Ch21）" },
+        { "drug": "Vasopressin", "dose": "20–40 U", "route": "IV/IO", "freq": "單次（可取代第 1 或 2 劑 epinephrine）", "note": "選擇性；vasopressin + methylprednisolone 組合證據不一致" },
+        { "drug": "Naloxone", "dose": "0.4–2 mg（IN 4 mg）", "route": "IV/IM/IN", "freq": "q2–3 min", "note": "疑鴉片過量的呼吸停止（有脈）；心跳停止以 CPR 為主" },
+        { "drug": "Alteplase", "dose": "50 mg bolus（可 15 分鐘後再 50 mg）", "route": "IV", "freq": "單次，可重複 1 次", "note": "疑 PE；之後 CPR 持續 60–90 分鐘" }
+      ],
+      "watch": ["每劑藥時間與節律記錄", "EtCO₂（CPR 品質／ROSC）"],
+      "call": ["任何院內心跳停止：急救小組 + 後線 + 主治", "特殊情況（懷孕、低體溫、中毒）→ 後線／相關專科"],
+      "refs": [{ "ch": "38", "q": "急救藥物" }, { "ch": "A4", "q": "Amiodarone" }],
+      "next": [
+        { "label": "VF／pVT 流程", "next": "r_vf" },
+        { "label": "Asystole／PEA 流程", "next": "r_pea" },
+        { "label": "可逆原因（H's & T's）", "next": "q_hts" }
+      ]
+    }
+  }
+}

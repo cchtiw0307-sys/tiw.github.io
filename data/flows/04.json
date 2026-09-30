@@ -1,0 +1,448 @@
+{
+  "id": "04",
+  "title": "頭痛",
+  "chapter": "04",
+  "entries": [
+    { "label": "病人頭痛（護理師通知）", "type": "symptom", "start": "q_redflag", "group": "頭部",
+      "keywords": ["頭痛", "headache", "頭很痛", "偏頭痛", "要止痛藥", "頭痛 藥"] },
+    { "label": "突然劇烈頭痛（雷擊頭痛）", "type": "symptom", "start": "r_sah_workup", "group": "頭部",
+      "keywords": ["雷擊頭痛", "thunderclap", "這輩子最痛", "突然劇烈頭痛", "SAH", "蛛網膜下腔出血", "worst headache"] },
+    { "label": "頭痛 + 發燒／頸僵（疑腦膜炎）", "type": "symptom", "start": "q_mening_host", "group": "頭部",
+      "keywords": ["頭痛 發燒", "頸部僵硬", "頸僵", "neck stiffness", "腦膜炎", "meningitis", "瘀點"] },
+    { "label": "偏頭痛急性發作", "type": "diagnosis", "start": "r_migraine",
+      "keywords": ["偏頭痛", "migraine", "sumatriptan", "rizatriptan", "triptan", "畏光", "單側搏動"] },
+    { "label": "張力型頭痛", "type": "diagnosis", "start": "r_tension",
+      "keywords": ["張力型頭痛", "tension headache", "緊箍", "雙側頭痛"] },
+    { "label": "叢集性頭痛", "type": "diagnosis", "start": "r_cluster",
+      "keywords": ["叢集性頭痛", "cluster headache", "眼眶痛", "流淚鼻塞", "100% O2"] },
+    { "label": "細菌性腦膜炎（經驗性抗生素）", "type": "diagnosis", "start": "q_mening_host",
+      "keywords": ["細菌性腦膜炎", "bacterial meningitis", "ceftriaxone 2 g", "vancomycin", "ampicillin Listeria", "LP", "腰椎穿刺", "dexamethasone"] },
+    { "label": "HSV／VZV 腦炎", "type": "diagnosis", "start": "r_hsv",
+      "keywords": ["HSV 腦炎", "encephalitis", "腦炎", "acyclovir", "herpes", "行為改變 發燒"] },
+    { "label": "腦膿瘍", "type": "diagnosis", "start": "r_abscess",
+      "keywords": ["腦膿瘍", "brain abscess", "metronidazole", "ring enhancing"] },
+    { "label": "蛛網膜下腔出血（SAH）已確診", "type": "diagnosis", "start": "r_sah",
+      "keywords": ["SAH", "蛛網膜下腔出血", "subarachnoid", "nimodipine", "動脈瘤", "aneurysm"] },
+    { "label": "顱內壓上升／腦脫疝", "type": "diagnosis", "start": "r_icp",
+      "keywords": ["顱內壓上升", "ICP", "腦脫疝", "herniation", "mannitol", "視乳突水腫", "papilledema", "Cushing triad"] },
+    { "label": "巨細胞動脈炎（GCA）", "type": "diagnosis", "start": "q_gca_vision",
+      "keywords": ["巨細胞動脈炎", "GCA", "giant cell arteritis", "顳動脈炎", "temporal arteritis", "下顎跛行", "ESR 高 頭痛", "黑矇"] },
+    { "label": "低腦壓（腰椎穿刺後）頭痛", "type": "diagnosis", "start": "r_lowpressure",
+      "keywords": ["低腦壓頭痛", "post-LP headache", "腰椎穿刺後頭痛", "硬膜外血液貼片", "blood patch", "caffeine", "脊椎麻醉後頭痛"] },
+    { "label": "急性閉角性青光眼", "type": "diagnosis", "start": "r_glaucoma",
+      "keywords": ["急性青光眼", "acute angle closure glaucoma", "眼痛 頭痛", "看光暈", "acetazolamide", "眼壓"] },
+    { "label": "帶狀皰疹（頭頸部）", "type": "diagnosis", "start": "r_zoster",
+      "keywords": ["帶狀皰疹", "herpes zoster", "shingles", "valacyclovir", "Hutchinson sign", "Ramsay-Hunt", "皮蛇"] },
+    { "label": "鼻竇炎", "type": "diagnosis", "start": "r_sinusitis",
+      "keywords": ["鼻竇炎", "sinusitis", "膿鼻涕", "augmentin", "amoxicillin-clavulanate"] }
+  ],
+  "nodes": {
+    "q_redflag": {
+      "type": "multi",
+      "title": "紅旗（SNNOOP10）：勾選所有符合",
+      "help": "電話中先叫：VS、GCS、瞳孔；突然劇痛、意識改變、發燒、局部無力、嘔吐 → 立刻到床邊",
+      "options": [
+        { "label": "猝發雷擊（秒到 1 分鐘內達最痛）", "set": { "thunder": true } },
+        { "label": "發燒／頸部僵硬／瘀點／免疫低下", "set": { "fever": true } },
+        { "label": "單側瞳孔散大、意識快速惡化、Cushing triad、去皮質／去大腦姿勢", "set": { "hern": true } },
+        { "label": "意識改變、局部神經缺損、癲癇、視乳突水腫、BP > 180/120 + 神經症狀", "set": { "neuro": true } },
+        { "label": "> 50 歲新發頭痛、顳動脈壓痛、下顎跛行、視力症狀", "set": { "gca": true } },
+        { "label": "眼痛紅眼、看光暈、瞳孔中等固定、噁心嘔吐", "set": { "eye": true } },
+        { "label": "頭部外傷／抗凝血劑／懷孕或產後／癌症／HIV", "set": { "risk": true } },
+        { "label": "型態改變、進行性惡化、躺下或 Valsalva 加劇", "set": { "pattern": true } },
+        { "label": "近期腰椎穿刺／脊椎麻醉，站起加劇、躺下緩解", "set": { "lp": true } }
+      ],
+      "branches": [
+        { "if": "hern", "next": "r_icp" },
+        { "if": "thunder", "next": "r_sah_workup" },
+        { "if": "fever", "next": "q_mening_host" },
+        { "if": "eye", "next": "r_glaucoma" },
+        { "if": "gca", "next": "q_gca_vision" },
+        { "if": "neuro || risk || pattern", "next": "r_redflag_workup" },
+        { "if": "lp", "next": "r_lowpressure" },
+        { "else": "q_primary" }
+      ]
+    },
+    "q_primary": {
+      "type": "choice",
+      "title": "無紅旗：最像哪一種？",
+      "help": "「和平常一樣」的頭痛 → 止痛即可；止痛後 1–2 小時未改善且型態不典型 → 回頭找紅旗",
+      "options": [
+        { "label": "單側搏動、畏光／噁心、4–72 hr、和平常偏頭痛一樣", "next": "r_migraine" },
+        { "label": "雙側緊箍、輕中度、無噁心畏光", "next": "r_tension" },
+        { "label": "單側眼眶劇痛 15–180 min + 流淚／鼻塞／眼瞼下垂", "next": "r_cluster" },
+        { "label": "鼻竇壓痛、膿鼻涕、感冒後", "next": "r_sinusitis" },
+        { "label": "單側皮節水泡／燒灼痛（頭頸部）", "next": "r_zoster" },
+        { "label": "不典型／不確定", "next": "r_redflag_workup" }
+      ]
+    },
+    "q_mening_host": {
+      "type": "choice",
+      "title": "疑腦膜炎：病人屬於哪一類？（先抽血液培養 × 2，1 小時內給抗生素，不等 LP／CT）",
+      "help": "典型：頭痛、發燒、頸僵、意識改變 95% 至少 2 項；老年／免疫低下可只有嗜睡不發燒",
+      "options": [
+        { "label": "一般成人 18–50 歲、社區型", "next": "r_meningitis", "set": { "host": "std" } },
+        { "label": "> 50 歲、酗酒、懷孕、免疫低下（加 Listeria 涵蓋）", "next": "r_meningitis", "set": { "host": "list" } },
+        { "label": "院內／神經外科術後／腦室引流／頭部外傷／免疫低下（Pseudomonas、MRSA）", "next": "r_meningitis", "set": { "host": "nosoc" } },
+        { "label": "β-lactam 嚴重過敏", "next": "r_meningitis", "set": { "host": "allergy" } }
+      ]
+    },
+    "q_gca_vision": {
+      "type": "choice",
+      "title": "疑 GCA：有視力喪失或一過性黑矇嗎？",
+      "help": "> 50 歲新頭痛 + 顳動脈壓痛／下顎跛行 + ESR > 50、CRP↑；不等切片立即給類固醇",
+      "options": [
+        { "label": "有視力喪失／一過性黑矇／複視", "next": "r_gca", "set": { "vision": true } },
+        { "label": "沒有視力症狀", "next": "r_gca", "set": { "vision": false } }
+      ]
+    },
+    "r_redflag_workup": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "紅旗頭痛：CT ± LP，聯絡後線",
+      "summary": "意識改變、局部缺損、癲癇、視乳突水腫、外傷、抗凝、懷孕、型態改變 → **非顯影頭部 CT**；懷疑靜脈栓塞／剝離加 CTA／CTV；CT 正常仍懷疑感染／SAH → LP。止痛先用 acetaminophen（避免 NSAID／aspirin 直到排除出血）。",
+      "steps": [
+        "VS（BP > 180/120 + 神經症狀 → 高血壓腦病變，Ch18）、GCS、瞳孔、視野、眼球運動、顏面、四肢肌力、步態、頸僵",
+        "檢驗：CBC、PT/aPTT、Na、血糖、CRP/ESR、驗孕；發燒 → 血液培養",
+        "非顯影頭部 CT；懷疑動脈瘤／剝離／RCVS／靜脈栓塞（懷孕、產後、OCP）→ CTA／CTV",
+        "LP 指標（先 CT）：免疫低下、顱內病灶史、新發癲癇、視乳突水腫、GCS < 15、局部缺損",
+        "抗凝血劑使用者外傷／新頭痛 → 立即 CT，出血則逆轉（Ch1、Ch30）",
+        "眼底（視乳突水腫）；發燒 + 頸僵 → 腦膜炎流程（不等 LP 給抗生素）",
+        "聯絡後線；CT／LP 異常依診斷處理"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "排除出血前避免 NSAID／aspirin" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV over 15 min／IM", "freq": "q6–8h PRN 嘔吐", "note": "EPS（可先給 diphenhydramine 30 mg）；QT 延長" },
+        { "drug": "NS", "dose": "500 mL", "route": "IV drip over 1–2 hr", "freq": "嘔吐脫水時", "note": "心／腎衰竭 250 mL" }
+      ],
+      "watch": ["GCS、瞳孔 q1h 至影像完成", "BP、新神經症狀、嘔吐"],
+      "call": ["頭痛 + 意識改變、局部缺損、癲癇、視乳突水腫、瞳孔不對稱 → 立刻後線", "BP > 180/120 合併神經症狀、抗凝血劑者新頭痛或外傷、CT 或 LP 異常"],
+      "ddx": ["SAH（雷擊）", "腦膜炎／腦炎", "ICH／SDH（外傷、抗凝）", "腦靜脈栓塞（懷孕、OCP）", "高血壓腦病變／PRES", "腫瘤／ICP↑"],
+      "refs": [{ "ch": "04", "q": "SNNOOP10" }, { "ch": "04", "q": "非顯影頭部 CT" }],
+      "next": [{ "label": "CT 出血／SAH → SAH 處置", "next": "r_sah" }, { "label": "腦脫疝徵候 → ICP↑", "next": "r_icp" }, { "label": "發燒／CSF 化膿 → 腦膜炎", "next": "q_mening_host" }]
+    },
+    "r_sah_workup": {
+      "type": "result",
+      "urgency": "red",
+      "title": "雷擊頭痛：SAH 直到證明不是",
+      "summary": "1 分鐘內達最痛 = SAH：**6 小時內 CT**（陰性幾乎可排除）；> 6 小時 CT 陰性需 LP（黃變、RBC 不隨管數下降）或 CTA；絕對臥床、止痛避免 NSAID、SBP < 160，聯絡後線 + 神外。",
+      "steps": [
+        "VS、GCS、瞳孔、局部缺損、頸僵；IV、心電監測",
+        "立即非顯影頭部 CT（6 小時內陰性幾乎排除 SAH）",
+        "CT 陰性且 > 6 小時 → LP（黃變、RBC 不隨管數下降）或 CTA",
+        "CT 陽性 → SAH 處置：絕對臥床、SBP < 160、nimodipine、緊急神外／神放",
+        "CBC、PT/aPTT（LP 前）、Na、ECG；鑑別 RCVS、動脈剝離、腦下垂體中風、腦靜脈栓塞（CTA／CTV）"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO／IV", "freq": "q6h PRN，max 3 g/d", "note": "避免 NSAID／aspirin（出血）" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV over 15 min", "freq": "q6–8h PRN 嘔吐", "note": "EPS、QT 延長" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min 加 2.5 mg/hr，max 15 mg/hr", "route": "IVD", "freq": "持續（SBP > 160 時）", "note": "20 mg in NS total 40 mL（Ch1）；SAH 目標 SBP < 160" }
+      ],
+      "watch": ["GCS、瞳孔 q1h；BP q15 min（目標 SBP < 160）", "再次劇痛（再出血）、新局部徵候"],
+      "call": ["雷擊頭痛當下就聯絡後線；CT 陽性 → 神經外科", "GCS 下降、瞳孔不對稱、癲癇"],
+      "ddx": ["RCVS", "頸／椎動脈剝離", "腦下垂體中風", "腦靜脈栓塞"],
+      "refs": [{ "ch": "04", "q": "雷擊頭痛" }, { "ch": "04", "q": "蛛網膜下腔出血" }],
+      "next": [{ "label": "CT 確診 SAH → 完整處置", "next": "r_sah" }]
+    },
+    "r_sah": {
+      "type": "result",
+      "urgency": "red",
+      "title": "蛛網膜下腔出血（SAH）",
+      "summary": "絕對臥床、止痛（避免 NSAID／aspirin）、止吐、便軟劑；**SBP < 160**；**nimodipine 60 mg q4h × 21 天**；緊急神外／神放介入；逆轉抗凝血。",
+      "steps": [
+        "立刻後線 + 神經外科／神放；保護氣道（GCS ≤ 8 插管）；床頭 30°",
+        "絕對臥床、安靜、避免 Valsalva（便軟劑）",
+        "SBP < 160（nicardipine／labetalol）；避免低血容",
+        "逆轉抗凝血（Ch1、Ch30）；血小板 < 100,000 → 輸血小板",
+        "nimodipine 21 天（預防血管痙攣）；抗癲癇依神外",
+        "CTA 找動脈瘤；心電監測（神經性心肌損傷）、Na（腦性鹽耗）"
+      ],
+      "orders": [
+        { "drug": "Nimodipine", "dose": "60 mg", "route": "PO／NG", "freq": "q4h × 21 天", "note": "低血壓改 30 mg q2h" },
+        { "drug": "Nicardipine", "dose": "5 mg/hr 起，每 5–15 min 加 2.5 mg/hr，max 15 mg/hr", "route": "IVD", "freq": "持續，目標 SBP < 160", "note": "20 mg in NS total 40 mL（0.5 mg/mL）；未處理動脈瘤前 SBP < 160" },
+        { "drug": "Labetalol", "dose": "10–20 mg", "route": "IVP over 1–2 min", "freq": "q10–15 min，累計 max 300 mg", "note": "禁：氣喘、HR < 60、AV block（Ch1）", "alt": "nicardipine" },
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO／NG", "freq": "q6h，max 3 g/d", "with": "短效鴉片 PRN（依院內）", "note": "避免 NSAID／aspirin" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV over 15 min", "freq": "q6–8h PRN 嘔吐", "note": "EPS、QT" },
+        { "drug": "便軟劑（sennoside／MgO）", "dose": "依院內", "route": "PO", "freq": "HS", "note": "避免用力" },
+        { "drug": "Levetiracetam", "dose": "500–1,000 mg", "route": "IV／PO", "freq": "q12h", "note": "抗癲癇預防依神外；CrCl {round(crcl)} 調整" }
+      ],
+      "watch": ["GCS、瞳孔 q1h；BP q15 min → 穩定後 q1h", "血管痙攣（3–14 天）：新局部缺損、意識變差", "Na q12h、ECG、心電監測"],
+      "call": ["確診 SAH = 後線 + 神經外科／神放", "GCS 下降、再出血（突發劇痛）、新缺損、Na 異常"],
+      "refs": [{ "ch": "04", "q": "蛛網膜下腔出血" }, { "ch": "01", "q": "顱內出血（ICH）" }]
+    },
+    "r_meningitis": {
+      "type": "result",
+      "urgency": "red",
+      "title": "細菌性腦膜炎：經驗性抗生素（1 小時內，不等 LP）",
+      "summary": "血液培養 × 2 → **1 小時內抗生素**（腦膜炎劑量）；dexamethasone 第一劑抗生素前 10–20 min 或同時；有 LP 先 CT 指標者，抗生素仍先給；飛沫隔離。",
+      "steps": [
+        "血液培養 × 2 套後立即抗生素（腦膜炎劑量，依腎功能調整）",
+        "Dexamethasone 第一劑抗生素前 10–20 min 或同時（肺炎鏈球菌、GCS 8–11 效果最佳；隱球菌勿用）",
+        "LP 指標先 CT：免疫低下、顱內病灶史、新癲癇、視乳突水腫、GCS < 15、局部缺損；LP 在抗生素後 4 小時內做仍有價值",
+        "CSF：細胞數／分類、糖、蛋白、Gram stain、培養；視情況 AFB／TB PCR、隱球菌抗原、HSV/VZV PCR；「2 法則」WBC > 2,000、糖 < 20、蛋白 > 200 任一 → 細菌性",
+        "飛沫隔離至排除腦膜炎雙球菌；確認 → 密切接觸者預防（rifampin／cipro／ceftriaxone），通知感管",
+        "發燒 + 行為改變／癲癇／局部缺損 → 加 acyclovir（HSV 腦炎）",
+        "SpO₂、GCS、癲癇處置（Ch3）；聯絡後線 + 感染科"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q12h", "note": "社區型首選", "cond": "host == 'std' || host == 'list'" },
+        { "drug": "Vancomycin", "dose": "{round(wt*25)}–{round(wt*30)} mg loading（25–30 mg/kg）→ {round(wt*15)}–{round(wt*20)} mg（15–20 mg/kg）", "route": "IVD", "freq": "loading STAT → q8–12h（trough 15–20 或 AUC）", "note": "台灣 PRSP 多，必加；依 {wt} kg；CrCl {round(crcl)} 調整頻次", "cond": "host != 'allergy'" },
+        { "drug": "Ampicillin", "dose": "2 g", "route": "IV", "freq": "q4h", "note": "涵蓋 Listeria（> 50 歲、酗酒、懷孕、免疫低下）", "cond": "host == 'list'" },
+        { "drug": "Cefepime", "dose": "2 g", "route": "IV", "freq": "q8h", "note": "院內／術後／引流／外傷：涵蓋 Pseudomonas；CrCl {round(crcl)} 調整（腎功能差易癲癇）；或 meropenem", "cond": "host == 'nosoc'" },
+        { "drug": "Meropenem", "dose": "2 g", "route": "IV", "freq": "q8h", "note": "cefepime 替代；已涵蓋 Listeria 可不加 ampicillin；CrCl {round(crcl)} 調整", "cond": "host == 'nosoc'", "alt": "cefepime" },
+        { "drug": "Ampicillin（免疫低下者）", "dose": "2 g", "route": "IV", "freq": "q4h", "note": "用 cefepime 時免疫低下者加（涵蓋 Listeria）；用 meropenem 可不加", "cond": "host == 'nosoc'" },
+        { "drug": "Moxifloxacin", "dose": "400 mg", "route": "IV", "freq": "q24h", "with": "Vancomycin {round(wt*25)}–{round(wt*30)} mg loading → 15–20 mg/kg q8–12h ± TMP-SMX（Listeria）", "note": "β-lactam 嚴重過敏", "cond": "host == 'allergy'" },
+        { "drug": "Dexamethasone", "dose": "10 mg（0.15 mg/kg = {round(wt*0.15,1)} mg）", "route": "IV", "freq": "q6h × 4 天；第一劑抗生素前 10–20 min 或同時", "note": "確認非肺炎鏈球菌可停；隱球菌腦膜炎勿用" },
+        { "drug": "Acyclovir", "dose": "{round(wt*10)} mg（10 mg/kg）in NS 100 mL", "route": "IVD over 1 hr", "freq": "q8h × 14–21 天", "note": "懷疑 HSV／VZV 腦炎或免疫低下時加；CrCl {round(crcl)} 調整；多喝水避免結晶腎病" }
+      ],
+      "watch": ["GCS、瞳孔 q1h；癲癇", "體溫、VS；CSF 結果後調整抗生素", "Cr（vancomycin、acyclovir）、Na（SIADH）"],
+      "call": ["頭痛 + 發燒／頸僵／瘀點 → 立刻後線 + 感染科", "GCS 下降、癲癇、休克、瘀點快速擴散（腦膜炎雙球菌）"],
+      "refs": [{ "ch": "04", "q": "腦膜炎／腦炎" }, { "ch": "04", "q": "1 小時內給抗生素" }, { "ch": "17", "q": "腦膜炎" }],
+      "next": [{ "label": "行為改變／顳葉徵候 → HSV 腦炎", "next": "r_hsv" }, { "label": "CT 環狀增強病灶 → 腦膿瘍", "next": "r_abscess" }]
+    },
+    "r_hsv": {
+      "type": "result",
+      "urgency": "red",
+      "title": "HSV／VZV 腦炎",
+      "summary": "發燒 + 意識／行為改變 ± 癲癇、局部缺損 → **不等 PCR 先給 acyclovir 10 mg/kg IV q8h**；CSF HSV PCR、MRI 顳葉；同時涵蓋細菌性腦膜炎直到排除。",
+      "steps": [
+        "血液培養 → 抗生素（腦膜炎劑量）+ acyclovir；先 CT（意識改變）再 LP",
+        "CSF：細胞數、糖、蛋白、Gram stain、培養、HSV/VZV PCR（敏感度／特異度 95%）",
+        "MRI（顳葉病灶）、EEG（癲癇／NCSE）",
+        "多喝水／輸液避免 acyclovir 結晶腎病；Cr 每日",
+        "癲癇 → Ch3；治療後症狀復發 → 想自體免疫腦炎"
+      ],
+      "orders": [
+        { "drug": "Acyclovir", "dose": "{round(wt*10)} mg（10 mg/kg）in NS 100 mL", "route": "IVD over 1 hr", "freq": "q8h × 14–21 天", "note": "依 {wt} kg；CrCl {round(crcl)} mL/min 調整（< 50 延長間隔，依院內）；多喝水" },
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q12h", "with": "Vancomycin {round(wt*25)}–{round(wt*30)} mg loading → 15–20 mg/kg q8–12h", "note": "排除細菌性前併用（> 50 歲／免疫低下加 ampicillin 2 g q4h）" },
+        { "drug": "NS（維持輸液／多喝水）", "dose": "維持速率依院內", "route": "IVD／PO", "freq": "持續", "note": "避免 acyclovir 結晶腎病" },
+        { "drug": "Levetiracetam", "dose": "500–1,000 mg", "route": "IV／PO", "freq": "q12h（癲癇時）", "note": "CrCl {round(crcl)} 調整" }
+      ],
+      "watch": ["GCS、癲癇；EEG", "Cr、尿量（acyclovir）", "PCR 結果後決定療程"],
+      "call": ["懷疑腦炎當下 = 後線 + 感染科／神經科", "GCS 下降、癲癇重積、需插管"],
+      "refs": [{ "ch": "04", "q": "HSV／VZV 腦炎" }]
+    },
+    "r_abscess": {
+      "type": "result",
+      "urgency": "red",
+      "title": "腦膿瘍",
+      "summary": "CT 環狀增強病灶 + 發燒／頭痛／局部缺損：會診神經外科（抽吸／引流）；ceftriaxone + metronidazole（口腔／耳／鼻竇來源），血行性或不明加 vancomycin；癲癇預防 levetiracetam。",
+      "steps": [
+        "血液培養 × 2；找來源：口腔、中耳、鼻竇（局部擴散）、心內膜炎、肺（血行性）",
+        "緊急會診神經外科（抽吸／引流，培養引導抗生素）；勿 LP（ICP↑）",
+        "抗生素依來源；術後改 cefepime／meropenem + vancomycin",
+        "ICP↑ 徵候 → dexamethasone（膿瘍相關水腫可用）、Ch1 ICP 流程",
+        "癲癇預防；心臟超音波（心內膜炎）；感染科會診"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "2 g", "route": "IV", "freq": "q12h", "with": "Metronidazole 500 mg IV q8h", "note": "口腔／耳／鼻竇來源" },
+        { "drug": "Vancomycin", "dose": "{round(wt*25)}–{round(wt*30)} mg loading → {round(wt*15)}–{round(wt*20)} mg", "route": "IVD", "freq": "loading STAT → q8–12h（trough 15–20）", "note": "血行性或來源不明時加；依 {wt} kg；CrCl {round(crcl)} 調整" },
+        { "drug": "Cefepime 或 Meropenem", "dose": "2 g", "route": "IV", "freq": "q8h", "note": "術後／院內；CrCl {round(crcl)} 調整", "with": "Vancomycin" },
+        { "drug": "Levetiracetam", "dose": "500–1,000 mg", "route": "IV／PO", "freq": "q12h", "note": "癲癇預防；CrCl {round(crcl)} 調整" },
+        { "drug": "Dexamethasone", "dose": "10 mg → 4 mg", "route": "IV", "freq": "負荷 → q6h", "note": "僅明顯血管源性水腫／ICP↑ 時（膿瘍可用）；依神外" }
+      ],
+      "watch": ["GCS、瞳孔、局部缺損 q2–4h", "體溫、癲癇", "Cr（vancomycin）"],
+      "call": ["確診即會診神經外科 + 感染科", "GCS 下降、腦脫疝徵候、癲癇"],
+      "refs": [{ "ch": "04", "q": "腦膿瘍" }]
+    },
+    "r_icp": {
+      "type": "result",
+      "urgency": "red",
+      "title": "顱內壓上升／腦脫疝（頭痛 + 嘔吐、視乳突水腫、瞳孔不對稱）",
+      "summary": "單側瞳孔散大、意識快速惡化、Cushing triad → 床頭 30°、mannitol 0.5–1 g/kg 或 3% NaCl 150 mL、短暫過度換氣 PaCO₂ 30–35，**立即神外**（Ch1 VI.5）。",
+      "steps": [
+        "床頭 30°、頭正中；避免發燒、疼痛、躁動；GCS ≤ 8 → 插管",
+        "Mannitol 或 3% NaCl；急 CT；緊急會診神經外科",
+        "已插管：短暫過度換氣 PaCO₂ 30–35（< 30 min 橋接）",
+        "維持 CPP 60–70；避免低血壓",
+        "類固醇只用於腫瘤／膿瘍水腫（中風、外傷、出血禁）"
+      ],
+      "orders": [
+        { "drug": "Mannitol 20%", "dose": "{round(wt*0.5)}–{round(wt)} g（{round(wt*2.5)}–{round(wt*5)} mL）", "route": "IVD over 15–30 min", "freq": "q4–6h 依臨床", "note": "0.5–1 g/kg，依 {wt} kg；滲透壓 < 320；低血壓、腎衰竭慎用" },
+        { "drug": "3% NaCl", "dose": "150 mL", "route": "IVD over 10–20 min", "freq": "可重複", "note": "目標 Na 145–155；持續滴注建議 CVC", "alt": "mannitol" },
+        { "drug": "Dexamethasone", "dose": "10 mg → 4 mg", "route": "IVD", "freq": "負荷 → q6h", "note": "僅腫瘤／膿瘍相關水腫", "cond": "false" }
+      ],
+      "watch": ["瞳孔、GCS q15–30 min", "Na、滲透壓、尿量、BP"],
+      "call": ["腦脫疝徵候 → 立刻後線 + 神經外科", "需插管／ICU"],
+      "refs": [{ "ch": "04", "q": "顱內壓上升／腦脫疝" }, { "ch": "01", "q": "顱內壓上升／腦脫疝" }]
+    },
+    "r_gca": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "巨細胞動脈炎（GCA）：不等切片立即給類固醇",
+      "summary": "> 50 歲新頭痛 + 顳動脈壓痛／下顎跛行／視力症狀 + ESR/CRP↑ → 立即類固醇：{vision ? '**有視力症狀：methylprednisolone 500–1,000 mg IV QD × 3 天**再改口服' : 'prednisolone 1 mg/kg PO QD'}；2 週內切片仍有效。",
+      "steps": [
+        "抽 ESR（> 50）、CRP、CBC（血小板↑、貧血）、肝功能、血糖",
+        "視力／視野、眼底檢查；顳動脈觸診（壓痛、搏動減弱、結節）",
+        "立即類固醇（不等切片）；視力症狀者高劑量 IV",
+        "會診風濕科、眼科；安排 1–2 週內顳動脈切片／超音波（halo sign）",
+        "aspirin 100 mg 僅合併頸／椎動脈嚴重狹窄者（依風濕科）；胃保護、血糖監測"
+      ],
+      "orders": [
+        { "drug": "Methylprednisolone", "dose": "500–1,000 mg", "route": "IV", "freq": "QD × 3 天，再改口服 prednisolone", "note": "視力喪失或一過性黑矇者", "cond": "vision" },
+        { "drug": "Prednisolone", "dose": "{clamp(round(wt),40,60)} mg（1 mg/kg，40–60 mg）", "route": "PO", "freq": "QD", "note": "依 {wt} kg；無視力症狀者直接口服；IV 衝擊後接續" },
+        { "drug": "Aspirin", "dose": "100 mg", "route": "PO", "freq": "QD", "note": "僅合併頸／椎動脈嚴重狹窄者，依風濕科", "cond": "false" },
+        { "drug": "PPI（胃保護）", "dose": "依院內", "route": "PO", "freq": "QD", "note": "高劑量類固醇期間" }
+      ],
+      "watch": ["視力每日（新視力喪失 = 急症）", "血糖、BP、電解質（類固醇）", "ESR/CRP 追蹤"],
+      "call": ["懷疑 GCA 併視力症狀 → 立刻後線 + 眼科 + 風濕科", "類固醇後仍視力惡化、新神經缺損（中風）"],
+      "refs": [{ "ch": "04", "q": "巨細胞動脈炎" }]
+    },
+    "r_lowpressure": {
+      "type": "result",
+      "urgency": "green",
+      "title": "低腦壓（腰椎穿刺後／脊椎麻醉後）頭痛",
+      "summary": "站起加劇、躺下緩解：臥床、補水、caffeine、止痛；> 24–48 hr 未改善會診麻醉科做硬膜外血液貼片。",
+      "steps": [
+        "確認姿勢相關（站起加劇、躺下緩解）；排除紅旗（發燒、頸僵 → 腦膜炎；意識改變）",
+        "臥床、平躺；補水（口服或 IV）",
+        "caffeine PO（或 IV）+ acetaminophen／NSAID",
+        "> 24–48 hr 未改善 → 會診麻醉科硬膜外血液貼片"
+      ],
+      "orders": [
+        { "drug": "Caffeine", "dose": "300 mg", "route": "PO", "freq": "q4–6h", "note": "或 caffeine sodium benzoate 500 mg IV" },
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "" },
+        { "drug": "Naproxen", "dose": "500–550 mg", "route": "PO", "freq": "q12h PRN", "note": "或 ibuprofen 400–800 mg q6–8h；腎功能 CrCl {round(crcl)} 差者避免" },
+        { "drug": "NS", "dose": "500–1,000 mL", "route": "IVD over 2–4 hr", "freq": "無法口服補水時", "note": "心／腎衰竭減量" }
+      ],
+      "watch": ["姿勢性頭痛是否隨臥床改善", "發燒、頸僵、意識改變（腦膜炎、硬腦膜下出血）"],
+      "call": ["> 24–48 hr 未改善（血液貼片）", "出現發燒、意識改變、局部缺損"],
+      "refs": [{ "ch": "04", "q": "低腦壓" }]
+    },
+    "r_glaucoma": {
+      "type": "result",
+      "urgency": "red",
+      "title": "急性閉角性青光眼",
+      "summary": "眼痛、視力模糊、看光暈、噁心嘔吐、紅眼、瞳孔中等固定、眼球硬 → **緊急會診眼科**；等待時 acetazolamide IV/PO、timolol、pilocarpine（眼壓 < 40 後）、止吐、平躺。",
+      "steps": [
+        "緊急會診眼科（雷射虹膜切開）；量眼壓（若可）",
+        "停散瞳劑／抗膽鹼藥；平躺",
+        "acetazolamide + timolol 點眼；眼壓 < 40 後 pilocarpine",
+        "止吐、止痛"
+      ],
+      "orders": [
+        { "drug": "Acetazolamide", "dose": "500 mg", "route": "IV／PO", "freq": "STAT", "note": "磺胺過敏、腎衰竭慎" },
+        { "drug": "Timolol 0.5% 眼藥水", "dose": "1 滴", "route": "患眼", "freq": "STAT", "note": "氣喘、心搏過緩慎" },
+        { "drug": "Pilocarpine 2% 眼藥水", "dose": "1 滴", "route": "患眼", "freq": "眼壓 < 40 後", "note": "" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV over 15 min／IM", "freq": "q6–8h PRN 嘔吐", "note": "" },
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h PRN", "note": "" }
+      ],
+      "watch": ["視力、眼痛、眼壓（眼科）", "嘔吐、脫水"],
+      "call": ["懷疑急性青光眼 → 緊急眼科（視力保存與時間相關）"],
+      "refs": [{ "ch": "04", "q": "急性閉角性青光眼" }]
+    },
+    "r_zoster": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "帶狀皰疹（頭頸部）",
+      "summary": "單側皮節水泡／燒灼痛：valacyclovir 1,000 mg PO TID × 7 天（發疹 72 hr 內最有效）；鼻尖水泡（Hutchinson sign）→ 眼科；耳部水泡 + 顏面麻痺（Ramsay-Hunt）→ ENT；免疫低下／播散性 → IV acyclovir + 隔離。",
+      "steps": [
+        "確認皮節分佈；V1（鼻尖 = Hutchinson sign）→ 眼科；耳部 + 顏面麻痺 → 耳鼻喉科",
+        "抗病毒：發疹 72 hr 內開始（> 72 hr 仍有新水泡可給）",
+        "免疫低下／跨多個皮節（播散性）→ IV acyclovir、評估內臟侵犯、空氣／飛沫隔離",
+        "止痛（acetaminophen、NSAID；神經痛依 Ch14）；未結痂前接觸傳染，接觸隔離"
+      ],
+      "orders": [
+        { "drug": "Valacyclovir", "dose": "1,000 mg", "route": "PO", "freq": "TID × 7 天", "note": "CrCl {round(crcl)} < 50 減量依院內" },
+        { "drug": "Acyclovir", "dose": "800 mg", "route": "PO", "freq": "5×/d × 7 天", "note": "valacyclovir 替代", "alt": "valacyclovir" },
+        { "drug": "Acyclovir（免疫低下／播散性）", "dose": "{round(wt*10)} mg（10 mg/kg）in NS 100 mL", "route": "IVD over 1 hr", "freq": "q8h", "note": "依 {wt} kg；CrCl {round(crcl)} 調整；多喝水" },
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "神經痛輔助藥見 Ch14" }
+      ],
+      "watch": ["眼部症狀（V1）、顏面神經", "新水泡擴散（播散性）"],
+      "call": ["Hutchinson sign／眼部侵犯 → 眼科", "免疫低下、播散性、內臟侵犯徵候"],
+      "refs": [{ "ch": "04", "q": "帶狀皰疹" }, { "ch": "14", "q": "帶狀皰疹" }]
+    },
+    "r_sinusitis": {
+      "type": "result",
+      "urgency": "green",
+      "title": "鼻竇炎",
+      "summary": "多為病毒性：止痛、鼻沖洗、局部去充血劑 ≤ 5 天；> 10 天未改善、雙相病程、高燒膿鼻涕 → amoxicillin-clavulanate；眼眶蜂窩性組織炎／顱內併發症徵候 → 緊急 ENT + CT。",
+      "steps": [
+        "鼻竇壓痛、膿鼻涕、發燒；眼眶周圍紅腫、眼球運動痛、複視 → 眼眶蜂窩性組織炎（緊急）",
+        "症狀治療：止痛、鼻沖洗、局部去充血劑 ≤ 5 天",
+        "細菌性指標（> 10 天、雙相、高燒膿鼻涕）→ 抗生素 5–7 天",
+        "顱內併發症徵候（劇烈頭痛、意識改變、頸僵）→ CT + ENT"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "" },
+        { "drug": "生理食鹽水鼻沖洗", "dose": "依院內", "route": "鼻腔", "freq": "每日", "with": "局部去充血劑 ≤ 5 天", "note": "" },
+        { "drug": "Amoxicillin-clavulanate", "dose": "875/125 mg", "route": "PO", "freq": "BID × 5–7 天", "note": "細菌性指標時；CrCl {round(crcl)} < 30 減量依院內" }
+      ],
+      "watch": ["眼眶紅腫、視力、複視", "發燒、頭痛惡化"],
+      "call": ["眼眶蜂窩性組織炎、顱內併發症徵候 → 緊急 ENT + CT"],
+      "refs": [{ "ch": "04", "q": "鼻竇炎" }]
+    },
+    "r_migraine": {
+      "type": "result",
+      "urgency": "green",
+      "title": "偏頭痛急性發作",
+      "summary": "和平常一樣的偏頭痛：acetaminophen／NSAID ± 止吐（metoclopramide）；中重度 ketorolac 或 triptan（越早越好；冠心病、中風、未控高血壓、懷孕禁）；**避免 opioid**；躺暗室、補水。",
+      "steps": [
+        "確認「認得出這種痛」、無紅旗；VS、神經學快篩",
+        "輕中度：acetaminophen 或 NSAID；噁心 → metoclopramide／prochlorperazine（兼止痛）",
+        "中重度／無法口服：ketorolac IM/IV + metoclopramide IV；或 sumatriptan SC",
+        "triptan 禁忌：冠心病、中風／TIA、周邊動脈病、未控高血壓、偏癱／腦幹型、懷孕、24 hr 內用過麥角鹼或另一 triptan",
+        "躺暗室、止吐、補水；dexamethasone 單次減少 72 hr 內復發",
+        "止痛後 1–2 小時未改善且型態不典型 → 回頭找紅旗、CT"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "輕中度" },
+        { "drug": "Naproxen", "dose": "500–550 mg", "route": "PO", "freq": "q12h PRN", "note": "或 ibuprofen 400–800 mg q6–8h、diclofenac 50 mg q8h；CrCl {round(crcl)} 差者避免" },
+        { "drug": "Ketorolac", "dose": "{(age >= 65 || wt < 50 || crcl < 60) ? 15 : 30} mg", "route": "IM／IV", "freq": "q6h，max 5 天", "note": "≥ 65 歲、< 50 kg 或 CrCl↓ 用 15 mg（年齡 {age}、{wt} kg、CrCl {round(crcl)}）；消化道與腎毒性" },
+        { "drug": "Metoclopramide", "dose": "10 mg", "route": "IV over 15 min／IM／PO", "freq": "q6–8h", "note": "止吐 + 止痛；EPS（可先給 diphenhydramine 30 mg）；QT 延長" },
+        { "drug": "Prochlorperazine", "dose": "10 mg（PO 5–10 mg）", "route": "IV／IM", "freq": "q6–8h", "note": "效果佳；靜坐不能", "alt": "metoclopramide" },
+        { "drug": "Sumatriptan", "dose": "50–100 mg", "route": "PO", "freq": "2 hr 後可再 1 次，max 200 mg/d", "note": "越早用越好（前兆期不用）；禁忌見 steps" },
+        { "drug": "Sumatriptan", "dose": "6 mg", "route": "SC", "freq": "1 hr 後可再 1 次，max 12 mg/d", "note": "最快、最有效；嘔吐者" },
+        { "drug": "Rizatriptan", "dose": "10 mg（服 propranolol 者 5 mg）", "route": "PO", "freq": "2 hr 後可再 1 次，max 30 mg/d", "note": "台灣常見", "alt": "sumatriptan" },
+        { "drug": "Dexamethasone", "dose": "10 mg", "route": "IV／PO", "freq": "單次", "note": "減少 72 hr 內復發，不減當下疼痛" },
+        { "drug": "NS", "dose": "500–1,000 mL", "route": "IVD", "freq": "嘔吐脫水時", "note": "心／腎衰竭減量" }
+      ],
+      "watch": ["1–2 小時後疼痛評分；未改善且不典型 → 紅旗評估", "EPS（metoclopramide／prochlorperazine）、BP（triptan 後）"],
+      "call": ["止痛後 1–2 小時未改善且型態不典型", "出現任何紅旗（意識改變、局部缺損、發燒、雷擊）"],
+      "refs": [{ "ch": "04", "q": "偏頭痛急性發作" }, { "ch": "04", "q": "Sumatriptan" }],
+      "next": [{ "label": "不典型／未改善 → 紅旗評估", "next": "r_redflag_workup" }]
+    },
+    "r_tension": {
+      "type": "result",
+      "urgency": "green",
+      "title": "張力型頭痛",
+      "summary": "雙側緊箍、輕中度：acetaminophen 或 NSAID ± caffeine；肌肉鬆弛劑短期；避免每週 > 2 天用止痛藥（藥物過度使用頭痛）。",
+      "steps": [
+        "確認無紅旗；頸部肌肉壓痛、顳顎關節",
+        "acetaminophen 或 NSAID ± caffeine；短期 tizanidine",
+        "每月 > 10–15 天用止痛藥 → 藥物過度使用頭痛，交班門診處理",
+        "減少誘因：睡眠、壓力、姿勢；熱敷"
+      ],
+      "orders": [
+        { "drug": "Acetaminophen", "dose": "1,000 mg", "route": "PO", "freq": "q6h PRN，max 3 g/d", "note": "" },
+        { "drug": "Naproxen", "dose": "500–550 mg", "route": "PO", "freq": "q12h PRN", "note": "或 ibuprofen 400–800 mg q6–8h；CrCl {round(crcl)} 差者避免", "alt": "acetaminophen" },
+        { "drug": "Tizanidine", "dose": "2–4 mg", "route": "PO", "freq": "TID 短期", "note": "鎮靜、低血壓；老年人減量" }
+      ],
+      "watch": ["1–2 小時後疼痛評分", "型態改變 → 紅旗評估"],
+      "call": ["止痛後 1–2 小時未改善且型態不典型", "出現紅旗"],
+      "refs": [{ "ch": "04", "q": "張力型頭痛" }]
+    },
+    "r_cluster": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "叢集性頭痛",
+      "summary": "單側眼眶劇痛 15–180 min + 流淚／鼻塞／眼瞼下垂：**100% O₂ 12–15 L/min × 15–20 min**（70% 有效）+ sumatriptan SC 6 mg；過渡預防 prednisolone／verapamil 交由神經科。",
+      "steps": [
+        "確認型態（同側自律神經症狀、坐立不安）；第一次發作或 > 50 歲仍建議影像排除次發性",
+        "100% O₂ NRM 立即；sumatriptan SC（PO 太慢）",
+        "過渡預防（prednisolone、verapamil + ECG）交由神經科",
+        "每次 2–30 分鐘、一天多次（陣發性偏側頭痛）或持續 > 3 個月 → indomethacin 有效且具診斷性，會診神經科"
+      ],
+      "orders": [
+        { "drug": "100% O₂", "dose": "12–15 L/min × 15–20 min", "route": "NRM", "freq": "發作時", "note": "一線，70% 有效" },
+        { "drug": "Sumatriptan", "dose": "6 mg", "route": "SC", "freq": "max 2 次/d", "note": "一線；禁忌：冠心病、中風、未控高血壓、懷孕" },
+        { "drug": "Sumatriptan 鼻噴", "dose": "20 mg", "route": "鼻腔", "freq": "max 40 mg/d", "note": "台灣不一定有", "alt": "sumatriptan SC" },
+        { "drug": "Prednisolone（過渡預防）", "dose": "60 mg", "route": "PO", "freq": "QD × 5 天再漸減", "note": "交由神經科" },
+        { "drug": "Verapamil（預防）", "dose": "80 mg", "route": "PO", "freq": "TID", "note": "ECG 監測 PR；交由神經科" }
+      ],
+      "watch": ["發作頻率與持續時間", "ECG PR（verapamil）"],
+      "call": ["第一次發作、型態不典型、> 50 歲新發（排除次發性）", "O₂ + triptan 無效"],
+      "refs": [{ "ch": "04", "q": "叢集性頭痛" }]
+    }
+  }
+}

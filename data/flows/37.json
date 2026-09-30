@@ -1,0 +1,579 @@
+{
+  "id": "37",
+  "title": "管路問題",
+  "chapter": "37",
+  "entries": [
+    { "label": "管路不通／阻塞（抽不到、灌不進去、沒尿、不引流）", "type": "symptom", "start": "q_tube", "group": "管路",
+      "keywords": ["管路阻塞", "管子不通", "NG 塞住", "Foley 沒尿", "CVC 抽不到血", "推不進去", "胸管不引流", "PEG 塞住", "occlusion", "blocked tube"] },
+    { "label": "管路滑脫／病人自拔（NG、Foley、CVC、胸管、氣切、PEG、引流管）", "type": "symptom", "start": "q_tube", "group": "管路",
+      "keywords": ["管路滑脫", "自拔", "拔管", "NG 掉了", "Foley 拔掉", "CVC 脫出", "胸管掉出", "氣切掉出", "PEG 脫出", "引流管掉", "dislodged", "self-extubation"] },
+    { "label": "插管病人突然惡化／呼吸器高壓警報", "type": "symptom", "start": "r_ett_dope", "group": "管路",
+      "keywords": ["高壓警報", "呼吸器警報", "插管病人 SpO2 掉", "氣管內管", "ETT", "DOPE", "endotracheal tube", "ventilator alarm", "咬管"] },
+    { "label": "管路插入處紅腫／發燒（懷疑管路感染）", "type": "symptom", "start": "q_tube", "group": "管路",
+      "keywords": ["管路感染", "CVC 紅腫", "PICC 紅腫", "導管相關血流感染", "CLABSI", "CRBSI", "CAUTI", "尿管發燒", "氣切感染", "line infection"] },
+    { "label": "NG 阻塞（含 PEG 阻塞）", "type": "diagnosis", "start": "r_ng_block",
+      "keywords": ["NG 阻塞", "鼻胃管阻塞", "灌不進去", "nasogastric tube occlusion", "PEG 阻塞", "胃造口阻塞"] },
+    { "label": "NG 滑脫／位置確認／重放", "type": "diagnosis", "start": "r_ng_position",
+      "keywords": ["NG 滑脫", "NG 位置", "重放 NG", "鼻胃管放置", "NG 放不進去", "灌食後嘔吐", "nasogastric tube placement"] },
+    { "label": "Foley 不通／少尿／旁漏", "type": "diagnosis", "start": "r_foley_block",
+      "keywords": ["Foley 阻塞", "尿管不通", "尿管沒尿", "漏尿", "旁漏", "膀胱痙攣", "血塊阻塞", "Foley occlusion", "bypassing"] },
+    { "label": "Foley 滑脫／放不進去（男性）／拔管後尿滯留", "type": "diagnosis", "start": "r_foley_out",
+      "keywords": ["Foley 滑脫", "氣球未消", "尿管放不進去", "導尿失敗", "尿道出血", "尿滯留", "urinary retention", "difficult catheterization", "Coude"] },
+    { "label": "CAUTI（導尿管相關泌尿道感染）", "type": "diagnosis", "start": "r_cauti",
+      "keywords": ["CAUTI", "尿管感染", "導尿管相關泌尿道感染", "catheter-associated UTI"] },
+    { "label": "CVC／PICC 阻塞", "type": "diagnosis", "start": "r_cvc_block",
+      "keywords": ["CVC 阻塞", "PICC 阻塞", "Port 抽不到血", "推不進去", "alteplase", "catheter occlusion", "透析導管"] },
+    { "label": "導管相關血流感染（CLABSI／CRBSI）", "type": "diagnosis", "start": "r_cvc_infection",
+      "keywords": ["CLABSI", "CRBSI", "導管相關血流感染", "CVC 感染", "PICC 紅腫", "插入處紅腫", "line sepsis"] },
+    { "label": "CVC 滑脫／部分脫出／插入處出血", "type": "diagnosis", "start": "r_cvc_out",
+      "keywords": ["CVC 滑脫", "PICC 脫出", "CVC 出血", "拔 CVC", "PICC 手臂腫", "新放 CVC 心律不整"] },
+    { "label": "空氣栓塞（CVC 相關）", "type": "diagnosis", "start": "r_air_embolism",
+      "keywords": ["空氣栓塞", "air embolism", "Durant", "CVC 脫開後喘"] },
+    { "label": "胸管滑脫／與引流瓶脫離", "type": "diagnosis", "start": "r_chest_out",
+      "keywords": ["胸管滑脫", "胸管掉出", "pigtail 掉出", "胸管脫離", "chest tube dislodged"] },
+    { "label": "胸管不引流／漏氣／血性引流／皮下氣腫", "type": "diagnosis", "start": "r_chest_drain",
+      "keywords": ["胸管不擺動", "no tidaling", "air leak", "持續冒泡", "胸管引流血", "皮下氣腫", "再擴張性肺水腫", "chest tube"] },
+    { "label": "氣管內管問題（DOPE）／非計畫性拔管", "type": "diagnosis", "start": "r_ett_dope",
+      "keywords": ["DOPE", "非計畫性拔管", "unplanned extubation", "氣管內管滑脫", "ETT 太深", "高壓警報"] },
+    { "label": "氣切阻塞（痰栓）", "type": "diagnosis", "start": "r_trach_block",
+      "keywords": ["氣切阻塞", "痰栓", "氣切抽不到", "tracheostomy obstruction", "mucus plug", "換內管"] },
+    { "label": "氣切滑脫", "type": "diagnosis", "start": "q_trach_days",
+      "keywords": ["氣切滑脫", "氣切掉出", "tracheostomy dislodged", "假通道", "氣切重插"] },
+    { "label": "氣切出血／周圍感染／造口漏氣", "type": "diagnosis", "start": "r_trach_bleed",
+      "keywords": ["氣切出血", "氣管無名動脈瘻管", "tracheoinnominate fistula", "氣切肉芽", "氣切感染", "造口漏氣"] },
+    { "label": "PEG 滑脫", "type": "diagnosis", "start": "q_peg_age",
+      "keywords": ["PEG 滑脫", "胃造口脫出", "gastrostomy dislodged", "PEG 掉了", "Foley 暫代 PEG"] },
+    { "label": "腸造口問題／PEG 周圍滲漏", "type": "diagnosis", "start": "r_stoma",
+      "keywords": ["腸造口", "stoma", "造口出血", "造口缺血", "高輸出造口", "high output stoma", "PEG 滲漏", "肉芽"] },
+    { "label": "PTCD／PCN／手術引流管（性質改變、阻塞、滑脫）", "type": "diagnosis", "start": "q_drain",
+      "keywords": ["PTCD", "PCN", "腎造口", "T-tube", "JP", "Jackson-Pratt", "Hemovac", "引流管", "膽汁引流", "引流性質改變", "腹水引流"] },
+    { "label": "周邊靜脈留置針外滲／靜脈炎／打不上", "type": "diagnosis", "start": "r_piv",
+      "keywords": ["外滲", "extravasation", "靜脈炎", "phlebitis", "升壓劑外滲", "phentolamine", "化療外滲", "打不上", "IO", "骨內針"] }
+  ],
+  "nodes": {
+    "q_tube": {
+      "type": "choice",
+      "title": "哪一種管路出問題？",
+      "help": "三原則：先確認病人穩不穩（呼吸窘迫、SpO₂ ↓、低血壓、意識改變 → 到床邊、叫後線）；阻塞先沖、滑脫先評估能不能等；近期手術／特殊管路操作前先問後線。滑脫不要硬塞回去；每次操作記錄時間、原因、方法、結果",
+      "options": [
+        { "label": "鼻胃管（NG）／灌食管", "next": "q_ng" },
+        { "label": "導尿管（Foley）", "next": "q_foley" },
+        { "label": "CVC／PICC／Port／透析導管", "next": "q_cvc" },
+        { "label": "胸管／pigtail", "next": "q_chest" },
+        { "label": "氣管內管（呼吸器病人）", "next": "r_ett_dope" },
+        { "label": "氣切（tracheostomy）", "next": "q_trach" },
+        { "label": "胃造口 PEG／腸造口", "next": "q_peg" },
+        { "label": "手術引流管／PTCD／PCN／T-tube／腹水引流", "next": "q_drain" },
+        { "label": "周邊靜脈留置針", "next": "r_piv" }
+      ]
+    },
+    "q_ng": {
+      "type": "choice",
+      "title": "NG 是什麼問題？",
+      "options": [
+        { "label": "阻塞（灌不進去、抽不到）", "next": "r_ng_block" },
+        { "label": "滑脫／外露長度改變／懷疑跑到肺（咳嗽、SpO₂ ↓、抽不到胃液）", "next": "r_ng_position" },
+        { "label": "灌食後腹脹／嘔吐／腹瀉、減壓引流量多、鼻翼壓瘡", "next": "r_ng_position" }
+      ]
+    },
+    "r_ng_block": {
+      "type": "result",
+      "urgency": "green",
+      "title": "NG／PEG 阻塞",
+      "summary": "溫水推拉沖洗 → 無效用碳酸飲料或 NaHCO₃ + 胰酵素夾 30 分鐘 → 仍無效換管（重放前確認禁忌）。",
+      "steps": [
+        "先確認外露長度與記錄一致（阻塞 vs 位置跑掉）",
+        "溫水 30–60 mL 灌食空針反覆沖洗反抽（推拉法）",
+        "無效 → 碳酸飲料，或 pancrelipase 1 顆溶於 5 mL 水 + NaHCO₃ 650 mg 注入後夾管 30 分鐘",
+        "仍無效 → 換管；重放禁忌（顱底骨折、食道手術／狹窄／靜脈曲張剛結紮、近期上消化道／頭頸手術）→ 先問後線",
+        "預防：每次給藥／灌食前後沖 30 mL；藥物分開磨、勿混灌；PEG 阻塞處理相同"
+      ],
+      "orders": [
+        { "drug": "溫水沖洗", "dose": "30–60 mL", "route": "經 NG／PEG 灌食空針推拉", "freq": "STAT，反覆數次", "note": "先於任何藥物溶解法" },
+        { "drug": "Pancrelipase + NaHCO₃", "dose": "Pancrelipase 1 顆溶於 5 mL 水 + NaHCO₃ 650 mg", "route": "經 NG 注入後夾管 30 分鐘", "freq": "STAT 單次；無效 → 換管", "alt": "碳酸飲料沖洗" },
+        { "drug": "沖洗（預防）", "dose": "30 mL 水", "route": "經 NG", "freq": "每次給藥／灌食前後", "note": "藥物分開磨、勿混灌" }
+      ],
+      "watch": ["沖通後灌食是否順暢；再阻塞 → 換管", "換管後 X 光確認尖端在橫膈下才灌"],
+      "call": ["換管有重放禁忌（顱底骨折、食道／頭頸手術、靜脈曲張剛結紮）→ 先問後線", "長期灌食反覆阻塞 → 交班原團隊考慮胃造口"],
+      "refs": [{ "ch": "37", "q": "推拉法" }, { "ch": "37", "q": "PEG 阻塞" }],
+      "next": [{ "label": "需要換管 → 重放與位置確認", "next": "r_ng_position" }]
+    },
+    "r_ng_position": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "NG 滑脫／位置懷疑／灌食不耐（先停灌、確認位置）",
+      "summary": "任何懷疑在肺內（咳嗽、SpO₂ 下降、抽不到胃液）→ **先不要灌，照 X 光**；完全脫出 → 檢查重放禁忌後重放，X 光確認後才灌。",
+      "steps": [
+        "**先停灌**；檢查外露長度（與記錄比）、抽出物 pH（≤ 5.5 = 胃）；聽診打氣不可靠",
+        "咳嗽、SpO₂ ↓、抽不到胃液 → CXR 確認尖端在橫膈下、胃內",
+        "完全脫出 → 重放禁忌：顱底骨折、食道手術／狹窄／靜脈曲張剛結紮、近期上消化道／頭頸手術、鼻中隔嚴重異常 → 先問後線",
+        "放置：坐直、頭略前傾，長度鼻尖→耳垂→劍突 + 5–10 cm（成人約 55–65 cm），潤滑，沿鼻底進，過咽時吞嚥；阻力／咳嗽／發紺立即退出；固定；X 光確認後才灌",
+        "灌食後腹脹／嘔吐／腹瀉：減速、確認位置、殘餘量 > 250–500 mL 暫停、床頭 30–45°、換配方；腸阻塞徵候 → 停灌接引流",
+        "減壓引流量多：記量與性質（咖啡渣／鮮血 → Ch9；膽汁多 → 阻塞），補等量 NS + KCl（Ch10）",
+        "鼻翼壓瘡、鼻竇炎、耳炎：換側、換管；鼻竇炎（發燒 + 膿鼻涕）→ 移除 NG、抗生素"
+      ],
+      "orders": [
+        { "drug": "灌食暫停（hold feeding）", "dose": "至 X 光確認位置", "route": "經 NG", "freq": "STAT", "note": "殘餘量 > 250–500 mL 暫停；床頭 30–45°" },
+        { "drug": "NS + KCl（引流補充）", "dose": "等量補回 NG 引流量", "route": "IV drip", "freq": "依每班引流量", "note": "減壓引流量多時；KCl 濃度依 Ch10" }
+      ],
+      "watch": ["SpO₂、咳嗽（肺內位置）", "灌食後腹脹、嘔吐、殘餘量", "引流量與性質（咖啡渣／鮮血／膽汁）"],
+      "call": ["重放有禁忌（顱底骨折、食道／頭頸手術、靜脈曲張剛結紮）", "懷疑誤入肺且 SpO₂ 下降", "腸阻塞徵候、咖啡渣／鮮血引流"],
+      "refs": [{ "ch": "37", "q": "滑脫／位置懷疑" }, { "ch": "37", "q": "放置技巧" }, { "ch": "37", "q": "灌食後腹脹" }]
+    },
+    "q_foley": {
+      "type": "choice",
+      "title": "Foley 是什麼問題？",
+      "help": "每天問「還需要尿管嗎」",
+      "options": [
+        { "label": "無尿／少尿／尿袋沒尿／血塊", "next": "r_foley_block" },
+        { "label": "漏尿（旁漏）", "next": "r_foley_block" },
+        { "label": "滑脫（氣球未消）／放不進去／拔管後尿滯留", "next": "r_foley_out" },
+        { "label": "發燒、恥骨上痛（懷疑 CAUTI）", "next": "r_cauti" }
+      ]
+    },
+    "r_foley_block": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Foley 不通／少尿／旁漏",
+      "summary": "先排除折管與尿袋位置、bladder scan → **NS 30–50 mL 無菌沖洗反抽** → 不通換管（血塊多換 3-way 22–24 Fr）；通暢仍少尿 = AKI 評估（Ch11）。旁漏多是阻塞或膀胱痙攣，不要換更大號。",
+      "steps": [
+        "確認管路是否折到、尿袋位置（低於膀胱）、bladder scan（膀胱脹 = 管子問題）",
+        "NS 30–50 mL 無菌沖洗反抽；仍不通 → 換管（血塊多換 3-way 22–24 Fr）",
+        "通暢但仍少尿 → 依 Ch11 AKI 評估（輸液狀態、Cr、K）",
+        "血尿／血塊：沖洗、CBI、停抗凝評估（Ch13）",
+        "旁漏：沖洗、檢查氣球（10 mL）、oxybutynin；**不要換更大號的管**"
+      ],
+      "orders": [
+        { "drug": "NS 無菌沖洗", "dose": "30–50 mL", "route": "經 Foley 沖洗後反抽", "freq": "STAT，可重複", "note": "不通 → 換管" },
+        { "drug": "Foley 換管（3-way）", "dose": "22–24 Fr", "route": "經尿道", "freq": "沖洗無效時", "note": "血塊多時用 3-way 並接 CBI（Ch13）" },
+        { "drug": "Oxybutynin", "dose": "5 mg", "route": "PO", "freq": "TID", "note": "旁漏／膀胱痙攣；先排除阻塞" }
+      ],
+      "watch": ["沖洗／換管後每小時尿量", "血尿顏色、血塊；Hb、抗凝"],
+      "call": ["換管失敗、男性尿道出血、近期泌尿科手術 → 泌尿科", "通暢仍少尿且 K ↑／體液過多 → 依 Ch11 通知後線"],
+      "refs": [{ "ch": "37", "q": "無尿／少尿" }, { "ch": "37", "q": "漏尿" }, { "ch": "11", "q": "少尿" }, { "ch": "13", "q": "CBI" }]
+    },
+    "r_foley_out": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "Foley 滑脫（氣球未消）／放不進去（男性）／拔管後尿滯留",
+      "summary": "滑脫：查尿道口出血與疼痛，輕微者觀察自解、需要時重放小一號（14 Fr）；男性放不進去：lidocaine gel 10–20 mL 等 3–5 分鐘、拉直陰莖、Coudé；**不要反覆硬試**，失敗或出血 → 泌尿科。",
+      "steps": [
+        "滑脫：檢查尿道口出血、疼痛；男性可能尿道損傷 → 泌尿科",
+        "**近期 TURP／前列腺切除／尿道手術／腎移植 → 先問泌尿科**再動",
+        "輕微者觀察自解；需要時重放小一號（14 Fr）",
+        "男性放不進去：潤滑充足（lidocaine gel 10–20 mL 注入尿道等 3–5 分鐘）、陰莖拉直垂直、Coudé 管",
+        "仍不行或出血 → 泌尿科（膀胱鏡／恥骨上導尿）；不要反覆硬試",
+        "拔管後尿滯留：bladder scan > 300–400 mL → 單次導尿或重放 ± tamsulosin"
+      ],
+      "orders": [
+        { "drug": "Lidocaine gel（尿道用）", "dose": "10–20 mL", "route": "注入尿道，等 3–5 分鐘", "freq": "導尿前 STAT", "note": "男性困難導尿" },
+        { "drug": "Foley 重放", "dose": "14 Fr（小一號）", "route": "經尿道", "freq": "需要時", "note": "或 Coudé 管（前列腺肥大）；尿道出血勿硬放" },
+        { "drug": "Tamsulosin", "dose": "0.4 mg", "route": "PO", "freq": "QD（台灣 0.2 mg × 2）", "note": "拔管後尿滯留輔助；劑量依 Ch11 BPH" }
+      ],
+      "watch": ["尿道口出血、血尿、能否自解", "bladder scan 殘尿（> 300–400 mL 需導尿）"],
+      "call": ["男性導尿失敗或尿道出血 → 泌尿科", "近期 TURP／前列腺切除／尿道手術／腎移植 → 先問泌尿科"],
+      "refs": [{ "ch": "37", "q": "滑脫（氣球未消）" }, { "ch": "37", "q": "放不進去（男性）" }, { "ch": "37", "q": "拔管後尿滯留" }, { "ch": "11", "q": "tamsulosin" }]
+    },
+    "r_cauti": {
+      "type": "result",
+      "urgency": "green",
+      "title": "懷疑 CAUTI（導尿管相關泌尿道感染）",
+      "summary": "**換管後**再留尿培養；無症狀菌尿不治療；有症狀（發燒、恥骨上痛、敗血症）依 Ch17 給抗生素。",
+      "steps": [
+        "先問：還需要尿管嗎？能拔就拔",
+        "換管後留尿培養 + 血液培養（發燒時）",
+        "無症狀菌尿（單獨膿尿）→ 不治療",
+        "有症狀 → 經驗性抗生素（Ch17）；休克 → 依敗血症流程",
+        "重症、疑阻塞、48–72 小時無改善 → CT 找阻塞／膿瘍"
+      ],
+      "orders": [
+        { "drug": "Ceftriaxone", "dose": "1–2 g", "route": "IV", "freq": "q24h", "note": "有症狀 CAUTI 經驗性（Ch17）；ESBL 風險改 ertapenem 1 g q24h；休克改 piperacillin-tazobactam 4.5 g q6h" }
+      ],
+      "watch": ["體溫、血壓；培養結果 48–72 小時縮窄", "退燒 24–48 小時後改口服（Ch17）"],
+      "call": ["敗血症／休克徵候", "48–72 小時無改善或疑阻塞"],
+      "refs": [{ "ch": "37", "q": "CAUTI 懷疑" }, { "ch": "17", "q": "CAUTI" }]
+    },
+    "q_cvc": {
+      "type": "choice",
+      "title": "CVC／PICC／Port／透析導管：什麼問題？",
+      "help": "透析導管不要用來輸液／抽血（除非緊急且與腎臟科確認）；heparin lock 濃度高（1,000–5,000 U/mL），使用前先抽掉",
+      "options": [
+        { "label": "抽不到血／推不進去（阻塞）", "next": "r_cvc_block" },
+        { "label": "插入處紅腫／膿／疼痛，或發燒懷疑血流感染", "next": "r_cvc_infection" },
+        { "label": "滑脫／部分脫出／插入處出血／新放後心律不整／PICC 手臂腫", "next": "r_cvc_out" },
+        { "label": "突然喘、胸痛、低血壓、意識改變（管路脫開後）→ 空氣栓塞", "next": "r_air_embolism" }
+      ]
+    },
+    "r_cvc_block": {
+      "type": "result",
+      "urgency": "green",
+      "title": "CVC／PICC／Port 阻塞",
+      "summary": "夾子、扭折、手臂姿勢 → NS 10 mL 空針推拉（**勿用 < 10 mL 空針硬推**）→ 血栓／纖維蛋白鞘用 alteplase 2 mg 保留 30–120 分鐘 → 仍不通且需要就換管。",
+      "steps": [
+        "檢查夾子、扭折、位置（手臂姿勢改變試抽）",
+        "NS 10 mL 空針推拉法沖洗；勿用 < 10 mL 空針硬推（管路破裂）",
+        "纖維蛋白鞘／血栓 → alteplase 2 mg in 2 mL 灌注保留 30–120 分鐘後抽出，可重複 1 次",
+        "藥物沉澱：鹼性藥 → 0.1 N HCl；脂肪乳劑 → 70% ethanol（依院內規範）",
+        "仍不通且需要 → 換管；透析導管 → 先抽掉 heparin lock，問題交腎臟科"
+      ],
+      "orders": [
+        { "drug": "NS 沖洗", "dose": "10 mL（≥ 10 mL 空針）", "route": "經導管推拉法", "freq": "STAT", "note": "勿用小空針硬推" },
+        { "drug": "Alteplase（rt-PA）", "dose": "2 mg in 2 mL", "route": "灌注導管內保留 30–120 分鐘後抽出", "freq": "單次，可重複 1 次", "note": "纖維蛋白鞘／血栓性阻塞" },
+        { "drug": "0.1 N HCl 或 70% ethanol", "dose": "依院內規範（填滿導管容積）", "route": "導管內保留", "freq": "單次", "note": "鹼性藥物沉澱用 HCl；脂肪乳劑用 ethanol" }
+      ],
+      "watch": ["沖通後抽血／輸液是否順暢", "透析導管：heparin lock 抽掉再用"],
+      "call": ["需要換管（尤其長期 Port／透析導管由原團隊決定）", "透析導管問題 → 腎臟科"],
+      "refs": [{ "ch": "37", "q": "阻塞（抽不到血" }, { "ch": "37", "q": "透析導管" }]
+    },
+    "r_cvc_infection": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "插入處感染／懷疑導管相關血流感染（CRBSI）",
+      "summary": "**血液培養 ≥ 2 套（每個 lumen + 周邊不同穿刺處）後才給抗生素**：vancomycin + cefepime（或 piperacillin-tazobactam）；S. aureus、GNR、Enterococcus、Candida、休克、72 小時仍菌血症 → 拔管。",
+      "steps": [
+        "插入處紅腫／膿／疼痛 → 拔管 + 導管尖端培養 + 血液培養（周邊 + 導管）",
+        "蜂窩性組織炎範圍 > 2 cm 或全身症狀 → 抗生素",
+        "懷疑血流感染：每個 lumen + 周邊（不同穿刺處）血液培養 ≥ 2 套，**先培養再給藥**",
+        "經驗性 vancomycin + cefepime／piperacillin-tazobactam；Candida 風險（TPN、長期抗生素、腹部手術）+ micafungin",
+        "**拔管**：S. aureus、Enterococcus、革蘭陰性菌（尤其 Pseudomonas）、Candida、化膿性靜脈炎、心內膜炎、休克、72 小時仍菌血症；只有 CoNS 可考慮保留",
+        "S. aureus → 感染科會診 + 心臟超音波；Candida → 心臟超音波 + 眼科",
+        "菌血症確認後每天追蹤血液培養至陰性 48 小時；長期 Port／透析導管由原團隊決定"
+      ],
+      "orders": [
+        { "drug": "Vancomycin", "dose": "{round(wt*25)}–{round(wt*30)} mg loading（25–30 mg/kg）", "route": "IV drip", "freq": "STAT → 15–20 mg/kg q8–12h", "note": "依 {wt} kg；CrCl {round(crcl)} → 維持劑量與間隔依 A5，監測 trough 15–20（Ch17）" },
+        { "drug": "Cefepime", "dose": "2 g", "route": "IV drip", "freq": "q8h", "note": "CrCl {round(crcl)}：依 A5 調整", "alt": "Piperacillin-tazobactam 4.5 g IV q6h" },
+        { "drug": "Micafungin", "dose": "100 mg", "route": "IV drip", "freq": "QD", "note": "僅 Candida 風險（TPN、長期抗生素、腹部手術、定植）時加（Ch17）" }
+      ],
+      "watch": ["體溫、血壓、乳酸（休克？）", "每天血液培養至陰性 48 小時", "培養結果 48–72 小時縮窄；vancomycin trough"],
+      "call": ["休克、S. aureus／Candida 菌血症 → 後線 + 感染科", "72 小時仍菌血症或需拔長期 Port／透析導管 → 原團隊"],
+      "refs": [{ "ch": "37", "q": "懷疑導管相關血流感染" }, { "ch": "17", "q": "中央靜脈導管相關" }]
+    },
+    "r_cvc_out": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "CVC／PICC 滑脫、部分脫出、插入處出血、新放後心律不整、PICC 手臂腫",
+      "summary": "**不要推回**；部分脫出的 CVC 應換掉；完全脫出 → **病人平躺（勿坐起）**、加壓 5–10 分鐘（頸／鎖骨下 15 分鐘）、密封敷料 24 小時。",
+      "steps": [
+        "部分脫出：不要推回；固定、確認深度與功能；CVC 應換掉（X 光確認尖端）",
+        "完全脫出／拔管：病人**平躺**、吐氣末／Valsalva 時拔出；加壓止血 5–10 分鐘（頸／鎖骨下 15 分鐘）；密封敷料 24 小時",
+        "插入處出血：加壓、抗凝評估、血小板；透析導管出血 → 壓迫 + protamine（若剛用 heparin lock）",
+        "新放 CVC 心律不整：導管太深 → 退管、X 光",
+        "PICC 手臂腫脹：超音波排除 DVT；DVT → 抗凝，導管可保留（Ch16）",
+        "突然喘、胸痛、低血壓、意識改變 → 空氣栓塞流程"
+      ],
+      "orders": [
+        { "drug": "密封敷料（occlusive dressing）", "dose": "1 片，覆蓋 24 小時", "route": "穿刺處", "freq": "拔管／脫出後 STAT", "note": "先加壓 5–10 分鐘（頸／鎖骨下 15 分鐘）" },
+        { "drug": "Protamine", "dose": "依院內（依 heparin lock 劑量）", "route": "IV", "freq": "單次", "note": "僅透析導管剛用 heparin lock 且壓迫無效的出血；與腎臟科確認" }
+      ],
+      "watch": ["穿刺處出血、血腫；血小板／INR", "空氣栓塞徵候（突然喘、胸痛、低血壓、意識改變）", "心律（新放 CVC）"],
+      "call": ["大出血、壓迫 15 分鐘仍出血", "需要重放 CVC", "任何操作後病人變差"],
+      "refs": [{ "ch": "37", "q": "滑脫／部分脫出" }, { "ch": "37", "q": "出血（插入處）" }, { "ch": "16", "q": "DVT" }],
+      "next": [{ "label": "突然喘／胸痛／低血壓 → 空氣栓塞", "next": "r_air_embolism" }]
+    },
+    "r_air_embolism": {
+      "type": "result",
+      "urgency": "red",
+      "title": "空氣栓塞（CVC 脫開／拔管後突然喘、胸痛、低血壓、意識改變）",
+      "summary": "**左側臥頭低（Durant 姿勢）、100% O₂、夾住導管／封住穿刺處**、叫後線；高壓氧評估。",
+      "steps": [
+        "立刻左側臥、頭低腳高（Durant）",
+        "100% O₂（NRM／BVM）；SpO₂、BP、心電監測",
+        "夾住導管或密封穿刺處；不要再從該管路推任何東西",
+        "叫後線；評估高壓氧治療",
+        "血行不穩／心跳停止 → Ch19／Ch38"
+      ],
+      "orders": [
+        { "drug": "O₂ 100%", "dose": "100%（NRM 或 BVM）", "route": "面罩", "freq": "持續至穩定", "note": "促進氮氣吸收" }
+      ],
+      "watch": ["SpO₂、BP、意識 q5 min", "新神經學缺損（動脈空氣栓塞）"],
+      "call": ["懷疑空氣栓塞當下就叫後線；高壓氧評估", "低血壓、意識改變、心跳停止"],
+      "refs": [{ "ch": "37", "q": "空氣栓塞徵候" }, { "ch": "19", "q": "休克" }]
+    },
+    "q_chest": {
+      "type": "choice",
+      "title": "胸管／pigtail：什麼問題？",
+      "help": "先看病人：呼吸窘迫、SpO₂ ↓、張力性氣胸徵候 → 到床邊、叫後線",
+      "options": [
+        { "label": "滑脫／掉出來", "next": "r_chest_out" },
+        { "label": "與引流瓶脫離／接頭鬆脫", "next": "r_chest_out" },
+        { "label": "不再擺動／不引流／持續冒泡／皮下氣腫增加", "next": "r_chest_drain" },
+        { "label": "引流量突然增加（血性）／大量積液剛放管", "next": "r_chest_drain" }
+      ]
+    },
+    "r_chest_out": {
+      "type": "result",
+      "urgency": "red",
+      "title": "胸管滑脫／與引流瓶脫離",
+      "summary": "滑脫：**凡士林紗布 + 密閉敷料三邊固定**（留一邊排氣）覆蓋傷口，評估張力性氣胸、X 光、需要時重放（叫後線）；脫離：無菌重接或短暫夾住（**有漏氣者不可長夾**）、換瓶。",
+      "steps": [
+        "滑脫：立即凡士林紗布 + 密閉敷料三邊固定（留一邊可排氣）覆蓋傷口",
+        "評估呼吸、SpO₂、張力性氣胸徵候（單側呼吸音消失、氣管偏移、低血壓）→ 針刺減壓（第 4–5 肋間腋前線，Ch38）",
+        "與引流瓶脫離：無菌技術重新接上，或先用夾子短暫夾住（有漏氣者不可長夾）；換瓶",
+        "O₂ 目標 94–98%；CXR 確認肺狀況與位置",
+        "需要重放 → 叫後線／胸腔科／外科"
+      ],
+      "orders": [
+        { "drug": "凡士林紗布 + 密閉敷料", "dose": "1 片，三邊固定留一邊排氣", "route": "覆蓋胸管傷口", "freq": "STAT", "note": "滑脫時；不要完全密封（張力性氣胸）" },
+        { "drug": "O₂", "dose": "目標 SpO₂ 94–98%（CO₂ 滯留 88–92%）", "route": "鼻管／面罩", "freq": "持續", "note": "呼吸窘迫 → NRM" }
+      ],
+      "watch": ["RR、SpO₂、BP q5–15 min；張力性氣胸徵候", "CXR：氣胸／積液再累積"],
+      "call": ["胸管滑脫合併呼吸窘迫、張力性氣胸徵候 → 立刻後線", "需要重放胸管 → 胸腔科／外科"],
+      "refs": [{ "ch": "37", "q": "凡士林紗布" }, { "ch": "37", "q": "與引流瓶脫離" }, { "ch": "38", "q": "針刺減壓" }]
+    },
+    "r_chest_drain": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "胸管不擺動／不引流／漏氣／血性引流／皮下氣腫／大量積液",
+      "summary": "不擺動先查扭折、夾子、血塊、水位（肺已復張也會停）並 X 光；air leak 夾近端分辨系統 vs 肺；**血性引流每小時 > 200 mL × 2–3 小時 = 出血，備血、聯絡外科**；大量積液初次 ≤ 1–1.5 L 即夾管。",
+      "steps": [
+        "不擺動／不引流：檢查扭折、夾子、血塊（不建議常規 milking）、引流瓶水位；肺已完全復張也會停；X 光確認位置與肺狀況",
+        "持續冒泡：夾住近端管子仍冒泡 = 接頭／瓶子漏（系統漏氣）vs 肺漏氣；持續 > 5–7 天 → 胸腔科／外科",
+        "血性引流每小時 > 200 mL × 2–3 小時 → 血胸／出血：備血、Hb、凝血，聯絡外科",
+        "皮下氣腫增加 = 阻塞、位置不良或漏氣量大：X 光、胸腔科",
+        "大量積液剛放管：初次引流 ≤ 1–1.5 L 即夾管（再擴張性肺水腫），咳嗽／胸悶／喘即停；之後每次 ≤ 1–1.5 L 分次放",
+        "拔管指標由原團隊決定：氣胸無 air leak 24 小時 + X 光復張（可先夾管 4–6 小時再照）；積液 < 100–200 mL/24 hr",
+        "疼痛：規則止痛（Ch22）；插入處感染換敷料、抗生素"
+      ],
+      "orders": [
+        { "drug": "夾管（clamp）", "dose": "初次引流達 1–1.5 L 後", "route": "胸管", "freq": "分次放，每次 ≤ 1–1.5 L", "note": "大量積液；有漏氣者不可長夾" },
+        { "drug": "Type & screen／備血", "dose": "依院內（血性 > 200 mL/hr）", "route": "—", "freq": "STAT", "note": "同時抽 CBC、凝血；聯絡外科" }
+      ],
+      "watch": ["每小時引流量與性質", "RR、SpO₂；放液中咳嗽／胸悶即停", "皮下氣腫範圍"],
+      "call": ["血性引流每小時 > 200 mL × 2–3 小時", "air leak > 5–7 天、皮下氣腫快速增加、呼吸窘迫"],
+      "refs": [{ "ch": "37", "q": "no tidaling" }, { "ch": "37", "q": "air leak" }, { "ch": "37", "q": "再擴張性肺水腫" }]
+    },
+    "r_ett_dope": {
+      "type": "result",
+      "urgency": "red",
+      "title": "插管病人突然惡化／高壓警報（DOPE）",
+      "summary": "**先脫離呼吸器、BVM 100% O₂ 手壓**（阻力大 = 管路／氣道問題）→ 聽診 → 抽痰 → CXR + ABG；DOPE：Displacement、Obstruction、Pneumothorax、Equipment。脫出一半**不要推回**，拔除後 BVM 給氧、叫後線／麻醉重插。",
+      "steps": [
+        "脫離呼吸器，BVM 100% O₂ 手壓；手感阻力大 = 管路／氣道問題",
+        "聽診：單側呼吸音 = 太深（右主支氣管）或氣胸；看管子深度刻度",
+        "抽痰（痰栓、咬管 → 咬合器）",
+        "CXR + ABG；EtCO₂",
+        "D：滑脫／太深 → 調整深度或重插；O：痰栓、咬管；P：張力性氣胸 → 針刺減壓（第 4–5 肋間腋前線）→ 胸管；E：管路脫落、呼吸器故障",
+        "非計畫性拔管或脫出一半 → 不要推回，拔除後 BVM 給氧並叫後線／麻醉重插"
+      ],
+      "orders": [
+        { "drug": "O₂ 100%（BVM 手壓）", "dose": "100%", "route": "BVM 經氣管內管", "freq": "STAT 至找出原因", "note": "脫離呼吸器" },
+        { "drug": "抽痰（suction）", "dose": "生理食鹽水 2–5 mL 濕潤", "route": "經氣管內管", "freq": "STAT", "note": "痰栓" }
+      ],
+      "watch": ["SpO₂、EtCO₂、氣道壓、BP", "CXR 管尖位置、氣胸"],
+      "call": ["非計畫性拔管／需重插 → 後線 + 麻醉", "張力性氣胸、BVM 仍無法通氣"],
+      "refs": [{ "ch": "37", "q": "DOPE" }, { "ch": "38", "q": "針刺減壓" }]
+    },
+    "q_trach": {
+      "type": "choice",
+      "title": "氣切：什麼問題？",
+      "help": "喉頭切除病人只能經造口通氣（不能經口）",
+      "options": [
+        { "label": "阻塞（痰栓、抽不到、呼吸窘迫）", "next": "r_trach_block" },
+        { "label": "滑脫／掉出來", "next": "q_trach_days" },
+        { "label": "出血", "next": "r_trach_bleed" },
+        { "label": "周圍感染／肉芽／拔管後造口漏氣", "next": "r_trach_bleed" }
+      ]
+    },
+    "r_trach_block": {
+      "type": "result",
+      "urgency": "red",
+      "title": "氣切阻塞（痰栓）",
+      "summary": "抽痰（NS 2–5 mL 濕潤）→ 換內管（雙管式）→ 加濕；**抽痰管過不去 + 呼吸窘迫 → 拔除內管／整個氣切管，BVM 經口（封住造口）或經造口給氧**，叫後線／麻醉／ENT。",
+      "steps": [
+        "抽痰：生理食鹽水 2–5 mL 濕潤後抽",
+        "雙管式 → 換內管；加濕",
+        "抽痰管無法通過 + 呼吸窘迫 → 拔除內管；仍不通 → 拔除整個氣切管",
+        "封住造口用 BVM 經口通氣（上呼吸道通暢者），或經造口給氧；喉頭切除病人只能經造口",
+        "叫後線／麻醉／ENT；重插依「氣切滑脫」流程"
+      ],
+      "orders": [
+        { "drug": "NS（抽痰濕潤）", "dose": "2–5 mL", "route": "滴入氣切管後抽痰", "freq": "STAT，可重複", "note": "並換內管、加濕" },
+        { "drug": "O₂ 100%（BVM）", "dose": "100%", "route": "經口（封住造口）或經造口", "freq": "STAT 至通氣恢復", "note": "喉頭切除病人只能經造口" }
+      ],
+      "watch": ["SpO₂、RR、胸廓起伏、EtCO₂", "抽痰後是否通暢"],
+      "call": ["阻塞無法通氣 → 立刻後線／麻醉／ENT", "需拔除整個氣切管重插"],
+      "refs": [{ "ch": "37", "q": "阻塞（痰栓）" }],
+      "next": [{ "label": "需拔除整個氣切管 → 重插流程", "next": "q_trach_days" }]
+    },
+    "q_trach_days": {
+      "type": "choice",
+      "title": "氣切做了幾天？（造口成熟了嗎）",
+      "help": "< 7 天造口未成熟，盲目重插會形成假通道",
+      "options": [
+        { "label": "< 7 天（造口未成熟）", "next": "r_trach_out", "set": { "trachnew": true } },
+        { "label": "≥ 7 天且造口成熟", "next": "r_trach_out", "set": { "trachnew": false } }
+      ]
+    },
+    "r_trach_out": {
+      "type": "result",
+      "urgency": "red",
+      "title": "氣切滑脫",
+      "summary": "**< 7 天：不要盲目重插**（假通道）→ 封住造口 BVM 經口通氣、經口插管，同時叫後線／ENT／麻醉；**≥ 7 天且造口成熟**：同號或小一號管（或 ETT 6.0）在光線下重插，EtCO₂／胸起確認。喉頭切除病人只能經造口。",
+      "steps": [
+        "評估通氣：SpO₂、RR、胸廓起伏；100% O₂",
+        "< 7 天（造口未成熟）：不要盲目重插；封住造口用 BVM 經口通氣（上呼吸道通暢者）→ 經口插管；同時叫後線／ENT／麻醉",
+        "≥ 7 天且造口成熟：以同號或小一號氣切管（或氣管內管 6.0）在光線充足下重插，確認通氣（EtCO₂、胸起）",
+        "喉頭切除病人：**只能經造口通氣／插管**，不可經口",
+        "重插失敗或通氣不良 → 經口插管（非喉切）、叫麻醉",
+        "記錄時間、方法、結果；CXR"
+      ],
+      "orders": [
+        { "drug": "O₂ 100%（BVM）", "dose": "100%", "route": "經口（封住造口）或經造口", "freq": "STAT", "note": "喉頭切除病人只能經造口" },
+        { "drug": "經口氣管插管", "dose": "依麻醉／後線", "route": "經口", "freq": "STAT", "cond": "trachnew", "note": "< 7 天造口未成熟；喉頭切除病人不可經口" },
+        { "drug": "氣切管重插", "dose": "同號或小一號（或 ETT 6.0）", "route": "經造口，光線充足", "freq": "STAT", "cond": "!trachnew", "note": "≥ 7 天造口成熟；EtCO₂ 與胸起確認" }
+      ],
+      "watch": ["SpO₂、EtCO₂、胸廓起伏（假通道 = 皮下氣腫、無 EtCO₂）", "重插後 CXR"],
+      "call": ["氣切 < 7 天滑脫 → 立刻後線／ENT／麻醉", "重插失敗、無法通氣"],
+      "refs": [{ "ch": "37", "q": "造口未成熟" }, { "ch": "37", "q": "喉頭切除" }]
+    },
+    "r_trach_bleed": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "氣切出血／周圍感染／肉芽／拔管後造口漏氣",
+      "summary": "少量：局部壓迫、換管、TXA 局部；**大量（術後 3 天–6 週想氣管無名動脈瘻管）：cuff 過度充氣壓迫、手指經造口向前壓、緊急外科**。",
+      "steps": [
+        "少量出血：局部壓迫、換管、TXA 局部使用",
+        "大量出血（術後 3 天–6 週 = 氣管無名動脈瘻管）：cuff 過度充氣壓迫、手指經造口向前壓迫無名動脈、緊急外科／ENT",
+        "保護氣道：抽痰、100% O₂；備血、凝血功能",
+        "周圍感染／肉芽：換藥、抗生素、ENT",
+        "拔管後造口漏氣：密閉敷料，通常數天閉合"
+      ],
+      "orders": [
+        { "drug": "Tranexamic acid（TXA）局部", "dose": "依院內（局部濕敷）", "route": "氣切造口局部", "freq": "PRN 少量出血", "note": "章節未載劑量；不 IV 常規" },
+        { "drug": "Cuff 過度充氣壓迫", "dose": "cuff 充氣至出血停止", "route": "氣切管 cuff", "freq": "STAT（大量出血）", "note": "同時手指經造口向前壓、緊急外科" },
+        { "drug": "密閉敷料", "dose": "1 片", "route": "拔管後造口", "freq": "每日更換至閉合", "note": "拔管後漏氣" }
+      ],
+      "watch": ["出血量、SpO₂（血液吸入）、Hb", "術後 3 天–6 週的少量「前哨出血」也要警覺"],
+      "call": ["大量出血或疑無名動脈瘻管 → 立刻外科／ENT + 後線", "出血影響氣道"],
+      "refs": [{ "ch": "37", "q": "氣管無名動脈瘻管" }, { "ch": "37", "q": "氣切周圍感染" }]
+    },
+    "q_peg": {
+      "type": "choice",
+      "title": "PEG／腸造口：什麼問題？",
+      "options": [
+        { "label": "PEG 滑脫／掉出來", "next": "q_peg_age" },
+        { "label": "PEG 阻塞", "next": "r_ng_block" },
+        { "label": "PEG 周圍滲漏／肉芽／感染，或腸造口問題（出血、缺血、高輸出、皮膚炎）", "next": "r_stoma" }
+      ]
+    },
+    "q_peg_age": {
+      "type": "choice",
+      "title": "PEG 放了多久？",
+      "help": "< 4 週通道未成熟，重插可能進腹腔（腹膜炎）",
+      "options": [
+        { "label": "< 4 週（通道未成熟）", "next": "r_peg_out", "set": { "pegmature": false } },
+        { "label": "≥ 4 週（通道成熟）", "next": "r_peg_out", "set": { "pegmature": true } }
+      ]
+    },
+    "r_peg_out": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "PEG 滑脫",
+      "summary": "**< 4 週：不要重插**，覆蓋、NPO、IV、聯絡消化科／外科（可能腹膜炎）；**≥ 4 週：24 小時內用同號 Foley 暫時置入**（充氣 5–10 mL、固定）維持通道，X 光顯影確認再灌。",
+      "steps": [
+        "< 4 週（通道未成熟）：不要重插；覆蓋造口、NPO、IV 輸液；聯絡消化科／外科；觀察腹膜炎徵候（腹痛、發燒、腹肌僵硬）",
+        "≥ 4 週：24 小時內以同號 Foley 暫時置入維持通道（氣球充氣 5–10 mL、固定），之後換正式管",
+        "重插後 X 光顯影確認位置再灌；未確認前不灌食、不給藥",
+        "記錄外露長度、時間、方法、結果"
+      ],
+      "orders": [
+        { "drug": "NPO + IV 輸液", "dose": "維持輸液（依 Ch10）", "route": "IV drip", "freq": "持續至消化科／外科評估", "cond": "!pegmature", "note": "< 4 週通道未成熟" },
+        { "drug": "Foley（暫代 PEG）", "dose": "同號，氣球充氣 5–10 mL", "route": "經原造口置入並固定", "freq": "24 小時內（通道會關閉）", "cond": "pegmature", "note": "≥ 4 週；X 光顯影確認後才灌" }
+      ],
+      "watch": ["腹痛、發燒、腹膜炎徵候（< 4 週）", "暫時 Foley 位置與滲漏；顯影確認"],
+      "call": ["新 PEG（< 4 週）滑脫 → 消化科／外科", "腹膜炎徵候、無法置入暫時管"],
+      "refs": [{ "ch": "37", "q": "PEG 滑脫" }]
+    },
+    "r_stoma": {
+      "type": "result",
+      "urgency": "green",
+      "title": "腸造口問題／PEG 周圍滲漏、肉芽、感染",
+      "summary": "造口出血多表淺（壓迫）；**暗紫黑 = 缺血 → 外科**；高輸出 > 1.5–2 L/d → loperamide、輸液、電解質；PEG 周圍滲漏／肉芽／感染 → 換藥、氧化鋅、抗生素、消化科。",
+      "steps": [
+        "出血：多為表淺，局部壓迫",
+        "缺血（造口暗紫黑）→ 外科",
+        "脫垂／退縮／狹窄 → 外科／造口師",
+        "高輸出（> 1.5–2 L/d）：loperamide、輸液、電解質（Na、K、Mg）",
+        "周圍皮膚炎 → 造口師；PEG 周圍滲漏／肉芽／感染：換藥、氧化鋅、抗生素、消化科"
+      ],
+      "orders": [
+        { "drug": "Loperamide", "dose": "4 mg → 每次解便後 2 mg", "route": "PO", "freq": "max 16 mg/d", "note": "高輸出造口（Ch24）；感染性腹瀉禁" },
+        { "drug": "氧化鋅軟膏", "dose": "適量", "route": "造口周圍皮膚", "freq": "每次換藥", "note": "周圍皮膚炎／滲漏" }
+      ],
+      "watch": ["造口顏色（暗紫黑 = 缺血）", "每日輸出量、電解質、尿量"],
+      "call": ["造口缺血、脫垂無法復位 → 外科", "高輸出合併 AKI／電解質異常"],
+      "refs": [{ "ch": "37", "q": "腸造口" }, { "ch": "24", "q": "Loperamide" }]
+    },
+    "q_drain": {
+      "type": "choice",
+      "title": "引流管（JP、Hemovac、Penrose、T-tube、PTCD／PTGBD、PCN、腹水／膿瘍引流）：什麼問題？",
+      "help": "性質改變 + 發燒／腹痛／不穩 → 立即通知後線",
+      "options": [
+        { "label": "引流量／性質改變（血性大量、膽汁、腸液、膿、乳糜、尿）", "next": "r_drain_output" },
+        { "label": "沒引流／阻塞（PTCD、PCN 無引流 + 發燒／黃疸／腰痛）", "next": "r_drain_output" },
+        { "label": "腹水引流管（放液量、發燒）", "next": "r_drain_output" },
+        { "label": "滑脫／掉出來", "next": "r_drain_out" }
+      ]
+    },
+    "r_drain_output": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "引流管性質改變／無引流／阻塞（含 PTCD、PCN、腹水引流）",
+      "summary": "漿液 → 血性大量（出血）、膽汁（吻合口／膽道滲漏）、腸液（瘻管）、膿、乳糜、尿：**性質改變 + 發燒／腹痛／不穩 → 立即通知後線**；PTCD／PCN 阻塞 → NS 5–10 mL 無菌輕沖（不反抽、不加壓），無效 → 介入放射科。",
+      "steps": [
+        "記錄量與性質；性質改變 + 發燒／腹痛／不穩 → 立即通知後線／原團隊",
+        "大量血性 → 備血、Hb、凝血；聯絡外科",
+        "JP：擠壓球維持負壓、檢查扭折",
+        "PTCD／PCN 無引流 + 發燒／黃疸／腰痛 → NS 5–10 mL 無菌輕沖（不反抽、不加壓，依放射科規範）；無效 → 介入放射科",
+        "腹水引流：每次放 ≤ 4–5 L 並補 albumin（Ch8）；發燒 → 腹水培養（床邊接血液培養瓶）"
+      ],
+      "orders": [
+        { "drug": "NS 無菌輕沖（PTCD／PCN）", "dose": "5–10 mL", "route": "經引流管輕推，不反抽、不加壓", "freq": "STAT 單次", "note": "依放射科規範；無效 → 介入放射科" },
+        { "drug": "Albumin 20%", "dose": "6–8 g／每放 1 L 腹水（20% 100 mL ≈ 20 g）", "route": "IV drip", "freq": "放液後", "note": "腹水引流每次 ≤ 4–5 L；Ch8：治療性放液 > 5 L 時每 L 補 6–8 g" },
+        { "drug": "Type & screen／備血", "dose": "依院內", "route": "—", "freq": "STAT", "note": "大量血性引流時" }
+      ],
+      "watch": ["每班引流量與性質", "體溫、腹痛、BP（性質改變者）", "放腹水後 BP、Cr"],
+      "call": ["術後引流性質改變（膽汁、腸液、膿、大量血）", "PTCD／PCN 阻塞沖洗無效、發燒／黃疸／腰痛 → 介入放射科"],
+      "refs": [{ "ch": "37", "q": "量與性質改變" }, { "ch": "37", "q": "PTCD／PCN 阻塞" }, { "ch": "08", "q": "albumin" }]
+    },
+    "r_drain_out": {
+      "type": "result",
+      "urgency": "orange",
+      "title": "引流管滑脫（JP、T-tube、PTCD／PCN）",
+      "summary": "**不要塞回**；覆蓋、記錄外露長度、通知原團隊；**PTCD／PCN 需 24 小時內重放**（通道會關閉）→ 介入放射科；T-tube < 6 週滑脫 → 外科。",
+      "steps": [
+        "不要塞回；無菌敷料覆蓋、記錄外露長度與時間",
+        "通知原團隊（術後引流）",
+        "PTCD／PCN 滑脫 → 24 小時內重放，聯絡介入放射科",
+        "T-tube 滑脫（< 6 週）→ 外科",
+        "觀察發燒、腹痛、黃疸、腰痛（引流中斷後感染／阻塞）"
+      ],
+      "orders": [
+        { "drug": "無菌敷料覆蓋", "dose": "1 片", "route": "引流口", "freq": "STAT，滲濕更換", "note": "不要塞回管子" }
+      ],
+      "watch": ["體溫、腹痛、黃疸／腰痛", "引流口滲出量與性質"],
+      "call": ["PTCD／PCN／T-tube 滑脫 → 介入放射科／外科（24 小時內）", "術後引流滑脫 → 原團隊"],
+      "refs": [{ "ch": "37", "q": "PTCD／PCN 滑脫" }]
+    },
+    "r_piv": {
+      "type": "result",
+      "urgency": "green",
+      "title": "周邊靜脈留置針：靜脈炎／外滲／打不上",
+      "summary": "拔除、抬高、冷敷（多數藥）或熱敷（vincristine 等）；**升壓劑外滲 → phentolamine 5–10 mg in NS 10–15 mL 局部皮下**；化療外滲依藥物專屬解毒劑（藥劑部）。",
+      "steps": [
+        "停止輸注、拔除留置針、抬高患肢",
+        "冷敷（多數藥物）；熱敷（vincristine 等）",
+        "升壓劑外滲 → phentolamine 局部皮下注射（多點注射外滲範圍）",
+        "化療外滲 → 依藥物專屬解毒劑（藥劑部）",
+        "記錄範圍、拍照；72–96 小時更換留置針或依臨床",
+        "打不上：超音波導引、EJ、骨內針（緊急）、CVC"
+      ],
+      "orders": [
+        { "drug": "Phentolamine", "dose": "5–10 mg in NS 10–15 mL", "route": "局部皮下注射（外滲範圍多點）", "freq": "STAT 單次", "note": "升壓劑外滲（norepinephrine、dopamine 等）" }
+      ],
+      "watch": ["外滲範圍、皮膚顏色、疼痛、水泡（每班）", "升壓劑外滲：局部蒼白／壞死"],
+      "call": ["化療外滲（藥劑部／原團隊）", "皮膚壞死、腔室症候群徵候", "打不上需 CVC／骨內針"],
+      "refs": [{ "ch": "37", "q": "靜脈炎／外滲" }, { "ch": "37", "q": "打不上" }]
+    }
+  }
+}
